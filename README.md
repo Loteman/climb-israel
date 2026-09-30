@@ -2,7 +2,7 @@
 
 אתר מידע חינמי וקהילתי לטיפוס בישראל — גם טיפוס אולמות (בולדרינג) וגם טיפוס בטבע. כולל מדריך למתחילים, אנציקלופדיה של אחיזות/מושגים/סגנונות/ציוד, מדריכי טכניקה ומניעת פציעות, ומדריך אולמות ואתרי טבע ברחבי הארץ עם מפה אינטראקטיבית.
 
-אתר חי: [tipus-israel.co.il](https://tipus-israel.co.il)
+אתר חי: [loteman.github.io/climb-israel](https://loteman.github.io/climb-israel/)
 
 ## טכנולוגיה
 
@@ -46,4 +46,4 @@ npm run build    # בנייה סטטית ל-dist/
 
 ## פריסה
 
-פריסה אוטומטית ל-GitHub Pages דרך GitHub Actions (`.github/workflows/deploy.yml`) בכל push ל-`main`: בנייה עם `astro build` והעלאה כ-Pages artifact. דומיין מותאם אישית מוגדר דרך `public/CNAME`.
+פריסה אוטומטית ל-GitHub Pages דרך GitHub Actions (`.github/workflows/deploy.yml`) בכל push ל-`main`: בנייה עם `astro build` והעלאה כ-Pages artifact. האתר מוגש תחת הנתיב `/climb-israel/` (`base` ב-`astro.config.mjs`), ללא דומיין מותאם אישית.
