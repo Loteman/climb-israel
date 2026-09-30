@@ -19,7 +19,7 @@ const CRAG_STYLE_OPTIONS: StyleOption[] = [
   { label: "ויה פראטה", values: ["via-ferrata"] },
 ];
 
-const REGION_OPTIONS: { value: string; label: string }[] = [
+const GYM_REGION_OPTIONS: { value: string; label: string }[] = [
   { value: "north", label: "צפון" },
   { value: "sharon", label: "שרון" },
   { value: "center", label: "מרכז" },
@@ -28,6 +28,19 @@ const REGION_OPTIONS: { value: string; label: string }[] = [
   { value: "yosh", label: "יהודה ושומרון" },
   { value: "south", label: "דרום" },
 ];
+
+// Crags don't get the שרון/שפלה split - too few natural sites in those
+// areas to justify it, so both are folded into "מרכז" (both in the
+// filter chips here and in the crags' own region tag in generate-content.ts).
+const CRAG_REGION_OPTIONS: { value: string; label: string }[] = [
+  { value: "north", label: "צפון" },
+  { value: "center", label: "מרכז" },
+  { value: "jerusalem", label: "אזור ירושלים" },
+  { value: "yosh", label: "יהודה ושומרון" },
+  { value: "south", label: "דרום" },
+];
+
+const ALL_REGION_OPTIONS = GYM_REGION_OPTIONS;
 
 type Kind = "gym" | "crag";
 type ViewMode = "cards" | "table" | "map";
@@ -64,7 +77,7 @@ function initialRegions(): Set<string> {
   if (typeof window === "undefined") return new Set();
   const param = new URLSearchParams(window.location.search).get("region");
   if (!param) return new Set();
-  const valid = new Set(REGION_OPTIONS.map((o) => o.value));
+  const valid = new Set(ALL_REGION_OPTIONS.map((o) => o.value));
   return new Set(param.split(",").filter((r) => valid.has(r)));
 }
 
@@ -80,6 +93,7 @@ export default function DirectoryFilters() {
   const [viewMode, setViewMode] = useState<ViewMode>("cards");
 
   const options = kind === "gym" ? GYM_STYLE_OPTIONS : CRAG_STYLE_OPTIONS;
+  const regionOptions = kind === "gym" ? GYM_REGION_OPTIONS : CRAG_REGION_OPTIONS;
 
   useEffect(() => {
     const cards = Array.from(
@@ -132,6 +146,15 @@ export default function DirectoryFilters() {
   function changeKind(next: Kind) {
     setKind(next);
     setStyleLabels(new Set());
+    // A region chip like שרון/שפלה only exists for gyms - if one was
+    // selected there, carrying it into the crag view would silently
+    // filter out every crag with no visible chip left to undo it.
+    setRegions((prev) => {
+      const validValues = new Set(
+        (next === "gym" ? GYM_REGION_OPTIONS : CRAG_REGION_OPTIONS).map((o) => o.value),
+      );
+      return new Set([...prev].filter((r) => validValues.has(r)));
+    });
   }
 
   function toggleStyle(label: string) {
@@ -238,7 +261,7 @@ export default function DirectoryFilters() {
             <span class="shrink-0 font-mono text-[11px] uppercase tracking-wide text-ink-soft">
               אזור בארץ
             </span>
-            {REGION_OPTIONS.map((opt) => (
+            {regionOptions.map((opt) => (
               <button
                 type="button"
                 onClick={() => toggleRegion(opt.value)}
