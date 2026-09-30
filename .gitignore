@@ -19,6 +19,10 @@ npm-debug.log*
 .vscode/*
 !.vscode/extensions.json
 
+# Claude Code local config/state (dev-server launch config, skill files,
+# scheduled-task lock) - machine/session-local, not meant to be published
+.claude/
+
 # original source material (notes + guidebook scans) - not for publishing;
 # the guidebooks intentionally published on the live site live under
 # public/guidebooks/ instead, which is tracked normally.
