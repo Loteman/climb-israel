@@ -904,7 +904,7 @@ const disciplines: Discipline[] = [
     slug: "deep-water-soloing",
     nameHe: "סולו מים עמוקים",
     nameEn: "Deep Water Soloing (DWS)",
-    order: 8,
+    order: 9,
     environment: "outdoor",
     summary: "סולו מים עמוקים הוא כמו בולדרינג בלי חבלים או רתמה, אבל על מצוקים מעל מים עמוקים.",
     body: `סולו מים עמוקים הוא כמו בולדרינג בלי חבלים או רתמה, אבל על מצוקים מעל מים עמוקים.
@@ -917,7 +917,7 @@ const disciplines: Discipline[] = [
     slug: "free-solo",
     nameHe: "פרי סולו",
     nameEn: "Free Soloing",
-    order: 9,
+    order: 11,
     environment: "outdoor",
     summary: "פרי סולו הוא הסגנון המסוכן ביותר: טיפוס מצוקים בטבע ללא שום ציוד, חבל או רתמה.",
     body: `פרי סולו הוא הסגנון המסוכן ביותר: טיפוס מצוקים בטבע ללא שום ציוד, חבל או רתמה.
@@ -956,7 +956,7 @@ const disciplines: Discipline[] = [
     slug: "via-ferrata",
     nameHe: "ויה פראטה (\"דרך הברזל\")",
     nameEn: "Via Ferrata",
-    order: 11,
+    order: 8,
     environment: "outdoor",
     summary: "ויה פראטה (\"דרך הברזל\") היא מסלול מצוקים המאובטח בכבלי פלדה ויתדות קבועים - מאפשר חוויית גובה בטוחה יחסית.",
     body: `ויה פראטה ("דרך הברזל") היא מסלול מצוקים המאובטח בכבלי פלדה ויתדות קבועים - מאפשר חוויית גובה בטוחה יחסית.

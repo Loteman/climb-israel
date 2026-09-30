@@ -1,7 +1,7 @@
 ---
 nameHe: "פרי סולו"
 nameEn: "Free Soloing"
-order: 9
+order: 11
 environment: outdoor
 summary: "פרי סולו הוא הסגנון המסוכן ביותר: טיפוס מצוקים בטבע ללא שום ציוד, חבל או רתמה."
 ---

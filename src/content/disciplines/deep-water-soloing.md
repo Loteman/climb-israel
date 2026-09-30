@@ -1,7 +1,7 @@
 ---
 nameHe: "סולו מים עמוקים"
 nameEn: "Deep Water Soloing (DWS)"
-order: 8
+order: 9
 environment: outdoor
 summary: "סולו מים עמוקים הוא כמו בולדרינג בלי חבלים או רתמה, אבל על מצוקים מעל מים עמוקים."
 ---
