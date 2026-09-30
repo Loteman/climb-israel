@@ -1,5 +1,5 @@
 ---
-import { withBase } from "../../lib/url";
+import { withBase, withBaseIfRelative } from "../../lib/url";
 import { getCollection, render } from "astro:content";
 import GuideLayout from "../../layouts/GuideLayout.astro";
 import Badge from "../../components/ui/Badge.astro";
@@ -294,7 +294,7 @@ const jsonLd = {
                 {data.guidebooks.map((g: { label: string; url: string }) => (
                   <li>
                     <a
-                      href={g.url}
+                      href={withBaseIfRelative(g.url)}
                       target="_blank"
                       rel="noopener noreferrer"
                       class="inline-block font-body text-sm font-bold text-rope hover:underline"

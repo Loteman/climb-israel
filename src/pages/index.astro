@@ -133,7 +133,7 @@ const quickLocationLinks = [
     <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {
         guides.map((g) => (
-          <Card as="li" href={g.href} class="flex h-full flex-col">
+          <Card as="li" href={withBase(g.href)} class="flex h-full flex-col">
             <Badge variant={g.variant} class="w-fit">
               {g.badge}
             </Badge>
@@ -163,7 +163,7 @@ const quickLocationLinks = [
       <ul class="mt-8 grid gap-4 sm:grid-cols-2">
         {
           environments.map((e) => (
-            <Card as="li" href={e.href} class="flex h-full flex-col">
+            <Card as="li" href={withBase(e.href)} class="flex h-full flex-col">
               <Badge variant={e.variant} class="w-fit">
                 {e.badge}
               </Badge>
@@ -194,7 +194,7 @@ const quickLocationLinks = [
       {
         quickLocationLinks.map((link) => (
           <a
-            href={link.href}
+            href={withBase(link.href)}
             class="border border-dashed border-stone px-4 py-2 font-body text-sm font-bold text-ink transition-colors hover:border-rust hover:text-rust"
           >
             {link.label}

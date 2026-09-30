@@ -1,5 +1,5 @@
 ---
-import { withBase } from "../../lib/url";
+import { withBase, withBaseIfRelative } from "../../lib/url";
 import type { CollectionEntry } from "astro:content";
 import Badge from "../ui/Badge.astro";
 import NavigationButtons from "./NavigationButtons.astro";
@@ -99,7 +99,7 @@ const searchText = [
     {
       data.kind === "crag" && data.guidebooks?.[0] && (
         <a
-          href={data.guidebooks[0].url}
+          href={withBaseIfRelative(data.guidebooks[0].url)}
           target="_blank"
           rel="noopener noreferrer"
           class="flex items-center gap-1.5 border border-stone/60 px-2.5 py-1.5 font-body text-xs font-bold text-ink transition-colors hover:border-rust hover:text-rust"

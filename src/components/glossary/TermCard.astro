@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import Card from "../ui/Card.astro";
 import Badge from "../ui/Badge.astro";
+import { withBase } from "../../lib/url";
 
 interface Props {
   term: CollectionEntry<"glossary">;
@@ -9,9 +10,11 @@ interface Props {
 
 const { term } = Astro.props;
 
-const href = term.data.relatedDisciplineSlug
-  ? `/סגנונות-טיפוס/${term.data.relatedDisciplineSlug.id}/`
-  : `/מושגי-טיפוס/${term.id}/`;
+const href = withBase(
+  term.data.relatedDisciplineSlug
+    ? `/סגנונות-טיפוס/${term.data.relatedDisciplineSlug.id}/`
+    : `/מושגי-טיפוס/${term.id}/`,
+);
 ---
 
 <Card as="li" href={href}>
