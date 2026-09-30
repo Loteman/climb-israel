@@ -1,0 +1,90 @@
+---
+import { getCollection, render } from "astro:content";
+import GuideLayout from "../../layouts/GuideLayout.astro";
+import Badge from "../../components/ui/Badge.astro";
+import Card from "../../components/ui/Card.astro";
+
+export async function getStaticPaths() {
+  const disciplines = await getCollection("disciplines");
+  return disciplines.map((d) => ({
+    params: { slug: d.id },
+    props: { discipline: d },
+  }));
+}
+
+const { discipline } = Astro.props;
+const { Content } = await render(discipline);
+
+const envLabels: Record<string, string> = {
+  indoor: "קיר סגור",
+  outdoor: "טבע",
+  both: "קיר וטבע",
+};
+const envVariant: Record<string, "rope" | "olive" | "rust"> = {
+  indoor: "rope",
+  outdoor: "olive",
+  both: "rust",
+};
+
+const relatedGear = (await getCollection("gear")).filter((g) =>
+  g.data.relevantDisciplines?.some((ref) => ref.id === discipline.id),
+);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: `${discipline.data.nameHe} (${discipline.data.nameEn})`,
+  description: discipline.data.summary,
+};
+---
+
+<GuideLayout
+  title={`${discipline.data.nameHe} (${discipline.data.nameEn}) - סגנון טיפוס`}
+  description={discipline.data.summary}
+  breadcrumbs={[
+    { href: "/", label: "בית" },
+    { href: "/סגנונות-טיפוס/", label: "סגנונות טיפוס" },
+    { href: `/סגנונות-טיפוס/${discipline.id}/`, label: discipline.data.nameHe },
+  ]}
+  jsonLd={jsonLd}
+>
+  <Badge variant={envVariant[discipline.data.environment]}>
+    {envLabels[discipline.data.environment]}
+  </Badge>
+  <h1 class="mt-3 font-display text-3xl font-bold text-ink">
+    {discipline.data.nameHe}
+  </h1>
+  <p class="mt-1 font-mono text-sm text-ink-soft">{discipline.data.nameEn}</p>
+
+  <div class="prose-climbing mt-8 max-w-none leading-relaxed text-ink">
+    <Content />
+  </div>
+
+  {
+    relatedGear.length > 0 && (
+      <div class="mt-10 border-t border-stone/40 pt-6">
+        <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">
+          ציוד רלוונטי
+        </p>
+        <ul class="mt-3 flex flex-wrap gap-3">
+          {relatedGear.map((item) => (
+            <li>
+              <Card href={`/ציוד-טיפוס/${item.id}/`} class="px-4 py-2">
+                <span class="font-body text-sm font-semibold text-ink group-hover:text-rust">
+                  {item.data.nameHe}
+                </span>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  <a
+    href="/סגנונות-טיפוס/"
+    class="mt-10 inline-block font-body text-sm font-bold text-rope hover:underline"
+  >
+    → חזרה לכל הסגנונות
+  </a>
+</GuideLayout>

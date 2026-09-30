@@ -1,0 +1,21 @@
+---
+interface Props {
+  variant?: "rust" | "olive" | "rope" | "stone";
+  class?: string;
+}
+
+const { variant = "stone", class: className = "" } = Astro.props;
+
+const colorMap = {
+  rust: "text-rust border-rust",
+  olive: "text-olive border-olive",
+  rope: "text-rope border-rope",
+  stone: "text-ink-soft border-stone",
+} as const;
+---
+
+<span
+  class={`inline-flex items-center gap-1 rounded-sm border border-dashed px-2 py-0.5 font-mono text-xs uppercase tracking-wide ${colorMap[variant]} ${className}`}
+>
+  <slot />
+</span>

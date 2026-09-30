@@ -1,0 +1,320 @@
+---
+import { getCollection, render } from "astro:content";
+import GuideLayout from "../../layouts/GuideLayout.astro";
+import Badge from "../../components/ui/Badge.astro";
+import NavigationButtons from "../../components/directory/NavigationButtons.astro";
+import { publiclyVisibleLocations } from "../../lib/locations";
+
+export async function getStaticPaths() {
+  const locations = publiclyVisibleLocations(await getCollection("locations"));
+  return locations.map((location) => ({
+    params: { slug: location.id },
+    props: { location },
+  }));
+}
+
+const { location } = Astro.props;
+const { data } = location;
+const { Content } = await render(location);
+
+const styleLabels: Record<string, string> = {
+  bouldering: "בולדרינג",
+  lead: "הובלה",
+  "top-rope": "טופ-רופ",
+  speed: "טיפוס מהירות",
+  trad: "טראד",
+  "multi-pitch": "מולטי-פיץ'",
+};
+
+const regionLabels: Record<string, string> = {
+  north: "צפון",
+  sharon: "שרון",
+  center: "מרכז",
+  shfela: "שפלה",
+  jerusalem: "אזור ירושלים",
+  yosh: "יהודה ושומרון",
+  south: "דרום",
+};
+
+const navQuery =
+  data.kind === "gym"
+    ? [data.address, data.city].filter(Boolean).join(", ")
+    : (data.locationDescription ?? data.name);
+
+const NO_INFO = "אין מידע";
+
+const cragSpecs =
+  data.kind === "crag"
+    ? [
+        { label: "סלע", value: data.rockType },
+        { label: "אורך המסלולים", value: data.routeLength },
+        { label: "כמות מסלולים", value: data.routeCount },
+        { label: "עונה", value: data.season },
+        { label: "צל", value: data.shade },
+        { label: "לינה", value: data.lodging },
+      ]
+    : [];
+
+const gymSpecs =
+  data.kind === "gym"
+    ? [
+        {
+          label: "שעות פתיחה",
+          value: data.hours
+            ? Object.entries(data.hours)
+                .map(([day, h]) => `${day}: ${h}`)
+                .join(" · ")
+            : undefined,
+        },
+      ]
+    : [];
+
+const chainBranches =
+  data.kind === "gym" && data.chain
+    ? publiclyVisibleLocations(await getCollection("locations"))
+        .filter(
+          (l) =>
+            l.data.kind === "gym" &&
+            l.data.chain === data.chain &&
+            l.id !== location.id,
+        )
+        .sort((a, b) => a.data.name.localeCompare(b.data.name, "he"))
+    : [];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SportsActivityLocation",
+  name: data.name,
+  ...(data.kind === "gym"
+    ? {
+        address: {
+          "@type": "PostalAddress",
+          ...(data.address ? { streetAddress: data.address } : {}),
+          addressLocality: data.city,
+          addressCountry: "IL",
+        },
+        ...(data.phone ? { telephone: data.phone } : {}),
+        ...(data.website ? { url: data.website } : {}),
+      }
+    : {
+        address: { "@type": "PostalAddress", addressCountry: "IL" },
+      }),
+};
+---
+
+<GuideLayout
+  title={`${data.name} - ${data.kind === "gym" ? "קיר טיפוס" : "אתר טיפוס בטבע"}`}
+  description={
+    data.description ??
+    `${data.name} - ${data.kind === "gym" ? `קיר טיפוס ב${data.city}` : `אתר טיפוס בטבע באזור ${regionLabels[data.region]}`}.`
+  }
+  breadcrumbs={[
+    { href: "/", label: "בית" },
+    { href: "/מקומות-טיפוס/", label: "מקומות טיפוס" },
+    { href: `/מקומות-טיפוס/${location.id}/`, label: data.name },
+  ]}
+  jsonLd={jsonLd}
+>
+  <Badge variant={data.kind === "gym" ? "rope" : "olive"}>
+    {data.kind === "gym" ? "אולם טיפוס" : "אתר טבע"}
+  </Badge>
+  <h1 class="mt-3 font-display text-3xl font-bold text-ink">{data.name}</h1>
+  <p class="mt-1 text-sm text-ink-soft">
+    {regionLabels[data.region]}
+    {data.kind === "gym" && data.chain ? ` · רשת ${data.chain}` : ""}
+  </p>
+
+  {
+    data.kind === "gym" && (
+      <div class="mt-8 space-y-6">
+        <div>
+          <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">תיאור האולם</p>
+          <div class="prose-climbing mt-2 max-w-none leading-relaxed text-ink">
+            <Content />
+          </div>
+        </div>
+
+        <div>
+          <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">מיקום</p>
+          <p class="mt-2 text-sm leading-relaxed text-ink">
+            {[data.city, data.address].filter(Boolean).join(", ") || NO_INFO}
+          </p>
+          <NavigationButtons query={navQuery} size="sm" class="mt-3" />
+        </div>
+
+        <div>
+          <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">סגנון</p>
+          <div class="mt-2 flex flex-wrap gap-1.5">
+            {data.styles.map((s: string) => <Badge variant="stone">{styleLabels[s]}</Badge>)}
+          </div>
+        </div>
+
+        {
+          gymSpecs.map((spec) => (
+            <div>
+              <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">{spec.label}</p>
+              <p class="mt-2 text-sm leading-relaxed text-ink">{spec.value || NO_INFO}</p>
+            </div>
+          ))
+        }
+
+        <div>
+          <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">טלפון</p>
+          {
+            data.phone ? (
+              <a
+                href={`tel:${data.phone.replace(/[^0-9+]/g, "")}`}
+                class="mt-2 inline-block font-body text-sm font-bold text-ink hover:text-rust"
+              >
+                {data.phone}
+              </a>
+            ) : (
+              <p class="mt-2 text-sm leading-relaxed text-ink-soft">{NO_INFO}.</p>
+            )
+          }
+        </div>
+
+        <div>
+          <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">אתר האולם</p>
+          {
+            data.website ? (
+              <a
+                href={data.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-2 inline-block font-body text-sm font-bold text-rope hover:underline"
+              >
+                לאתר האולם ←
+              </a>
+            ) : (
+              <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+                אין אתר זמין כרגע.
+              </p>
+            )
+          }
+        </div>
+
+        {
+          chainBranches.length > 0 && (
+            <div>
+              <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">
+                סניפים נוספים ברשת {data.chain}
+              </p>
+              <p class="mt-2 text-sm leading-relaxed">
+                {chainBranches.map((branch, i) => (
+                  <Fragment>
+                    <a
+                      href={`/מקומות-טיפוס/${branch.id}/`}
+                      class="font-body font-bold text-ink hover:text-rust"
+                    >
+                      {branch.data.name}
+                    </a>
+                    {i < chainBranches.length - 1 ? ", " : ""}
+                  </Fragment>
+                ))}
+              </p>
+            </div>
+          )
+        }
+      </div>
+    )
+  }
+
+  {
+    data.kind === "crag" && (
+      <div class="mt-8 space-y-6">
+        <div>
+          <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">תיאור המצוק</p>
+          <div class="prose-climbing mt-2 max-w-none leading-relaxed text-ink">
+            <Content />
+          </div>
+        </div>
+
+        <div>
+          <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">מיקום</p>
+          <p class="mt-2 text-sm leading-relaxed text-ink">
+            {data.locationDescription ?? NO_INFO}
+          </p>
+          <NavigationButtons query={navQuery} size="sm" class="mt-3" />
+        </div>
+
+        <div>
+          <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">סגנון</p>
+          <div class="mt-2 flex flex-wrap gap-1.5">
+            {data.styles.map((s: string) => <Badge variant="stone">{styleLabels[s]}</Badge>)}
+          </div>
+        </div>
+
+        {
+          cragSpecs.map((spec) => (
+            <div>
+              <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">{spec.label}</p>
+              <p class="mt-2 text-sm leading-relaxed text-ink">{spec.value || NO_INFO}</p>
+            </div>
+          ))
+        }
+
+        <div>
+          <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">עוד על המצוק</p>
+          {
+            data.externalBetaUrl ? (
+              <a
+                href={data.externalBetaUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-2 inline-block font-body text-sm font-bold text-rope hover:underline"
+              >
+                לקריאה נוספת ←
+              </a>
+            ) : (
+              <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+                אין מידע נוסף זמין כרגע.
+              </p>
+            )
+          }
+        </div>
+
+        <div>
+          <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">להורדת הגיידבוק</p>
+          {
+            data.guidebooks && data.guidebooks.length > 0 ? (
+              <ul class="mt-2 space-y-1.5">
+                {data.guidebooks.map((g: { label: string; url: string }) => (
+                  <li>
+                    <a
+                      href={g.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-block font-body text-sm font-bold text-rope hover:underline"
+                    >
+                      {g.label} ←
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+                אין גיידבוק זמין להורדה כרגע.
+              </p>
+            )
+          }
+        </div>
+      </div>
+    )
+  }
+
+  {
+    data.sourceNote && (
+      <div class="mt-8 border border-dashed border-stone/60 bg-paper-dark p-4 text-sm leading-relaxed text-ink-soft">
+        ⚠ {data.sourceNote}
+      </div>
+    )
+  }
+
+  <a
+    href="/מקומות-טיפוס/"
+    class="mt-10 inline-block font-body text-sm font-bold text-rope hover:underline"
+  >
+    → חזרה לכל המקומות
+  </a>
+</GuideLayout>

@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Card from "../ui/Card.astro";
+import Badge from "../ui/Badge.astro";
+
+interface Props {
+  entry: CollectionEntry<"injury-prevention">;
+}
+
+const { entry } = Astro.props;
+---
+
+<Card as="li" href={`/מניעת-פציעות/${entry.id}/`}>
+  <p class="font-display font-bold text-ink group-hover:text-rust">
+    {entry.data.nameHe}
+  </p>
+  <Badge variant="stone" class="mt-1">{entry.data.nameEn}</Badge>
+  <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+    {entry.data.summary}
+  </p>
+</Card>

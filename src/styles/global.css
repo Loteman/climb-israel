@@ -1,0 +1,112 @@
+@import "tailwindcss";
+@import "@fontsource-variable/heebo";
+@import "@fontsource/ibm-plex-sans-hebrew/500.css";
+@import "@fontsource/ibm-plex-sans-hebrew/600.css";
+@import "@fontsource/ibm-plex-sans-hebrew/700.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+
+/*
+ * "Technical Topo" design tokens.
+ * Warm paper/rock palette instead of pure black/white so the site reads as a
+ * printed beta sheet, not a generic SaaS template. Every color below is also
+ * usable directly as a Tailwind utility (bg-paper, text-rust, border-stone…)
+ * because Tailwind v4 derives utilities from --color-* theme keys.
+ */
+@theme {
+  --color-paper: #f3ede0;
+  --color-paper-dark: #e8dfc9;
+  --color-ink: #2b2620;
+  --color-ink-soft: #5a5347;
+  --color-rust: #b5502d;
+  --color-olive: #6b7052;
+  --color-stone: #8c8271;
+  --color-rope: #e14d2a;
+  --color-rope-dark: #c23b1c;
+  --color-contour: #c9bfa5;
+
+  --font-display: "IBM Plex Sans Hebrew", "Heebo Variable", system-ui, sans-serif;
+  --font-body: "Heebo Variable", "IBM Plex Sans Hebrew", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
+}
+
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  position: relative;
+}
+
+/* Subtle paper grain overlay - no image asset, pure SVG noise filter. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background-color: var(--color-rope);
+  color: var(--color-paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-rope);
+  outline-offset: 2px;
+}
+
+/*
+ * Shared styling for rendered markdown bodies (hold/term/discipline/gear/
+ * location descriptions). Tailwind's preflight strips default list/link
+ * styling, so restore just enough to read as prose, in the site's palette.
+ */
+.prose-climbing p + p {
+  margin-top: 1em;
+}
+
+.prose-climbing ul {
+  list-style: disc;
+  padding-inline-start: 1.25em;
+  margin-top: 0.75em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.prose-climbing li::marker {
+  color: var(--color-rust);
+}
+
+.prose-climbing strong {
+  color: var(--color-rust);
+  font-weight: 700;
+}
+
+.prose-climbing a {
+  color: var(--color-rope);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose-climbing a:hover {
+  color: var(--color-rope-dark);
+}

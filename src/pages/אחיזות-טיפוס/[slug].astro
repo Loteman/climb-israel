@@ -1,0 +1,105 @@
+---
+import { getCollection, getEntry, render } from "astro:content";
+import GuideLayout from "../../layouts/GuideLayout.astro";
+import HoldIcon from "../../components/holds/HoldIcon.astro";
+import Badge from "../../components/ui/Badge.astro";
+import Card from "../../components/ui/Card.astro";
+
+export async function getStaticPaths() {
+  const holds = await getCollection("hold-types");
+  return holds.map((hold) => ({
+    params: { slug: hold.id },
+    props: { hold },
+  }));
+}
+
+const { hold } = Astro.props;
+const { Content } = await render(hold);
+
+const familyLabels: Record<string, string> = {
+  foundational: "אחיזות יסוד",
+  directional: "אחיזות כיווניות",
+  "structural-special": "אחיזות גדולות, מבניות ומיוחדות",
+  "feet-only": "רגליים בלבד",
+  "outdoor-rock": "אופייניות לטיפוס בטבע",
+};
+
+const relatedHolds = hold.data.relatedHoldSlugs
+  ? await Promise.all(
+      hold.data.relatedHoldSlugs.map((ref) => getEntry(ref)),
+    )
+  : [];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: `${hold.data.nameHe} (${hold.data.nameEn})`,
+  description: hold.data.summary,
+  articleSection: familyLabels[hold.data.family],
+};
+---
+
+<GuideLayout
+  title={`${hold.data.nameHe} (${hold.data.nameEn}) - אחיזת טיפוס`}
+  description={hold.data.summary}
+  breadcrumbs={[
+    { href: "/", label: "בית" },
+    { href: "/אחיזות-טיפוס/", label: "אחיזות טיפוס" },
+    { href: `/אחיזות-טיפוס/${hold.id}/`, label: hold.data.nameHe },
+  ]}
+  jsonLd={jsonLd}
+>
+  <div class="flex flex-wrap items-start gap-6 border-b border-stone/40 pb-8">
+    <HoldIcon
+      iconId={hold.data.iconId}
+      label={hold.data.nameHe}
+      class="h-28 w-28 shrink-0 text-rust"
+    />
+    <div>
+      <Badge variant="olive">{familyLabels[hold.data.family]}</Badge>
+      <h1 class="mt-2 font-display text-3xl font-bold text-ink">
+        {hold.data.nameHe}
+      </h1>
+      <p class="mt-1 font-mono text-sm text-ink-soft">{hold.data.nameEn}</p>
+    </div>
+  </div>
+
+  <div
+    class="prose-climbing mt-8 max-w-none leading-relaxed text-ink"
+  >
+    <Content />
+  </div>
+
+  {
+    relatedHolds.length > 0 && (
+      <div class="mt-10 border-t border-stone/40 pt-6">
+        <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">
+          אחיזות קשורות
+        </p>
+        <ul class="mt-3 flex flex-wrap gap-3">
+          {relatedHolds.map((related) => (
+            <li>
+              <Card href={`/אחיזות-טיפוס/${related.id}/`} class="flex items-center gap-2 px-4 py-2">
+                <HoldIcon
+                  iconId={related.data.iconId}
+                  label={related.data.nameHe}
+                  class="h-8 w-8 text-rust"
+                />
+                <span class="font-body text-sm font-semibold text-ink group-hover:text-rust">
+                  {related.data.nameHe}
+                </span>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  <a
+    href="/אחיזות-טיפוס/"
+    class="mt-10 inline-block font-body text-sm font-bold text-rope hover:underline"
+  >
+    → חזרה לכל האחיזות
+  </a>
+</GuideLayout>

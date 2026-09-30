@@ -1,0 +1,228 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TopoBackground from "../../components/layout/TopoBackground.astro";
+import Badge from "../../components/ui/Badge.astro";
+import SectionDivider from "../../components/ui/SectionDivider.astro";
+
+const vScale = [
+  { grade: "VB - V1", level: "מתחילים", desc: "אחיזות גדולות וברורות, תנועות פשוטות. נקודת הכניסה לבולדרינג עבור רוב האנשים." },
+  { grade: "V2 - V4", level: "מתחילים מתקדמים", desc: "מתחילות להופיע טכניקות ספציפיות (היל הוק, דרופ ני), אחיזות קטנות יותר, ותכנון תנועה נדרש." },
+  { grade: "V5 - V7", level: "בינוני", desc: "דורש כוח אמות וליבה ממשי, קריאת בעיה מדויקת, ולעיתים מהלכים דינמיים (דיינו)." },
+  { grade: "V8 - V10", level: "מתקדם", desc: "רף שרוב המטפסים הרציניים שואפים אליו לאחר שנים של אימון - כוח אצבעות גבוה וטכניקה עדינה." },
+  { grade: "V11 - V13", level: "מתקדם מאוד", desc: "מטפסי תחרויות ומטפסים שמתאמנים באופן שיטתי. אחיזות זעירות, מהלכים מורכבים." },
+  { grade: "V14+", level: "עלית עולמית", desc: "הרף העליון של הענף - עשרות בודדות של מטפסים בעולם מגיעים לרמות האלו." },
+];
+
+const frenchScale = [
+  { grade: "3 - 4", level: "מתחילים", desc: "מסלולים עם אחיזות גדולות וזווית קלה, מתאימים לטיפוס הראשון עם חבל." },
+  { grade: "5a - 5c", level: "מתחילים מתקדמים", desc: "עדיין נגיש, אבל דורש כבר קריאת מסלול ותכנון רגליים." },
+  { grade: "6a - 6c", level: "בינוני", desc: "הטווח שבו רוב המטפסים הקבועים באולם מתאמנים - דורש סיבולת וטכניקה." },
+  { grade: "7a - 7c", level: "מתקדם", desc: "רמה תחרותית-חובבנית. דורש אימון ייעודי, כוח אמות וסיבולת גבוהה." },
+  { grade: "8a - 8c", level: "מתקדם מאוד", desc: "רמת מטפסים מקצועיים וספורטאי תחרויות." },
+  { grade: "9a+", level: "עלית עולמית", desc: "הרף העליון בעולם הטיפוס הספורטיבי - מספר קטן של מסלולים כאלה נסגרו אי פעם." },
+];
+
+const comparison = [
+  { v: "V0", french: "4 - 5a" },
+  { v: "V2", french: "5c - 6a" },
+  { v: "V4", french: "6b - 6b+" },
+  { v: "V6", french: "7a" },
+  { v: "V8", french: "7b+ - 7c" },
+  { v: "V10", french: "8a" },
+  { v: "V12", french: "8b - 8b+" },
+  { v: "V14", french: "8c+" },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "דירוג מסלולים בטיפוס - מדריך לסולם V ולסולם הצרפתי",
+  description:
+    "איך עובד דירוג הקושי בבולדרינג (סולם V) ובטיפוס ספורטיבי (סולם צרפתי), ולמה גראד הוא תמיד קירוב ולא מדע מדויק.",
+};
+---
+
+<BaseLayout
+  title="דירוג מסלולים - מדריך לסולמות הדירוג"
+  description="מדריך לדירוג קושי בטיפוס: סולם V בבולדרינג, הסולם הצרפתי בטיפוס ספורטיבי, טבלת השוואה ביניהם, ולמה גראד הוא תמיד קירוב ולא מדע מדויק."
+  jsonLd={jsonLd}
+>
+  <section class="relative overflow-hidden border-b border-stone/40 py-14">
+    <TopoBackground opacity={0.3} />
+    <div class="relative mx-auto max-w-4xl px-4 sm:px-6">
+      <h1 class="font-display text-3xl font-bold text-ink sm:text-4xl">
+        דירוג מסלולים
+      </h1>
+      <p class="mt-3 max-w-2xl leading-relaxed text-ink-soft">
+        כל מסלול או בעיה מקבלים "גראד" - מספר או קוד שמסמן את רמת הקושי שלו.
+        בישראל, כמו ברוב העולם, משתמשים בסולם V לבולדרינג ובסולם הצרפתי
+        לטיפוס ספורטיבי והובלה.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-4 py-12 sm:px-6">
+    <div class="border border-dashed border-stone/60 bg-paper-dark p-5">
+      <p class="font-display font-bold text-ink">לפני שצוללים למספרים</p>
+      <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+        גראד הוא <strong class="text-rust">הערכה קונצנזוסית, לא מדע מדויק</strong>.
+        הוא נקבע על ידי ראוט סטרים או על ידי הצבעה קהילתית לאורך זמן,
+        ומושפע מגובה המטפס, אורך הזרועים, וסגנון אישי (מסלול "כוחני" ירגיש
+        קשה יותר למטפס טכני, ולהפך). אותו גראד יכול להרגיש שונה לגמרי בין
+        שני אולמות, ובטח בין קיר מלאכותי לסלע טבעי. אל תתנו למספר לקבוע
+        לכם איך מרגישים לגבי הטיפוס שלכם.
+      </p>
+    </div>
+
+    <SectionDivider class="my-10 text-stone/40" />
+
+    <h2 class="font-display text-2xl font-bold text-ink">
+      סולם V - בולדרינג
+    </h2>
+    <p class="mt-2 max-w-2xl text-ink-soft">
+      פותח על ידי המטפס ג'ון שרמן (John "Vermin" Sherman) בשנות ה-90, ונע
+      מ-VB (הכי קל) עד לרמות העלית שמתקדמות כל הזמן - כיום עד בסביבות V17.
+    </p>
+    <div class="mt-5 hidden overflow-hidden border border-stone/50 sm:block">
+      <table class="w-full border-collapse text-start">
+        <thead>
+          <tr class="border-b border-stone/50 bg-paper-dark">
+            <th class="p-4 text-start font-display text-sm font-bold text-ink">גראד</th>
+            <th class="p-4 text-start font-display text-sm font-bold text-ink">רמה</th>
+            <th class="p-4 text-start font-display text-sm font-bold text-ink">מה מצפה לכם</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            vScale.map((row, i) => (
+              <tr class={i % 2 === 1 ? "bg-paper-dark/40" : ""}>
+                <td class="border-t border-stone/30 p-4 align-top font-mono text-sm font-bold text-rust">
+                  {row.grade}
+                </td>
+                <td class="border-t border-stone/30 p-4 align-top">
+                  <Badge variant="olive">{row.level}</Badge>
+                </td>
+                <td class="border-t border-stone/30 p-4 align-top text-sm leading-relaxed text-ink-soft">
+                  {row.desc}
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <ul class="mt-5 space-y-3 sm:hidden">
+      {
+        vScale.map((row) => (
+          <li class="border border-stone/50 bg-paper-dark p-4">
+            <div class="flex items-center gap-2">
+              <span class="font-mono text-sm font-bold text-rust">{row.grade}</span>
+              <Badge variant="olive">{row.level}</Badge>
+            </div>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">{row.desc}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <SectionDivider class="my-10 text-stone/40" />
+
+    <h2 class="font-display text-2xl font-bold text-ink">
+      הסולם הצרפתי - טיפוס ספורטיבי והובלה
+    </h2>
+    <p class="mt-2 max-w-2xl text-ink-soft">
+      הסולם הנפוץ בעולם לטיפוס עם חבל (הובלה, ספורטיבי, לעיתים גם טופ-רופ),
+      נע מ-1 (הכי קל) ועד מעל 9a ברמת העלית העולמית.
+    </p>
+    <div class="mt-5 hidden overflow-hidden border border-stone/50 sm:block">
+      <table class="w-full border-collapse text-start">
+        <thead>
+          <tr class="border-b border-stone/50 bg-paper-dark">
+            <th class="p-4 text-start font-display text-sm font-bold text-ink">גראד</th>
+            <th class="p-4 text-start font-display text-sm font-bold text-ink">רמה</th>
+            <th class="p-4 text-start font-display text-sm font-bold text-ink">מה מצפה לכם</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            frenchScale.map((row, i) => (
+              <tr class={i % 2 === 1 ? "bg-paper-dark/40" : ""}>
+                <td class="border-t border-stone/30 p-4 align-top font-mono text-sm font-bold text-rust">
+                  {row.grade}
+                </td>
+                <td class="border-t border-stone/30 p-4 align-top">
+                  <Badge variant="olive">{row.level}</Badge>
+                </td>
+                <td class="border-t border-stone/30 p-4 align-top text-sm leading-relaxed text-ink-soft">
+                  {row.desc}
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <ul class="mt-5 space-y-3 sm:hidden">
+      {
+        frenchScale.map((row) => (
+          <li class="border border-stone/50 bg-paper-dark p-4">
+            <div class="flex items-center gap-2">
+              <span class="font-mono text-sm font-bold text-rust">{row.grade}</span>
+              <Badge variant="olive">{row.level}</Badge>
+            </div>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">{row.desc}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <SectionDivider class="my-10 text-stone/40" />
+
+    <h2 class="font-display text-2xl font-bold text-ink">
+      טבלת השוואה בין הסולמות
+    </h2>
+    <p class="mt-2 max-w-2xl text-ink-soft">
+      אי אפשר להשוות בולדרינג להובלה אחד-לאחד - הראשון נמדד בעוצמה
+      ובעיות קצרות, השני בסיבולת ומסלולים ארוכים. בכל זאת, הנה קירוב גס
+      שמקובל בקהילת הטיפוס, שימושי רק כדי לקבל תחושה כללית:
+    </p>
+    <div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      {
+        comparison.map((row) => (
+          <div class="border border-stone/50 bg-paper-dark p-4 text-center">
+            <div class="font-mono text-lg font-bold text-rope">{row.v}</div>
+            <div class="mt-1 text-xs text-ink-soft">≈</div>
+            <div class="font-mono text-sm text-ink">{row.french}</div>
+          </div>
+        ))
+      }
+    </div>
+    <p class="mt-4 text-sm text-ink-soft">
+      * ההשוואה מקורבת בלבד ומשתנה בין מקורות - אל תתייחסו אליה כאל
+      נוסחה מדויקת.
+    </p>
+
+    <div class="mt-10 border border-dashed border-stone/60 bg-paper-dark p-5">
+      <p class="font-display font-bold text-ink">כמה טיפים מעשיים</p>
+      <ul class="mt-3 space-y-2 text-sm leading-relaxed text-ink-soft">
+        <li>
+          <strong class="text-rust">גראד "רך" וגראד "קשה":</strong> גם בתוך
+          אותו גראד יש טווח - מסלול "V4 קשה" יכול להרגיש כמו V5 אצל
+          מטפסים אחרים, ולהפך.
+        </li>
+        <li>
+          <strong class="text-rust">גראד של הובלה נקבע לפי רדפוינט:</strong>{" "}
+          בדרך כלל הדירוג משקף ניסיון לאחר תרגול, לא בהכרח את הניסיון
+          הראשון (אונסייט) - ראו את הערך{" "}
+          <a href="/מושגי-טיפוס/onsight/" class="font-bold text-rope hover:underline">אונסייט</a>{" "}
+          במילון המונחים.
+        </li>
+        <li>
+          <strong class="text-rust">גופים שונים, חוויות שונות:</strong>{" "}
+          מטפסים גבוהים וקצרים יחוו לעיתים את אותו מסלול בצורה שונה
+          לגמרי - מהלך "פשוט" למטפס גבוה יכול לדרוש דיינו למטפס נמוך.
+        </li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

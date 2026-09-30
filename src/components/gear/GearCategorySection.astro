@@ -1,0 +1,53 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Card from "../ui/Card.astro";
+import Badge from "../ui/Badge.astro";
+import GearIcon from "./GearIcon.astro";
+import { gearIconPaths } from "./gearIconPaths";
+
+interface Props {
+  title: string;
+  items: CollectionEntry<"gear">[];
+}
+
+const { title, items } = Astro.props;
+const sorted = [...items].sort((a, b) => a.data.order - b.data.order);
+
+for (const item of items) {
+  if (!gearIconPaths[item.data.iconId]) {
+    throw new Error(
+      `GearCategorySection: gear "${item.id}" references iconId "${item.data.iconId}" which has no shape in gearIconPaths.ts`,
+    );
+  }
+}
+---
+
+<section>
+  <h2 class="font-display text-xl font-bold text-ink">{title}</h2>
+  <ul class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      sorted.map((item) => (
+        <Card as="li" href={`/ציוד-טיפוס/${item.id}/`}>
+          <div class="flex items-start gap-4">
+            <GearIcon
+              iconId={item.data.iconId}
+              label={item.data.nameHe}
+              class="h-14 w-14 shrink-0 text-rust group-hover:text-rope"
+            />
+            <div>
+              <p class="font-display font-bold text-ink group-hover:text-rust">
+                {item.data.nameHe}
+              </p>
+              <Badge variant="stone" class="mt-1">
+                {item.data.nameEn}
+              </Badge>
+              <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+                {item.data.summary}
+              </p>
+            </div>
+          </div>
+        </Card>
+      ))
+    }
+  </ul>
+</section>

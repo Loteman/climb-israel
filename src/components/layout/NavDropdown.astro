@@ -1,0 +1,68 @@
+---
+interface Item {
+  href: string;
+  label: string;
+}
+
+interface Group {
+  label: string;
+  items: Item[];
+}
+
+interface Props {
+  label: string;
+  items?: Item[];
+  groups?: Group[];
+}
+
+const { label, items, groups } = Astro.props;
+const currentPath = Astro.url.pathname;
+const allItems = groups ? groups.flatMap((g) => g.items) : (items ?? []);
+const active = allItems.some((item) => currentPath.startsWith(item.href));
+---
+
+<details class="group relative">
+  <summary
+    class:list={[
+      "flex cursor-pointer list-none items-center gap-1 rounded-sm px-3 py-2 font-body text-sm font-semibold transition-colors [&::-webkit-details-marker]:hidden",
+      active ? "text-rope" : "text-ink-soft hover:text-rust",
+    ]}
+  >
+    <span>{label}</span>
+    <svg width="10" height="6" viewBox="0 0 10 6" class="transition-transform group-open:rotate-180" aria-hidden="true">
+      <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  </summary>
+  <nav
+    class="absolute start-0 top-full z-50 mt-2 w-56 border border-stone/50 bg-paper-dark p-2 shadow-lg"
+    aria-label={label}
+  >
+    {
+      groups
+        ? groups.map((group, i) => (
+            <Fragment>
+              {i > 0 && <div class="my-1 border-t border-stone/40" />}
+              <p class="px-3 pt-1.5 pb-1 font-mono text-[11px] uppercase tracking-wide text-ink-soft/70">
+                {group.label}
+              </p>
+              {group.items.map((item) => (
+                <a
+                  href={item.href}
+                  class="block rounded-sm px-3 py-2 font-body text-sm font-semibold text-ink hover:bg-paper hover:text-rust"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </Fragment>
+          ))
+        : items?.map((item) => (
+            <a
+              href={item.href}
+              class="block rounded-sm px-3 py-2 font-body text-sm font-semibold text-ink hover:bg-paper hover:text-rust"
+            >
+              {item.label}
+            </a>
+          ))
+    }
+  </nav>
+</details>

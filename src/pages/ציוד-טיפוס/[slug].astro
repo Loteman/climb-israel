@@ -1,0 +1,95 @@
+---
+import { getCollection, getEntry, render } from "astro:content";
+import GuideLayout from "../../layouts/GuideLayout.astro";
+import Badge from "../../components/ui/Badge.astro";
+import Card from "../../components/ui/Card.astro";
+import GearIcon from "../../components/gear/GearIcon.astro";
+
+export async function getStaticPaths() {
+  const gear = await getCollection("gear");
+  return gear.map((item) => ({
+    params: { slug: item.id },
+    props: { item },
+  }));
+}
+
+const { item } = Astro.props;
+const { Content } = await render(item);
+
+const categoryLabels: Record<string, string> = {
+  "personal-basics": "ציוד אישי בסיסי",
+  "safety-rope-lead": "ציוד אבטחה, חבלים והובלה",
+  bouldering: "ציוד בולדרינג",
+  trad: "ציוד טיפוס מסורתי (טראד)",
+  "training-recovery": "ציוד אימון ושיקום",
+};
+
+const relevantDisciplines = item.data.relevantDisciplines
+  ? await Promise.all(item.data.relevantDisciplines.map((ref) => getEntry(ref)))
+  : [];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: `${item.data.nameHe} (${item.data.nameEn})`,
+  description: item.data.summary,
+};
+---
+
+<GuideLayout
+  title={`${item.data.nameHe} (${item.data.nameEn}) - ציוד טיפוס`}
+  description={item.data.summary}
+  breadcrumbs={[
+    { href: "/", label: "בית" },
+    { href: "/ציוד-טיפוס/", label: "ציוד טיפוס" },
+    { href: `/ציוד-טיפוס/${item.id}/`, label: item.data.nameHe },
+  ]}
+  jsonLd={jsonLd}
+>
+  <div class="flex flex-wrap items-start gap-6 border-b border-stone/40 pb-8">
+    <GearIcon
+      iconId={item.data.iconId}
+      label={item.data.nameHe}
+      class="h-28 w-28 shrink-0 text-rust"
+    />
+    <div>
+      <Badge variant="olive">{categoryLabels[item.data.category]}</Badge>
+      <h1 class="mt-2 font-display text-3xl font-bold text-ink">
+        {item.data.nameHe}
+      </h1>
+      <p class="mt-1 font-mono text-sm text-ink-soft">{item.data.nameEn}</p>
+    </div>
+  </div>
+
+  <div class="prose-climbing mt-8 max-w-none leading-relaxed text-ink">
+    <Content />
+  </div>
+
+  {
+    relevantDisciplines.length > 0 && (
+      <div class="mt-10 border-t border-stone/40 pt-6">
+        <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">
+          רלוונטי לסגנונות
+        </p>
+        <ul class="mt-3 flex flex-wrap gap-3">
+          {relevantDisciplines.map((d) => (
+            <li>
+              <Card href={`/סגנונות-טיפוס/${d.id}/`} class="px-4 py-2">
+                <span class="font-body text-sm font-semibold text-ink group-hover:text-rust">
+                  {d.data.nameHe}
+                </span>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  <a
+    href="/ציוד-טיפוס/"
+    class="mt-10 inline-block font-body text-sm font-bold text-rope hover:underline"
+  >
+    → חזרה לכל הציוד
+  </a>
+</GuideLayout>

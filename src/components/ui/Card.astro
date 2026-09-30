@@ -1,0 +1,32 @@
+---
+interface Props {
+  as?: "div" | "li" | "article";
+  class?: string;
+  href?: string;
+}
+
+const { as: Tag = "div", class: className = "", href } = Astro.props;
+---
+
+{
+  href ? (
+    <a
+      href={href}
+      class={`group relative block border border-stone/50 bg-paper-dark p-5 transition-colors hover:border-rust ${className}`}
+    >
+      <span
+        class="absolute end-3 top-0 h-3 w-px bg-stone/50 transition-colors group-hover:bg-rust"
+        aria-hidden="true"
+      />
+      <slot />
+    </a>
+  ) : (
+    <Tag class={`relative border border-stone/50 bg-paper-dark p-5 ${className}`}>
+      <span
+        class="absolute end-3 top-0 h-3 w-px bg-stone/50"
+        aria-hidden="true"
+      />
+      <slot />
+    </Tag>
+  )
+}

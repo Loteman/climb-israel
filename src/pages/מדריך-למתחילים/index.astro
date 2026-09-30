@@ -1,0 +1,201 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TopoBackground from "../../components/layout/TopoBackground.astro";
+import Card from "../../components/ui/Card.astro";
+import Badge from "../../components/ui/Badge.astro";
+import SectionDivider from "../../components/ui/SectionDivider.astro";
+import HoldIcon from "../../components/holds/HoldIcon.astro";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "מדריך למתחילים בטיפוס",
+  description:
+    "איך מתחילים לטפס נכון - סגנונות הטיפוס העיקריים, אחיזות ומושגי בסיס, וההבדל בין טיפוס באולם לטיפוס בטבע.",
+};
+---
+
+<BaseLayout
+  title="מדריך למתחילים - איך מתחילים לטפס נכון"
+  description="מדריך למתחילים בטיפוס: איך להתחיל, מה ההבדל בין בולדרינג להובלה, אילו אחיזות ומושגים כדאי להכיר, ומה ההבדל בין טיפוס באולם לטיפוס בטבע."
+  jsonLd={jsonLd}
+>
+  <section class="relative overflow-hidden border-b border-stone/40 py-14">
+    <TopoBackground opacity={0.3} />
+    <div class="relative mx-auto max-w-3xl px-4 sm:px-6">
+      <Badge variant="rope">התחילו כאן</Badge>
+      <h1 class="mt-3 font-display text-3xl font-bold text-ink sm:text-4xl">
+        מדריך למתחילים
+      </h1>
+      <p class="mt-3 max-w-2xl leading-relaxed text-ink-soft">
+        אין לכם ניסיון קודם? זה בסדר גמור - ככה כל מטפס מתחיל. הנה מה
+        שכדאי לדעת ולעשות כדי להתחיל נכון.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+    <h2 class="font-display text-2xl font-bold text-ink">
+      מה צריך לעשות בפועל
+    </h2>
+    <ol class="mt-5 space-y-4">
+      <li class="flex gap-4">
+        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-dashed border-rust font-mono text-sm font-bold text-rust">1</span>
+        <p class="leading-relaxed text-ink">
+          <strong class="text-rust">תתחילו באולם בולדרינג</strong> - זו נקודת
+          הכניסה הכי נגישה: לא צריך שותף, לא צריך ציוד אישי (נעליים ומגנזיום
+          להשכרה בכל אולם), ואפשר להתנסות בלי שום התחייבות.
+        </p>
+      </li>
+      <li class="flex gap-4">
+        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-dashed border-rust font-mono text-sm font-bold text-rust">2</span>
+        <p class="leading-relaxed text-ink">
+          <strong class="text-rust">בקשו תדרוך בטיחות או שיעור מתחילים</strong> -
+          כמעט כל אולם מציע תדרוך קצר לפני הטיפוס הראשון: איך נופלים נכון,
+          מתי לרדת מהקיר, ומה כללי ההתנהגות סביב מטפסים אחרים.
+        </p>
+      </li>
+      <li class="flex gap-4">
+        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-dashed border-rust font-mono text-sm font-bold text-rust">3</span>
+        <p class="leading-relaxed text-ink">
+          <strong class="text-rust">התחילו מדירוג נמוך</strong> - בונים ביטחון
+          וטכניקה לפני שמנסים משהו קשה. ראו את{" "}
+          <a href="/דירוג-מסלולים/" class="font-bold text-rope hover:underline">מדריך דירוג המסלולים</a>{" "}
+          כדי להבין את הסולמות.
+        </p>
+      </li>
+      <li class="flex gap-4">
+        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-dashed border-rust font-mono text-sm font-bold text-rust">4</span>
+        <p class="leading-relaxed text-ink">
+          <strong class="text-rust">אם זה נדבק - השקיעו בנעלי טיפוס משלכם.</strong>{" "}
+          זה פריט הציוד הראשון ששווה לקנות. ראו את{" "}
+          <a href="/ציוד-טיפוס/" class="font-bold text-rope hover:underline">מדריך הציוד</a>.
+        </p>
+      </li>
+      <li class="flex gap-4">
+        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-dashed border-rust font-mono text-sm font-bold text-rust">5</span>
+        <p class="leading-relaxed text-ink">
+          <strong class="text-rust">לפני מעבר לטיפוס עם חבל (הובלה)</strong> -
+          עברו קורס או הסמכה רשמית מדריך מוסמך. זה לא שלב שלומדים לבד מסרטון.
+        </p>
+      </li>
+    </ol>
+
+    <SectionDivider class="my-10 text-stone/40" />
+
+    <h2 class="font-display text-2xl font-bold text-ink">
+      שני סגנונות הטיפוס העיקריים
+    </h2>
+    <p class="mt-2 leading-relaxed text-ink-soft">
+      טיפוס מתחלק להרבה סגנונות, אבל כמעט כל מטפס נכנס לעולם דרך אחד
+      משני אלה:
+    </p>
+
+    <div class="mt-5 grid gap-4 sm:grid-cols-2">
+      <Card href="/סגנונות-טיפוס/bouldering/">
+        <p class="font-display text-lg font-bold text-ink group-hover:text-rust">
+          בולדרינג
+        </p>
+        <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+          טיפוס על קירות נמוכים (עד כ-4-5 מטרים) בלי חבלים, עם מזרנים עבים
+          על הקרקע לבלימת נפילות. לא צריך שותף או ציוד אבטחה - אפשר
+          להתחיל מיד.
+        </p>
+        <span class="mt-3 inline-block font-body text-sm font-bold text-rope">
+          קראו עוד ←
+        </span>
+      </Card>
+      <Card href="/סגנונות-טיפוס/lead-climbing/">
+        <p class="font-display text-lg font-bold text-ink group-hover:text-rust">
+          הובלה
+        </p>
+        <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+          טיפוס על קירות גבוהים עם חבל, כשהמטפס מכניס את החבל לטבעות
+          אבטחה תוך כדי הטיפוס. דורש שותף מאובטח (בליי) והכשרה רשמית.
+        </p>
+        <span class="mt-3 inline-block font-body text-sm font-bold text-rope">
+          קראו עוד ←
+        </span>
+      </Card>
+    </div>
+
+    <p class="mt-5 text-ink-soft">
+      ויש עוד הרבה - מטופ-רופ ועד טראד ומולטי-פיץ'.{" "}
+      <a href="/סגנונות-טיפוס/" class="font-bold text-rope hover:underline">לכל סגנונות הטיפוס ←</a>
+    </p>
+
+    <SectionDivider class="my-10 text-stone/40" />
+
+    <h2 class="font-display text-2xl font-bold text-ink">
+      קיר סגור מול טבע
+    </h2>
+    <p class="mt-2 leading-relaxed text-ink-soft">
+      רוב המתחילים מתחילים באולם - סביבה מבוקרת, מסלולים מסומנים בצבע
+      ומדורגים באופן עקבי, ותמיד יש עובדי אולם בסביבה. טיפוס בטבע שונה
+      לגמרי: האחיזות לא מסומנות, מזג האוויר ותנאי הסלע משתנים, ורמת
+      האחריות האישית - על הבטיחות, על הציוד, על קריאת המסלול - גבוהה
+      בהרבה. מומלץ לצבור ניסיון באולם ולצאת לטבע רק בליווי מטפסים
+      מנוסים.
+    </p>
+    <div class="mt-5 flex flex-wrap gap-4">
+      <a href="/טיפוס-באולם/" class="font-bold text-rope hover:underline">קראו על טיפוס באולם ←</a>
+      <a href="/טיפוס-בטבע/" class="font-bold text-rope hover:underline">קראו על טיפוס בטבע ←</a>
+    </div>
+
+    <SectionDivider class="my-10 text-stone/40" />
+
+    <h2 class="font-display text-2xl font-bold text-ink">אחיזות טיפוס</h2>
+    <p class="mt-2 leading-relaxed text-ink-soft">
+      כל מסלול בנוי מאחיזות בצורות שונות. שתי הראשונות שתכירו:
+    </p>
+    <div class="mt-5 grid gap-4 sm:grid-cols-2">
+      <div class="flex items-center gap-4 border border-stone/50 bg-paper-dark p-4">
+        <HoldIcon iconId="jug" label="ג'אג" class="h-14 w-14 shrink-0 text-rust" />
+        <div>
+          <p class="font-display font-bold text-ink">ג'אג (Jug)</p>
+          <p class="mt-1 text-sm text-ink-soft">
+            אחיזה גדולה ונוחה, אידיאלית לחימום ולמתחילים.
+          </p>
+        </div>
+      </div>
+      <div class="flex items-center gap-4 border border-stone/50 bg-paper-dark p-4">
+        <HoldIcon iconId="crimp" label="קרימפ" class="h-14 w-14 shrink-0 text-rust" />
+        <div>
+          <p class="font-display font-bold text-ink">קרימפ (Crimp)</p>
+          <p class="mt-1 text-sm text-ink-soft">
+            אחיזת קצה קטנה וצרה שדורשת כוח אצבעות.
+          </p>
+        </div>
+      </div>
+    </div>
+    <p class="mt-5 text-ink-soft">
+      ככל שתתקדמו תפגשו גם סלופרים, פינצ'ים, פוקטים ועוד.{" "}
+      <a href="/אחיזות-טיפוס/" class="font-bold text-rope hover:underline">למדריך המלא לאחיזות טיפוס ←</a>
+    </p>
+
+    <SectionDivider class="my-10 text-stone/40" />
+
+    <h2 class="font-display text-2xl font-bold text-ink">מושגי טיפוס</h2>
+    <p class="mt-2 leading-relaxed text-ink-soft">
+      בישראל, שפת הטיפוס כמעט כולה באנגלית. שלושה מונחים שכדאי להכיר
+      מהיום הראשון:
+    </p>
+    <ul class="mt-4 space-y-2 text-ink">
+      <li>
+        <strong class="text-rust">בטא</strong> - מידע על איך לפתור מסלול
+        (עצה, תיאור תנועות, או צפייה במטפס אחר).
+      </li>
+      <li>
+        <strong class="text-rust">קראקס</strong> - החלק הקשה והמאתגר ביותר
+        במסלול.
+      </li>
+      <li>
+        <strong class="text-rust">סנד</strong> - סיום מסלול בהצלחה, מההתחלה
+        ועד הסוף, בלי נפילות.
+      </li>
+    </ul>
+    <p class="mt-5 text-ink-soft">
+      <a href="/מושגי-טיפוס/" class="font-bold text-rope hover:underline">למילון המונחים המלא ←</a>
+    </p>
+  </section>
+</BaseLayout>

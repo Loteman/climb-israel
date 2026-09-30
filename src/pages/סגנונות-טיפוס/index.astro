@@ -1,0 +1,49 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TopoBackground from "../../components/layout/TopoBackground.astro";
+import DisciplineTable from "../../components/disciplines/DisciplineTable.astro";
+
+const disciplines = await getCollection("disciplines");
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "סגנונות טיפוס",
+  description: "מדריך משווה לכל סגנונות הטיפוס: בולדרינג, טופ-רופ, הובלה, טראד ועוד.",
+};
+---
+
+<BaseLayout
+  title="סגנונות טיפוס - מדריך משווה"
+  description="מה ההבדל בין בולדרינג, טופ-רופ, הובלה, טראד, מולטי-פיץ' ופרי סולו? מדריך משווה לכל סגנונות הטיפוס בקיר ובטבע."
+  jsonLd={jsonLd}
+>
+  <section class="relative overflow-hidden border-b border-stone/40 py-14">
+    <TopoBackground opacity={0.3} />
+    <div class="relative mx-auto max-w-4xl px-4 sm:px-6">
+      <h1 class="font-display text-3xl font-bold text-ink sm:text-4xl">
+        סגנונות טיפוס
+      </h1>
+      <p class="mt-3 max-w-2xl leading-relaxed text-ink-soft">
+        מבולדרינג בלי חבלים ועד מולטי-פיץ' על מצוק בן מאות מטרים - כל סגנון
+        דורש ציוד, טכניקה וגישה מנטלית שונים.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-4 py-12 sm:px-6">
+    <DisciplineTable disciplines={disciplines} />
+
+    <div class="mt-10 border border-dashed border-stone/60 bg-paper-dark p-5">
+      <p class="font-display font-bold text-ink">לוחות אימון דיגיטליים</p>
+      <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+        מתקנים כמו <strong class="text-rust">MoonBoard</strong>,{" "}
+        <strong class="text-rust">Kilter Board</strong> ו-<strong class="text-rust">Tension Board</strong> הם קירות בולדרינג
+        קטנים וצפופים בשיפוע קבוע או משתנה, שבהם האחיזות מוארות ב-LED לפי
+        בחירת מסלול מאפליקציה. משמשים ככלי אימון עוצמתי לבניית כוח אצבעות
+        וסיבולת בשיפועים.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

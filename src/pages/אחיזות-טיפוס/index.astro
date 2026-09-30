@@ -1,0 +1,41 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TopoBackground from "../../components/layout/TopoBackground.astro";
+import HoldGallery from "../../components/holds/HoldGallery.astro";
+
+const holds = await getCollection("hold-types");
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "אחיזות טיפוס",
+  description:
+    "מדריך מאויר לכל סוגי אחיזות הטיפוס - ג'אג, קרימפ, סלופר, פינץ' ועוד.",
+};
+---
+
+<BaseLayout
+  title="אחיזות טיפוס - מדריך מאויר לכל סוגי האחיזות"
+  description="מדריך מאויר לכל סוגי אחיזות הטיפוס: ג'אג, קרימפ, סלופר, פינץ', פוקט, אנדרקלינג, סיידפול, גסטון ועוד - עם הסבר איך אוחזים כל אחת."
+  jsonLd={jsonLd}
+>
+  <section class="relative overflow-hidden border-b border-stone/40 py-14">
+    <TopoBackground opacity={0.3} />
+    <div class="relative mx-auto max-w-4xl px-4 sm:px-6">
+      <h1 class="font-display text-3xl font-bold text-ink sm:text-4xl">
+        אחיזות טיפוס
+      </h1>
+      <p class="mt-3 max-w-2xl leading-relaxed text-ink-soft">
+        אחיזות מגיעות באינסוף צורות, טקסטורות וגדלים - אבל כולן נופלות
+        לכמה משפחות ברורות. בישראל, כמו בעולם כולו, שפת הטיפוס מתבססת
+        כמעט לחלוטין על מונחים באנגלית - כך שתפגשו את השמות האלו בכל
+        קיר וכל תדרוך.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <HoldGallery holds={holds} />
+  </section>
+</BaseLayout>

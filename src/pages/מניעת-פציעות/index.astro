@@ -1,0 +1,68 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TopoBackground from "../../components/layout/TopoBackground.astro";
+import InjuryPreventionCard from "../../components/injury-prevention/InjuryPreventionCard.astro";
+
+const entries = await getCollection("injury-prevention");
+
+const categoryLabels: Record<string, string> = {
+  "warmup-prep": "חימום והכנה",
+  "common-injuries": "פציעות נפוצות ומניעתן",
+  "recovery-training": "התאוששות ואימון מונע",
+};
+
+const categories = ["warmup-prep", "common-injuries", "recovery-training"];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "מניעת פציעות בטיפוס",
+  description: "מדריך למניעת פציעות בטיפוס: חימום נכון, הפציעות הנפוצות ביותר (A2 Pulley, מרפק מטפסים, תפיסה בכתף) ואימון מונע.",
+};
+---
+
+<BaseLayout
+  title="מניעת פציעות בטיפוס - מדריך"
+  description="איך נמנעים מהפציעות הנפוצות ביותר בטיפוס: חימום הדרגתי, פציעת A2 Pulley, מרפק מטפסים, תפיסה בכתף, אימון שרירים נגדיים וימי מנוחה."
+  jsonLd={jsonLd}
+>
+  <section class="relative overflow-hidden border-b border-stone/40 py-14">
+    <TopoBackground opacity={0.3} />
+    <div class="relative mx-auto max-w-4xl px-4 sm:px-6">
+      <h1 class="font-display text-3xl font-bold text-ink sm:text-4xl">
+        מניעת פציעות
+      </h1>
+      <p class="mt-3 max-w-2xl leading-relaxed text-ink-soft">
+        טיפוס מפעיל את האצבעות, הגידים והכתפיים בצורה שאין לה מקבילה
+        בספורטים אחרים. כאן מוסבר איך לחמם נכון, איך לזהות את הפציעות
+        הנפוצות לפני שהן הופכות חמורות, ואיך לבנות אימון שמונע אותן מראש.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <div class="space-y-14">
+      {
+        categories.map((cat) => {
+          const items = entries
+            .filter((e) => e.data.category === cat)
+            .sort((a, b) => a.data.order - b.data.order);
+          if (items.length === 0) return null;
+          return (
+            <section>
+              <h2 class="font-display text-xl font-bold text-ink">
+                {categoryLabels[cat]}
+              </h2>
+              <ul class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {items.map((entry) => (
+                  <InjuryPreventionCard entry={entry} />
+                ))}
+              </ul>
+            </section>
+          );
+        })
+      }
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,72 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TopoBackground from "../../components/layout/TopoBackground.astro";
+import TermCard from "../../components/glossary/TermCard.astro";
+
+const terms = await getCollection("glossary");
+
+const categoryLabels: Record<string, string> = {
+  "movement-technique": "תנועה וטכניקה על הקיר",
+  "sending-attempts": "הצלחה, ניסיונות ומהלך הטיפוס",
+  "discipline-style": "סגנונות טיפוס",
+  "wall-safety": "מושגי מבנה קיר ובטיחות",
+};
+
+const categories = [
+  "movement-technique",
+  "sending-attempts",
+  "discipline-style",
+  "wall-safety",
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "מושגי טיפוס",
+  description: "מילון מונחי הטיפוס: בטא, קראקס, דיינו, היל הוק ועוד.",
+};
+---
+
+<BaseLayout
+  title="מושגי טיפוס - מילון מונחים למטפסים"
+  description="מילון מונחי הטיפוס: תנועה וטכניקה, הצלחה וניסיונות, סגנונות ומבנה קיר - בטא, קראקס, דיינו, היל הוק, אונסייט ועוד."
+  jsonLd={jsonLd}
+>
+  <section class="relative overflow-hidden border-b border-stone/40 py-14">
+    <TopoBackground opacity={0.3} />
+    <div class="relative mx-auto max-w-4xl px-4 sm:px-6">
+      <h1 class="font-display text-3xl font-bold text-ink sm:text-4xl">
+        מושגי טיפוס
+      </h1>
+      <p class="mt-3 max-w-2xl leading-relaxed text-ink-soft">
+        בישראל, כמעט כל מושגי הטיפוס נאמרים באנגלית או בסלנג מעוברת. הנה
+        מילון המונחים שתשמעו בכל קיר ובכל תדרוך.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <div class="space-y-14">
+      {
+        categories.map((cat) => {
+          const items = terms
+            .filter((t) => t.data.category === cat)
+            .sort((a, b) => a.data.order - b.data.order);
+          return (
+            <section>
+              <h2 class="font-display text-xl font-bold text-ink">
+                {categoryLabels[cat]}
+              </h2>
+              <ul class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {items.map((term) => (
+                  <TermCard term={term} />
+                ))}
+              </ul>
+            </section>
+          );
+        })
+      }
+    </div>
+  </section>
+</BaseLayout>

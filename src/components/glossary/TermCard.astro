@@ -1,0 +1,23 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Card from "../ui/Card.astro";
+import Badge from "../ui/Badge.astro";
+
+interface Props {
+  term: CollectionEntry<"glossary">;
+}
+
+const { term } = Astro.props;
+
+const href = term.data.relatedDisciplineSlug
+  ? `/סגנונות-טיפוס/${term.data.relatedDisciplineSlug.id}/`
+  : `/מושגי-טיפוס/${term.id}/`;
+---
+
+<Card as="li" href={href}>
+  <p class="font-display font-bold text-ink group-hover:text-rust">
+    {term.data.termHe}
+  </p>
+  <Badge variant="stone" class="mt-1">{term.data.termEn}</Badge>
+  <p class="mt-2 text-sm leading-relaxed text-ink-soft">{term.data.summary}</p>
+</Card>

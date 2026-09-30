@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TopoBackground from "../../components/layout/TopoBackground.astro";
+import SectionDivider from "../../components/ui/SectionDivider.astro";
+---
+
+<BaseLayout
+  title="אודות הפרויקט"
+  description="טיפוס ישראל הוא מאגר מידע חינמי וקהילתי לטיפוס בישראל - בולדרינג וטיפוס בטבע. איך נבנה האתר ולמה."
+>
+  <section class="relative overflow-hidden border-b border-stone/40 py-14">
+    <TopoBackground opacity={0.3} />
+    <div class="relative mx-auto max-w-3xl px-4 sm:px-6">
+      <h1 class="font-display text-3xl font-bold text-ink sm:text-4xl">
+        אודות טיפוס ישראל
+      </h1>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+    <div class="space-y-6 leading-relaxed text-ink">
+      <p>
+        <strong class="text-rust">טיפוס ישראל</strong> נבנה כמאגר מידע פתוח
+        וחינמי לכל מי שרוצה לטפס בישראל - בין אם מדובר בבולדרינג בקיר סגור,
+        בולדרינג בטבע, או טיפוס ספורטיבי וטראד על סלע. האתר לא נועד להחליף
+        הדרכה מקצועית, אלא לרכז במקום אחד את השפה, המושגים והמידע הבסיסי
+        שכל מטפס - ממתחיל ועד מתקדם - נתקל בו.
+      </p>
+
+      <p>
+        לא בטוחים איפה להתחיל? <a href="/מדריך-למתחילים/" class="font-bold text-rope hover:underline">מדריך למתחילים</a>{" "}
+        הוא נקודת הפתיחה הטובה ביותר. משם אפשר להעמיק ב-
+        <a href="/אחיזות-טיפוס/" class="font-bold text-rope hover:underline">אחיזות טיפוס</a>,{" "}
+        <a href="/מושגי-טיפוס/" class="font-bold text-rope hover:underline">מושגי טיפוס</a>,{" "}
+        <a href="/דירוג-מסלולים/" class="font-bold text-rope hover:underline">דירוג מסלולים</a>,{" "}
+        <a href="/סגנונות-טיפוס/" class="font-bold text-rope hover:underline">סגנונות טיפוס</a> ו-<a href="/ציוד-טיפוס/" class="font-bold text-rope hover:underline">ציוד טיפוס</a>,{" "}
+        לקרוא על ההבדל בין{" "}
+        <a href="/טיפוס-באולם/" class="font-bold text-rope hover:underline">טיפוס באולם</a>{" "}
+        ל-<a href="/טיפוס-בטבע/" class="font-bold text-rope hover:underline">טיפוס בטבע</a>,{" "}
+        ולמצוא קיר או אתר ב-<a href="/מקומות-טיפוס/" class="font-bold text-rope hover:underline">מדריך המקומות</a>.
+      </p>
+
+      <SectionDivider class="text-stone/40" />
+
+      <h2 class="font-display text-xl font-bold text-ink">דיוק המידע</h2>
+      <p>
+        המידע באתר נאסף בהתנדבות ובקפידה, אך עולם הטיפוס משתנה - אולמות
+        סוגרים ונפתחים, שעות פתיחה ומחירים מתעדכנים, ותנאי שטח (במיוחד בטבע)
+        יכולים להשתנות בעקבות מזג אוויר או עונה. לפני יציאה לטיפוס, במיוחד
+        בטבע, מומלץ תמיד לוודא מידע עדכני מול המקום או עם מטפסים מנוסים
+        באזור, ולא להסתמך על האתר כמקור בטיחותי בלעדי.
+      </p>
+
+      <p>
+        טיפוס - במיוחד בטבע וללא ציוד אבטחה מלא - כרוך בסיכון ממשי. האתר
+        אינו תחליף להדרכה מקצועית, ואינו אחראי לשימוש שנעשה במידע המופיע בו.
+      </p>
+
+      <h2 class="font-display text-xl font-bold text-ink">רוצים לעזור?</h2>
+      <p>
+        נתקלתם במידע לא מדויק, אולם שנסגר, או אתר טיפוס שחסר באתר? נשמח
+        לעדכן - הפרויקט קהילתי ופתוח לתיקונים ותוספות.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

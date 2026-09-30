@@ -1,0 +1,27 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Breadcrumbs from "../components/ui/Breadcrumbs.astro";
+
+interface Crumb {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  breadcrumbs: Crumb[];
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { title, description, breadcrumbs, jsonLd } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} jsonLd={jsonLd}>
+  <div class="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+    <Breadcrumbs items={breadcrumbs} />
+    <article class="mt-6">
+      <slot />
+    </article>
+  </div>
+</BaseLayout>

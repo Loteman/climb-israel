@@ -1,0 +1,167 @@
+---
+import NavDropdown from "./NavDropdown.astro";
+
+const guideGroups = [
+  {
+    label: "מתחילים",
+    items: [
+      { href: "/אחיזות-טיפוס/", label: "אחיזות טיפוס" },
+      { href: "/מושגי-טיפוס/", label: "מושגי טיפוס" },
+      { href: "/דירוג-מסלולים/", label: "דירוג מסלולים" },
+    ],
+  },
+  {
+    label: "מעמיק",
+    items: [
+      { href: "/סגנונות-טיפוס/", label: "סגנונות טיפוס" },
+      { href: "/ציוד-טיפוס/", label: "ציוד טיפוס" },
+      { href: "/טכניקות-טיפוס/", label: "טכניקות טיפוס" },
+      { href: "/מניעת-פציעות/", label: "מניעת פציעות" },
+    ],
+  },
+];
+
+const environmentItems = [
+  { href: "/טיפוס-באולם/", label: "טיפוס באולם" },
+  { href: "/טיפוס-בטבע/", label: "טיפוס בטבע" },
+];
+
+const otherItems = [
+  { href: "/מקומות-טיפוס/", label: "מקומות טיפוס" },
+  { href: "/אודות/", label: "אודות" },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 border-b border-stone/40 bg-paper">
+  <div
+    class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6"
+  >
+    <a href="/" class="flex items-center gap-2 font-display text-lg font-bold text-ink">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+        <circle cx="13" cy="13" r="11" fill="none" stroke="var(--color-rope)" stroke-width="2"></circle>
+        <circle cx="13" cy="13" r="2.5" fill="var(--color-rope)"></circle>
+      </svg>
+      <span>טיפוס ישראל</span>
+    </a>
+
+    <nav class="hidden items-center gap-1 md:flex" aria-label="ניווט ראשי">
+      <a
+        href="/מדריך-למתחילים/"
+        class:list={[
+          "rounded-sm px-3 py-2 font-body text-sm font-semibold transition-colors",
+          currentPath.startsWith("/מדריך-למתחילים/")
+            ? "text-rope"
+            : "text-ink-soft hover:text-rust",
+        ]}
+      >
+        מדריך למתחילים
+      </a>
+
+      <NavDropdown label="מדריכים" groups={guideGroups} />
+      <NavDropdown label="סביבות טיפוס" items={environmentItems} />
+
+      {
+        otherItems.map((item) => {
+          const active = currentPath.startsWith(item.href);
+          return (
+            <a
+              href={item.href}
+              class:list={[
+                "rounded-sm px-3 py-2 font-body text-sm font-semibold transition-colors",
+                active ? "text-rope" : "text-ink-soft hover:text-rust",
+              ]}
+              aria-current={active ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          );
+        })
+      }
+    </nav>
+
+    <details class="relative md:hidden">
+      <summary
+        class="flex cursor-pointer list-none items-center gap-2 rounded-sm border border-dashed border-stone px-3 py-1.5 font-body text-sm font-semibold text-ink [&::-webkit-details-marker]:hidden"
+      >
+        <span>תפריט</span>
+      </summary>
+      <nav
+        class="absolute start-0 top-full z-50 mt-2 w-56 border border-stone/50 bg-paper-dark p-2 shadow-lg"
+        aria-label="ניווט ראשי (מובייל)"
+      >
+        <a
+          href="/מדריך-למתחילים/"
+          class="block rounded-sm px-3 py-2 font-body text-sm font-semibold text-ink hover:bg-paper hover:text-rust"
+        >
+          מדריך למתחילים
+        </a>
+
+        <p class="mt-2 px-3 font-mono text-xs uppercase tracking-wide text-ink-soft">
+          מדריכים
+        </p>
+        {
+          guideGroups.map((group) => (
+            <Fragment>
+              <p class="mt-1 px-3 ps-5 font-mono text-[11px] uppercase tracking-wide text-ink-soft/70">
+                {group.label}
+              </p>
+              {group.items.map((item) => (
+                <a
+                  href={item.href}
+                  class="block rounded-sm px-3 py-2 ps-7 font-body text-sm font-semibold text-ink hover:bg-paper hover:text-rust"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </Fragment>
+          ))
+        }
+
+        <p class="mt-2 px-3 font-mono text-xs uppercase tracking-wide text-ink-soft">
+          סביבות טיפוס
+        </p>
+        {
+          environmentItems.map((item) => (
+            <a
+              href={item.href}
+              class="block rounded-sm px-3 py-2 ps-5 font-body text-sm font-semibold text-ink hover:bg-paper hover:text-rust"
+            >
+              {item.label}
+            </a>
+          ))
+        }
+
+        <div class="my-2 border-t border-stone/40"></div>
+
+        {
+          otherItems.map((item) => (
+            <a
+              href={item.href}
+              class="block rounded-sm px-3 py-2 font-body text-sm font-semibold text-ink hover:bg-paper hover:text-rust"
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+    </details>
+  </div>
+</header>
+
+<script>
+  // Close any open header <details> dropdown when clicking outside it,
+  // or when a link inside it is clicked (native <details> stays open
+  // otherwise, which feels broken for a nav dropdown).
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    document.querySelectorAll("header details[open]").forEach((details) => {
+      if (!(target instanceof Node) || !details.contains(target)) {
+        details.removeAttribute("open");
+      } else if (target instanceof Element && target.closest("a")) {
+        details.removeAttribute("open");
+      }
+    });
+  });
+</script>

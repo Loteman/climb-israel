@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Card from "../ui/Card.astro";
+import Badge from "../ui/Badge.astro";
+
+interface Props {
+  technique: CollectionEntry<"techniques">;
+}
+
+const { technique } = Astro.props;
+---
+
+<Card as="li" href={`/טכניקות-טיפוס/${technique.id}/`}>
+  <p class="font-display font-bold text-ink group-hover:text-rust">
+    {technique.data.nameHe}
+  </p>
+  <Badge variant="stone" class="mt-1">{technique.data.nameEn}</Badge>
+  <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+    {technique.data.summary}
+  </p>
+</Card>

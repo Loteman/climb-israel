@@ -1,0 +1,68 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TopoBackground from "../../components/layout/TopoBackground.astro";
+import TechniqueCard from "../../components/techniques/TechniqueCard.astro";
+
+const techniques = await getCollection("techniques");
+
+const categoryLabels: Record<string, string> = {
+  fundamentals: "יסודות התנועה",
+  "advanced-movement": "טכניקות תנועה מתקדמות",
+  "effort-safety": "ניהול מאמץ ובטיחות",
+};
+
+const categories = ["fundamentals", "advanced-movement", "effort-safety"];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "טכניקות טיפוס",
+  description: "מדריך לטכניקות טיפוס: עבודת רגליים, דגל, דרופ ני, פיתות, תנועה דינמית ועוד.",
+};
+---
+
+<BaseLayout
+  title="טכניקות טיפוס - מדריך תנועה"
+  description="איך מבצעים נכון את טכניקות הטיפוס המרכזיות: עבודת רגליים, קריאת מסלול, דגל ודרופ ני, באקסטפ, פיתות, תנועה דינמית, מנטל, מנוחה אקטיבית ונפילה נכונה."
+  jsonLd={jsonLd}
+>
+  <section class="relative overflow-hidden border-b border-stone/40 py-14">
+    <TopoBackground opacity={0.3} />
+    <div class="relative mx-auto max-w-4xl px-4 sm:px-6">
+      <h1 class="font-display text-3xl font-bold text-ink sm:text-4xl">
+        טכניקות טיפוס
+      </h1>
+      <p class="mt-3 max-w-2xl leading-relaxed text-ink-soft">
+        לדעת את שם האחיזה זה שלב אחד - לדעת לזוז נכון זה השלב הבא. כאן
+        מוסבר איך מבצעים בפועל את התנועות שכל מטפס צריך, מהיסודות ועד
+        טכניקות מתקדמות.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <div class="space-y-14">
+      {
+        categories.map((cat) => {
+          const items = techniques
+            .filter((t) => t.data.category === cat)
+            .sort((a, b) => a.data.order - b.data.order);
+          if (items.length === 0) return null;
+          return (
+            <section>
+              <h2 class="font-display text-xl font-bold text-ink">
+                {categoryLabels[cat]}
+              </h2>
+              <ul class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {items.map((technique) => (
+                  <TechniqueCard technique={technique} />
+                ))}
+              </ul>
+            </section>
+          );
+        })
+      }
+    </div>
+  </section>
+</BaseLayout>

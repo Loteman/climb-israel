@@ -1,0 +1,69 @@
+---
+import { gearIconPaths } from "./gearIconPaths";
+
+interface Props {
+  iconId: string;
+  label: string;
+  class?: string;
+}
+
+const { iconId, label, class: className = "" } = Astro.props;
+const data = gearIconPaths[iconId];
+
+if (!data) {
+  throw new Error(
+    `GearIcon: no shape registered for iconId "${iconId}" in gearIconPaths.ts`,
+  );
+}
+---
+
+<svg
+  viewBox="0 0 100 100"
+  class={`text-ink ${className}`}
+  role="img"
+  aria-label={label}
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <title>{label}</title>
+  {
+    data.strokeOnly
+      ? data.paths.map((d) => (
+          <path
+            d={d}
+            fill="none"
+            stroke="currentColor"
+            stroke-width="4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        ))
+      : data.paths.map((d) => <path d={d} fill="currentColor" />)
+  }
+  {
+    data.holePaths?.map((d) => <path d={d} fill="var(--color-paper)" />)
+  }
+  {
+    data.paperLines?.map((d) => (
+      <path
+        d={d}
+        fill="none"
+        stroke="var(--color-paper)"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    ))
+  }
+  {
+    data.accentLines?.map((d) => (
+      <path
+        d={d}
+        fill="none"
+        stroke="currentColor"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    ))
+  }
+</svg>

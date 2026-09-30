@@ -1,0 +1,63 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TopoBackground from "../../components/layout/TopoBackground.astro";
+import GearCategorySection from "../../components/gear/GearCategorySection.astro";
+
+const gear = await getCollection("gear");
+
+const categoryLabels: Record<string, string> = {
+  "personal-basics": "ציוד אישי בסיסי",
+  "safety-rope-lead": "ציוד אבטחה, חבלים והובלה",
+  bouldering: "ציוד בולדרינג",
+  trad: "ציוד טיפוס מסורתי (טראד)",
+  "training-recovery": "ציוד אימון ושיקום",
+};
+
+const categories = [
+  "personal-basics",
+  "safety-rope-lead",
+  "bouldering",
+  "trad",
+  "training-recovery",
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "ציוד טיפוס",
+  description: "מדריך לציוד טיפוס: נעליים, מגנזיום, רתמות, חבלים ועד ציוד טראד.",
+};
+---
+
+<BaseLayout
+  title="ציוד טיפוס - מדריך מלא"
+  description="מדריך לכל ציוד הטיפוס: נעלי טיפוס, מגנזיום, רתמות, חבלים, מכשירי אבטחה, קראש פאד, ועד ציוד טראד כמו נאטס וקאמים."
+  jsonLd={jsonLd}
+>
+  <section class="relative overflow-hidden border-b border-stone/40 py-14">
+    <TopoBackground opacity={0.3} />
+    <div class="relative mx-auto max-w-4xl px-4 sm:px-6">
+      <h1 class="font-display text-3xl font-bold text-ink sm:text-4xl">
+        ציוד טיפוס
+      </h1>
+      <p class="mt-3 max-w-2xl leading-relaxed text-ink-soft">
+        מעולם הטיפוס הבסיסי ועד ציוד אבטחה, בולדרינג וטראד - מה צריך ולמה,
+        לפי סגנון הטיפוס שלכם.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <div class="space-y-14">
+      {
+        categories.map((cat) => (
+          <GearCategorySection
+            title={categoryLabels[cat]}
+            items={gear.filter((g) => g.data.category === cat)}
+          />
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

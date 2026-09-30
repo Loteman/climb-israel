@@ -1,0 +1,79 @@
+---
+import { holdPaths } from "./holdPaths";
+
+interface Props {
+  iconId: string;
+  label: string;
+  class?: string;
+  showArrow?: boolean;
+}
+
+const { iconId, label, class: className = "", showArrow = true } = Astro.props;
+const data = holdPaths[iconId];
+
+if (!data) {
+  throw new Error(
+    `HoldIcon: no shape registered for iconId "${iconId}" in holdPaths.ts`,
+  );
+}
+---
+
+<svg
+  viewBox="0 0 100 100"
+  class={`text-ink ${className}`}
+  role="img"
+  aria-label={label}
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <title>{label}</title>
+  {
+    data.strokeOnly
+      ? data.paths.map((d) => (
+          <path
+            d={d}
+            fill="none"
+            stroke="currentColor"
+            stroke-width="4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        ))
+      : data.paths.map((d) => <path d={d} fill="currentColor" />)
+  }
+  {
+    data.holePaths?.map((d) => (
+      <path d={d} fill="var(--color-paper)" />
+    ))
+  }
+  {
+    showArrow && data.arrow && (
+      <line
+        x1={data.arrow[0]}
+        y1={data.arrow[1]}
+        x2={data.arrow[2]}
+        y2={data.arrow[3]}
+        stroke="var(--color-rope)"
+        stroke-width="3"
+        stroke-dasharray="1 5"
+        stroke-linecap="round"
+        marker-end="url(#hold-arrowhead)"
+      />
+    )
+  }
+  {
+    showArrow && data.arrow && (
+      <defs>
+        <marker
+          id="hold-arrowhead"
+          markerWidth="6"
+          markerHeight="6"
+          refX="3"
+          refY="3"
+          orient="auto-start-reverse"
+        >
+          <path d="M0,0 L6,3 L0,6 Z" fill="var(--color-rope)" />
+        </marker>
+      </defs>
+    )
+  }
+</svg>

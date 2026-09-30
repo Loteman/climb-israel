@@ -1,0 +1,231 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import TopoBackground from "../components/layout/TopoBackground.astro";
+import RouteLine from "../components/ui/RouteLine.astro";
+import Card from "../components/ui/Card.astro";
+import Badge from "../components/ui/Badge.astro";
+
+const guides = [
+  {
+    href: "/מדריך-למתחילים/",
+    title: "מדריך למתחילים",
+    badge: "התחילו כאן",
+    variant: "rope" as const,
+    desc: "אין לכם ניסיון קודם? הצעד הראשון - מה צריך לעשות, ואיפה כל שאר המדריכים נכנסים לתמונה.",
+  },
+  {
+    href: "/אחיזות-טיפוס/",
+    title: "אחיזות טיפוס",
+    badge: "מתחילים",
+    variant: "rope" as const,
+    desc: "ג'אג, קרימפ, סלופר, פינץ' ועוד - כל סוגי האחיזות שתפגשו על קיר או על סלע, עם איורים.",
+  },
+  {
+    href: "/מושגי-טיפוס/",
+    title: "מושגי טיפוס",
+    badge: "מתחילים",
+    variant: "rope" as const,
+    desc: "בטא, קראקס, דיינו, היל הוק - מילון המונחים שכל מטפס משתמש בו בקיר.",
+  },
+  {
+    href: "/דירוג-מסלולים/",
+    title: "דירוג מסלולים",
+    badge: "מתחילים",
+    variant: "rope" as const,
+    desc: "מה זה V4? מה זה 6a? מדריך לסולם ה-V ולסולם הצרפתי, וטבלת השוואה ביניהם.",
+  },
+  {
+    href: "/טכניקות-טיפוס/",
+    title: "טכניקות טיפוס",
+    badge: "מעמיק",
+    variant: "rust" as const,
+    desc: "עבודת רגליים, דגל ודרופ ני, פיתות, תנועה דינמית - איך לבצע נכון את התנועות שכל מטפס צריך.",
+  },
+  {
+    href: "/מניעת-פציעות/",
+    title: "מניעת פציעות",
+    badge: "מעמיק",
+    variant: "rust" as const,
+    desc: "חימום נכון, A2 Pulley, מרפק מטפסים ותפיסה בכתף - איך מזהים ומונעים את הפציעות הנפוצות בטיפוס.",
+  },
+  {
+    href: "/סגנונות-טיפוס/",
+    title: "סגנונות טיפוס",
+    badge: "מעמיק",
+    variant: "rust" as const,
+    desc: "מה ההבדל בין בולדרינג, טופ-רופ, הובלה וטראד? מדריך משווה לכל סגנונות הטיפוס.",
+  },
+  {
+    href: "/ציוד-טיפוס/",
+    title: "ציוד טיפוס",
+    badge: "מעמיק",
+    variant: "rust" as const,
+    desc: "נעליים, מגנזיום, רתמות, חבלים ועד ציוד טראד - מה צריך ולמה.",
+  },
+];
+
+const environments = [
+  {
+    href: "/טיפוס-באולם/",
+    title: "טיפוס באולם",
+    badge: "Indoor",
+    variant: "rope" as const,
+    desc: "הדרך הכי נגישה להתחיל - קיר מלאכותי, ציוד להשכרה, וסביבה מבוקרת.",
+  },
+  {
+    href: "/טיפוס-בטבע/",
+    title: "טיפוס בטבע",
+    badge: "Outdoor",
+    variant: "olive" as const,
+    desc: "סלע אמיתי, ציוד מלא, ואחריות אישית גבוהה יותר. מה שונה ואיך מתכוננים.",
+  },
+];
+
+const quickLocationLinks = [
+  { href: "/מקומות-טיפוס/?kind=crag&style=lead", label: "הובלה בטבע" },
+  { href: "/מקומות-טיפוס/?kind=gym&style=bouldering", label: "בולדר באולם" },
+  { href: "/מקומות-טיפוס/?kind=crag&style=bouldering", label: "בולדר בטבע" },
+  { href: "/מקומות-טיפוס/?kind=gym&style=lead", label: "הובלה באולם" },
+];
+---
+
+<BaseLayout
+  title="טיפוס ישראל"
+  description="מדריך חינמי וקהילתי לטיפוס בישראל - בולדרינג וטיפוס בטבע. אחיזות, מושגים, ציוד ומפת קירות ואתרי טיפוס בכל הארץ."
+>
+  <section class="relative overflow-hidden border-b border-stone/40 py-20">
+    <TopoBackground class="text-contour" opacity={0.4} />
+    <div class="relative mx-auto max-w-4xl px-4 text-center sm:px-6">
+      <h1 class="font-display text-4xl font-bold text-ink sm:text-6xl">
+        טיפוס ישראל
+      </h1>
+      <p class="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-ink-soft">
+        מאגר מידע קהילתי וחינמי לכל מי שרוצה לטפס - בולדרינג בקיר או בטבע,
+        טיפוס ספורטיבי, וטראד. מהאחיזה הראשונה ועד המצוק הבא.
+      </p>
+      <div class="mx-auto mt-8 max-w-xs">
+        <RouteLine />
+      </div>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+        <a
+          href="/מדריך-למתחילים/"
+          class="border border-ink bg-ink px-5 py-2.5 font-body font-bold text-sm text-paper transition-colors hover:bg-rope hover:border-rope"
+        >
+          מדריך למתחילים
+        </a>
+        <a
+          href="/מקומות-טיפוס/"
+          class="border border-dashed border-stone px-5 py-2.5 font-body font-bold text-sm text-ink transition-colors hover:border-rust hover:text-rust"
+        >
+          מצאו איפה לטפס
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <h2 class="font-display text-2xl font-bold text-ink">מפת הדרכים</h2>
+    <p class="mt-2 max-w-2xl text-ink-soft">
+      מהצעד הראשון על הקיר ועד תכנון היום הבא על סלע - כל המדריכים באתר.
+    </p>
+
+    <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        guides.map((g) => (
+          <Card as="li" href={g.href} class="flex h-full flex-col">
+            <Badge variant={g.variant} class="w-fit">
+              {g.badge}
+            </Badge>
+            <h3 class="mt-3 font-display text-xl font-bold text-ink group-hover:text-rust">
+              {g.title}
+            </h3>
+            <p class="mt-2 flex-1 text-sm leading-relaxed text-ink-soft">
+              {g.desc}
+            </p>
+            <span class="mt-4 font-body text-sm font-bold text-rope">
+              קראו עוד ←
+            </span>
+          </Card>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="border-t border-stone/40 bg-paper-dark py-16">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <h2 class="font-display text-2xl font-bold text-ink">סביבות טיפוס</h2>
+      <p class="mt-2 max-w-2xl text-ink-soft">
+        אותם סגנונות מרגישים אחרת לגמרי בקיר מלאכותי לעומת סלע טבעי - הנה
+        מה שונה בכל אחד.
+      </p>
+
+      <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+        {
+          environments.map((e) => (
+            <Card as="li" href={e.href} class="flex h-full flex-col">
+              <Badge variant={e.variant} class="w-fit">
+                {e.badge}
+              </Badge>
+              <h3 class="mt-3 font-display text-xl font-bold text-ink group-hover:text-rust">
+                {e.title}
+              </h3>
+              <p class="mt-2 flex-1 text-sm leading-relaxed text-ink-soft">
+                {e.desc}
+              </p>
+              <span class="mt-4 font-body text-sm font-bold text-rope">
+                קראו עוד ←
+              </span>
+            </Card>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <h2 class="font-display text-2xl font-bold text-ink">מקומות טיפוס</h2>
+    <p class="mt-2 max-w-2xl text-ink-soft">
+      עשרות קירות מלאכותיים ואתרי טבע ברחבי הארץ - חפשו לפי סגנון, סביבה
+      או עיר.
+    </p>
+
+    <div class="mt-6 flex flex-wrap gap-3">
+      {
+        quickLocationLinks.map((link) => (
+          <a
+            href={link.href}
+            class="border border-dashed border-stone px-4 py-2 font-body text-sm font-bold text-ink transition-colors hover:border-rust hover:text-rust"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+
+    <a
+      href="/מקומות-טיפוס/"
+      class="mt-5 inline-block font-body text-sm font-bold text-rope hover:underline"
+    >
+      לכל מקומות הטיפוס ←
+    </a>
+  </section>
+
+  <section class="border-t border-stone/40 bg-paper-dark py-16">
+    <div class="mx-auto max-w-3xl px-4 text-center sm:px-6">
+      <h2 class="font-display text-2xl font-bold text-ink">
+        פרויקט קהילתי, בהתנדבות
+      </h2>
+      <p class="mt-3 leading-relaxed text-ink-soft">
+        טיפוס ישראל נבנה כמאגר מידע פתוח וחינמי - בלי פרסומות, בלי הרשמה.
+        המידע נאסף בקפידה אך עשוי להשתנות (שעות פתיחה, מחירים, תנאי שטח) -
+        כדאי תמיד לוודא מול המקור לפני יציאה לטיפוס.
+      </p>
+      <a
+        href="/אודות/"
+        class="mt-5 inline-block font-body text-sm font-bold text-rope hover:underline"
+      >
+        עוד על הפרויקט ←
+      </a>
+    </div>
+  </section>
+</BaseLayout>
