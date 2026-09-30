@@ -7,8 +7,7 @@ interface StyleOption {
 
 const GYM_STYLE_OPTIONS: StyleOption[] = [
   { label: "בולדרינג", values: ["bouldering"] },
-  { label: "הובלה", values: ["lead"] },
-  { label: "טופ-רופ", values: ["top-rope"] },
+  { label: "הובלה / טופ-רופ", values: ["lead", "top-rope"] },
   { label: "טיפוס מהירות", values: ["speed"] },
 ];
 
