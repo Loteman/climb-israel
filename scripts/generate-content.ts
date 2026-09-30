@@ -2060,6 +2060,9 @@ const crags: CragLocation[] = [
     kind: "crag",
     name: "מצוק האלונים",
     region: "north",
+    // Approximate: geocoded to Kibbutz Yiftach, near the access road
+    // described in the wiki ("חניון יפתח"/"פארק גיאולוגי" on Google Maps).
+    coordinates: { lat: 33.12861, lng: 35.55195 },
     styles: ["lead"],
     description: "המצוק נפתח ובולט בקיץ 2019 ביוזמתו של אלון מלאכי ובעזרתם של מספר מטפסים מהגליל העליון. המצוק פונה מזרחה ונשקף ממנו נוף נהדר של עמק החולה וצפון רמת הגולן. המצוק מתאים מאוד למתחילים - הן בגישה הנוחה והן באופי המסלולים.",
     locationDescription: "גליל עליון, פונה מזרחה לעמק החולה וצפון רמת הגולן",
@@ -2269,6 +2272,9 @@ const crags: CragLocation[] = [
     kind: "crag",
     name: "מצוק היונים",
     region: "north",
+    // Approximate: geocoded to the Route 85 / Route 8512 junction near
+    // Majd al-Krum, the turn-off described in the wiki's access section.
+    coordinates: { lat: 32.92258, lng: 35.25795 },
     styles: ["lead"],
     description: "המצוק התגלה בשנת 2002. זהו מצוק נעים ונוח, ובו מערה מרשימה - ומכאן גם השם הנוסף \"מערת היונים\".",
     locationDescription: "גליל מערבי",
@@ -2360,6 +2366,7 @@ const crags: CragLocation[] = [
     kind: "crag",
     name: "עין פרת (עין פארה)",
     region: "jerusalem",
+    coordinates: { lat: 31.83283, lng: 35.30604 },
     styles: ["lead", "trad"],
     description: `מצוק גדול מאוד - ויש שיגידו הטוב באזור. מרובה מסלולי "פייס", אך גם סלאב ומסלולים שליליים. השם "ארובותים" (5.8) מוכר בקרב מטפסים ותיקים כ"הפה היפה ביותר בארץ".
 
@@ -2589,6 +2596,9 @@ const crags: CragLocation[] = [
     kind: "crag",
     name: "בולדר רמת חן",
     region: "north",
+    // Geocoded to Bat-Chen St 40, Haifa - the retirement home named as the
+    // parking/orientation point in the wiki's access directions.
+    coordinates: { lat: 32.78239, lng: 35.00883 },
     styles: ["bouldering"],
     description: "מצוקון בולדרינג בשכונת רמת-חן בחיפה, כ-100 מ' אורך ועד כ-10 מ' גובה, עם מספר גגות. מוצל כל השנה, עם תצפית על מנהרות הכרמל ועל הגרנד קניון. במצוק מספר בולטים והרבה בעיות בולדרינג. חשוב: אין להדביק או לחצוב אחיזות חדשות - שמרו על הבעיות כפי שהן, לטובת המטפסים הבאים.",
     locationDescription: "רמת-חן, חיפה - ליד בית האבות ברחוב בת-חן 40",
@@ -2606,6 +2616,9 @@ const crags: CragLocation[] = [
     kind: "crag",
     name: "מצוק שני ברמת חן",
     region: "north",
+    // Same parking point as ramat-hen-crag - the wiki describes this as
+    // reached from the identical spot, just turning the other way.
+    coordinates: { lat: 32.78239, lng: 35.00883 },
     styles: ["bouldering"],
     description: "מצוק בולדרינג שני בשכונת רמת-חן בחיפה, סמוך למצוקון רמת חן אך נפרד ממנו - קצר יותר אך מאתגר יותר. חשוב: אין להדביק או לחצוב אחיזות חדשות - שמרו על הבעיות כפי שהן, לטובת המטפסים הבאים.",
     locationDescription: "רמת-חן, חיפה - מאותה נקודת חניה ליד בית האבות ברחוב בת-חן 40",
@@ -2617,6 +2630,9 @@ const crags: CragLocation[] = [
     kind: "crag",
     name: "מצוק הגלבוע",
     region: "north",
+    // Geocoded to "מצפה גלבוע" (Gilboa Lookout), a named viewpoint
+    // directly on route 667 in the Gilboa range.
+    coordinates: { lat: 32.48333, lng: 35.41667 },
     styles: ["lead", "trad"],
     description: "מצוק גיר בהרי הגלבוע. ייחודי בכך שאין בו אף בולט - הטיפוס כולו על עוגנים טבעיים (עצים או בליטות סלע) בראש המסלולים, ולרוב כטופ-רופ.",
     locationDescription: "כביש 667 בהרי הגלבוע",
@@ -2632,6 +2648,7 @@ const crags: CragLocation[] = [
     kind: "crag",
     name: "המחצבה בנשר",
     region: "north",
+    coordinates: { lat: 32.76386, lng: 35.02968 },
     styles: ["lead"],
     description: "מצוק ספורט בתוך מחצבת אבן סגורה בנשר (פעלה כ-80 שנה עד 2011), ליד בית הקברות. התגלה ופותח ב-2014-2015 על ידי אלי צ'קנוב, בעזרת ולרי פרומקין ומקס שוסטר.",
     locationDescription: "נשר",
@@ -2660,6 +2677,7 @@ const crags: CragLocation[] = [
     kind: "crag",
     name: "מצוק כחל",
     region: "north",
+    coordinates: { lat: 32.89016, lng: 35.51146 },
     styles: ["lead"],
     description: "מצוק גיר קשה בתחומי מושב כחל שבגליל העליון, דרומית לצפת. יש להיכנס לאט בתוך היישוב ולחנות רק לצד השביל, בלי לחסום שערים או כניסות חקלאיות. קיים גם מסלול גישה חלופי דרך \"מדרגות המעיין\" - הוא אינו חוקי, ואין להשתמש בו.",
     locationDescription: "מושב כחל, גליל עליון",
@@ -2674,6 +2692,9 @@ const crags: CragLocation[] = [
     kind: "crag",
     name: "מצוק העורבים",
     region: "north",
+    // Approximate: geocoded to the Technion, Haifa - the crag is reached
+    // from the Technion's שער זיו (Ziv Gate), a short walk from campus.
+    coordinates: { lat: 32.77681, lng: 35.02254 },
     styles: ["lead", "bouldering"],
     description: "קיר טיפוס לאורך כ-100 מטר בתחומי הטכניון בחיפה, עם מסלולים ובעיות בולדר לאורכו. עקב צמחייה עבותה חלק מהקיר אינו נגיש כיום; עיריית חיפה מתחזקת את המקום ומבצעת ניקויים מדי פעם.",
     locationDescription: "ליד הטכניון, חיפה (שער זיו)",
@@ -2686,6 +2707,9 @@ const crags: CragLocation[] = [
     kind: "crag",
     name: "מצוק יקנעם",
     region: "north",
+    // Approximate: geocoded to Yokneam Illit itself - the crag is in
+    // Carmel forest southwest of the city, no more precise landmark found.
+    coordinates: { lat: 32.64806, lng: 35.09435 },
     styles: ["lead"],
     description: "אתר טיפוס חדש יחסית, שנפתח ב-2023 בשיתוף פעולה בין התאחדות הטיפוס לקק\"ל, ביערות הכרמל דרומית-מערבית ליקנעם עילית.",
     locationDescription: "יערות הכרמל, דרומית-מערבית ליקנעם עילית",
@@ -2701,6 +2725,7 @@ const crags: CragLocation[] = [
     kind: "crag",
     name: "נחל בוקר",
     region: "south",
+    coordinates: { lat: 30.90634, lng: 34.77644 },
     styles: ["lead"],
     description: "מצוק גיר במדבר הנגב, מתאים למתחילים ולמטפסים מנוסים כאחד. ניתן למצוא בסלע מאובנים של רודיסטים (יצורים ימיים בוני שוניות קדומים).",
     locationDescription: "כביש 40 בין צומת צאלים לצומת חלוקים, סמוך לחוות נחל בוקר",
@@ -2715,6 +2740,9 @@ const crags: CragLocation[] = [
     kind: "crag",
     name: "נחל יצהר",
     region: "north",
+    // Approximate: geocoded to Yirka itself - the crag is off route 8533
+    // near the town, no more precise landmark found.
+    coordinates: { lat: 32.95489, lng: 35.20879 },
     styles: ["lead"],
     description: "מצוק ספורט פונה צפונה בגליל המערבי, ליד הכפר הדרוזי ירכא. ליד האתר מערת נזר קדושה לבני העדה הדרוזית (\"מערת המתבודד\") - יש לנהוג בכבוד. יש לחנות בהתחשבות בסופי שבוע, שכן השכנים הדרוזים מתחזקים את הדרך והחניה.",
     locationDescription: "ליד ירכא, גליל מערבי",
@@ -2730,6 +2758,7 @@ const crags: CragLocation[] = [
     kind: "crag",
     name: "עכברה",
     region: "north",
+    coordinates: { lat: 32.96457, lng: 35.50007 },
     styles: ["bouldering"],
     description: "אתר בולדרינג מעל נחל עכברה, יובל של נחל עמוד, דרומית לצפת. ייתכן שהאתר נמצא בתחום שמורת טבע - מובא כאן כתיעוד.",
     locationDescription: "מעל נחל עכברה, דרומית לצפת",
@@ -2744,6 +2773,9 @@ const crags: CragLocation[] = [
     kind: "crag",
     name: "צפית",
     region: "south",
+    // Approximate: geocoded to צומת הערבה (Arava Junction) - the crag is
+    // ~2.6km south of it per the wiki, no more precise landmark found.
+    coordinates: { lat: 30.98759, lng: 35.30895 },
     styles: ["lead"],
     description: "קניון בערבה עם כ-50 מסלולים (החל מסוף 2025), רובם עד 6c. שיטפונות עלולים להתפתח מגשם שיורד גם עד 15 ק\"מ במעלה הנחל - אין להיכנס לקניון כשיש תחזית גשם.",
     locationDescription: "כ-2.6 ק\"מ דרומית לצומת הערבה, ליד כביש 90",
@@ -2773,6 +2805,7 @@ const crags: CragLocation[] = [
     kind: "crag",
     name: "מערת הנזירים",
     region: "center",
+    coordinates: { lat: 31.92957, lng: 34.97652 },
     styles: ["bouldering", "lead"],
     description: "אתר בולדרינג משפחתי וקטן, ליד בית הקברות של מודיעין - נגיש ברכב עד לתחתית, ומתאים גם לילדים. האתר הוא גם אתר ארכיאולוגי עם מערות מגורים עתיקות של נזירים, שהתגלה סביב 2007.",
     locationDescription: "כביש 443, צומת מחכים, ליד בית הקברות של מודיעין",
@@ -2789,6 +2822,7 @@ const crags: CragLocation[] = [
     kind: "crag",
     name: "נחל צאלים",
     region: "jerusalem",
+    coordinates: { lat: 31.33832, lng: 35.26019 },
     styles: ["lead", "trad"],
     description: "קניון במדבר יהודה. המידע שברשותנו על האתר מוגבל בשלב זה לגיידבוק שהופץ על ידי התאחדות הטיפוס - נשמח לעדכן פרטי גישה ומסלולים נוספים ברגע שיהיו זמינים.",
     guidebooks: [{ label: "טופו מהוויקי", url: "http://wiki.imga.org.il/Topos/tzeelim.pdf" }],
@@ -2799,6 +2833,7 @@ const crags: CragLocation[] = [
     kind: "crag",
     name: "פרסת נקרות",
     region: "south",
+    coordinates: { lat: 30.59439, lng: 34.93892 },
     styles: ["lead"],
     description: "אתר טיפוס באזור מכתש רמון. המידע שברשותנו על האתר מוגבל בשלב זה לגיידבוק שהופץ על ידי התאחדות הטיפוס - נשמח לעדכן פרטי גישה ומסלולים נוספים ברגע שיהיו זמינים.",
     guidebooks: [{ label: "טופו מהוויקי", url: "http://wiki.imga.org.il/Topos/nekarot.pdf" }],
@@ -2809,6 +2844,9 @@ const crags: CragLocation[] = [
     kind: "crag",
     name: "נחל גוב",
     region: "south",
+    // Approximate: geocoded to מעלה עקרבים (Maale Akrabim / Scorpions'
+    // Ascent), the nearest well-known named landmark per the wiki.
+    coordinates: { lat: 30.90905, lng: 35.13163 },
     styles: ["lead"],
     description: "קניון בהר הנגב הצפוני, ליד מעלה עקרבים, היורד לכיוון נחל צין. המידע שברשותנו על האתר מוגבל בשלב זה לגיידבוק שהופץ על ידי התאחדות הטיפוס - נשמח לעדכן פרטי גישה ומסלולים נוספים ברגע שיהיו זמינים.",
     locationDescription: "ליד מעלה עקרבים, הר הנגב הצפוני",

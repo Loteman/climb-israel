@@ -5,6 +5,9 @@ styles:
   - lead
 region: north
 description: "המצוק התגלה בשנת 2002. זהו מצוק נעים ונוח, ובו מערה מרשימה - ומכאן גם השם הנוסף \"מערת היונים\"."
+coordinates:
+  lat: 32.92258
+  lng: 35.25795
 locationDescription: "גליל מערבי"
 rockType: "אבן גיר יציב"
 routeLength: "10-25 מטר"

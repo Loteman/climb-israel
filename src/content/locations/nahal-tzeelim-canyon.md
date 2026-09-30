@@ -6,6 +6,9 @@ styles:
   - trad
 region: jerusalem
 description: "קניון במדבר יהודה. המידע שברשותנו על האתר מוגבל בשלב זה לגיידבוק שהופץ על ידי התאחדות הטיפוס - נשמח לעדכן פרטי גישה ומסלולים נוספים ברגע שיהיו זמינים."
+coordinates:
+  lat: 31.33832
+  lng: 35.26019
 guidebooks:
   - label: "טופו מהוויקי"
     url: "http://wiki.imga.org.il/Topos/tzeelim.pdf"

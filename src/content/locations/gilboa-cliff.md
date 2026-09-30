@@ -6,6 +6,9 @@ styles:
   - trad
 region: north
 description: "מצוק גיר בהרי הגלבוע. ייחודי בכך שאין בו אף בולט - הטיפוס כולו על עוגנים טבעיים (עצים או בליטות סלע) בראש המסלולים, ולרוב כטופ-רופ."
+coordinates:
+  lat: 32.48333
+  lng: 35.41667
 locationDescription: "כביש 667 בהרי הגלבוע"
 rockType: "אבן גיר"
 routeLength: "עד כ-12 מטר"

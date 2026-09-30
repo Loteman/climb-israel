@@ -5,6 +5,9 @@ styles:
   - lead
 region: south
 description: "אתר טיפוס באזור מכתש רמון. המידע שברשותנו על האתר מוגבל בשלב זה לגיידבוק שהופץ על ידי התאחדות הטיפוס - נשמח לעדכן פרטי גישה ומסלולים נוספים ברגע שיהיו זמינים."
+coordinates:
+  lat: 30.59439
+  lng: 34.93892
 guidebooks:
   - label: "טופו מהוויקי"
     url: "http://wiki.imga.org.il/Topos/nekarot.pdf"
