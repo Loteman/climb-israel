@@ -118,7 +118,7 @@ const jsonLd = {
   jsonLd={jsonLd}
 >
   <Badge variant={data.kind === "gym" ? "rope" : "olive"}>
-    {data.kind === "gym" ? "אולם טיפוס" : "אתר טבע"}
+    {data.kind === "gym" ? "קיר טיפוס" : "אתר טבע"}
   </Badge>
   <h1 class="mt-3 font-display text-3xl font-bold text-ink">{data.name}</h1>
   <p class="mt-1 text-sm text-ink-soft">
@@ -130,7 +130,7 @@ const jsonLd = {
     data.kind === "gym" && (
       <div class="mt-8 space-y-6">
         <div>
-          <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">תיאור האולם</p>
+          <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">תיאור קיר הטיפוס</p>
           <div class="prose-climbing mt-2 max-w-none leading-relaxed text-ink">
             <Content />
           </div>
@@ -177,7 +177,7 @@ const jsonLd = {
         </div>
 
         <div>
-          <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">אתר האולם</p>
+          <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">אתר קיר הטיפוס</p>
           {
             data.website ? (
               <a
@@ -186,7 +186,7 @@ const jsonLd = {
                 rel="noopener noreferrer"
                 class="mt-2 inline-block font-body text-sm font-bold text-rope hover:underline"
               >
-                לאתר האולם ←
+                לאתר קיר הטיפוס ←
               </a>
             ) : (
               <p class="mt-2 text-sm leading-relaxed text-ink-soft">

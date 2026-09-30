@@ -180,7 +180,7 @@ export default function DirectoryFilters() {
       <div class="grid grid-cols-2 gap-2">
         {(
           [
-            ["gym", "אולמות", "Indoor"],
+            ["gym", "קירות טיפוס", "Indoor"],
             ["crag", "טבע", "Outdoor"],
           ] as [Kind, string, string][]
         ).map(([value, label, subLabel]) => (

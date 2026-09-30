@@ -8,15 +8,15 @@ import SectionDivider from "../../components/ui/SectionDivider.astro";
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Article",
-  headline: "טיפוס באולם (Indoor) - מדריך מלא",
+  headline: "קיר טיפוס (מלאכותי) - מדריך מלא",
   description:
-    "מה ההבדל בין בולדרינג להובלה באולם סגור, אילו ציוד צריך לכל אחד, וכללי בטיחות והתנהגות בקיר מלאכותי.",
+    "מה ההבדל בין בולדרינג להובלה בקיר טיפוס מלאכותי, אילו ציוד צריך לכל אחד, וכללי בטיחות והתנהגות בקיר מלאכותי.",
 };
 ---
 
 <BaseLayout
-  title="טיפוס באולם (Indoor) - מדריך מלא"
-  description="מדריך לטיפוס בקיר מלאכותי: ההבדל בין בולדרינג להובלה באולם, אילו ציוד צריך, וכללי בטיחות והתנהגות. כולל קישור למפת אולמות בישראל."
+  title="קיר טיפוס (מלאכותי) - מדריך מלא"
+  description="מדריך לטיפוס בקיר מלאכותי: ההבדל בין בולדרינג להובלה בקיר טיפוס, אילו ציוד צריך, וכללי בטיחות והתנהגות. כולל קישור למפת קירות טיפוס בישראל."
   jsonLd={jsonLd}
 >
   <section class="relative overflow-hidden border-b border-stone/40 py-14">
@@ -24,11 +24,11 @@ const jsonLd = {
     <div class="relative mx-auto max-w-4xl px-4 sm:px-6">
       <Badge variant="rope">Indoor</Badge>
       <h1 class="mt-3 font-display text-3xl font-bold text-ink sm:text-4xl">
-        טיפוס באולם
+        קיר טיפוס (מלאכותי)
       </h1>
       <p class="mt-3 max-w-2xl leading-relaxed text-ink-soft">
         קיר מלאכותי הוא הדרך הכי נגישה, בטוחה ומבוקרת להתחיל לטפס - הסביבה
-        קבועה, המסלולים מסומנים ומדורגים, ותמיד יש עובדי אולם בסביבה.
+        קבועה, המסלולים מסומנים ומדורגים, ותמיד יש צוות קיר הטיפוס בסביבה.
         רוב המטפסים בישראל מתחילים כאן.
       </p>
     </div>
@@ -36,17 +36,17 @@ const jsonLd = {
 
   <section class="mx-auto max-w-3xl px-4 py-12 sm:px-6">
     <h2 class="font-display text-2xl font-bold text-ink">
-      שני הסגנונות באולם - וההבדל ביניהם
+      שני הסגנונות בקיר טיפוס - וההבדל ביניהם
     </h2>
     <p class="mt-2 leading-relaxed text-ink-soft">
-      כמעט כל אולם בישראל מציע לפחות אחד משני הסגנונות האלה, ורבים מציעים
+      כמעט כל קיר טיפוס בישראל מציע לפחות אחד משני הסגנונות האלה, ורבים מציעים
       את שניהם תחת קורת גג אחת:
     </p>
 
     <div class="mt-5 grid gap-4 sm:grid-cols-2">
       <div class="border border-stone/50 bg-paper-dark p-5">
         <p class="font-display text-lg font-bold text-ink">
-          בולדרינג באולם
+          בולדרינג בקיר טיפוס
         </p>
         <p class="mt-2 text-sm leading-relaxed text-ink-soft">
           קירות נמוכים (עד כ-4-5 מטרים) ללא חבלים, עם מזרנים עבים על
@@ -59,11 +59,11 @@ const jsonLd = {
         </a>
       </div>
       <div class="border border-stone/50 bg-paper-dark p-5">
-        <p class="font-display text-lg font-bold text-ink">הובלה באולם</p>
+        <p class="font-display text-lg font-bold text-ink">הובלה בקיר טיפוס</p>
         <p class="mt-2 text-sm leading-relaxed text-ink-soft">
           קירות גבוהים עם חבל, כשהמטפס מכניס את החבל לטבעות אבטחה תוך
           כדי הטיפוס. <strong class="text-rust">דורש שותף מאובטח (בליי)
-          וקורס הסמכה</strong> - רוב האולמות לא יתנו לכם לטפס הובלה בלי
+          וקורס הסמכה</strong> - ברוב קירות הטיפוס לא יתנו לכם לטפס הובלה בלי
           תעודת הסמכה מוכרת, גם אם עשיתם את זה בעבר במקום אחר.
         </p>
         <a href={withBase("/סגנונות-טיפוס/lead-climbing/")} class="mt-3 inline-block font-body text-sm font-bold text-rope hover:underline">
@@ -72,9 +72,9 @@ const jsonLd = {
       </div>
     </div>
     <p class="mt-4 text-sm leading-relaxed text-ink-soft">
-      חלק מהאולמות מציעים גם <strong class="text-rust">טופ-רופ</strong> עם
+      בחלק מקירות הטיפוס מציעים גם <strong class="text-rust">טופ-רופ</strong> עם
       מערכת Auto-Belay - חבל שתלוי מראש ומאבטח אוטומטית, בלי צורך בשותף
-      אנושי. בדקו מול האולם הספציפי מה הוא מציע.
+      אנושי. בדקו מול קיר הטיפוס הספציפי מה הוא מציע.
     </p>
 
     <SectionDivider class="my-10 text-stone/40" />
@@ -83,9 +83,9 @@ const jsonLd = {
 
     <div class="mt-5 space-y-5">
       <div>
-        <p class="font-display font-bold text-ink">לבולדרינג באולם</p>
+        <p class="font-display font-bold text-ink">לבולדרינג בקיר טיפוס</p>
         <p class="mt-1 text-sm leading-relaxed text-ink-soft">
-          כל אולם משכיר{" "}
+          כל קיר טיפוס משכיר{" "}
           <a href={withBase("/ציוד-טיפוס/climbing-shoes/")} class="font-bold text-rope hover:underline">נעלי טיפוס</a>{" "}
           ו<a href={withBase("/ציוד-טיפוס/chalk/")} class="font-bold text-rope hover:underline">מגנזיום</a>{" "}
           - אין צורך לקנות כלום מראש. אחרי כמה ביקורים, נעליים אישיות
@@ -93,14 +93,14 @@ const jsonLd = {
         </p>
       </div>
       <div>
-        <p class="font-display font-bold text-ink">להובלה באולם</p>
+        <p class="font-display font-bold text-ink">להובלה בקיר טיפוס</p>
         <p class="mt-1 text-sm leading-relaxed text-ink-soft">
           בנוסף לנעליים ומגנזיום, תזדקקו ל-<a href={withBase("/ציוד-טיפוס/harness/")} class="font-bold text-rope hover:underline">רתמה</a>,{" "}
           <a href={withBase("/ציוד-טיפוס/belay-devices/")} class="font-bold text-rope hover:underline">מכשיר אבטחה</a>{" "}
           ו<a href={withBase("/ציוד-טיפוס/carabiners/")} class="font-bold text-rope hover:underline">טבעת ננעלת</a>.
-          רוב האולמות משכירים גם את אלה, ורק{" "}
+          רוב קירות הטיפוס משכירים גם את אלה, ורק{" "}
           <a href={withBase("/ציוד-טיפוס/dynamic-rope/")} class="font-bold text-rope hover:underline">חבל דינמי</a>{" "}
-          לפעמים נדרש להביא בעצמכם - תלוי במדיניות האולם.
+          לפעמים נדרש להביא בעצמכם - תלוי במדיניות קיר הטיפוס.
         </p>
       </div>
     </div>
@@ -108,7 +108,7 @@ const jsonLd = {
     <SectionDivider class="my-10 text-stone/40" />
 
     <h2 class="font-display text-2xl font-bold text-ink">
-      בטיחות והתנהגות באולם
+      בטיחות והתנהגות בקיר טיפוס
     </h2>
     <ul class="mt-4 space-y-2 text-ink">
       <li>
@@ -131,7 +131,7 @@ const jsonLd = {
     </ul>
 
     <div class="mt-10 border border-dashed border-stone/60 bg-paper-dark p-5">
-      <p class="font-display font-bold text-ink">איפה יש אולם ליד הבית?</p>
+      <p class="font-display font-bold text-ink">איפה יש קיר טיפוס ליד הבית?</p>
       <p class="mt-2 text-sm leading-relaxed text-ink-soft">
         יש בישראל עשרות קירות מלאכותיים - מרשתות ארציות ועד מועדונים
         עצמאיים.
@@ -140,7 +140,7 @@ const jsonLd = {
         href={withBase("/מקומות-טיפוס/?kind=gym")}
         class="mt-3 inline-block font-body text-sm font-bold text-rope hover:underline"
       >
-        לכל אולמות הטיפוס בישראל ←
+        לכל קירות הטיפוס בישראל ←
       </a>
     </div>
 

@@ -68,7 +68,7 @@ const guides = [
 const environments = [
   {
     href: "/טיפוס-באולם/",
-    title: "טיפוס באולם",
+    title: "קיר טיפוס (מלאכותי)",
     badge: "Indoor",
     variant: "rope" as const,
     desc: "הדרך הכי נגישה להתחיל - קיר מלאכותי, ציוד להשכרה, וסביבה מבוקרת.",
@@ -83,10 +83,10 @@ const environments = [
 ];
 
 const quickLocationLinks = [
-  { href: "/מקומות-טיפוס/?kind=crag&style=lead", label: "הובלה בטבע" },
-  { href: "/מקומות-טיפוס/?kind=gym&style=bouldering", label: "בולדר באולם" },
   { href: "/מקומות-טיפוס/?kind=crag&style=bouldering", label: "בולדר בטבע" },
-  { href: "/מקומות-טיפוס/?kind=gym&style=lead", label: "הובלה באולם" },
+  { href: "/מקומות-טיפוס/?kind=crag&style=lead", label: "הובלה בטבע" },
+  { href: "/מקומות-טיפוס/?kind=gym&style=bouldering", label: "בולדר בקיר טיפוס" },
+  { href: "/מקומות-טיפוס/?kind=gym&style=lead", label: "הובלה בקיר טיפוס" },
 ];
 ---
 
@@ -154,61 +154,61 @@ const quickLocationLinks = [
 
   <section class="border-t border-stone/40 bg-paper-dark py-16">
     <div class="mx-auto max-w-6xl px-4 sm:px-6">
-      <h2 class="font-display text-2xl font-bold text-ink">סביבות טיפוס</h2>
+      <h2 class="font-display text-2xl font-bold text-ink">מקומות טיפוס</h2>
       <p class="mt-2 max-w-2xl text-ink-soft">
-        אותם סגנונות מרגישים אחרת לגמרי בקיר מלאכותי לעומת סלע טבעי - הנה
-        מה שונה בכל אחד.
+        עשרות קירות מלאכותיים ואתרי טבע ברחבי הארץ - חפשו לפי סגנון, סביבה
+        או עיר.
       </p>
 
-      <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+      <div class="mt-6 flex flex-wrap gap-3">
         {
-          environments.map((e) => (
-            <Card as="li" href={withBase(e.href)} class="flex h-full flex-col">
-              <Badge variant={e.variant} class="w-fit">
-                {e.badge}
-              </Badge>
-              <h3 class="mt-3 font-display text-xl font-bold text-ink group-hover:text-rust">
-                {e.title}
-              </h3>
-              <p class="mt-2 flex-1 text-sm leading-relaxed text-ink-soft">
-                {e.desc}
-              </p>
-              <span class="mt-4 font-body text-sm font-bold text-rope">
-                קראו עוד ←
-              </span>
-            </Card>
+          quickLocationLinks.map((link) => (
+            <a
+              href={withBase(link.href)}
+              class="border border-dashed border-stone px-4 py-2 font-body text-sm font-bold text-ink transition-colors hover:border-rust hover:text-rust"
+            >
+              {link.label}
+            </a>
           ))
         }
-      </ul>
+      </div>
+
+      <a
+        href={withBase("/מקומות-טיפוס/")}
+        class="mt-5 inline-block font-body text-sm font-bold text-rope hover:underline"
+      >
+        לכל מקומות הטיפוס ←
+      </a>
     </div>
   </section>
 
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-    <h2 class="font-display text-2xl font-bold text-ink">מקומות טיפוס</h2>
+    <h2 class="font-display text-2xl font-bold text-ink">סביבות טיפוס</h2>
     <p class="mt-2 max-w-2xl text-ink-soft">
-      עשרות קירות מלאכותיים ואתרי טבע ברחבי הארץ - חפשו לפי סגנון, סביבה
-      או עיר.
+      אותם סגנונות מרגישים אחרת לגמרי בקיר מלאכותי לעומת סלע טבעי - הנה
+      מה שונה בכל אחד.
     </p>
 
-    <div class="mt-6 flex flex-wrap gap-3">
+    <ul class="mt-8 grid gap-4 sm:grid-cols-2">
       {
-        quickLocationLinks.map((link) => (
-          <a
-            href={withBase(link.href)}
-            class="border border-dashed border-stone px-4 py-2 font-body text-sm font-bold text-ink transition-colors hover:border-rust hover:text-rust"
-          >
-            {link.label}
-          </a>
+        environments.map((e) => (
+          <Card as="li" href={withBase(e.href)} class="flex h-full flex-col">
+            <Badge variant={e.variant} class="w-fit">
+              {e.badge}
+            </Badge>
+            <h3 class="mt-3 font-display text-xl font-bold text-ink group-hover:text-rust">
+              {e.title}
+            </h3>
+            <p class="mt-2 flex-1 text-sm leading-relaxed text-ink-soft">
+              {e.desc}
+            </p>
+            <span class="mt-4 font-body text-sm font-bold text-rope">
+              קראו עוד ←
+            </span>
+          </Card>
         ))
       }
-    </div>
-
-    <a
-      href={withBase("/מקומות-טיפוס/")}
-      class="mt-5 inline-block font-body text-sm font-bold text-rope hover:underline"
-    >
-      לכל מקומות הטיפוס ←
-    </a>
+    </ul>
   </section>
 
   <section class="border-t border-stone/40 bg-paper-dark py-16">
