@@ -51,18 +51,7 @@ declare global {
   }
 }
 
-// No "all" option on purpose - the environment choice (indoor vs outdoor)
-// is mandatory, since gym/crag results need different mental context
-// (opening hours vs. weather and approach), not just a narrower list.
-function initialKind(): Kind {
-  if (typeof window === "undefined") return "gym";
-  const param = new URLSearchParams(window.location.search).get("kind");
-  return param === "crag" ? "crag" : "gym";
-}
-
-function initialStyleLabels(kind: Kind): Set<string> {
-  if (typeof window === "undefined") return new Set();
-  const param = new URLSearchParams(window.location.search).get("style");
+function styleLabelsFromParam(kind: Kind, param: string | null): Set<string> {
   if (!param) return new Set();
   const requested = new Set(param.split(","));
   const options = kind === "gym" ? GYM_STYLE_OPTIONS : CRAG_STYLE_OPTIONS;
@@ -73,24 +62,34 @@ function initialStyleLabels(kind: Kind): Set<string> {
   );
 }
 
-function initialRegions(): Set<string> {
-  if (typeof window === "undefined") return new Set();
-  const param = new URLSearchParams(window.location.search).get("region");
-  if (!param) return new Set();
-  const valid = new Set(ALL_REGION_OPTIONS.map((o) => o.value));
-  return new Set(param.split(",").filter((r) => valid.has(r)));
-}
-
 export default function DirectoryFilters() {
-  const [kind, setKind] = useState<Kind>(initialKind);
-  const [styleLabels, setStyleLabels] = useState<Set<string>>(() =>
-    initialStyleLabels(initialKind()),
-  );
-  const [regions, setRegions] = useState<Set<string>>(initialRegions);
+  // Always start from the same neutral defaults Astro's SSR pass renders
+  // (it has no `window`, so it can't know the URL's ?kind=/?style=/?region=
+  // yet). Reading those on the client's very first render would make that
+  // render disagree with the server-rendered HTML - e.g. crag needs 5 style
+  // buttons where gym's SSR markup only has 3 - and Preact's hydration
+  // can't reconcile a structural mismatch like that; it just leaves the
+  // stale SSR content on screen. Applying the URL in a useEffect instead
+  // runs strictly after hydration, as an ordinary client-side state update.
+  const [kind, setKind] = useState<Kind>("gym");
+  const [styleLabels, setStyleLabels] = useState<Set<string>>(new Set());
+  const [regions, setRegions] = useState<Set<string>>(new Set());
   const [search, setSearch] = useState("");
   const [visibleCount, setVisibleCount] = useState<number | null>(null);
   const [filtersVisible, setFiltersVisible] = useState(true);
   const [viewMode, setViewMode] = useState<ViewMode>("cards");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const urlKind: Kind = params.get("kind") === "crag" ? "crag" : "gym";
+    const validRegions = new Set(ALL_REGION_OPTIONS.map((o) => o.value));
+    setKind(urlKind);
+    setStyleLabels(styleLabelsFromParam(urlKind, params.get("style")));
+    setRegions(
+      new Set((params.get("region")?.split(",") ?? []).filter((r) => validRegions.has(r))),
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const options = kind === "gym" ? GYM_STYLE_OPTIONS : CRAG_STYLE_OPTIONS;
   const regionOptions = kind === "gym" ? GYM_REGION_OPTIONS : CRAG_REGION_OPTIONS;
