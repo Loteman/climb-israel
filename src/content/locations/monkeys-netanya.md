@@ -5,7 +5,7 @@ styles:
   - bouldering
 region: sharon
 city: "נתניה"
-chain: "Monkeyz"
+chain: "Monkeys"
 address: "מתחם ביג פולג"
 phone: "09-788-9933"
 website: "https://www.monkeysclimbinggym.co.il/"

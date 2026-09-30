@@ -5,7 +5,7 @@ styles:
   - bouldering
 region: shfela
 city: "אשדוד"
-chain: "Monkeyz"
+chain: "Monkeys"
 address: "BMALL עד הלום"
 phone: "08-680-6000"
 coordinates:
