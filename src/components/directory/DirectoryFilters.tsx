@@ -23,6 +23,7 @@ const CRAG_STYLE_OPTIONS: StyleOption[] = [
   // still include multi-pitch so a location like הר שלמה is still caught
   // by this filter instead of matching nothing.
   { label: "הובלה", values: ["lead", "multi-pitch"] },
+  { label: "ויה פראטה", values: ["via-ferrata"] },
 ];
 
 const REGION_OPTIONS: { value: string; label: string }[] = [

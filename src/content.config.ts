@@ -115,6 +115,7 @@ const climbingStyle = z.enum([
   "speed",
   "trad",
   "multi-pitch",
+  "via-ferrata",
 ]);
 
 // General-area filter shown on the directory page, independent of city

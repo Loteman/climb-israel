@@ -1881,7 +1881,14 @@ async function writeGear() {
 // Locations: gyms + crags (from קירות טיפוס ישראל.txt)
 // ---------------------------------------------------------------------------
 
-type ClimbingStyle = "bouldering" | "lead" | "top-rope" | "speed" | "trad" | "multi-pitch";
+type ClimbingStyle =
+  | "bouldering"
+  | "lead"
+  | "top-rope"
+  | "speed"
+  | "trad"
+  | "multi-pitch"
+  | "via-ferrata";
 
 type Region = "north" | "sharon" | "center" | "shfela" | "jerusalem" | "yosh" | "south";
 
@@ -1918,6 +1925,10 @@ interface CragLocation {
   guidebooks?: { label: string; url: string }[];
   externalBetaUrl?: string;
   climbingProhibited?: boolean;
+  // Overrides CROWD_SOURCE_NOTE below - only for crags whose data didn't
+  // come from the usual ILCA/community-update pipeline (e.g. a guided
+  // commercial activity sourced straight from the operator's own site).
+  sourceNote?: string;
 }
 
 type LocationItem = GymLocation | CragLocation;
@@ -2560,15 +2571,33 @@ const crags: CragLocation[] = [
   // בכרמל) and their internal links. Every field below traces to what
   // those pages actually say - nothing here is invented. ---
   {
-    slug: "haifa-boulders-crag",
+    // Split from a single merged "בולדרים בחיפה" entry after re-checking
+    // the source wiki page: it actually describes two distinct crags a
+    // short walk apart from the same parking spot (not a second area near
+    // Ramat Sapir - that reading was wrong, see the other entry's comment).
+    slug: "ramat-hen-crag",
     kind: "crag",
-    name: "בולדרים בחיפה",
+    name: "בולדר רמת חן",
     region: "north",
     styles: ["bouldering"],
-    description: "שני אזורי בולדרינג נפרדים בתוך שטחי העיר חיפה: בולדר רמת חן, מתחת לבניין ברחוב בת-חן, ואזור נוסף ליד רמת ספיר (מרכז ניר זיו). שני האתרים מוצלים כל השנה. חשוב: אין להדביק או לחצוב אחיזות חדשות - שמרו על הבעיות כפי שהן, לטובת המטפסים הבאים.",
-    locationDescription: "רמת חן: ליד רחוב בת-חן 40, חונים ליד בית האבות ויורדים דרך הגינה לשביל עפר. רמת ספיר: הליכה של כשעה משדה הספורט רמת ספיר לכיוון מרכז ניר זיו",
-    routeLength: "בולדר רמת חן: כ-100 מ' אורך, עד כ-10 מ' גובה",
+    description: "מצוקון בולדרינג בשכונת רמת-חן בחיפה, כ-100 מ' אורך ועד כ-10 מ' גובה, עם מספר גגות. מוצל כל השנה, עם תצפית על מנהרות הכרמל ועל הגרנד קניון. במצוק מספר בולטים והרבה בעיות בולדרינג. חשוב: אין להדביק או לחצוב אחיזות חדשות - שמרו על הבעיות כפי שהן, לטובת המטפסים הבאים.",
+    locationDescription: "רמת-חן, חיפה - ליד בית האבות ברחוב בת-חן 40. חונים שם, יורדים דרך הגינה לשביל עפר המקיף את השכונה, פונים שמאלה, והליכה של כ-100 מ' מביאה למצוק.",
+    routeLength: "כ-100 מ' אורך, עד כ-10 מ' גובה",
     season: "יבש כל השנה.",
+    externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%91%D7%95%D7%9C%D7%93%D7%A8%D7%99%D7%9D_%D7%91%D7%97%D7%99%D7%A4%D7%94",
+  },
+  {
+    // The wiki page mentions a second, unnamed crag reached from the same
+    // parking spot by turning the other way - "shorter but more
+    // challenging." No length/height or season is given for it in the
+    // source, so those stay unset rather than reusing the first crag's.
+    slug: "ramat-hen-crag-2",
+    kind: "crag",
+    name: "מצוק שני ברמת חן",
+    region: "north",
+    styles: ["bouldering"],
+    description: "מצוק בולדרינג שני בשכונת רמת-חן בחיפה, סמוך למצוקון רמת חן אך נפרד ממנו - קצר יותר אך מאתגר יותר. חשוב: אין להדביק או לחצוב אחיזות חדשות - שמרו על הבעיות כפי שהן, לטובת המטפסים הבאים.",
+    locationDescription: "רמת-חן, חיפה - מאותה נקודת חניה ליד בית האבות ברחוב בת-חן 40: יורדים לשביל העפר, אך פונים ימינה (במקום שמאלה) לכיוון המצוק הנוסף.",
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%91%D7%95%D7%9C%D7%93%D7%A8%D7%99%D7%9D_%D7%91%D7%97%D7%99%D7%A4%D7%94",
   },
   {
@@ -2884,6 +2913,24 @@ const crags: CragLocation[] = [
     routeCount: "כ-30 מסלולים",
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A9%D7%99%D7%99%D7%97_%D7%9E%D7%A8%D7%96%D7%95%D7%A7",
   },
+  {
+    // Source: vfisrael.co.il ("ויה פראטה ישראל"), the outfit that built and
+    // runs this route. Not an open-access crag - a guided, paid activity;
+    // sourceNote says so. No dedicated trailhead coordinates published, so
+    // left unset rather than guessing from the kibbutz contact address.
+    slug: "derech-hamelech-via-ferrata",
+    kind: "crag",
+    name: 'דרך המלך - ויה פראטה',
+    region: "north",
+    styles: ["via-ferrata"],
+    description:
+      'מסלול הויה פראטה הראשון שנבנה בישראל (2016), מטעם החברה "ויה פראטה ישראל". המסלול משולב בכבל פלדה קבוע, יתדות וסולמות לאורך המצוק, ומאפשר חוויית טיפוס וגובה גם למי שאין לו ניסיון טיפוס קודם, בליווי מדריך. נבנה לזכרו של ניר מלך ז"ל, שנהרג במאי 2006 בפעילות אתגרית. ויה פראטה ישראל מפעילה גם את "האקדמיה לטיפוס בטבע" באזור.',
+    locationDescription:
+      "רכס רמים, גליל עליון - סמוך לקיבוץ כפר סאלד. יש לתאם ולהזמין מראש מול ויה פראטה ישראל; הפעילות מופעלת כטיול מודרך עם ציוד וליווי, לא לטיפוס עצמאי.",
+    externalBetaUrl: "https://www.vfisrael.co.il/",
+    sourceNote:
+      "מקור: אתר ויה פראטה ישראל (vfisrael.co.il). זהו מסלול מודרך בתשלום ולא אתר טיפוס פתוח - יש ליצור קשר עם המפעילים לפני יציאה.",
+  },
 ];
 
 const regionLabels: Record<Region, string> = {
@@ -2938,7 +2985,7 @@ async function writeLocations() {
         : []),
       ...(c?.externalBetaUrl ? [`externalBetaUrl: ${yamlStr(c.externalBetaUrl)}`] : []),
       ...(c?.climbingProhibited ? [`climbingProhibited: true`] : []),
-      `sourceNote: ${yamlStr(loc.kind === "gym" ? GYM_SOURCE_NOTE : CROWD_SOURCE_NOTE)}`,
+      `sourceNote: ${yamlStr(loc.kind === "gym" ? GYM_SOURCE_NOTE : (c?.sourceNote ?? CROWD_SOURCE_NOTE))}`,
     ];
     const body =
       loc.description ??
