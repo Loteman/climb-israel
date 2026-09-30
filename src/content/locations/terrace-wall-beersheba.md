@@ -5,7 +5,11 @@ styles:
   - lead
 region: south
 description: "קיר תמך מחופה בבאר שבע, עם מסלולים מסומנים בצבע."
-locationDescription: "באר שבע"
+coordinates:
+  lat: 31.23046
+  lng: 34.76936
+locationDescription: "שכונת נאות אילן, באר שבע"
+accessDescription: "ליד רחוב אפרים לרון, סמוך לנחל באר שבע. ראו מפת הגעה בדף המקור באנציקלופדיית הטיפוס."
 routeLength: "עד כ-10 מטר"
 routeCount: "12 מסלולים, דירוגים 5c-6c"
 guidebooks:
