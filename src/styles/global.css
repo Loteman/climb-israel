@@ -30,6 +30,40 @@
   --font-mono: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
 }
 
+/*
+ * Dark mode palette - takes its cue from the "אבן וגיר / Raw Rock & Chalk"
+ * design direction (see the site's design-directions comparison): a warm
+ * charcoal instead of pure black, cream ink, same rust/rope accents so
+ * brand color stays recognizable across themes. Applies when the user
+ * explicitly picks "dark" (data-theme="dark", set by ThemeSwitcher before
+ * paint - see BaseLayout's inline script) or, for the default "system"
+ * setting, whenever the OS itself prefers dark (and the user hasn't
+ * forced light mode).
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-paper: #211f1c;
+    --color-paper-dark: #2a2723;
+    --color-ink: #ede9e1;
+    --color-ink-soft: #b3aa9c;
+    --color-olive: #8a9169;
+    --color-stone: #6b6255;
+    --color-contour: #3a352e;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-paper: #211f1c;
+  --color-paper-dark: #2a2723;
+  --color-ink: #ede9e1;
+  --color-ink-soft: #b3aa9c;
+  --color-olive: #8a9169;
+  --color-stone: #6b6255;
+  --color-contour: #3a352e;
+  color-scheme: dark;
+}
+
 html {
   color-scheme: light;
   scroll-behavior: smooth;
@@ -40,6 +74,9 @@ body {
   color: var(--color-ink);
   font-family: var(--font-body);
   position: relative;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
 }
 
 /* Subtle paper grain overlay - no image asset, pure SVG noise filter. */

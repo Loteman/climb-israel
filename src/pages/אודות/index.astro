@@ -3,18 +3,22 @@ import { withBase } from "../../lib/url";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TopoBackground from "../../components/layout/TopoBackground.astro";
 import SectionDivider from "../../components/ui/SectionDivider.astro";
+import ThemeSwitcher from "../../components/settings/ThemeSwitcher";
 ---
 
 <BaseLayout
   title="אודות הפרויקט"
   description="טיפוס ישראל הוא מאגר מידע חינמי וקהילתי לטיפוס בישראל - בולדרינג וטיפוס בטבע. איך נבנה האתר ולמה."
 >
-  <section class="relative overflow-hidden border-b border-stone/40 py-14">
-    <TopoBackground opacity={0.3} />
-    <div class="relative mx-auto max-w-4xl px-4 sm:px-6">
+  <section class="relative border-b border-stone/40 py-14">
+    <div class="absolute inset-0 overflow-hidden">
+      <TopoBackground opacity={0.3} />
+    </div>
+    <div class="relative mx-auto flex max-w-4xl items-start justify-between gap-4 px-4 sm:px-6">
       <h1 class="font-display text-3xl font-bold text-ink sm:text-4xl">
         אודות טיפוס ישראל
       </h1>
+      <ThemeSwitcher client:load />
     </div>
   </section>
 

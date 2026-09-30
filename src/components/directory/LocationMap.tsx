@@ -124,7 +124,10 @@ export default function LocationMap({ locations }: Props) {
 
       const dotIcon = leaflet.divIcon({
         className: "",
-        html: '<span class="block h-[18px] w-[18px] rounded-full border-2 border-paper bg-rope shadow-[0_1px_3px_rgba(0,0,0,0.4)]"></span>',
+        // border-white (not border-paper) on purpose: the map tiles
+        // themselves are always light regardless of site theme, so the
+        // marker's halo needs to stay light too, not follow dark mode.
+        html: '<span class="block h-[18px] w-[18px] rounded-full border-2 border-white bg-rope shadow-[0_1px_3px_rgba(0,0,0,0.4)]"></span>',
         iconSize: [18, 18],
         iconAnchor: [9, 9],
         popupAnchor: [0, -10],

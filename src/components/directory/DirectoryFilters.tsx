@@ -5,24 +5,18 @@ interface StyleOption {
   values: string[];
 }
 
-// Style filter choices differ by environment: gyms distinguish speed
-// walls and treat top-rope as effectively the same bucket as lead for
-// most climbers. Crags only ever show bouldering or roped climbing, but
-// "roped" includes multi-pitch (e.g. הר שלמה) - it's still lead climbing
-// technique, just over several pitches, so it's grouped into the same
-// "הובלה" bucket rather than needing a third crag-only filter option.
 const GYM_STYLE_OPTIONS: StyleOption[] = [
   { label: "בולדרינג", values: ["bouldering"] },
-  { label: "הובלה / טופ-רופ", values: ["lead", "top-rope"] },
+  { label: "הובלה", values: ["lead"] },
+  { label: "טופ-רופ", values: ["top-rope"] },
   { label: "טיפוס מהירות", values: ["speed"] },
 ];
 
 const CRAG_STYLE_OPTIONS: StyleOption[] = [
   { label: "בולדרינג", values: ["bouldering"] },
-  // Label stays plain "הובלה" (no "/ מולטי-פיץ'" suffix) - but the values
-  // still include multi-pitch so a location like הר שלמה is still caught
-  // by this filter instead of matching nothing.
-  { label: "הובלה", values: ["lead", "multi-pitch"] },
+  { label: "הובלה / ספורט", values: ["lead"] },
+  { label: "טראד", values: ["trad"] },
+  { label: "מולטי-פיץ'", values: ["multi-pitch"] },
   { label: "ויה פראטה", values: ["via-ferrata"] },
 ];
 

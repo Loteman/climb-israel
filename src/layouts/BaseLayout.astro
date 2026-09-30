@@ -19,9 +19,22 @@ const swUrl = withBase("/sw.js");
 <!doctype html>
 <html dir="rtl" lang="he">
   <head>
+    <script is:inline>
+      // Runs before first paint to avoid a flash of the wrong theme. Only
+      // sets data-theme when the user explicitly picked light/dark -
+      // "system" (the default) has no stored value at all, so the
+      // prefers-color-scheme CSS in global.css handles it with zero JS.
+      try {
+        var t = localStorage.getItem("climb-israel-theme");
+        if (t === "light" || t === "dark") {
+          document.documentElement.setAttribute("data-theme", t);
+        }
+      } catch (e) {}
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f3ede0" />
+    <meta name="theme-color" content="#f3ede0" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#211f1c" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href={withBase("/favicon.svg")} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={withBase("/icons/icon-192.png")} />
     <link rel="manifest" href={withBase("/manifest.webmanifest")} />
