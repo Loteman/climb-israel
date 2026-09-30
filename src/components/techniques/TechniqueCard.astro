@@ -1,4 +1,5 @@
 ---
+import { withBase } from "../../lib/url";
 import type { CollectionEntry } from "astro:content";
 import Card from "../ui/Card.astro";
 import Badge from "../ui/Badge.astro";
@@ -10,7 +11,7 @@ interface Props {
 const { technique } = Astro.props;
 ---
 
-<Card as="li" href={`/טכניקות-טיפוס/${technique.id}/`}>
+<Card as="li" href={withBase(`/טכניקות-טיפוס/${technique.id}/`)}>
   <p class="font-display font-bold text-ink group-hover:text-rust">
     {technique.data.nameHe}
   </p>

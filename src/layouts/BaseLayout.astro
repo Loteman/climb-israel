@@ -3,6 +3,7 @@ import "../styles/global.css";
 import SeoHead from "../components/seo/SeoHead.astro";
 import Header from "../components/layout/Header.astro";
 import Footer from "../components/layout/Footer.astro";
+import { withBase } from "../lib/url";
 
 interface Props {
   title: string;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 const { title, description, jsonLd, noindex } = Astro.props;
+const swUrl = withBase("/sw.js");
 ---
 
 <!doctype html>
@@ -20,9 +22,9 @@ const { title, description, jsonLd, noindex } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f3ede0" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
-    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href={withBase("/favicon.svg")} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={withBase("/icons/icon-192.png")} />
+    <link rel="manifest" href={withBase("/manifest.webmanifest")} />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="טיפוס ישראל" />
@@ -40,10 +42,10 @@ const { title, description, jsonLd, noindex } = Astro.props;
       <slot />
     </main>
     <Footer />
-    <script>
+    <script define:vars={{ swUrl }}>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("/sw.js").catch(() => {
+          navigator.serviceWorker.register(swUrl).catch(() => {
             /* offline support is a progressive enhancement - ignore failures */
           });
         });

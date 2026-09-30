@@ -1,4 +1,6 @@
 ---
+import { withBase } from "../../lib/url";
+
 interface Item {
   href: string;
   label: string;
@@ -18,7 +20,7 @@ interface Props {
 const { label, items, groups } = Astro.props;
 const currentPath = Astro.url.pathname;
 const allItems = groups ? groups.flatMap((g) => g.items) : (items ?? []);
-const active = allItems.some((item) => currentPath.startsWith(item.href));
+const active = allItems.some((item) => currentPath.startsWith(withBase(item.href)));
 ---
 
 <details class="group relative">
@@ -47,7 +49,7 @@ const active = allItems.some((item) => currentPath.startsWith(item.href));
               </p>
               {group.items.map((item) => (
                 <a
-                  href={item.href}
+                  href={withBase(item.href)}
                   class="block rounded-sm px-3 py-2 font-body text-sm font-semibold text-ink hover:bg-paper hover:text-rust"
                 >
                   {item.label}
@@ -57,7 +59,7 @@ const active = allItems.some((item) => currentPath.startsWith(item.href));
           ))
         : items?.map((item) => (
             <a
-              href={item.href}
+              href={withBase(item.href)}
               class="block rounded-sm px-3 py-2 font-body text-sm font-semibold text-ink hover:bg-paper hover:text-rust"
             >
               {item.label}

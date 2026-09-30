@@ -1,4 +1,5 @@
 ---
+import { withBase } from "../../lib/url";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TopoBackground from "../../components/layout/TopoBackground.astro";
 import Card from "../../components/ui/Card.astro";
@@ -60,7 +61,7 @@ const jsonLd = {
         <p class="leading-relaxed text-ink">
           <strong class="text-rust">התחילו מדירוג נמוך</strong> - בונים ביטחון
           וטכניקה לפני שמנסים משהו קשה. ראו את{" "}
-          <a href="/דירוג-מסלולים/" class="font-bold text-rope hover:underline">מדריך דירוג המסלולים</a>{" "}
+          <a href={withBase("/דירוג-מסלולים/")} class="font-bold text-rope hover:underline">מדריך דירוג המסלולים</a>{" "}
           כדי להבין את הסולמות.
         </p>
       </li>
@@ -69,7 +70,7 @@ const jsonLd = {
         <p class="leading-relaxed text-ink">
           <strong class="text-rust">אם זה נדבק - השקיעו בנעלי טיפוס משלכם.</strong>{" "}
           זה פריט הציוד הראשון ששווה לקנות. ראו את{" "}
-          <a href="/ציוד-טיפוס/" class="font-bold text-rope hover:underline">מדריך הציוד</a>.
+          <a href={withBase("/ציוד-טיפוס/")} class="font-bold text-rope hover:underline">מדריך הציוד</a>.
         </p>
       </li>
       <li class="flex gap-4">
@@ -92,7 +93,7 @@ const jsonLd = {
     </p>
 
     <div class="mt-5 grid gap-4 sm:grid-cols-2">
-      <Card href="/סגנונות-טיפוס/bouldering/">
+      <Card href={withBase("/סגנונות-טיפוס/bouldering/")}>
         <p class="font-display text-lg font-bold text-ink group-hover:text-rust">
           בולדרינג
         </p>
@@ -105,7 +106,7 @@ const jsonLd = {
           קראו עוד ←
         </span>
       </Card>
-      <Card href="/סגנונות-טיפוס/lead-climbing/">
+      <Card href={withBase("/סגנונות-טיפוס/lead-climbing/")}>
         <p class="font-display text-lg font-bold text-ink group-hover:text-rust">
           הובלה
         </p>
@@ -121,7 +122,7 @@ const jsonLd = {
 
     <p class="mt-5 text-ink-soft">
       ויש עוד הרבה - מטופ-רופ ועד טראד ומולטי-פיץ'.{" "}
-      <a href="/סגנונות-טיפוס/" class="font-bold text-rope hover:underline">לכל סגנונות הטיפוס ←</a>
+      <a href={withBase("/סגנונות-טיפוס/")} class="font-bold text-rope hover:underline">לכל סגנונות הטיפוס ←</a>
     </p>
 
     <SectionDivider class="my-10 text-stone/40" />
@@ -138,8 +139,8 @@ const jsonLd = {
       מנוסים.
     </p>
     <div class="mt-5 flex flex-wrap gap-4">
-      <a href="/טיפוס-באולם/" class="font-bold text-rope hover:underline">קראו על טיפוס באולם ←</a>
-      <a href="/טיפוס-בטבע/" class="font-bold text-rope hover:underline">קראו על טיפוס בטבע ←</a>
+      <a href={withBase("/טיפוס-באולם/")} class="font-bold text-rope hover:underline">קראו על טיפוס באולם ←</a>
+      <a href={withBase("/טיפוס-בטבע/")} class="font-bold text-rope hover:underline">קראו על טיפוס בטבע ←</a>
     </div>
 
     <SectionDivider class="my-10 text-stone/40" />
@@ -170,7 +171,7 @@ const jsonLd = {
     </div>
     <p class="mt-5 text-ink-soft">
       ככל שתתקדמו תפגשו גם סלופרים, פינצ'ים, פוקטים ועוד.{" "}
-      <a href="/אחיזות-טיפוס/" class="font-bold text-rope hover:underline">למדריך המלא לאחיזות טיפוס ←</a>
+      <a href={withBase("/אחיזות-טיפוס/")} class="font-bold text-rope hover:underline">למדריך המלא לאחיזות טיפוס ←</a>
     </p>
 
     <SectionDivider class="my-10 text-stone/40" />
@@ -195,7 +196,7 @@ const jsonLd = {
       </li>
     </ul>
     <p class="mt-5 text-ink-soft">
-      <a href="/מושגי-טיפוס/" class="font-bold text-rope hover:underline">למילון המונחים המלא ←</a>
+      <a href={withBase("/מושגי-טיפוס/")} class="font-bold text-rope hover:underline">למילון המונחים המלא ←</a>
     </p>
   </section>
 </BaseLayout>

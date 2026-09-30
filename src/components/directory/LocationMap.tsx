@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import type L from "leaflet";
+import { withBase } from "../../lib/url";
 
 export interface MapLocation {
   id: string;
@@ -148,7 +149,7 @@ export default function LocationMap({ locations }: Props) {
             wrap.appendChild(sub);
 
             const link = document.createElement("a");
-            link.href = `/מקומות-טיפוס/${loc.id}/`;
+            link.href = withBase(`/מקומות-טיפוס/${loc.id}/`);
             link.className = "mt-2 inline-block font-body text-xs font-bold text-rope hover:underline";
             link.textContent = "לדף המקום ←";
             wrap.appendChild(link);

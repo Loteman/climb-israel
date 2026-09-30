@@ -1,4 +1,5 @@
 ---
+import { withBase } from "../../lib/url";
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TopoBackground from "../../components/layout/TopoBackground.astro";
@@ -77,7 +78,7 @@ const jsonLd = {
       <p>
         לחלק מהאתרים עדיין אין מדריך טיפוס (guidebook) מפורט באתר. יש לכם
         מידע, תמונות מסלולים או קובץ טופו שתרצו לשתף?{" "}
-        <a href="/אודות/" class="font-bold text-rope hover:underline">
+        <a href={withBase("/אודות/")} class="font-bold text-rope hover:underline">
           נשמח שתעזרו לנו לעדכן
         </a>
         .

@@ -1,4 +1,6 @@
 ---
+import { withBase } from "../../lib/url";
+
 interface Crumb {
   href: string;
   label: string;
@@ -17,7 +19,7 @@ const jsonLd = {
     "@type": "ListItem",
     position: i + 1,
     name: item.label,
-    item: new URL(item.href, Astro.site).toString(),
+    item: new URL(withBase(item.href), Astro.site).toString(),
   })),
 };
 ---
@@ -33,7 +35,7 @@ const jsonLd = {
               {item.label}
             </span>
           ) : (
-            <a href={item.href} class="hover:text-rust">
+            <a href={withBase(item.href)} class="hover:text-rust">
               {item.label}
             </a>
           )}

@@ -1,4 +1,5 @@
 ---
+import { withBase } from "../../lib/url";
 import type { CollectionEntry } from "astro:content";
 import Card from "../ui/Card.astro";
 import Badge from "../ui/Badge.astro";
@@ -50,7 +51,7 @@ for (const hold of holds) {
           </h2>
           <ul class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {items.map((hold) => (
-              <Card as="li" href={`/אחיזות-טיפוס/${hold.id}/`}>
+              <Card as="li" href={withBase(`/אחיזות-טיפוס/${hold.id}/`)}>
                 <div class="flex items-start gap-4">
                   <HoldIcon
                     iconId={hold.data.iconId}

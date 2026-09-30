@@ -1,4 +1,5 @@
 ---
+import { withBase } from "../../lib/url";
 import { getCollection, render } from "astro:content";
 import GuideLayout from "../../layouts/GuideLayout.astro";
 import Badge from "../../components/ui/Badge.astro";
@@ -50,7 +51,7 @@ const jsonLd = {
   </div>
 
   <a
-    href="/מניעת-פציעות/"
+    href={withBase("/מניעת-פציעות/")}
     class="mt-10 inline-block font-body text-sm font-bold text-rope hover:underline"
   >
     → חזרה למניעת פציעות

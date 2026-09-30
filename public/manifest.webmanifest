@@ -2,16 +2,16 @@
   "name": "טיפוס ישראל - מדריך טיפוס ובולדרינג",
   "short_name": "טיפוס ישראל",
   "description": "מדריך חינמי וקהילתי לטיפוס בישראל - אחיזות, מושגים, ציוד ומקומות טיפוס.",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "/climb-israel/",
+  "scope": "/climb-israel/",
   "display": "standalone",
   "background_color": "#f3ede0",
   "theme_color": "#f3ede0",
   "dir": "rtl",
   "lang": "he",
   "icons": [
-    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
-    { "src": "/icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "/climb-israel/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/climb-israel/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/climb-israel/icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }

@@ -1,4 +1,5 @@
 ---
+import { withBase } from "../../lib/url";
 import type { CollectionEntry } from "astro:content";
 import Badge from "../ui/Badge.astro";
 import NavigationButtons from "./NavigationButtons.astro";
@@ -55,7 +56,7 @@ const searchText = [
   class="border border-stone/50 bg-paper-dark p-5"
 >
   <a
-    href={`/מקומות-טיפוס/${location.id}/`}
+    href={withBase(`/מקומות-טיפוס/${location.id}/`)}
     class="font-display font-bold text-ink hover:text-rust"
   >
     {data.name}

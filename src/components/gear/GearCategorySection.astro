@@ -1,4 +1,5 @@
 ---
+import { withBase } from "../../lib/url";
 import type { CollectionEntry } from "astro:content";
 import Card from "../ui/Card.astro";
 import Badge from "../ui/Badge.astro";
@@ -27,7 +28,7 @@ for (const item of items) {
   <ul class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
     {
       sorted.map((item) => (
-        <Card as="li" href={`/ציוד-טיפוס/${item.id}/`}>
+        <Card as="li" href={withBase(`/ציוד-טיפוס/${item.id}/`)}>
           <div class="flex items-start gap-4">
             <GearIcon
               iconId={item.data.iconId}

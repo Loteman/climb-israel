@@ -1,4 +1,5 @@
 ---
+import { withBase } from "../../lib/url";
 import type { CollectionEntry } from "astro:content";
 import Badge from "../ui/Badge.astro";
 import NavigationButtons from "./NavigationButtons.astro";
@@ -75,7 +76,7 @@ const regionLabels: Record<string, string> = {
             >
               <td class="border-t border-stone/30 p-3 align-top">
                 <a
-                  href={`/מקומות-טיפוס/${location.id}/`}
+                  href={withBase(`/מקומות-טיפוס/${location.id}/`)}
                   class="font-display font-bold text-ink hover:text-rust"
                 >
                   {data.name}

@@ -1,8 +1,8 @@
 // Bump this on every deploy that changes cached static assets, so old
 // caches get cleared out in the `activate` handler below.
 const CACHE_NAME = "tipus-israel-v1";
-const OFFLINE_URL = "/offline.html";
-const APP_SHELL = ["/", OFFLINE_URL, "/manifest.webmanifest"];
+const OFFLINE_URL = "/climb-israel/offline.html";
+const APP_SHELL = ["/climb-israel/", OFFLINE_URL, "/climb-israel/manifest.webmanifest"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
