@@ -10,7 +10,8 @@ description: "אתר בולדרינג הממוקם בחלק האחורי של מ
 coordinates:
   lat: 32.64612
   lng: 34.98996
-locationDescription: "מושב כרם מהר\"ל, בחלק האחורי של המושב - דרך השער"
+locationDescription: "מושב כרם מהר\"ל"
+accessDescription: "בחלק האחורי של המושב, דרך השער"
 rockType: "אבן גיר"
 season: "המקום מוצל רוב שעות היום, והטיפוס אפשרי במהלך כל השנה."
 guidebooks:

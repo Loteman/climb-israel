@@ -8,7 +8,8 @@ description: "המצוק נפתח ובולט בתקופת הקורונה, באב
 coordinates:
   lat: 32.57116
   lng: 34.953
-locationDescription: "ליד זכרון יעקב (חניה בישוב, כ-5 דקות הליכה למצוק)"
+locationDescription: "ליד זכרון יעקב"
+accessDescription: "חניה בישוב, כ-5 דקות הליכה למצוק"
 rockType: "אבן גיר, בחלקו לא יציב (קסדה חשובה מאוד!)"
 routeLength: "כ-15 מטר"
 routeCount: "23 מסלולי ספורט"

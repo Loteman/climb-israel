@@ -152,7 +152,8 @@ const cragSchema = z.object({
   // Sourced from the ILCA (Israel Climbing Federation) crag database -
   // see scripts/generate-content.ts for the per-crag data. Left unpopulated
   // for crags ILCA has no published write-up for - never fabricated.
-  locationDescription: z.string().optional(), // "מיקום" - approximate area/access, not a formal street address
+  locationDescription: z.string().optional(), // "מיקום" - short place/area name, not a formal street address
+  accessDescription: z.string().optional(), // "דרכי הגעה" - turn-by-turn walk-in detail, shown only on the crag's own page, never in listings
   rockType: z.string().optional(), // "סלע"
   routeLength: z.string().optional(), // "אורך המסלולים"
   routeCount: z.string().optional(), // "כמות מסלולים"

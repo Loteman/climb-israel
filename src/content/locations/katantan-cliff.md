@@ -8,7 +8,8 @@ description: "אחד ממצוקי רכס רמים ליד קיבוץ מנרה - �
 coordinates:
   lat: 33.19594
   lng: 35.54461
-locationDescription: "רכס רמים, ליד קיבוץ מנרה - הגישה דרך תצפית עמיר קרא"
+locationDescription: "רכס רמים, ליד קיבוץ מנרה"
+accessDescription: "הגישה דרך תצפית עמיר קרא"
 routeLength: "עד כ-12 מטר"
 routeCount: "כ-14 מסלולים, דירוגים 5 עד 6b/c"
 season: "כל השנה."
