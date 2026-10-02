@@ -70,3 +70,7 @@ npm run build    # בנייה סטטית ל-dist/
 ## פריסה
 
 פריסה אוטומטית ל-GitHub Pages דרך GitHub Actions (`.github/workflows/deploy.yml`) בכל push ל-`main`: בנייה עם `astro build` והעלאה כ-Pages artifact. האתר מוגש תחת הנתיב `/climb-israel/` (`base` ב-`astro.config.mjs`), ללא דומיין מותאם אישית.
+
+## רישיון
+
+התוכן המקורי באתר (טקסטים, איורים ועיצוב) הוא © Loteman Games ומופץ ברישיון [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). הרישיון אינו חל על תכנים של צד שלישי - גיידבוקים וקבצי טופו (`public/guidebooks/`), מידע שמקורו בהתאחדות הטיפוס, באנציקלופדיה של הטיפוס ובמקורות אחרים שמצוינים באתר, אריחי OpenStreetMap וסימני מסחר. פרטים מלאים בעמוד "אודות" באתר (`#license`).

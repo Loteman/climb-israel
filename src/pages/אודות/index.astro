@@ -3,7 +3,15 @@ import { withBase } from "../../lib/url";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TopoBackground from "../../components/layout/TopoBackground.astro";
 import SectionDivider from "../../components/ui/SectionDivider.astro";
-import { CONTACT_URL, REPO_URL } from "../../site-config";
+import {
+  CONTACT_EMAIL,
+  LICENSE_NAME,
+  LICENSE_URL,
+  LICENSOR_NAME,
+  LICENSOR_URL,
+  SITE_NAME,
+  contactUrl,
+} from "../../site-config";
 import { ACCESSIBILITY_LINK } from "../../lib/site-nav";
 
 const linkClass = "font-bold text-rope hover:underline";
@@ -42,7 +50,7 @@ const linkClass = "font-bold text-rope hover:underline";
         <a href={withBase("/דירוג-מסלולים/")} class={linkClass}>דירוג מסלולים</a>,{" "}
         <a href={withBase("/סגנונות-טיפוס/")} class={linkClass}>סגנונות טיפוס</a> ו-<a href={withBase("/ציוד-טיפוס/")} class={linkClass}>ציוד טיפוס</a>,{" "}
         לקרוא על ההבדל בין{" "}
-        <a href={withBase("/טיפוס-באולם/")} class={linkClass}>קיר טיפוס מלאכותי</a>{" "}
+        <a href={withBase("/קיר-טיפוס-מלאכותי/")} class={linkClass}>קיר טיפוס מלאכותי</a>{" "}
         ל-<a href={withBase("/טיפוס-בטבע/")} class={linkClass}>טיפוס בטבע</a>,{" "}
         ולמצוא קיר או אתר ב-<a href={withBase("/מקומות-טיפוס/")} class={linkClass}>מדריך המקומות</a>.
       </p>
@@ -50,7 +58,7 @@ const linkClass = "font-bold text-rope hover:underline";
       <p>
         סקרנים מאיפה כל זה התחיל? קראו על{" "}
         <a href={withBase("/היסטוריית-הטיפוס-בישראל/")} class={linkClass}>היסטוריית הטיפוס בישראל</a>{" "}
-        - ממועדון אלפיני קטן ב-1939 ועד התאחדות הטיפוס הישראלית של היום.
+        - ממועדון אלפיני קטן ב-1939 ועד התאחדות הטיפוס בישראל של היום.
       </p>
 
       <SectionDivider class="text-stone/40" />
@@ -74,16 +82,14 @@ const linkClass = "font-bold text-rope hover:underline";
         נתקלתם במידע לא מדויק, קיר טיפוס שנסגר, או אתר טיפוס שחסר באתר? יש
         לכם גיידבוק או טופו שתרצו לשתף? נשמח לעדכן - הפרויקט קהילתי ופתוח
         לתיקונים ותוספות.{" "}
-        <a href={CONTACT_URL} target="_blank" rel="noopener noreferrer" class={linkClass}>
+        <a href={contactUrl(`${SITE_NAME} - עדכון מידע`)} class={linkClass}>
           שלחו לנו עדכון ←
         </a>
       </p>
       <p class="text-sm text-ink-soft">
-        העדכונים מתקבלים דרך{" "}
-        <a href={REPO_URL} target="_blank" rel="noopener noreferrer" class={linkClass}>
-          מאגר הקוד של האתר ב-GitHub
-        </a>{" "}
-        - פתחו "Issue" חדש ותארו מה צריך לתקן או להוסיף.
+        אפשר גם לכתוב ישירות לכתובת{" "}
+        <a href={contactUrl()} class={linkClass} dir="ltr">{CONTACT_EMAIL}</a>{" "}
+        - ספרו לנו מה צריך לתקן או להוסיף, ואם אפשר גם מאיפה המידע.
       </p>
 
       <h2 class="font-display text-xl font-bold text-ink">תודות</h2>
@@ -105,8 +111,7 @@ const linkClass = "font-bold text-rope hover:underline";
           class={linkClass}
         >
           האנציקלופדיה של הטיפוס (wiki.imga.org.il)
-        </a>
-        , בתוספת עדכונים קהילתיים. תודה גם למדריך הטיפוס המודפס{" "}
+        </a>, בתוספת עדכונים קהילתיים. תודה גם למדריך הטיפוס המודפס{" "}
         <a
           href="https://www.climbing-israel.com/"
           target="_blank"
@@ -123,8 +128,7 @@ const linkClass = "font-bold text-rope hover:underline";
           class={linkClass}
         >
           ויה פראטה ישראל
-        </a>
-        . בלי העבודה שכל הגורמים האלו השקיעו בתיעוד סצנת הטיפוס בישראל, האתר
+        </a>. בלי העבודה שכל הגורמים האלו השקיעו בתיעוד סצנת הטיפוס בישראל, האתר
         הזה פשוט לא היה יכול להתקיים.
       </p>
 
@@ -153,13 +157,45 @@ const linkClass = "font-bold text-rope hover:underline";
           ועל ספריית{" "}
           <a href="https://leafletjs.com/" target="_blank" rel="noopener noreferrer" class={linkClass}>
             Leaflet
-          </a>
-          , והגופנים (Heebo, IBM Plex) מופצים ברישיון SIL Open Font License.
+          </a>, והגופנים (Heebo, IBM Plex) מופצים ברישיון SIL Open Font License.
+        </li>
+      </ul>
+
+      <h2 id="license" class="scroll-mt-24 font-display text-xl font-bold text-ink">
+        רישיון שימוש בתוכן
+      </h2>
+      <p>
+        התוכן המקורי של טיפוס ישראל - הטקסטים במדריכים, האיורים ועיצוב
+        האתר - הוא ©{" "}
+        <a href={LICENSOR_URL} target="_blank" rel="noopener noreferrer" class={linkClass} dir="ltr">{LICENSOR_NAME}</a>, ומופץ
+        ברישיון{" "}
+        <a href={LICENSE_URL} target="_blank" rel="license noopener noreferrer" class={linkClass} dir="ltr">
+          {LICENSE_NAME}
+        </a>{" "}
+        (ייחוס-שיתוף זהה 4.0 בינלאומי). בפשטות: מותר להעתיק, לשתף, לתרגם
+        ולעבד את התוכן - גם לשימוש מסחרי - בתנאי ש:
+      </p>
+      <ul class="list-disc space-y-2 ps-5 marker:text-rust">
+        <li>
+          <strong class="text-rust">נותנים קרדיט</strong> - "טיפוס ישראל /{" "}
+          <bdi>{LICENSOR_NAME}</bdi>" עם קישור לאתר, ומציינים אם בוצעו שינויים.
+        </li>
+        <li>
+          <strong class="text-rust">משתפים באותו רישיון</strong> - עבודה שמבוססת
+          על התוכן מופצת גם היא ברישיון{" "}
+          <bdi class="whitespace-nowrap">{LICENSE_NAME}</bdi>.
         </li>
       </ul>
       <p>
+        הרישיון חל רק על תוכן שבבעלות האתר. הוא <strong class="text-rust">לא</strong>{" "}
+        חל על תכנים של צד שלישי: גיידבוקים וקבצי טופו, מידע ותיאורים שמקורם
+        בהתאחדות הטיפוס, באנציקלופדיה של הטיפוס או במקורות אחרים שמצוינים
+        באתר, אריחי המפה של OpenStreetMap, ושמות מסחריים וסימני מסחר. על אלה
+        חלים התנאים של בעלי הזכויות בהם.
+      </p>
+      <p>
         לבקשות הסרה, תיקון או קרדיט:{" "}
-        <a href={CONTACT_URL} target="_blank" rel="noopener noreferrer" class={linkClass}>
+        <a href={contactUrl(`${SITE_NAME} - בקשת הסרה / קרדיט`)} class={linkClass}>
           צרו קשר ←
         </a>
       </p>

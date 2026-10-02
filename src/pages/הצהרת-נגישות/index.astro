@@ -2,7 +2,7 @@
 import { withBase } from "../../lib/url";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TopoBackground from "../../components/layout/TopoBackground.astro";
-import { CONTACT_URL } from "../../site-config";
+import { CONTACT_EMAIL, SITE_NAME, contactUrl } from "../../site-config";
 
 const linkClass = "font-bold text-rope hover:underline";
 ---
@@ -59,9 +59,11 @@ const linkClass = "font-bold text-rope hover:underline";
       <p>
         אם משהו באתר לא נגיש לכם, נשמח לשמוע ולתקן. כתבו לנו מה הבעיה, באיזה
         עמוד, ובאיזה דפדפן או טכנולוגיה מסייעת השתמשתם.{" "}
-        <a href={CONTACT_URL} target="_blank" rel="noopener noreferrer" class={linkClass}>
+        <a href={contactUrl(`${SITE_NAME} - נגישות`)} class={linkClass}>
           פנייה בנושא נגישות ←
-        </a>
+        </a>{" "}
+        (או בדוא"ל:{" "}
+        <a href={contactUrl(`${SITE_NAME} - נגישות`)} class={linkClass} dir="ltr">{CONTACT_EMAIL}</a>)
       </p>
       <p class="text-sm text-ink-soft">
         ההצהרה עודכנה לאחרונה באוקטובר 2026. לפרטים נוספים על האתר ראו{" "}

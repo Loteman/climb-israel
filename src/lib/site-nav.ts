@@ -77,10 +77,8 @@ export const GUIDE_GROUPS: { label: string; items: NavLink[] }[] = (
   items: GUIDES.filter((g) => g.level === level),
 }));
 
-// The /טיפוס-באולם/ slug predates the "קיר טיפוס (מלאכותי)" wording; it is
-// kept as-is so existing links and search rankings don't break.
 export const ENVIRONMENT_LINKS: NavLink[] = [
-  { href: "/טיפוס-באולם/", label: "קיר טיפוס (מלאכותי)" },
+  { href: "/קיר-טיפוס-מלאכותי/", label: "קיר טיפוס (מלאכותי)" },
   { href: "/טיפוס-בטבע/", label: "טיפוס בטבע" },
 ];
 

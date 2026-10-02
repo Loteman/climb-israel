@@ -1,5 +1,5 @@
 ---
-import { SITE_NAME } from "../../site-config";
+import { LICENSE_URL, LICENSOR_NAME, LICENSOR_URL, SITE_NAME } from "../../site-config";
 import { withBase } from "../../lib/url";
 import { toMetaDescription } from "../../lib/text";
 
@@ -24,10 +24,20 @@ const ogImage = new URL(withBase("/og-image.png"), Astro.site).toString();
 const ogImageAlt = `${SITE_NAME} - מדריך קהילתי לטיפוס ובולדרינג בישראל`;
 
 // Every structured-data block describes a Hebrew page on this URL; add
-// that once here instead of in each page's object.
-const jsonLdList = (jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []).map((entry) =>
-  entry["@type"] === "BreadcrumbList" ? entry : { inLanguage: "he", ...entry },
-);
+// that once here instead of in each page's object. Written content (not
+// places, which are facts about a real location) also carries the site's
+// content license and its holder.
+const LICENSED_TYPES = new Set(["Article", "CollectionPage", "DefinedTerm", "WebSite", "ItemList"]);
+const jsonLdList = (jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []).map((entry) => {
+  if (entry["@type"] === "BreadcrumbList") return entry;
+  const licensed = LICENSED_TYPES.has(String(entry["@type"]))
+    ? {
+        license: LICENSE_URL,
+        copyrightHolder: { "@type": "Organization", name: LICENSOR_NAME, url: LICENSOR_URL },
+      }
+    : {};
+  return { inLanguage: "he", ...licensed, ...entry };
+});
 ---
 
 <title>{fullTitle}</title>
