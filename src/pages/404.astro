@@ -1,0 +1,51 @@
+---
+// Built to dist/404.html, which GitHub Pages serves for any missing URL
+// under the site - without it, a mistyped or outdated link landed on
+// GitHub's generic English 404 with no way back into the site.
+import { withBase } from "../lib/url";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import TopoBackground from "../components/layout/TopoBackground.astro";
+import { BEGINNER_GUIDE, GUIDES, LOCATIONS_LINK } from "../lib/site-nav";
+
+const suggestions = [BEGINNER_GUIDE, LOCATIONS_LINK, ...GUIDES.slice(0, 3)];
+---
+
+<BaseLayout
+  title="הדף לא נמצא"
+  description="הדף שחיפשתם לא נמצא באתר טיפוס ישראל."
+  noindex
+>
+  <section class="relative overflow-hidden py-20">
+    <TopoBackground opacity={0.3} />
+    <div class="relative mx-auto max-w-2xl px-4 text-center sm:px-6">
+      <p class="font-mono text-sm font-bold text-rope">404</p>
+      <h1 class="mt-2 font-display text-3xl font-bold text-ink sm:text-4xl">
+        נראה שהמסלול הזה לא מסומן
+      </h1>
+      <p class="mt-4 leading-relaxed text-ink-soft">
+        הדף שחיפשתם לא קיים, הועבר, או שהקישור שהגעתם ממנו כבר לא מעודכן.
+        אולי אחד מאלה יעזור:
+      </p>
+      <ul class="mt-8 flex flex-wrap justify-center gap-3">
+        {
+          suggestions.map((link) => (
+            <li>
+              <a
+                href={withBase(link.href)}
+                class="inline-block border border-dashed border-stone px-4 py-2 font-body text-sm font-bold text-ink transition-colors hover:border-rust hover:text-rust"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a
+        href={withBase("/")}
+        class="mt-8 inline-block border border-ink bg-ink px-5 py-2.5 font-body text-sm font-bold text-paper transition-colors hover:border-rope hover:bg-rope"
+      >
+        חזרה לעמוד הבית
+      </a>
+    </div>
+  </section>
+</BaseLayout>

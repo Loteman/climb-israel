@@ -19,7 +19,7 @@ guidebooks:
   - label: "התאחדות הטיפוס (ILCA)"
     url: "https://drive.google.com/file/d/1tDFtpZ03JMKVVaHgvg80QmOK7GmjWt19/view?usp=sharing"
   - label: "המדריך המקורי של נחל עמוד"
-    url: "http://wiki.imga.org.il/Topos/Amud%20Guidebook.pdf"
+    url: "https://wiki.imga.org.il/Topos/Amud%20Guidebook.pdf"
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A0%D7%97%D7%9C_%D7%A2%D7%9E%D7%95%D7%93"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---

@@ -8,9 +8,9 @@ region: north
 description: "נחל בהר הכרמל היורד לים דרך יישוב מגדים - אחד מאתרי הטיפוס הראשונים בכרמל, מסוף שנות ה-70 (בעיקר מטפסי חיפה), עם המשך פיתוח משמעותי בשנות ה-80 בידי יואב ניר וחברים. רוב המסלולים על ציוד טראד. האתר נמצא בתחום שמורת טבע והטיפוס בו אסור - המידע מובא כתיעוד היסטורי בלבד."
 guidebooks:
   - label: "המדריך המקורי מאת דורון בר"
-    url: "http://wiki.imga.org.il/Topos/doronBar_Megadim_Sefoonim_Old.pdf"
+    url: "https://wiki.imga.org.il/Topos/doronBar_Megadim_Sefoonim_Old.pdf"
   - label: "המדריך המעודכן מאת דורון בר"
-    url: "http://wiki.imga.org.il/Topos/doronBar_Megadim_Sefoonim.pdf"
+    url: "https://wiki.imga.org.il/Topos/doronBar_Megadim_Sefoonim.pdf"
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A0%D7%97%D7%9C_%D7%9E%D7%92%D7%93%D7%99%D7%9D"
 climbingProhibited: true
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."

@@ -3,6 +3,7 @@ import { withBase } from "../../lib/url";
 import { getCollection, render } from "astro:content";
 import GuideLayout from "../../layouts/GuideLayout.astro";
 import Badge from "../../components/ui/Badge.astro";
+import { TECHNIQUE_CATEGORY_LABELS } from "../../lib/labels";
 
 export async function getStaticPaths() {
   const techniques = await getCollection("techniques");
@@ -15,18 +16,12 @@ export async function getStaticPaths() {
 const { technique } = Astro.props;
 const { Content } = await render(technique);
 
-const categoryLabels: Record<string, string> = {
-  fundamentals: "יסודות התנועה",
-  "advanced-movement": "טכניקות תנועה מתקדמות",
-  "effort-safety": "ניהול מאמץ ובטיחות",
-};
-
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Article",
   headline: `${technique.data.nameHe} (${technique.data.nameEn})`,
   description: technique.data.summary,
-  articleSection: categoryLabels[technique.data.category],
+  articleSection: TECHNIQUE_CATEGORY_LABELS[technique.data.category],
 };
 ---
 
@@ -40,7 +35,7 @@ const jsonLd = {
   ]}
   jsonLd={jsonLd}
 >
-  <Badge variant="olive">{categoryLabels[technique.data.category]}</Badge>
+  <Badge variant="olive">{TECHNIQUE_CATEGORY_LABELS[technique.data.category]}</Badge>
   <h1 class="mt-3 font-display text-3xl font-bold text-ink">
     {technique.data.nameHe}
   </h1>

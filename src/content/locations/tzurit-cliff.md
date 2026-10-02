@@ -17,9 +17,9 @@ guidebooks:
   - label: "התאחדות הטיפוס (ILCA)"
     url: "https://drive.google.com/file/d/1H4kfwhU07xMQar50D9dgt_9EFi7yGVGt/view?usp=sharing"
   - label: "טופו המצוק העיקרי"
-    url: "http://wiki.imga.org.il/Topos/TzuritCrag.pdf"
+    url: "https://wiki.imga.org.il/Topos/TzuritCrag.pdf"
   - label: "גיידבוק בולדרינג"
-    url: "http://wiki.imga.org.il/Topos/tzurit.pdf"
+    url: "https://wiki.imga.org.il/Topos/tzurit.pdf"
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A6%D7%95%D7%A8%D7%99%D7%AA"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---

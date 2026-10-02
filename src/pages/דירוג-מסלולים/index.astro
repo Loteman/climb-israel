@@ -20,7 +20,7 @@ const frenchScale = [
   { grade: "6a - 6c", level: "בינוני", desc: "הטווח שבו רוב המטפסים הקבועים בקיר הטיפוס מתאמנים - דורש סיבולת וטכניקה." },
   { grade: "7a - 7c", level: "מתקדם", desc: "רמה תחרותית-חובבנית. דורש אימון ייעודי, כוח אמות וסיבולת גבוהה." },
   { grade: "8a - 8c", level: "מתקדם מאוד", desc: "רמת מטפסים מקצועיים וספורטאי תחרויות." },
-  { grade: "9a+", level: "עלית עולמית", desc: "הרף העליון בעולם הטיפוס הספורטיבי - מספר קטן של מסלולים כאלה נסגרו אי פעם." },
+  { grade: "9a - 9c", level: "עלית עולמית", desc: "הרף העליון בעולם הטיפוס הספורטיבי - מספר קטן של מסלולים כאלה נסגרו אי פעם." },
 ];
 
 const comparison = [
@@ -34,6 +34,20 @@ const comparison = [
   { v: "V14", french: "8c+" },
 ];
 
+// Standard V <-> Fontainebleau boulder conversion (as in most published
+// grade-comparison charts). Font is the other common bouldering scale,
+// mainly in Europe - easy to confuse with French *sport* grades above.
+const fontComparison = [
+  { v: "V0", font: "4" },
+  { v: "V2", font: "5+" },
+  { v: "V4", font: "6B / 6B+" },
+  { v: "V6", font: "7A" },
+  { v: "V8", font: "7B / 7B+" },
+  { v: "V10", font: "7C+" },
+  { v: "V12", font: "8A+" },
+  { v: "V14", font: "8B+" },
+];
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Article",
@@ -45,7 +59,7 @@ const jsonLd = {
 
 <BaseLayout
   title="דירוג מסלולים - מדריך לסולמות הדירוג"
-  description="מדריך לדירוג קושי בטיפוס: סולם V בבולדרינג, הסולם הצרפתי בטיפוס ספורטיבי, טבלת השוואה ביניהם, ולמה גראד הוא תמיד קירוב ולא מדע מדויק."
+  description="מדריך לדירוג קושי בטיפוס: סולם V וסולם פונטנבלו בבולדרינג, הסולם הצרפתי בטיפוס ספורטיבי, טבלאות השוואה, ולמה גראד הוא תמיד קירוב ולא מדע מדויק."
   jsonLd={jsonLd}
 >
   <section class="relative overflow-hidden border-b border-stone/40 py-14">
@@ -70,7 +84,7 @@ const jsonLd = {
         הוא נקבע על ידי ראוט סטרים או על ידי הצבעה קהילתית לאורך זמן,
         ומושפע מגובה המטפס, אורך הזרועים, וסגנון אישי (מסלול "כוחני" ירגיש
         קשה יותר למטפס טכני, ולהפך). אותו גראד יכול להרגיש שונה לגמרי בין
-        שני אולמות, ובטח בין קיר מלאכותי לסלע טבעי. אל תתנו למספר לקבוע
+        שני קירות טיפוס, ובטח בין קיר מלאכותי לסלע טבעי. אל תתנו למספר לקבוע
         לכם איך מרגישים לגבי הטיפוס שלכם.
       </p>
     </div>
@@ -81,7 +95,8 @@ const jsonLd = {
       סולם V - בולדרינג
     </h2>
     <p class="mt-2 max-w-2xl text-ink-soft">
-      פותח על ידי המטפס ג'ון שרמן (John "Vermin" Sherman) בשנות ה-90, ונע
+      פותח על ידי המטפס ג'ון שרמן (John "Vermin" Sherman) באזור Hueco Tanks
+      בטקסס בסוף שנות ה-80, ופורסם לראשונה במדריך שלו ב-1991. הסולם נע
       מ-VB (הכי קל) עד לרמות העלית שמתקדמות כל הזמן - כיום עד בסביבות V17.
     </p>
     <div class="mt-5 hidden overflow-hidden border border-stone/50 sm:block">
@@ -98,7 +113,7 @@ const jsonLd = {
             vScale.map((row, i) => (
               <tr class={i % 2 === 1 ? "bg-paper-dark/40" : ""}>
                 <td class="border-t border-stone/30 p-4 align-top font-mono text-sm font-bold text-rust">
-                  {row.grade}
+                  <span dir="ltr">{row.grade}</span>
                 </td>
                 <td class="border-t border-stone/30 p-4 align-top">
                   <Badge variant="olive">{row.level}</Badge>
@@ -117,7 +132,7 @@ const jsonLd = {
         vScale.map((row) => (
           <li class="border border-stone/50 bg-paper-dark p-4">
             <div class="flex items-center gap-2">
-              <span class="font-mono text-sm font-bold text-rust">{row.grade}</span>
+              <span class="font-mono text-sm font-bold text-rust"><span dir="ltr">{row.grade}</span></span>
               <Badge variant="olive">{row.level}</Badge>
             </div>
             <p class="mt-2 text-sm leading-relaxed text-ink-soft">{row.desc}</p>
@@ -149,7 +164,7 @@ const jsonLd = {
             frenchScale.map((row, i) => (
               <tr class={i % 2 === 1 ? "bg-paper-dark/40" : ""}>
                 <td class="border-t border-stone/30 p-4 align-top font-mono text-sm font-bold text-rust">
-                  {row.grade}
+                  <span dir="ltr">{row.grade}</span>
                 </td>
                 <td class="border-t border-stone/30 p-4 align-top">
                   <Badge variant="olive">{row.level}</Badge>
@@ -168,7 +183,7 @@ const jsonLd = {
         frenchScale.map((row) => (
           <li class="border border-stone/50 bg-paper-dark p-4">
             <div class="flex items-center gap-2">
-              <span class="font-mono text-sm font-bold text-rust">{row.grade}</span>
+              <span class="font-mono text-sm font-bold text-rust"><span dir="ltr">{row.grade}</span></span>
               <Badge variant="olive">{row.level}</Badge>
             </div>
             <p class="mt-2 text-sm leading-relaxed text-ink-soft">{row.desc}</p>
@@ -193,7 +208,7 @@ const jsonLd = {
           <div class="border border-stone/50 bg-paper-dark p-4 text-center">
             <div class="font-mono text-lg font-bold text-rope">{row.v}</div>
             <div class="mt-1 text-xs text-ink-soft">≈</div>
-            <div class="font-mono text-sm text-ink">{row.french}</div>
+            <div class="font-mono text-sm text-ink" dir="ltr">{row.french}</div>
           </div>
         ))
       }
@@ -202,6 +217,30 @@ const jsonLd = {
       * ההשוואה מקורבת בלבד ומשתנה בין מקורות - אל תתייחסו אליה כאל
       נוסחה מדויקת.
     </p>
+
+    <SectionDivider class="my-10 text-stone/40" />
+
+    <h2 class="font-display text-2xl font-bold text-ink">
+      ומה זה 6A עם אות גדולה? סולם פונטנבלו
+    </h2>
+    <p class="mt-2 max-w-2xl text-ink-soft">
+      מלבד סולם ה-V יש לבולדרינג סולם נפוץ נוסף - סולם פונטנבלו (Font), על
+      שם אזור הבולדרינג המפורסם בצרפת. הוא נפוץ באירופה ובחלק מהגיידבוקים,
+      ונכתב עם <strong class="text-rust">אות גדולה</strong> (6A, 7B+) - בניגוד
+      לסולם הצרפתי לטיפוס עם חבל, שנכתב עם אות קטנה (6a, 7b+). למרות הדמיון
+      בכתיב, אלה שני סולמות שונים: בולדר 6A קשה בהרבה ממסלול הובלה 6a.
+    </p>
+    <div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      {
+        fontComparison.map((row) => (
+          <div class="border border-stone/50 bg-paper-dark p-4 text-center">
+            <div class="font-mono text-lg font-bold text-rope">{row.v}</div>
+            <div class="mt-1 text-xs text-ink-soft">≈</div>
+            <div class="font-mono text-sm text-ink" dir="ltr">{row.font}</div>
+          </div>
+        ))
+      }
+    </div>
 
     <div class="mt-10 border border-dashed border-stone/60 bg-paper-dark p-5">
       <p class="font-display font-bold text-ink">כמה טיפים מעשיים</p>

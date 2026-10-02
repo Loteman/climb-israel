@@ -2,6 +2,7 @@
 import { withBase } from "../../lib/url";
 import type { CollectionEntry } from "astro:content";
 import Badge from "../ui/Badge.astro";
+import { ENVIRONMENT_LABELS, ENVIRONMENT_VARIANTS } from "../../lib/labels";
 
 interface Props {
   disciplines: CollectionEntry<"disciplines">[];
@@ -17,16 +18,6 @@ const sorted = [...disciplines].sort((a, b) => a.data.order - b.data.order);
 const primary = sorted.slice(0, 4);
 const rest = sorted.slice(4);
 
-const envLabels: Record<string, string> = {
-  indoor: "קיר סגור",
-  outdoor: "טבע",
-  both: "קיר וטבע",
-};
-const envVariant: Record<string, "rope" | "olive" | "rust"> = {
-  indoor: "rope",
-  outdoor: "olive",
-  both: "rust",
-};
 ---
 
 <div class="hidden overflow-hidden border border-stone/50 sm:block">
@@ -54,8 +45,8 @@ const envVariant: Record<string, "rope" | "olive" | "rust"> = {
               </div>
             </td>
             <td class="border-t border-stone/30 p-4 align-top">
-              <Badge variant={envVariant[d.data.environment]}>
-                {envLabels[d.data.environment]}
+              <Badge variant={ENVIRONMENT_VARIANTS[d.data.environment]}>
+                {ENVIRONMENT_LABELS[d.data.environment]}
               </Badge>
             </td>
             <td class="border-t border-stone/30 p-4 align-top text-sm leading-relaxed text-ink-soft">
@@ -91,8 +82,8 @@ const envVariant: Record<string, "rope" | "olive" | "rust"> = {
               </div>
             </td>
             <td class="border-t border-stone/30 p-4 align-top">
-              <Badge variant={envVariant[d.data.environment]}>
-                {envLabels[d.data.environment]}
+              <Badge variant={ENVIRONMENT_VARIANTS[d.data.environment]}>
+                {ENVIRONMENT_LABELS[d.data.environment]}
               </Badge>
             </td>
             <td class="border-t border-stone/30 p-4 align-top text-sm leading-relaxed text-ink-soft">
@@ -113,8 +104,8 @@ const envVariant: Record<string, "rope" | "olive" | "rust"> = {
           {d.data.nameHe}
         </a>
         <div class="mt-1 flex items-center gap-2">
-          <Badge variant={envVariant[d.data.environment]}>
-            {envLabels[d.data.environment]}
+          <Badge variant={ENVIRONMENT_VARIANTS[d.data.environment]}>
+            {ENVIRONMENT_LABELS[d.data.environment]}
           </Badge>
           <span class="font-mono text-xs text-ink-soft">{d.data.nameEn}</span>
         </div>
@@ -137,8 +128,8 @@ const envVariant: Record<string, "rope" | "olive" | "rust"> = {
               {d.data.nameHe}
             </a>
             <div class="mt-1 flex items-center gap-2">
-              <Badge variant={envVariant[d.data.environment]}>
-                {envLabels[d.data.environment]}
+              <Badge variant={ENVIRONMENT_VARIANTS[d.data.environment]}>
+                {ENVIRONMENT_LABELS[d.data.environment]}
               </Badge>
               <span class="font-mono text-xs text-ink-soft">{d.data.nameEn}</span>
             </div>

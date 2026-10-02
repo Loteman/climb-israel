@@ -3,16 +3,10 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TopoBackground from "../../components/layout/TopoBackground.astro";
 import InjuryPreventionCard from "../../components/injury-prevention/InjuryPreventionCard.astro";
+import MedicalDisclaimer from "../../components/injury-prevention/MedicalDisclaimer.astro";
+import { INJURY_CATEGORY_LABELS, orderedKeys } from "../../lib/labels";
 
 const entries = await getCollection("injury-prevention");
-
-const categoryLabels: Record<string, string> = {
-  "warmup-prep": "חימום והכנה",
-  "common-injuries": "פציעות נפוצות ומניעתן",
-  "recovery-training": "התאוששות ואימון מונע",
-};
-
-const categories = ["warmup-prep", "common-injuries", "recovery-training"];
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -42,9 +36,10 @@ const jsonLd = {
   </section>
 
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <MedicalDisclaimer class="mb-12 max-w-3xl" />
     <div class="space-y-14">
       {
-        categories.map((cat) => {
+        orderedKeys(INJURY_CATEGORY_LABELS).map((cat) => {
           const items = entries
             .filter((e) => e.data.category === cat)
             .sort((a, b) => a.data.order - b.data.order);
@@ -52,7 +47,7 @@ const jsonLd = {
           return (
             <section>
               <h2 class="font-display text-xl font-bold text-ink">
-                {categoryLabels[cat]}
+                {INJURY_CATEGORY_LABELS[cat]}
               </h2>
               <ul class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {items.map((entry) => (

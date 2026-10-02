@@ -8,6 +8,7 @@ city: "אשדוד"
 chain: "Monkeys"
 address: "BMALL עד הלום"
 phone: "08-680-6000"
+website: "https://www.monkeysclimbinggym.co.il/"
 coordinates:
   lat: 31.79773
   lng: 34.65299

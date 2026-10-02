@@ -1,0 +1,17 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<aside
+  class={`border border-dashed border-stone/60 bg-paper-dark p-4 text-sm leading-relaxed text-ink-soft ${className}`}
+  aria-label="הבהרה רפואית"
+>
+  <strong class="text-rust">המידע כאן כללי ואינו תחליף לייעוץ רפואי.</strong>{" "}
+  כאב חד או פתאומי, "פופ" שנשמע באצבע, נפיחות, או כאב שלא חולף אחרי כמה ימי
+  מנוחה - הפסיקו לטפס ופנו לרופא או לפיזיותרפיסט, רצוי כזה שמכיר פציעות
+  טיפוס.
+</aside>

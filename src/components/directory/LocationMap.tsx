@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import type L from "leaflet";
 import { withBase } from "../../lib/url";
+import { REGION_LABELS } from "../../lib/labels";
 
 export interface MapLocation {
   id: string;
@@ -15,16 +16,6 @@ export interface MapLocation {
 interface Props {
   locations: MapLocation[];
 }
-
-const regionLabels: Record<string, string> = {
-  north: "צפון",
-  sharon: "שרון",
-  center: "מרכז",
-  shfela: "שפלה",
-  jerusalem: "אזור ירושלים",
-  yosh: "יהודה ושומרון",
-  south: "דרום",
-};
 
 // Israel's rough bounding box - used as the default view before markers
 // exist for the currently selected kind (e.g. crags before they're
@@ -41,13 +32,16 @@ const ISRAEL_BOUNDS: [[number, number], [number, number]] = [
 export default function LocationMap({ locations }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [emptyKind, setEmptyKind] = useState<string | null>(null);
+  const [status, setStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
 
   useEffect(() => {
     let cancelled = false;
     let map: L.Map | null = null;
     let Lmod: typeof L | null = null;
+    let initStarted = false;
     let isMapVisible = false;
-    let lastVisibleIds: string[] = locations.map((l) => l.id);
+    let lastVisibleIds: string[] = window.__directoryFilterState?.visibleIds ?? locations.map((l) => l.id);
+    let lastKind = window.__directoryFilterState?.kind ?? "gym";
     const markers = new Map<string, L.Marker>();
 
     function applyVisible(visibleIds: Set<string>): L.Marker[] {
@@ -80,6 +74,8 @@ export default function LocationMap({ locations }: Props) {
 
     function handleFilterChange(visibleIds: string[], kind: string) {
       lastVisibleIds = visibleIds;
+      lastKind = kind;
+      if (!map) return;
       const shown = applyVisible(new Set(visibleIds));
       setEmptyKind(visibleIds.length > 0 && shown.length === 0 ? kind : null);
       fitToShown(shown);
@@ -90,19 +86,24 @@ export default function LocationMap({ locations }: Props) {
       handleFilterChange(visibleIds, kind);
     }
 
-    function onViewMode(e: Event) {
-      isMapVisible = (e as CustomEvent<string>).detail === "map";
-      if (isMapVisible) {
-        requestAnimationFrame(() => {
-          map?.invalidateSize();
-          fitToShown(applyVisible(new Set(lastVisibleIds)));
-        });
+    // Leaflet (~45KB gzipped JS + its CSS) is only fetched the first time
+    // someone actually opens the map view, not on every directory visit.
+    async function initMap() {
+      initStarted = true;
+      setStatus("loading");
+      let leaflet: typeof L;
+      try {
+        [leaflet] = await Promise.all([
+          import("leaflet").then((m) => m.default),
+          import("leaflet/dist/leaflet.css"),
+        ]);
+      } catch {
+        // Flaky connection (or a deploy that replaced the chunk): let the
+        // next switch to the map view try again instead of hanging.
+        initStarted = false;
+        if (!cancelled) setStatus("error");
+        return;
       }
-    }
-
-    (async () => {
-      const leaflet = (await import("leaflet")).default;
-      await import("leaflet/dist/leaflet.css");
       if (cancelled || !containerRef.current) return;
 
       Lmod = leaflet;
@@ -134,7 +135,10 @@ export default function LocationMap({ locations }: Props) {
       });
 
       for (const loc of locations) {
-        const marker = leaflet.marker([loc.lat, loc.lng], { icon: dotIcon });
+        const marker = leaflet.marker([loc.lat, loc.lng], {
+          icon: dotIcon,
+          title: loc.name,
+        });
 
         marker.bindPopup(
           () => {
@@ -142,18 +146,18 @@ export default function LocationMap({ locations }: Props) {
             wrap.className = "min-w-[170px]";
 
             const title = document.createElement("p");
-            title.className = "font-display font-bold text-ink";
+            title.className = "font-display font-bold";
             title.textContent = loc.name;
             wrap.appendChild(title);
 
             const sub = document.createElement("p");
-            sub.className = "mt-1 text-xs text-ink-soft";
-            sub.textContent = [regionLabels[loc.region], loc.city].filter(Boolean).join(" · ");
+            sub.className = "text-xs text-ink-soft";
+            sub.textContent = [REGION_LABELS[loc.region], loc.city].filter(Boolean).join(" · ");
             wrap.appendChild(sub);
 
             const link = document.createElement("a");
             link.href = withBase(`/מקומות-טיפוס/${loc.id}/`);
-            link.className = "mt-2 inline-block font-body text-xs font-bold text-rope hover:underline";
+            link.className = "text-xs hover:underline";
             link.textContent = "לדף המקום ←";
             wrap.appendChild(link);
 
@@ -167,14 +171,33 @@ export default function LocationMap({ locations }: Props) {
         markers.set(loc.id, marker);
       }
 
-      applyVisible(new Set(locations.map((l) => l.id)));
+      setStatus("ready");
+      map.invalidateSize();
+      handleFilterChange(lastVisibleIds, lastKind);
+    }
 
-      const state = window.__directoryFilterState;
-      if (state) handleFilterChange(state.visibleIds, state.kind);
+    function showMap() {
+      isMapVisible = true;
+      if (!initStarted) {
+        void initMap();
+        return;
+      }
+      requestAnimationFrame(() => {
+        map?.invalidateSize();
+        fitToShown(applyVisible(new Set(lastVisibleIds)));
+      });
+    }
 
-      window.addEventListener("directory:filterchange", onFilterChange);
-      window.addEventListener("directory:viewmode", onViewMode);
-    })();
+    function onViewMode(e: Event) {
+      if ((e as CustomEvent<string>).detail === "map") showMap();
+      else isMapVisible = false;
+    }
+
+    window.addEventListener("directory:filterchange", onFilterChange);
+    window.addEventListener("directory:viewmode", onViewMode);
+    // The filters island may have hydrated first and already switched to
+    // the map (e.g. a shared ?view=map link) before these listeners existed.
+    if (window.__directoryViewMode === "map") showMap();
 
     return () => {
       cancelled = true;
@@ -187,13 +210,30 @@ export default function LocationMap({ locations }: Props) {
 
   return (
     <div>
-      <div
-        ref={containerRef}
-        class="h-[420px] w-full border border-stone/50 sm:h-[520px]"
-      />
+      {/* The loading note is a sibling, not a child, of the map container:
+          Leaflet takes over that element's children once it initializes. */}
+      <div class="relative">
+        <div
+          ref={containerRef}
+          class="h-[420px] w-full border border-stone/50 bg-paper-dark sm:h-[520px]"
+          role="region"
+          aria-label="מפת מקומות הטיפוס"
+        />
+        {status === "loading" && (
+          <p class="pointer-events-none absolute inset-0 flex items-center justify-center font-body text-sm text-ink-soft">
+            טוען מפה...
+          </p>
+        )}
+        {status === "error" && (
+          <p class="absolute inset-0 flex items-center justify-center p-6 text-center font-body text-sm text-ink-soft">
+            לא הצלחנו לטעון את המפה - בדקו את החיבור לאינטרנט ונסו שוב. כל
+            המקומות זמינים גם בתצוגת אריחים וטבלה.
+          </p>
+        )}
+      </div>
       {emptyKind === "crag" && (
         <p class="mt-3 text-center font-body text-sm text-ink-soft">
-          עדיין אין מיקום מדויק על המפה לאתרי טבע - בקרוב.
+          לאתרים שנבחרו עדיין אין מיקום מדויק על המפה.
         </p>
       )}
     </div>

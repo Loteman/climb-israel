@@ -3,22 +3,9 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TopoBackground from "../../components/layout/TopoBackground.astro";
 import TermCard from "../../components/glossary/TermCard.astro";
+import { GLOSSARY_CATEGORY_LABELS, orderedKeys } from "../../lib/labels";
 
 const terms = await getCollection("glossary");
-
-const categoryLabels: Record<string, string> = {
-  "movement-technique": "תנועה וטכניקה על הקיר",
-  "sending-attempts": "הצלחה, ניסיונות ומהלך הטיפוס",
-  "discipline-style": "סגנונות טיפוס",
-  "wall-safety": "מושגי מבנה קיר ובטיחות",
-};
-
-const categories = [
-  "movement-technique",
-  "sending-attempts",
-  "discipline-style",
-  "wall-safety",
-];
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -49,14 +36,14 @@ const jsonLd = {
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
     <div class="space-y-14">
       {
-        categories.map((cat) => {
+        orderedKeys(GLOSSARY_CATEGORY_LABELS).map((cat) => {
           const items = terms
             .filter((t) => t.data.category === cat)
             .sort((a, b) => a.data.order - b.data.order);
           return (
             <section>
               <h2 class="font-display text-xl font-bold text-ink">
-                {categoryLabels[cat]}
+                {GLOSSARY_CATEGORY_LABELS[cat]}
               </h2>
               <ul class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {items.map((term) => (

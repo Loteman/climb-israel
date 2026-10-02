@@ -1,4 +1,5 @@
-import { defineCollection, z, reference } from "astro:content";
+import { defineCollection, reference } from "astro:content";
+import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 
 const holdFamily = z.enum([
@@ -129,9 +130,10 @@ const locationBase = {
   description: z.string().optional(),
   sourceNote: z.string().optional(),
   // Not yet available for any location - do not invent a handle.
-  instagram: z.string().url().optional(),
-  // Geocoded from `address` (gyms) or looked up by name (crags) - see
-  // scripts/geocode-locations.mjs. Powers the "ניווט" button and the map.
+  instagram: z.url().optional(),
+  // Geocoded from `address` (gyms) or from the crag's published access
+  // directions/map (crags) - set per location in scripts/generate-content.ts.
+  // Powers the map, and the "ניווט" buttons for crags.
   coordinates: z.object({ lat: z.number(), lng: z.number() }).optional(),
 };
 
@@ -143,7 +145,7 @@ const gymSchema = z.object({
   address: z.string().optional(),
   hours: z.record(z.string(), z.string()).optional(),
   phone: z.string().optional(),
-  website: z.string().url().optional(),
+  website: z.url().optional(),
 });
 
 const cragSchema = z.object({
@@ -164,7 +166,7 @@ const cragSchema = z.object({
   // external link); the tile/table show only the first, the crag page
   // lists all of them.
   guidebooks: z.array(z.object({ label: z.string(), url: z.string() })).optional(),
-  externalBetaUrl: z.string().url().optional(), // extra map/beta link when ILCA links one that isn't the PDF guidebook
+  externalBetaUrl: z.url().optional(), // extra map/beta link when ILCA links one that isn't the PDF guidebook
   // Site is documented (per the IMGA wiki) as sitting inside a nature
   // reserve where climbing is prohibited. Kept in the collection for the
   // record, but filtered out of every public listing/detail page via

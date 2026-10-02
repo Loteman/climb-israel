@@ -1,28 +1,27 @@
 ---
 import SectionDivider from "../ui/SectionDivider.astro";
 import { withBase } from "../../lib/url";
+import {
+  ABOUT_LINK,
+  ACCESSIBILITY_LINK,
+  BEGINNER_GUIDE,
+  ENVIRONMENT_LINKS,
+  GUIDES,
+  HISTORY_LINK,
+  LOCATIONS_LINK,
+} from "../../lib/site-nav";
+import { CONTACT_URL, SITE_NAME } from "../../site-config";
 
 const columns = [
-  {
-    title: "מדריכים",
-    links: [
-      { href: "/אחיזות-טיפוס/", label: "אחיזות טיפוס" },
-      { href: "/מושגי-טיפוס/", label: "מושגי טיפוס" },
-      { href: "/דירוג-מסלולים/", label: "דירוג מסלולים" },
-      { href: "/סגנונות-טיפוס/", label: "סגנונות טיפוס" },
-      { href: "/ציוד-טיפוס/", label: "ציוד טיפוס" },
-      { href: "/טכניקות-טיפוס/", label: "טכניקות טיפוס" },
-      { href: "/מניעת-פציעות/", label: "מניעת פציעות" },
-    ],
-  },
+  { title: "מדריכים", links: GUIDES },
   {
     title: "אתר",
     links: [
-      { href: "/מדריך-למתחילים/", label: "מדריך למתחילים" },
-      { href: "/טיפוס-באולם/", label: "קיר טיפוס (מלאכותי)" },
-      { href: "/טיפוס-בטבע/", label: "טיפוס בטבע" },
-      { href: "/מקומות-טיפוס/", label: "מקומות טיפוס בישראל" },
-      { href: "/אודות/", label: "אודות הפרויקט" },
+      BEGINNER_GUIDE,
+      ...ENVIRONMENT_LINKS,
+      { ...LOCATIONS_LINK, label: "מקומות טיפוס בישראל" },
+      HISTORY_LINK,
+      { ...ABOUT_LINK, label: "אודות הפרויקט" },
     ],
   },
 ];
@@ -33,38 +32,46 @@ const columns = [
   <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
     <div class="grid gap-8 sm:grid-cols-[2fr_1fr_1fr]">
       <div>
-        <p class="font-display text-lg font-bold text-ink">טיפוס ישראל</p>
+        <p class="font-display text-lg font-bold text-ink">{SITE_NAME}</p>
         <p class="mt-2 max-w-sm text-sm leading-relaxed text-ink-soft">
           מאגר מידע חינמי וקהילתי לטיפוס בישראל - בולדרינג וטיפוס בטבע. המידע
           נאסף ומתעדכן בהתנדבות; שעות פתיחה, מחירים ותנאי שטח עשויים להשתנות
           - כדאי לוודא מול המקור לפני יציאה.
         </p>
+        <a
+          href={CONTACT_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-3 inline-block font-body text-sm font-bold text-rope hover:underline"
+        >
+          מצאתם טעות? דווחו לנו ←
+        </a>
       </div>
       {
         columns.map((col) => (
-          <div>
-            <p class="font-body text-xs font-bold uppercase tracking-wide text-ink-soft">
-              {col.title}
-            </p>
+          <nav aria-label={col.title}>
+            <p class="font-body text-xs font-bold tracking-wide text-ink-soft">{col.title}</p>
             <ul class="mt-3 space-y-2">
               {col.links.map((link) => (
                 <li>
-                  <a
-                    href={withBase(link.href)}
-                    class="text-sm text-ink hover:text-rust"
-                  >
+                  <a href={withBase(link.href)} class="text-sm text-ink hover:text-rust">
                     {link.label}
                   </a>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
         ))
       }
     </div>
-    <p class="mt-10 font-body text-xs text-ink-soft">
-      © {new Date().getFullYear()} טיפוס ישראל · טפסו בזהירות, תמיד עם ביטחון
-      מתאים.
-    </p>
+    <div class="mt-10 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 font-body text-xs text-ink-soft">
+      <p>
+        © {new Date().getFullYear()} {SITE_NAME} · טפסו בזהירות, תמיד עם אבטחה מתאימה.
+      </p>
+      <p class="flex flex-wrap gap-x-4 gap-y-1">
+        <a href={withBase(`${ABOUT_LINK.href}#sources`)} class="hover:text-rust">מקורות וזכויות יוצרים</a>
+        <a href={withBase(ACCESSIBILITY_LINK.href)} class="hover:text-rust">{ACCESSIBILITY_LINK.label}</a>
+      </p>
+    </div>
   </div>
 </footer>

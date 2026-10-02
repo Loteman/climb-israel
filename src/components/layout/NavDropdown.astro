@@ -1,26 +1,23 @@
 ---
 import { withBase } from "../../lib/url";
-
-interface Item {
-  href: string;
-  label: string;
-}
+import { currentPathname, linkState } from "../../lib/active-link";
+import type { NavLink } from "../../lib/site-nav";
 
 interface Group {
   label: string;
-  items: Item[];
+  items: NavLink[];
 }
 
 interface Props {
   label: string;
-  items?: Item[];
+  items?: NavLink[];
   groups?: Group[];
 }
 
 const { label, items, groups } = Astro.props;
-const currentPath = Astro.url.pathname;
-const allItems = groups ? groups.flatMap((g) => g.items) : (items ?? []);
-const active = allItems.some((item) => currentPath.startsWith(withBase(item.href)));
+const path = currentPathname(Astro.url);
+const allGroups: Group[] = groups ?? [{ label: "", items: items ?? [] }];
+const active = allGroups.some((g) => g.items.some((item) => linkState(path, item.href)));
 ---
 
 <details class="group relative">
@@ -35,36 +32,31 @@ const active = allItems.some((item) => currentPath.startsWith(withBase(item.href
       <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
     </svg>
   </summary>
-  <nav
-    class="absolute start-0 top-full z-50 mt-2 w-56 border border-stone/50 bg-paper-dark p-2 shadow-lg"
-    aria-label={label}
-  >
+  <div class="absolute start-0 top-full z-50 mt-2 w-56 border border-stone/50 bg-paper-dark p-2 shadow-lg">
     {
-      groups
-        ? groups.map((group, i) => (
-            <Fragment>
-              {i > 0 && <div class="my-1 border-t border-stone/40" />}
-              <p class="px-3 pt-1.5 pb-1 font-mono text-[11px] uppercase tracking-wide text-ink-soft/70">
-                {group.label}
-              </p>
-              {group.items.map((item) => (
-                <a
-                  href={withBase(item.href)}
-                  class="block rounded-sm px-3 py-2 font-body text-sm font-semibold text-ink hover:bg-paper hover:text-rust"
-                >
-                  {item.label}
-                </a>
-              ))}
-            </Fragment>
-          ))
-        : items?.map((item) => (
-            <a
-              href={withBase(item.href)}
-              class="block rounded-sm px-3 py-2 font-body text-sm font-semibold text-ink hover:bg-paper hover:text-rust"
-            >
-              {item.label}
-            </a>
-          ))
+      allGroups.map((group, i) => (
+        <Fragment>
+          {i > 0 && <div class="my-1 border-t border-stone/40" />}
+          {group.label && (
+            <p class="px-3 pt-1.5 pb-1 font-body text-xs font-bold text-ink-soft">{group.label}</p>
+          )}
+          {group.items.map((item) => {
+            const state = linkState(path, item.href);
+            return (
+              <a
+                href={withBase(item.href)}
+                aria-current={state}
+                class:list={[
+                  "block rounded-sm px-3 py-2 font-body text-sm font-semibold hover:bg-paper hover:text-rust",
+                  state ? "text-rope" : "text-ink",
+                ]}
+              >
+                {item.label}
+              </a>
+            );
+          })}
+        </Fragment>
+      ))
     }
-  </nav>
+  </div>
 </details>

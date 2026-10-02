@@ -6,7 +6,7 @@ styles:
 region: south
 city: "מדרשת בן גוריון"
 address: "רח' אזור תעשייה"
-phone: "0549399829"
+phone: "054-939-9829"
 coordinates:
   lat: 30.85159
   lng: 34.78258

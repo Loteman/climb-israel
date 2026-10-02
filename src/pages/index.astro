@@ -1,5 +1,7 @@
 ---
 import { withBase } from "../lib/url";
+import { BEGINNER_GUIDE, GUIDES, GUIDE_LEVEL_LABELS, HISTORY_LINK } from "../lib/site-nav";
+import { SITE_NAME, SITE_URL } from "../site-config";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import TopoBackground from "../components/layout/TopoBackground.astro";
 import RouteLine from "../components/ui/RouteLine.astro";
@@ -8,61 +10,19 @@ import Badge from "../components/ui/Badge.astro";
 
 const guides = [
   {
-    href: "/מדריך-למתחילים/",
-    title: "מדריך למתחילים",
+    href: BEGINNER_GUIDE.href,
+    title: BEGINNER_GUIDE.label,
     badge: "התחילו כאן",
     variant: "rope" as const,
     desc: "אין לכם ניסיון קודם? הצעד הראשון - מה צריך לעשות, ואיפה כל שאר המדריכים נכנסים לתמונה.",
   },
-  {
-    href: "/אחיזות-טיפוס/",
-    title: "אחיזות טיפוס",
-    badge: "מתחילים",
-    variant: "rope" as const,
-    desc: "ג'אג, קרימפ, סלופר, פינץ' ועוד - כל סוגי האחיזות שתפגשו על קיר או על סלע, עם איורים.",
-  },
-  {
-    href: "/מושגי-טיפוס/",
-    title: "מושגי טיפוס",
-    badge: "מתחילים",
-    variant: "rope" as const,
-    desc: "בטא, קראקס, דיינו, היל הוק - מילון המונחים שכל מטפס משתמש בו בקיר.",
-  },
-  {
-    href: "/דירוג-מסלולים/",
-    title: "דירוג מסלולים",
-    badge: "מתחילים",
-    variant: "rope" as const,
-    desc: "מה זה V4? מה זה 6a? מדריך לסולם ה-V ולסולם הצרפתי, וטבלת השוואה ביניהם.",
-  },
-  {
-    href: "/סגנונות-טיפוס/",
-    title: "סגנונות טיפוס",
-    badge: "מעמיק",
-    variant: "rust" as const,
-    desc: "מה ההבדל בין בולדרינג, טופ-רופ, הובלה וטראד? מדריך משווה לכל סגנונות הטיפוס.",
-  },
-  {
-    href: "/ציוד-טיפוס/",
-    title: "ציוד טיפוס",
-    badge: "מעמיק",
-    variant: "rust" as const,
-    desc: "נעליים, מגנזיום, רתמות, חבלים ועד ציוד טראד - מה צריך ולמה.",
-  },
-  {
-    href: "/טכניקות-טיפוס/",
-    title: "טכניקות טיפוס",
-    badge: "מעמיק",
-    variant: "rust" as const,
-    desc: "עבודת רגליים, דגל ודרופ ני, פיתות, תנועה דינמית - איך לבצע נכון את התנועות שכל מטפס צריך.",
-  },
-  {
-    href: "/מניעת-פציעות/",
-    title: "מניעת פציעות",
-    badge: "מעמיק",
-    variant: "rust" as const,
-    desc: "חימום נכון, A2 Pulley, מרפק מטפסים ותפיסה בכתף - איך מזהים ומונעים את הפציעות הנפוצות בטיפוס.",
-  },
+  ...GUIDES.map((g) => ({
+    href: g.href,
+    title: g.label,
+    badge: GUIDE_LEVEL_LABELS[g.level],
+    variant: g.level === "beginner" ? ("rope" as const) : ("rust" as const),
+    desc: g.desc,
+  })),
 ];
 
 const environments = [
@@ -87,18 +47,38 @@ const quickLocationLinks = [
   { href: "/מקומות-טיפוס/?kind=crag&style=lead", label: "הובלה בטבע" },
   { href: "/מקומות-טיפוס/?kind=gym&style=bouldering", label: "בולדר בקיר טיפוס" },
   { href: "/מקומות-טיפוס/?kind=gym&style=lead", label: "הובלה בקיר טיפוס" },
+  { href: "/מקומות-טיפוס/?kind=crag&guidebook=1", label: "אתרי טבע עם גיידבוק" },
+];
+
+const homeUrl = new URL(withBase("/"), SITE_URL).toString();
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE_NAME,
+    url: homeUrl,
+    description: "מדריך חינמי וקהילתי לטיפוס בישראל - בולדרינג וטיפוס בטבע.",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: SITE_NAME,
+    url: homeUrl,
+    logo: new URL(withBase("/icons/icon-512.png"), SITE_URL).toString(),
+  },
 ];
 ---
 
 <BaseLayout
-  title="טיפוס ישראל"
+  title={SITE_NAME}
   description="מדריך חינמי וקהילתי לטיפוס בישראל - בולדרינג וטיפוס בטבע. אחיזות, מושגים, ציוד ומפת קירות ואתרי טיפוס בכל הארץ."
+  jsonLd={jsonLd}
 >
   <section class="relative overflow-hidden border-b border-stone/40 py-20">
     <TopoBackground class="text-contour" opacity={0.4} />
     <div class="relative mx-auto max-w-4xl px-4 text-center sm:px-6">
       <h1 class="font-display text-4xl font-bold text-ink sm:text-6xl">
-        טיפוס ישראל
+        {SITE_NAME}
       </h1>
       <p class="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-ink-soft">
         מאגר מידע קהילתי וחינמי לכל מי שרוצה לטפס - בולדרינג בקיר או בטבע,
@@ -221,12 +201,20 @@ const quickLocationLinks = [
         המידע נאסף בקפידה אך עשוי להשתנות (שעות פתיחה, מחירים, תנאי שטח) -
         כדאי תמיד לוודא מול המקור לפני יציאה לטיפוס.
       </p>
-      <a
-        href={withBase("/אודות/")}
-        class="mt-5 inline-block font-body text-sm font-bold text-rope hover:underline"
-      >
-        עוד על הפרויקט ←
-      </a>
+      <div class="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+        <a
+          href={withBase("/אודות/")}
+          class="font-body text-sm font-bold text-rope hover:underline"
+        >
+          עוד על הפרויקט ←
+        </a>
+        <a
+          href={withBase(HISTORY_LINK.href)}
+          class="font-body text-sm font-bold text-rope hover:underline"
+        >
+          {HISTORY_LINK.label} ←
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>

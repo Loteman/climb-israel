@@ -3,68 +3,40 @@ import { withBase, withBaseIfRelative } from "../../lib/url";
 import type { CollectionEntry } from "astro:content";
 import Badge from "../ui/Badge.astro";
 import NavigationButtons from "./NavigationButtons.astro";
+import { REGION_LABELS, STYLE_LABELS } from "../../lib/labels";
+import {
+  hasGuidebook,
+  locationNavTarget,
+  locationPlaceText,
+  locationSearchText,
+} from "../../lib/locations";
 
 interface Props {
   locations: CollectionEntry<"locations">[];
 }
 
 const { locations } = Astro.props;
-
-const styleLabels: Record<string, string> = {
-  bouldering: "בולדרינג",
-  lead: "הובלה",
-  "top-rope": "טופ-רופ",
-  speed: "טיפוס מהירות",
-  trad: "טראד",
-  "multi-pitch": "מולטי-פיץ'",
-  "via-ferrata": "ויה פראטה",
-};
-
-const regionLabels: Record<string, string> = {
-  north: "צפון",
-  sharon: "שרון",
-  center: "מרכז",
-  shfela: "שפלה",
-  jerusalem: "אזור ירושלים",
-  yosh: "יהודה ושומרון",
-  south: "דרום",
-};
+const thClass = "p-3 text-start font-display text-sm font-bold text-ink";
+const tdClass = "border-t border-stone/30 p-3 align-top";
 ---
 
 <div class="overflow-x-auto border border-stone/50">
   <table class="w-full min-w-[760px] border-collapse text-start">
+    <caption class="sr-only">מקומות טיפוס - טבלה</caption>
     <thead>
       <tr class="border-b border-stone/50 bg-paper-dark">
-        <th class="p-3 text-start font-display text-sm font-bold text-ink">שם</th>
-        <th class="p-3 text-start font-display text-sm font-bold text-ink">אזור</th>
-        <th class="p-3 text-start font-display text-sm font-bold text-ink">מיקום</th>
-        <th class="p-3 text-start font-display text-sm font-bold text-ink">סגנון</th>
-        <th class="p-3 text-start font-display text-sm font-bold text-ink">ניווט</th>
-        <th class="p-3 text-start font-display text-sm font-bold text-ink">נוסף</th>
+        <th scope="col" class={thClass}>שם</th>
+        <th scope="col" class={thClass}>אזור</th>
+        <th scope="col" class={thClass}>מיקום</th>
+        <th scope="col" class={thClass}>סגנון</th>
+        <th scope="col" class={thClass}>ניווט</th>
+        <th scope="col" class={thClass}>נוסף</th>
       </tr>
     </thead>
     <tbody>
       {
-        locations.map((location, i) => {
+        locations.map((location) => {
           const { data } = location;
-          const navQuery =
-            data.kind === "gym"
-              ? [data.address, data.city].filter(Boolean).join(", ")
-              : (data.locationDescription ?? data.name);
-          const locationText =
-            data.kind === "gym"
-              ? [data.city, data.address].filter(Boolean).join(", ")
-              : (data.locationDescription ?? "אין מידע");
-          const searchText = [
-            data.name,
-            data.kind === "gym" ? data.city : "",
-            regionLabels[data.region],
-            data.kind === "gym" ? (data.chain ?? "") : "",
-            data.kind === "gym" ? (data.address ?? "") : "",
-          ]
-            .join(" ")
-            .toLowerCase();
-
           return (
             <tr
               data-location-card
@@ -72,10 +44,11 @@ const regionLabels: Record<string, string> = {
               data-kind={data.kind}
               data-styles={data.styles.join(",")}
               data-region={data.region}
-              data-search={searchText}
-              class={i % 2 === 1 ? "bg-paper-dark/40" : ""}
+              data-guidebook={hasGuidebook(location) ? "true" : undefined}
+              data-search={locationSearchText(location)}
+              class="even:bg-paper-dark/40"
             >
-              <td class="border-t border-stone/30 p-3 align-top">
+              <th scope="row" class={`${tdClass} text-start font-normal`}>
                 <a
                   href={withBase(`/מקומות-טיפוס/${location.id}/`)}
                   class="font-display font-bold text-ink hover:text-rust"
@@ -85,30 +58,29 @@ const regionLabels: Record<string, string> = {
                 {data.kind === "gym" && data.chain && (
                   <div class="mt-0.5 font-mono text-xs text-ink-soft">{data.chain}</div>
                 )}
+              </th>
+              <td class={`${tdClass} text-sm text-ink-soft`}>{REGION_LABELS[data.region]}</td>
+              <td class={`${tdClass} text-sm leading-relaxed text-ink-soft`}>
+                {locationPlaceText(location) ?? "אין מידע"}
               </td>
-              <td class="border-t border-stone/30 p-3 align-top text-sm text-ink-soft">
-                {regionLabels[data.region]}
-              </td>
-              <td class="border-t border-stone/30 p-3 align-top text-sm leading-relaxed text-ink-soft">
-                {locationText}
-              </td>
-              <td class="border-t border-stone/30 p-3 align-top">
+              <td class={tdClass}>
                 <div class="flex flex-wrap gap-1">
-                  {data.styles.map((s: string) => (
-                    <Badge variant="stone">{styleLabels[s]}</Badge>
+                  {data.styles.map((s) => (
+                    <Badge variant="stone">{STYLE_LABELS[s]}</Badge>
                   ))}
                 </div>
               </td>
-              <td class="border-t border-stone/30 p-3 align-top">
-                <NavigationButtons query={navQuery} size="sm" />
+              <td class={tdClass}>
+                <NavigationButtons target={locationNavTarget(location)} placeName={data.name} size="sm" />
               </td>
-              <td class="border-t border-stone/30 p-3 align-top">
+              <td class={tdClass}>
                 {data.kind === "gym" ? (
                   <div class="flex flex-col items-start gap-1 text-sm">
                     {data.phone && (
                       <a
                         href={`tel:${data.phone.replace(/[^0-9+]/g, "")}`}
                         class="font-bold text-ink hover:text-rust"
+                        dir="ltr"
                       >
                         {data.phone}
                       </a>
@@ -119,6 +91,7 @@ const regionLabels: Record<string, string> = {
                         target="_blank"
                         rel="noopener noreferrer"
                         class="font-bold text-rope hover:underline"
+                        aria-label={`אתר ${data.name} (נפתח בחלון חדש)`}
                       >
                         אתר ←
                       </a>
@@ -130,7 +103,9 @@ const regionLabels: Record<string, string> = {
                     target="_blank"
                     rel="noopener noreferrer"
                     class="flex w-fit items-center gap-1.5 border border-stone/60 px-2.5 py-1.5 font-body text-xs font-bold text-ink transition-colors hover:border-rust hover:text-rust"
+                    aria-label={`גיידבוק - ${data.name} (נפתח בחלון חדש)`}
                   >
+                    <svg width="14" height="14" aria-hidden="true"><use href="#icon-download"></use></svg>
                     גיידבוק
                   </a>
                 ) : (

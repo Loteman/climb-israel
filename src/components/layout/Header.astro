@@ -1,168 +1,230 @@
 ---
 import NavDropdown from "./NavDropdown.astro";
 import { withBase } from "../../lib/url";
+import { currentPathname, linkState } from "../../lib/active-link";
+import {
+  ABOUT_LINK,
+  BEGINNER_GUIDE,
+  ENVIRONMENT_LINKS,
+  GUIDE_GROUPS,
+  LOCATIONS_LINK,
+} from "../../lib/site-nav";
+import { SITE_NAME } from "../../site-config";
 
-const guideGroups = [
-  {
-    label: "מתחילים",
-    items: [
-      { href: "/אחיזות-טיפוס/", label: "אחיזות טיפוס" },
-      { href: "/מושגי-טיפוס/", label: "מושגי טיפוס" },
-      { href: "/דירוג-מסלולים/", label: "דירוג מסלולים" },
-    ],
-  },
-  {
-    label: "מעמיק",
-    items: [
-      { href: "/סגנונות-טיפוס/", label: "סגנונות טיפוס" },
-      { href: "/ציוד-טיפוס/", label: "ציוד טיפוס" },
-      { href: "/טכניקות-טיפוס/", label: "טכניקות טיפוס" },
-      { href: "/מניעת-פציעות/", label: "מניעת פציעות" },
-    ],
-  },
+const path = currentPathname(Astro.url);
+const topLinks = [BEGINNER_GUIDE];
+const trailingLinks = [LOCATIONS_LINK, ABOUT_LINK];
+
+const desktopLinkClass = (href: string) => [
+  "rounded-sm px-3 py-2 font-body text-sm font-semibold transition-colors",
+  linkState(path, href) ? "text-rope" : "text-ink-soft hover:text-rust",
+];
+const mobileLinkClass = (href: string, indent = "") => [
+  "block rounded-sm px-3 py-2 font-body text-sm font-semibold hover:bg-paper hover:text-rust",
+  indent,
+  linkState(path, href) ? "text-rope" : "text-ink",
 ];
 
-const environmentItems = [
-  { href: "/טיפוס-באולם/", label: "קיר טיפוס (מלאכותי)" },
-  { href: "/טיפוס-בטבע/", label: "טיפוס בטבע" },
+const THEME_OPTIONS = [
+  { value: "system", label: "לפי הגדרות המכשיר" },
+  { value: "light", label: "בהיר" },
+  { value: "dark", label: "כהה" },
 ];
-
-const otherItems = [
-  { href: "/מקומות-טיפוס/", label: "מקומות טיפוס" },
-  { href: "/אודות/", label: "אודות" },
-];
-
-const currentPath = Astro.url.pathname;
 ---
 
 <header class="sticky top-0 z-50 border-b border-stone/40 bg-paper">
-  <div
-    class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6"
-  >
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
     <a href={withBase("/")} class="flex items-center gap-2 font-display text-lg font-bold text-ink">
       <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
         <circle cx="13" cy="13" r="11" fill="none" stroke="var(--color-rope)" stroke-width="2"></circle>
         <circle cx="13" cy="13" r="2.5" fill="var(--color-rope)"></circle>
       </svg>
-      <span>טיפוס ישראל</span>
+      <span>{SITE_NAME}</span>
     </a>
 
     <nav class="hidden items-center gap-1 md:flex" aria-label="ניווט ראשי">
-      <a
-        href={withBase("/מדריך-למתחילים/")}
-        class:list={[
-          "rounded-sm px-3 py-2 font-body text-sm font-semibold transition-colors",
-          currentPath.startsWith(withBase("/מדריך-למתחילים/"))
-            ? "text-rope"
-            : "text-ink-soft hover:text-rust",
-        ]}
-      >
-        מדריך למתחילים
-      </a>
-
-      <NavDropdown label="מדריכים" groups={guideGroups} />
-      <NavDropdown label="סביבות טיפוס" items={environmentItems} />
-
       {
-        otherItems.map((item) => {
-          const active = currentPath.startsWith(withBase(item.href));
-          return (
-            <a
-              href={withBase(item.href)}
-              class:list={[
-                "rounded-sm px-3 py-2 font-body text-sm font-semibold transition-colors",
-                active ? "text-rope" : "text-ink-soft hover:text-rust",
-              ]}
-              aria-current={active ? "page" : undefined}
-            >
-              {item.label}
-            </a>
-          );
-        })
+        topLinks.map((item) => (
+          <a href={withBase(item.href)} class:list={desktopLinkClass(item.href)} aria-current={linkState(path, item.href)}>
+            {item.label}
+          </a>
+        ))
+      }
+      <NavDropdown label="מדריכים" groups={GUIDE_GROUPS} />
+      <NavDropdown label="סביבות טיפוס" items={ENVIRONMENT_LINKS} />
+      {
+        trailingLinks.map((item) => (
+          <a href={withBase(item.href)} class:list={desktopLinkClass(item.href)} aria-current={linkState(path, item.href)}>
+            {item.label}
+          </a>
+        ))
       }
     </nav>
 
-    <details class="relative md:hidden">
-      <summary
-        class="flex cursor-pointer list-none items-center gap-2 rounded-sm border border-dashed border-stone px-3 py-1.5 font-body text-sm font-semibold text-ink [&::-webkit-details-marker]:hidden"
-      >
-        <span>תפריט</span>
-      </summary>
-      <nav
-        class="absolute start-0 top-full z-50 mt-2 w-56 border border-stone/50 bg-paper-dark p-2 shadow-lg"
-        aria-label="ניווט ראשי (מובייל)"
-      >
-        <a
-          href={withBase("/מדריך-למתחילים/")}
-          class="block rounded-sm px-3 py-2 font-body text-sm font-semibold text-ink hover:bg-paper hover:text-rust"
+    <div class="flex items-center gap-2">
+      <details class="relative" data-theme-menu>
+        <summary
+          class="flex cursor-pointer list-none items-center gap-1.5 rounded-sm border border-dashed border-stone px-2.5 py-1.5 font-body text-sm font-semibold text-ink hover:border-rust hover:text-rust [&::-webkit-details-marker]:hidden"
+          aria-label="מצב תצוגה (בהיר / כהה)"
         >
-          מדריך למתחילים
-        </a>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4"></circle>
+            <path d="M8 2a6 6 0 0 1 0 12z" fill="currentColor"></path>
+          </svg>
+          <span class="hidden lg:inline">תצוגה</span>
+        </summary>
+        <div
+          class="absolute end-0 top-full z-50 mt-2 w-56 border border-stone/50 bg-paper-dark p-2 shadow-lg"
+          role="group"
+          aria-label="מצב תצוגה"
+        >
+          {
+            THEME_OPTIONS.map((opt) => (
+              <button
+                type="button"
+                data-theme-choice={opt.value}
+                aria-pressed={opt.value === "system" ? "true" : "false"}
+                class="group flex w-full items-center gap-2 rounded-sm px-2 py-2 text-start font-body text-sm text-ink hover:bg-paper aria-pressed:font-bold aria-pressed:text-rope"
+              >
+                <span
+                  class="block h-3 w-3 shrink-0 rounded-full border-2 border-stone group-aria-pressed:border-rope group-aria-pressed:bg-rope"
+                  aria-hidden="true"
+                ></span>
+                {opt.label}
+              </button>
+            ))
+          }
+        </div>
+      </details>
 
-        <p class="mt-2 px-3 font-mono text-xs uppercase tracking-wide text-ink-soft">
-          מדריכים
-        </p>
-        {
-          guideGroups.map((group) => (
-            <Fragment>
-              <p class="mt-1 px-3 ps-5 font-mono text-[11px] uppercase tracking-wide text-ink-soft/70">
-                {group.label}
-              </p>
-              {group.items.map((item) => (
-                <a
-                  href={withBase(item.href)}
-                  class="block rounded-sm px-3 py-2 ps-7 font-body text-sm font-semibold text-ink hover:bg-paper hover:text-rust"
-                >
-                  {item.label}
-                </a>
-              ))}
-            </Fragment>
-          ))
-        }
+      <details class="relative md:hidden">
+        <summary
+          class="flex cursor-pointer list-none items-center gap-2 rounded-sm border border-dashed border-stone px-3 py-1.5 font-body text-sm font-semibold text-ink [&::-webkit-details-marker]:hidden"
+        >
+          <span>תפריט</span>
+        </summary>
+        <nav
+          class="absolute end-0 top-full z-50 mt-2 max-h-[calc(100vh-5rem)] w-60 overflow-y-auto border border-stone/50 bg-paper-dark p-2 shadow-lg"
+          aria-label="ניווט ראשי (מובייל)"
+        >
+          {
+            topLinks.map((item) => (
+              <a href={withBase(item.href)} class:list={mobileLinkClass(item.href)} aria-current={linkState(path, item.href)}>
+                {item.label}
+              </a>
+            ))
+          }
 
-        <p class="mt-2 px-3 font-mono text-xs uppercase tracking-wide text-ink-soft">
-          סביבות טיפוס
-        </p>
-        {
-          environmentItems.map((item) => (
-            <a
-              href={withBase(item.href)}
-              class="block rounded-sm px-3 py-2 ps-5 font-body text-sm font-semibold text-ink hover:bg-paper hover:text-rust"
-            >
-              {item.label}
-            </a>
-          ))
-        }
+          <p class="mt-2 px-3 font-body text-xs font-bold text-ink-soft">מדריכים</p>
+          {
+            GUIDE_GROUPS.map((group) => (
+              <Fragment>
+                <p class="mt-1 px-3 ps-5 font-body text-[11px] font-bold text-ink-soft">{group.label}</p>
+                {group.items.map((item) => (
+                  <a href={withBase(item.href)} class:list={mobileLinkClass(item.href, "ps-7")} aria-current={linkState(path, item.href)}>
+                    {item.label}
+                  </a>
+                ))}
+              </Fragment>
+            ))
+          }
 
-        <div class="my-2 border-t border-stone/40"></div>
+          <p class="mt-2 px-3 font-body text-xs font-bold text-ink-soft">סביבות טיפוס</p>
+          {
+            ENVIRONMENT_LINKS.map((item) => (
+              <a href={withBase(item.href)} class:list={mobileLinkClass(item.href, "ps-5")} aria-current={linkState(path, item.href)}>
+                {item.label}
+              </a>
+            ))
+          }
 
-        {
-          otherItems.map((item) => (
-            <a
-              href={withBase(item.href)}
-              class="block rounded-sm px-3 py-2 font-body text-sm font-semibold text-ink hover:bg-paper hover:text-rust"
-            >
-              {item.label}
-            </a>
-          ))
-        }
-      </nav>
-    </details>
+          <div class="my-2 border-t border-stone/40"></div>
+
+          {
+            trailingLinks.map((item) => (
+              <a href={withBase(item.href)} class:list={mobileLinkClass(item.href)} aria-current={linkState(path, item.href)}>
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </details>
+    </div>
   </div>
 </header>
 
 <script>
   // Close any open header <details> dropdown when clicking outside it,
-  // or when a link inside it is clicked (native <details> stays open
-  // otherwise, which feels broken for a nav dropdown).
+  // when a link inside it is clicked, or on Escape (native <details>
+  // stays open otherwise, which feels broken for a nav dropdown).
+  const openHeaderDetails = () =>
+    Array.from(document.querySelectorAll<HTMLDetailsElement>("header details[open]"));
+
   document.addEventListener("click", (event) => {
     const target = event.target;
-    document.querySelectorAll("header details[open]").forEach((details) => {
+    for (const details of openHeaderDetails()) {
       if (!(target instanceof Node) || !details.contains(target)) {
         details.removeAttribute("open");
       } else if (target instanceof Element && target.closest("a")) {
         details.removeAttribute("open");
       }
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    for (const details of openHeaderDetails()) {
+      const hadFocus = details.contains(document.activeElement);
+      details.removeAttribute("open");
+      if (hadFocus) details.querySelector("summary")?.focus();
+    }
+  });
+
+  // Theme menu. "system" stores nothing and lets the prefers-color-scheme
+  // CSS decide; light/dark are persisted and applied as data-theme (which
+  // BaseLayout's inline script re-applies before first paint on every page).
+  const STORAGE_KEY = "climb-israel-theme";
+  const THEME_COLORS = { light: "#f3ede0", dark: "#211f1c" };
+  type Choice = "system" | "light" | "dark";
+
+  function storedChoice(): Choice {
+    try {
+      const value = localStorage.getItem(STORAGE_KEY);
+      if (value === "light" || value === "dark") return value;
+    } catch {
+      /* storage unavailable (private mode etc.) */
+    }
+    return "system";
+  }
+
+  function syncThemeUi(choice: Choice) {
+    document.querySelectorAll<HTMLButtonElement>("[data-theme-choice]").forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.dataset.themeChoice === choice));
+    });
+    // Keep the mobile browser chrome in step with a forced theme; for
+    // "system" each meta goes back to its own media-query color.
+    document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]').forEach((meta) => {
+      const ownScheme = meta.media.includes("dark") ? "dark" : "light";
+      meta.content = THEME_COLORS[choice === "system" ? ownScheme : choice];
+    });
+  }
+
+  function applyTheme(choice: Choice) {
+    try {
+      if (choice === "system") localStorage.removeItem(STORAGE_KEY);
+      else localStorage.setItem(STORAGE_KEY, choice);
+    } catch {
+      /* theme just won't persist */
+    }
+    if (choice === "system") document.documentElement.removeAttribute("data-theme");
+    else document.documentElement.setAttribute("data-theme", choice);
+    syncThemeUi(choice);
+  }
+
+  syncThemeUi(storedChoice());
+  document.querySelectorAll<HTMLButtonElement>("[data-theme-choice]").forEach((button) => {
+    button.addEventListener("click", () => {
+      applyTheme(button.dataset.themeChoice as Choice);
     });
   });
 </script>

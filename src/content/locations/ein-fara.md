@@ -20,9 +20,9 @@ shade: "בזכות מבנה האתר קיימים מסלולים מוצלים ל
 lodging: "הלינה אסורה בכל חלקי הפארק."
 guidebooks:
   - label: "Mountain-Man Guide to Ein Fara (2007)"
-    url: "http://wiki.imga.org.il/Topos/fara.pdf"
+    url: "https://wiki.imga.org.il/Topos/fara.pdf"
   - label: "הטופו המקורי של יואב וייס"
-    url: "http://wiki.imga.org.il/Topos/EinFaraOldTopo.webarchive"
+    url: "https://wiki.imga.org.il/Topos/EinFaraOldTopo.webarchive"
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A2%D7%99%D7%9F_%D7%A4%D7%90%D7%A8%D7%94"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---

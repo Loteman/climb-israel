@@ -1,0 +1,72 @@
+---
+import { withBase } from "../../lib/url";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TopoBackground from "../../components/layout/TopoBackground.astro";
+import { CONTACT_URL } from "../../site-config";
+
+const linkClass = "font-bold text-rope hover:underline";
+---
+
+<BaseLayout
+  title="הצהרת נגישות"
+  description="הצהרת הנגישות של טיפוס ישראל: מה נעשה כדי שהאתר יהיה נגיש, מגבלות ידועות, ואיך לפנות אלינו בנושא נגישות."
+>
+  <section class="relative overflow-hidden border-b border-stone/40 py-14">
+    <TopoBackground opacity={0.3} />
+    <div class="relative mx-auto max-w-4xl px-4 sm:px-6">
+      <h1 class="font-display text-3xl font-bold text-ink sm:text-4xl">הצהרת נגישות</h1>
+      <p class="mt-3 max-w-2xl leading-relaxed text-ink-soft">
+        טיפוס ישראל הוא אתר מידע קהילתי, חינמי והתנדבותי. חשוב לנו שכל מי
+        שרוצה לטפס יוכל להשתמש בו - כולל אנשים עם מוגבלות.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+    <div class="space-y-6 leading-relaxed text-ink">
+      <h2 class="font-display text-xl font-bold text-ink">מה עשינו</h2>
+      <p>
+        האתר נבנה בהתאם להנחיות{" "}
+        <a href="https://www.w3.org/TR/WCAG21/" target="_blank" rel="noopener noreferrer" class={linkClass}>
+          WCAG 2.1
+        </a>{" "}
+        ברמה AA (שעליהן מבוסס התקן הישראלי ת"י 5568), ככל שהדבר אפשרי באתר
+        התנדבותי:
+      </p>
+      <ul class="list-disc space-y-2 ps-5 marker:text-rust">
+        <li>מבנה כותרות ותוויות ברורים, ושפת העמוד מוגדרת כעברית מימין לשמאל.</li>
+        <li>ניווט מלא במקלדת, כולל קישור "דלג לתוכן הראשי" וסגירת תפריטים במקש Esc.</li>
+        <li>ניגודיות צבעים שנבדקה ועומדת ביחס 4.5:1 לפחות לטקסט, בתצוגה בהירה וכהה.</li>
+        <li>מצב תצוגה כהה ובהיר לבחירה (כפתור "תצוגה" בראש כל עמוד), וכיבוד הגדרת "הפחתת תנועה" של המכשיר.</li>
+        <li>טקסט חלופי לאיורים בעלי משמעות, ותוויות נגישות מפורטות לכפתורי הניווט (מפות / Waze) ולקישורי הגיידבוקים.</li>
+        <li>אפשרות להגדיל את הטקסט בדפדפן עד 200% בלי לאבד תוכן.</li>
+      </ul>
+
+      <h2 class="font-display text-xl font-bold text-ink">מגבלות ידועות</h2>
+      <ul class="list-disc space-y-2 ps-5 marker:text-rust">
+        <li>
+          המפה האינטראקטיבית במדריך המקומות מבוססת על רכיב צד-שלישי ואינה נגישה
+          באופן מלא. כל המידע שבה זמין גם בתצוגת "אריחים" ו"טבלה" באותו עמוד.
+        </li>
+        <li>
+          גיידבוקים וקבצי טופו (PDF) נוצרו על ידי גורמים חיצוניים, ורובם אינם
+          מונגשים. נשמח לעזור לאתר מידע ספציפי מתוכם לפי בקשה.
+        </li>
+        <li>קישורים לאתרים חיצוניים (קירות טיפוס, מפות, מקורות) אינם באחריותנו.</li>
+      </ul>
+
+      <h2 class="font-display text-xl font-bold text-ink">נתקלתם בבעיה?</h2>
+      <p>
+        אם משהו באתר לא נגיש לכם, נשמח לשמוע ולתקן. כתבו לנו מה הבעיה, באיזה
+        עמוד, ובאיזה דפדפן או טכנולוגיה מסייעת השתמשתם.{" "}
+        <a href={CONTACT_URL} target="_blank" rel="noopener noreferrer" class={linkClass}>
+          פנייה בנושא נגישות ←
+        </a>
+      </p>
+      <p class="text-sm text-ink-soft">
+        ההצהרה עודכנה לאחרונה באוקטובר 2026. לפרטים נוספים על האתר ראו{" "}
+        <a href={withBase("/אודות/")} class={linkClass}>אודות הפרויקט</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

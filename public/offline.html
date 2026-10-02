@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta name="color-scheme" content="light dark" />
     <title>אין חיבור - טיפוס ישראל</title>
     <style>
       body {
@@ -39,7 +41,23 @@
         font-weight: bold;
       }
       svg {
-        color: #e14d2a;
+        color: #b4361a;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: #211f1c;
+          color: #ede9e1;
+        }
+        p {
+          color: #b3aa9c;
+        }
+        a {
+          background: #ede9e1;
+          color: #211f1c;
+        }
+        svg {
+          color: #e5674b;
+        }
       }
     </style>
   </head>

@@ -6,7 +6,7 @@ styles:
 region: sharon
 city: "פרדס חנה"
 address: "ערער 1"
-phone: "04-6424849"
+phone: "04-642-4849"
 website: "https://www.totemclimbing.co.il/"
 coordinates:
   lat: 32.50666

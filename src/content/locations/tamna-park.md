@@ -21,9 +21,9 @@ guidebooks:
   - label: "התאחדות הטיפוס (ILCA)"
     url: "https://drive.google.com/file/d/1SPqifs6DLzMbfbEGSGf-TKvDo1s1sNxE/view?usp=sharing"
   - label: "גיידבוק מעודכן (2020)"
-    url: "http://wiki.imga.org.il/Topos/Timna_topo_guide_2020.pdf"
+    url: "https://wiki.imga.org.il/Topos/Timna_topo_guide_2020.pdf"
   - label: "גיידבוק ישן"
-    url: "http://wiki.imga.org.il/Topos/TIMNA_GUIDE_HEBREW-V4.pdf"
+    url: "https://wiki.imga.org.il/Topos/TIMNA_GUIDE_HEBREW-V4.pdf"
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%AA%D7%9E%D7%A0%D7%A2"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---

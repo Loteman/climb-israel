@@ -8,6 +8,7 @@ city: "ירושלים"
 chain: "iClimb"
 address: "אצטדיון טדי"
 phone: "02-648-2264"
+website: "https://iclimb.co.il"
 coordinates:
   lat: 31.75112
   lng: 35.19083

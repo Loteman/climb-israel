@@ -3,7 +3,10 @@ import { withBase } from "../../lib/url";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TopoBackground from "../../components/layout/TopoBackground.astro";
 import SectionDivider from "../../components/ui/SectionDivider.astro";
-import ThemeSwitcher from "../../components/settings/ThemeSwitcher";
+import { CONTACT_URL, REPO_URL } from "../../site-config";
+import { ACCESSIBILITY_LINK } from "../../lib/site-nav";
+
+const linkClass = "font-bold text-rope hover:underline";
 ---
 
 <BaseLayout
@@ -14,11 +17,10 @@ import ThemeSwitcher from "../../components/settings/ThemeSwitcher";
     <div class="absolute inset-0 overflow-hidden">
       <TopoBackground opacity={0.3} />
     </div>
-    <div class="relative mx-auto flex max-w-4xl items-start justify-between gap-4 px-4 sm:px-6">
+    <div class="relative mx-auto max-w-4xl px-4 sm:px-6">
       <h1 class="font-display text-3xl font-bold text-ink sm:text-4xl">
         אודות טיפוס ישראל
       </h1>
-      <ThemeSwitcher client:load />
     </div>
   </section>
 
@@ -26,28 +28,28 @@ import ThemeSwitcher from "../../components/settings/ThemeSwitcher";
     <div class="space-y-6 leading-relaxed text-ink">
       <p>
         <strong class="text-rust">טיפוס ישראל</strong> נבנה כמאגר מידע פתוח
-        וחינמי לכל מי שרוצה לטפס בישראל - בין אם מדובר בבולדרינג בקיר סגור,
+        וחינמי לכל מי שרוצה לטפס בישראל - בין אם מדובר בבולדרינג בקיר מלאכותי,
         בולדרינג בטבע, או טיפוס ספורטיבי וטראד על סלע. האתר לא נועד להחליף
         הדרכה מקצועית, אלא לרכז במקום אחד את השפה, המושגים והמידע הבסיסי
         שכל מטפס - ממתחיל ועד מתקדם - נתקל בו.
       </p>
 
       <p>
-        לא בטוחים איפה להתחיל? <a href={withBase("/מדריך-למתחילים/")} class="font-bold text-rope hover:underline">מדריך למתחילים</a>{" "}
+        לא בטוחים איפה להתחיל? <a href={withBase("/מדריך-למתחילים/")} class={linkClass}>מדריך למתחילים</a>{" "}
         הוא נקודת הפתיחה הטובה ביותר. משם אפשר להעמיק ב-
-        <a href={withBase("/אחיזות-טיפוס/")} class="font-bold text-rope hover:underline">אחיזות טיפוס</a>,{" "}
-        <a href={withBase("/מושגי-טיפוס/")} class="font-bold text-rope hover:underline">מושגי טיפוס</a>,{" "}
-        <a href={withBase("/דירוג-מסלולים/")} class="font-bold text-rope hover:underline">דירוג מסלולים</a>,{" "}
-        <a href={withBase("/סגנונות-טיפוס/")} class="font-bold text-rope hover:underline">סגנונות טיפוס</a> ו-<a href={withBase("/ציוד-טיפוס/")} class="font-bold text-rope hover:underline">ציוד טיפוס</a>,{" "}
+        <a href={withBase("/אחיזות-טיפוס/")} class={linkClass}>אחיזות טיפוס</a>,{" "}
+        <a href={withBase("/מושגי-טיפוס/")} class={linkClass}>מושגי טיפוס</a>,{" "}
+        <a href={withBase("/דירוג-מסלולים/")} class={linkClass}>דירוג מסלולים</a>,{" "}
+        <a href={withBase("/סגנונות-טיפוס/")} class={linkClass}>סגנונות טיפוס</a> ו-<a href={withBase("/ציוד-טיפוס/")} class={linkClass}>ציוד טיפוס</a>,{" "}
         לקרוא על ההבדל בין{" "}
-        <a href={withBase("/טיפוס-באולם/")} class="font-bold text-rope hover:underline">קיר טיפוס מלאכותי</a>{" "}
-        ל-<a href={withBase("/טיפוס-בטבע/")} class="font-bold text-rope hover:underline">טיפוס בטבע</a>,{" "}
-        ולמצוא קיר או אתר ב-<a href={withBase("/מקומות-טיפוס/")} class="font-bold text-rope hover:underline">מדריך המקומות</a>.
+        <a href={withBase("/טיפוס-באולם/")} class={linkClass}>קיר טיפוס מלאכותי</a>{" "}
+        ל-<a href={withBase("/טיפוס-בטבע/")} class={linkClass}>טיפוס בטבע</a>,{" "}
+        ולמצוא קיר או אתר ב-<a href={withBase("/מקומות-טיפוס/")} class={linkClass}>מדריך המקומות</a>.
       </p>
 
       <p>
         סקרנים מאיפה כל זה התחיל? קראו על{" "}
-        <a href={withBase("/היסטוריית-הטיפוס-בישראל/")} class="font-bold text-rope hover:underline">היסטוריית הטיפוס בישראל</a>{" "}
+        <a href={withBase("/היסטוריית-הטיפוס-בישראל/")} class={linkClass}>היסטוריית הטיפוס בישראל</a>{" "}
         - ממועדון אלפיני קטן ב-1939 ועד התאחדות הטיפוס הישראלית של היום.
       </p>
 
@@ -55,8 +57,8 @@ import ThemeSwitcher from "../../components/settings/ThemeSwitcher";
 
       <h2 class="font-display text-xl font-bold text-ink">דיוק המידע</h2>
       <p>
-        המידע באתר נאסף בהתנדבות ובקפידה, אך עולם הטיפוס משתנה - אולמות
-        סוגרים ונפתחים, שעות פתיחה ומחירים מתעדכנים, ותנאי שטח (במיוחד בטבע)
+        המידע באתר נאסף בהתנדבות ובקפידה, אך עולם הטיפוס משתנה - קירות
+        טיפוס נסגרים ונפתחים, שעות פתיחה ומחירים מתעדכנים, ותנאי שטח (במיוחד בטבע)
         יכולים להשתנות בעקבות מזג אוויר או עונה. לפני יציאה לטיפוס, במיוחד
         בטבע, מומלץ תמיד לוודא מידע עדכני מול המקום או עם מטפסים מנוסים
         באזור, ולא להסתמך על האתר כמקור בטיחותי בלעדי.
@@ -67,20 +69,31 @@ import ThemeSwitcher from "../../components/settings/ThemeSwitcher";
         אינו תחליף להדרכה מקצועית, ואינו אחראי לשימוש שנעשה במידע המופיע בו.
       </p>
 
-      <h2 class="font-display text-xl font-bold text-ink">רוצים לעזור?</h2>
+      <h2 id="contribute" class="scroll-mt-24 font-display text-xl font-bold text-ink">רוצים לעזור?</h2>
       <p>
-        נתקלתם במידע לא מדויק, קיר טיפוס שנסגר, או אתר טיפוס שחסר באתר? נשמח
-        לעדכן - הפרויקט קהילתי ופתוח לתיקונים ותוספות.
+        נתקלתם במידע לא מדויק, קיר טיפוס שנסגר, או אתר טיפוס שחסר באתר? יש
+        לכם גיידבוק או טופו שתרצו לשתף? נשמח לעדכן - הפרויקט קהילתי ופתוח
+        לתיקונים ותוספות.{" "}
+        <a href={CONTACT_URL} target="_blank" rel="noopener noreferrer" class={linkClass}>
+          שלחו לנו עדכון ←
+        </a>
+      </p>
+      <p class="text-sm text-ink-soft">
+        העדכונים מתקבלים דרך{" "}
+        <a href={REPO_URL} target="_blank" rel="noopener noreferrer" class={linkClass}>
+          מאגר הקוד של האתר ב-GitHub
+        </a>{" "}
+        - פתחו "Issue" חדש ותארו מה צריך לתקן או להוסיף.
       </p>
 
       <h2 class="font-display text-xl font-bold text-ink">תודות</h2>
       <p>
-        רוב המידע על אולמות ואתרי טיפוס בטבע באתר מבוסס על{" "}
+        רוב המידע על קירות הטיפוס ואתרי הטיפוס בטבע באתר מבוסס על{" "}
         <a
           href="https://ilca.org.il/"
           target="_blank"
           rel="noopener noreferrer"
-          class="font-bold text-rope hover:underline"
+          class={linkClass}
         >
           התאחדות הטיפוס בישראל (ILCA)
         </a>{" "}
@@ -89,7 +102,7 @@ import ThemeSwitcher from "../../components/settings/ThemeSwitcher";
           href="https://wiki.imga.org.il/"
           target="_blank"
           rel="noopener noreferrer"
-          class="font-bold text-rope hover:underline"
+          class={linkClass}
         >
           האנציקלופדיה של הטיפוס (wiki.imga.org.il)
         </a>
@@ -98,7 +111,7 @@ import ThemeSwitcher from "../../components/settings/ThemeSwitcher";
           href="https://www.climbing-israel.com/"
           target="_blank"
           rel="noopener noreferrer"
-          class="font-bold text-rope hover:underline"
+          class={linkClass}
         >
           The Israeli Climbing Guidebook
         </a>{" "}
@@ -107,12 +120,53 @@ import ThemeSwitcher from "../../components/settings/ThemeSwitcher";
           href="https://www.vfisrael.co.il/"
           target="_blank"
           rel="noopener noreferrer"
-          class="font-bold text-rope hover:underline"
+          class={linkClass}
         >
           ויה פראטה ישראל
         </a>
         . בלי העבודה שכל הגורמים האלו השקיעו בתיעוד סצנת הטיפוס בישראל, האתר
         הזה פשוט לא היה יכול להתקיים.
+      </p>
+
+      <h2 id="sources" class="scroll-mt-24 font-display text-xl font-bold text-ink">
+        מקורות וזכויות יוצרים
+      </h2>
+      <ul class="list-disc space-y-2 ps-5 marker:text-rust">
+        <li>
+          פרטי האתרים והקירות (תיאורים, סוג סלע, עונות, דרכי הגעה) מבוססים על
+          המקורות שלמעלה, וכל דף מקום מציין את המקור שלו וקישור אליו.
+        </li>
+        <li>
+          גיידבוקים וקבצי טופו - כל הזכויות שמורות ליוצריהם, ששמם מופיע ליד כל
+          קובץ. הקבצים מוצגים לטובת הקהילה; יוצר/ת שמעדיפים שהקובץ יוסר או
+          יוחלף בקישור למקור - פנו אלינו ונטפל בכך מיד.
+        </li>
+        <li>
+          שמות קירות הטיפוס, הרשתות והמותגים (כמו MoonBoard או Waze) שייכים
+          לבעליהם ומוזכרים לצורך מידע בלבד. האתר אינו קשור לאף אחד מהם.
+        </li>
+        <li>
+          המפה מבוססת על{" "}
+          <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer" class={linkClass}>
+            OpenStreetMap
+          </a>{" "}
+          ועל ספריית{" "}
+          <a href="https://leafletjs.com/" target="_blank" rel="noopener noreferrer" class={linkClass}>
+            Leaflet
+          </a>
+          , והגופנים (Heebo, IBM Plex) מופצים ברישיון SIL Open Font License.
+        </li>
+      </ul>
+      <p>
+        לבקשות הסרה, תיקון או קרדיט:{" "}
+        <a href={CONTACT_URL} target="_blank" rel="noopener noreferrer" class={linkClass}>
+          צרו קשר ←
+        </a>
+      </p>
+
+      <p class="text-sm text-ink-soft">
+        האתר שואף להיות נגיש לכולם - ראו את{" "}
+        <a href={withBase(ACCESSIBILITY_LINK.href)} class={linkClass}>{ACCESSIBILITY_LINK.label}</a>.
       </p>
     </div>
   </section>

@@ -14,7 +14,7 @@ routeCount: "9 מבני בולדר, 30+ בעיות, דירוגים V1 עד V10"
 season: "מומלץ סוף אוקטובר עד מאי (לא חם מדי). מומלץ להביא לפחות שלושה מזרוני נפילה."
 guidebooks:
   - label: "הטופו של לאון"
-    url: "http://wiki.imga.org.il/Topos/achbarra_guidebook.pdf"
+    url: "https://wiki.imga.org.il/Topos/achbarra_guidebook.pdf"
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A2%D7%9B%D7%91%D7%A8%D7%94"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---

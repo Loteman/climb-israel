@@ -12,7 +12,7 @@ routeLength: "עד כ-25 מטר"
 routeCount: "כ-11 מסלולי ספורט, ועוד מספר מסלולי טראד"
 guidebooks:
   - label: "טופו מהוויקי"
-    url: "http://wiki.imga.org.il/images/8/80/CarmillaV110204.pdf"
+    url: "https://wiki.imga.org.il/images/8/80/CarmillaV110204.pdf"
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%9B%D7%A8%D7%9E%D7%99%D7%9C%D7%94"
 climbingProhibited: true
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."

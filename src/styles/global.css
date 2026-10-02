@@ -14,29 +14,44 @@
  * because Tailwind v4 derives utilities from --color-* theme keys.
  */
 @theme {
+  /*
+   * Accent values are tuned to WCAG 2.1 AA (>= 4.5:1) for normal-size text
+   * on BOTH --color-paper and --color-paper-dark (cards), and for paper
+   * text on a solid accent background (active buttons/chips). The
+   * original brighter accents (#e14d2a rope, #b5502d rust, #6b7052 olive)
+   * measured 3.0-3.9:1 on cards - below the bar for the 14px link text
+   * they're used for. Re-check with a contrast tool before changing.
+   */
   --color-paper: #f3ede0;
   --color-paper-dark: #e8dfc9;
   --color-ink: #2b2620;
   --color-ink-soft: #5a5347;
-  --color-rust: #b5502d;
-  --color-olive: #6b7052;
+  --color-rust: #9e4b28;
+  --color-olive: #5f664b;
   --color-stone: #8c8271;
-  --color-rope: #e14d2a;
-  --color-rope-dark: #c23b1c;
+  --color-rope: #b4361a;
+  --color-rope-dark: #922a12;
   --color-contour: #c9bfa5;
 
   --font-display: "IBM Plex Sans Hebrew", "Heebo Variable", system-ui, sans-serif;
   --font-body: "Heebo Variable", "IBM Plex Sans Hebrew", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
+  /*
+   * IBM Plex Mono has no Hebrew glyphs. Without "Heebo Variable" here,
+   * every Hebrew badge/chip/label set in font-mono fell through to the
+   * OS's Courier New and rendered as a typewriter face. Font fallback is
+   * per-glyph, so Latin/digits keep Plex Mono and Hebrew gets Heebo.
+   */
+  --font-mono: "IBM Plex Mono", "Heebo Variable", ui-monospace, monospace;
 }
 
 /*
  * Dark mode palette - takes its cue from the "אבן וגיר / Raw Rock & Chalk"
  * design direction (see the site's design-directions comparison): a warm
- * charcoal instead of pure black, cream ink, same rust/rope accents so
- * brand color stays recognizable across themes. Applies when the user
- * explicitly picks "dark" (data-theme="dark", set by ThemeSwitcher before
- * paint - see BaseLayout's inline script) or, for the default "system"
+ * charcoal instead of pure black, cream ink, and lighter tints of the
+ * same rust/rope/olive hues (the light-theme values are too dark to read
+ * on charcoal) so brand color stays recognizable across themes. Applies when the user
+ * explicitly picks "dark" (data-theme="dark", set before first paint by
+ * BaseLayout's inline script and changed by the header's theme menu) or, for the default "system"
  * setting, whenever the OS itself prefers dark (and the user hasn't
  * forced light mode).
  */
@@ -46,20 +61,27 @@
     --color-paper-dark: #2a2723;
     --color-ink: #ede9e1;
     --color-ink-soft: #b3aa9c;
-    --color-olive: #8a9169;
+    --color-rust: #d2754c;
+    --color-olive: #8b9170;
     --color-stone: #6b6255;
+    --color-rope: #e5674b;
+    --color-rope-dark: #ee8468;
     --color-contour: #3a352e;
     color-scheme: dark;
   }
 }
 
+/* Keep in sync with the prefers-color-scheme block above. */
 :root[data-theme="dark"] {
   --color-paper: #211f1c;
   --color-paper-dark: #2a2723;
   --color-ink: #ede9e1;
   --color-ink-soft: #b3aa9c;
-  --color-olive: #8a9169;
+  --color-rust: #d2754c;
+  --color-olive: #8b9170;
   --color-stone: #6b6255;
+  --color-rope: #e5674b;
+  --color-rope-dark: #ee8468;
   --color-contour: #3a352e;
   color-scheme: dark;
 }
@@ -67,6 +89,20 @@
 html {
   color-scheme: light;
   scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
 
 body {
@@ -110,6 +146,11 @@ h4 {
   outline-offset: 2px;
 }
 
+/* The skip link moves focus to <main tabindex="-1">; no ring around the whole page. */
+#main-content:focus {
+  outline: none;
+}
+
 /*
  * Shared styling for rendered markdown bodies (hold/term/discipline/gear/
  * location descriptions). Tailwind's preflight strips default list/link
@@ -146,4 +187,55 @@ h4 {
 
 .prose-climbing a:hover {
   color: var(--color-rope-dark);
+}
+
+/*
+ * Leaflet ships its popups as white boxes with dark text. The popup body
+ * here is built from the site's own utility classes (text-ink etc.), so in
+ * dark mode that meant cream text on white - unreadable. Theme the popup
+ * chrome with the same tokens instead.
+ */
+.leaflet-container .leaflet-popup-content-wrapper,
+.leaflet-container .leaflet-popup-tip {
+  background: var(--color-paper-dark);
+  color: var(--color-ink);
+  box-shadow: 0 3px 14px rgb(0 0 0 / 0.35);
+}
+
+.leaflet-container .leaflet-popup-content-wrapper {
+  border: 1px solid color-mix(in srgb, var(--color-stone) 50%, transparent);
+  border-radius: 2px;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  color: var(--color-ink-soft);
+}
+
+.leaflet-container {
+  font-family: var(--font-body);
+}
+
+/*
+ * leaflet.css is unlayered, so it beats Tailwind's (layered) utilities no
+ * matter the specificity - its default popup link blue and 1.3em paragraph
+ * margins were overriding the classes set on the popup markup.
+ */
+.leaflet-container .leaflet-popup-content {
+  margin: 12px 16px;
+  line-height: 1.5;
+}
+
+.leaflet-container .leaflet-popup-content p {
+  margin: 0;
+}
+
+.leaflet-container .leaflet-popup-content p + p {
+  margin-top: 0.25rem;
+}
+
+.leaflet-container .leaflet-popup-content a {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: var(--color-rope);
+  font-weight: 700;
 }

@@ -6,7 +6,7 @@ styles:
 region: north
 city: "קיבוץ אפיקים, עמק הירדן"
 address: "אפיקים 1"
-phone: "054-8330920"
+phone: "054-833-0920"
 website: "https://www.rocaclimb.co.il/"
 coordinates:
   lat: 32.68137

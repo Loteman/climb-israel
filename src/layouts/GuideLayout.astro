@@ -12,12 +12,13 @@ interface Props {
   description: string;
   breadcrumbs: Crumb[];
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  ogType?: "website" | "article";
 }
 
-const { title, description, breadcrumbs, jsonLd } = Astro.props;
+const { title, description, breadcrumbs, jsonLd, ogType = "article" } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description} jsonLd={jsonLd}>
+<BaseLayout title={title} description={description} jsonLd={jsonLd} ogType={ogType}>
   <div class="mx-auto max-w-3xl px-4 py-10 sm:px-6">
     <Breadcrumbs items={breadcrumbs} />
     <article class="mt-6">

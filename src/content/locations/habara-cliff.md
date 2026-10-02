@@ -19,7 +19,7 @@ guidebooks:
   - label: "התאחדות הטיפוס (ILCA)"
     url: "https://drive.google.com/file/d/16E2ouMUhGNGVSfsMel01BGGPtt9bh-wn/view?usp=sharing"
   - label: "טופו מהוויקי"
-    url: "http://wiki.imga.org.il/Topos/kabara.pdf"
+    url: "https://wiki.imga.org.il/Topos/kabara.pdf"
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%9B%D7%91%D7%90%D7%A8%D7%94"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---

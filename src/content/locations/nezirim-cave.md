@@ -17,7 +17,7 @@ season: "אפשר לבקר גם בחורף - רטוב וקר אך יפה מאו�
 shade: "מוצל כל היום (פונה צפונה)."
 guidebooks:
   - label: "טופו מהוויקי"
-    url: "http://wiki.imga.org.il/Topos/Nezirim.pdf"
+    url: "https://wiki.imga.org.il/Topos/Nezirim.pdf"
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%9E%D7%A2%D7%A8%D7%AA_%D7%94%D7%A0%D7%96%D7%99%D7%A8%D7%99%D7%9D"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---

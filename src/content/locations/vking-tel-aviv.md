@@ -6,7 +6,7 @@ styles:
 region: center
 city: "תל אביב"
 address: "השלושה 3"
-phone: "03-6353-600"
+phone: "03-635-3600"
 website: "https://vking.co.il/"
 coordinates:
   lat: 32.06215

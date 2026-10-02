@@ -3,16 +3,9 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TopoBackground from "../../components/layout/TopoBackground.astro";
 import TechniqueCard from "../../components/techniques/TechniqueCard.astro";
+import { TECHNIQUE_CATEGORY_LABELS, orderedKeys } from "../../lib/labels";
 
 const techniques = await getCollection("techniques");
-
-const categoryLabels: Record<string, string> = {
-  fundamentals: "יסודות התנועה",
-  "advanced-movement": "טכניקות תנועה מתקדמות",
-  "effort-safety": "ניהול מאמץ ובטיחות",
-};
-
-const categories = ["fundamentals", "advanced-movement", "effort-safety"];
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -44,7 +37,7 @@ const jsonLd = {
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
     <div class="space-y-14">
       {
-        categories.map((cat) => {
+        orderedKeys(TECHNIQUE_CATEGORY_LABELS).map((cat) => {
           const items = techniques
             .filter((t) => t.data.category === cat)
             .sort((a, b) => a.data.order - b.data.order);
@@ -52,7 +45,7 @@ const jsonLd = {
           return (
             <section>
               <h2 class="font-display text-xl font-bold text-ink">
-                {categoryLabels[cat]}
+                {TECHNIQUE_CATEGORY_LABELS[cat]}
               </h2>
               <ul class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {items.map((technique) => (

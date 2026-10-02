@@ -10,7 +10,7 @@ coordinates:
   lng: 34.93892
 guidebooks:
   - label: "טופו מהוויקי"
-    url: "http://wiki.imga.org.il/Topos/nekarot.pdf"
+    url: "https://wiki.imga.org.il/Topos/nekarot.pdf"
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%90%D7%AA%D7%A8%D7%99_%D7%91%D7%95%D7%9C%D7%93%D7%A8%D7%99%D7%A0%D7%92"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---

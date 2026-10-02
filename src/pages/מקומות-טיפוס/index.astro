@@ -7,15 +7,14 @@ import LocationCard from "../../components/directory/LocationCard.astro";
 import LocationTable from "../../components/directory/LocationTable.astro";
 import DirectoryFilters from "../../components/directory/DirectoryFilters";
 import LocationMap from "../../components/directory/LocationMap";
-import { publiclyVisibleLocations } from "../../lib/locations";
+import { publiclyVisibleLocations, sortByName } from "../../lib/locations";
+import { SITE_URL } from "../../site-config";
 
 const locations = publiclyVisibleLocations(await getCollection("locations"));
 const gymCount = locations.filter((l) => l.data.kind === "gym").length;
 const cragCount = locations.filter((l) => l.data.kind === "crag").length;
 
-const sorted = [...locations].sort((a, b) =>
-  a.data.name.localeCompare(b.data.name, "he"),
-);
+const sorted = sortByName(locations);
 
 const mapLocations = sorted
   .filter((l) => l.data.coordinates)
@@ -33,7 +32,13 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
   name: "מקומות טיפוס בישראל",
-  numberOfItems: locations.length,
+  numberOfItems: sorted.length,
+  itemListElement: sorted.map((l, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: l.data.name,
+    url: new URL(withBase(`/מקומות-טיפוס/${l.id}/`), SITE_URL).toString(),
+  })),
 };
 ---
 
@@ -78,10 +83,10 @@ const jsonLd = {
       <p>
         לחלק מהאתרים עדיין אין מדריך טיפוס (guidebook) מפורט באתר. יש לכם
         מידע, תמונות מסלולים או קובץ טופו שתרצו לשתף?{" "}
-        <a href={withBase("/אודות/")} class="font-bold text-rope hover:underline">
+        <a href={withBase("/אודות/#contribute")} class="font-bold text-rope hover:underline">
           נשמח שתעזרו לנו לעדכן
         </a>
-        .
+        . הגיידבוקים וקבצי הטופו שייכים ליוצריהם - תודה לכל מי שתיעד את האתרים.
       </p>
       <p>
         נעזרנו במידע מהאתרים הבאים:{" "}

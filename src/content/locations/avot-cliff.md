@@ -20,7 +20,7 @@ guidebooks:
   - label: "התאחדות הטיפוס (ILCA)"
     url: "https://drive.google.com/file/d/1Q3jvWGMccHpgCvw_dcJbkvSbvZ4KQlr1/view?usp=sharing"
   - label: "טופו מאת נועה מייזליש"
-    url: "http://wiki.imga.org.il/Topos/haavot.pdf"
+    url: "https://wiki.imga.org.il/Topos/haavot.pdf"
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%9E%D7%A6%D7%95%D7%A7_%D7%94%D7%90%D7%91%D7%95%D7%AA"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---

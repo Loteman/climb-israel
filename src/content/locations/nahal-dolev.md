@@ -18,7 +18,7 @@ guidebooks:
   - label: "גיידבוק מלא - נחל דולב"
     url: "/guidebooks/nahal-dolev.pdf"
   - label: "טופו מהוויקי"
-    url: "http://wiki.imga.org.il/Topos/Dolev.pdf"
+    url: "https://wiki.imga.org.il/Topos/Dolev.pdf"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---
 

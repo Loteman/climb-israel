@@ -15,7 +15,7 @@ accessDescription: "בחלק האחורי של המושב, דרך השער"
 rockType: "אבן גיר"
 season: "המקום מוצל רוב שעות היום, והטיפוס אפשרי במהלך כל השנה."
 guidebooks:
-  - label: "גיידבוק מעודכן (2024)"
+  - label: "גיידבוק מעודכן (2026)"
     url: "/guidebooks/kerem-maharal-2026.pdf"
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%9B%D7%A8%D7%9D_%D7%9E%D7%94%D7%A8%22%D7%9C"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."

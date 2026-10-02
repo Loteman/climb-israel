@@ -5,9 +5,11 @@ interface Props {
   iconId: string;
   label: string;
   class?: string;
+  /** Hide from assistive tech when the item's name is printed beside the icon. */
+  decorative?: boolean;
 }
 
-const { iconId, label, class: className = "" } = Astro.props;
+const { iconId, label, class: className = "", decorative = false } = Astro.props;
 const data = gearIconPaths[iconId];
 
 if (!data) {
@@ -19,12 +21,11 @@ if (!data) {
 
 <svg
   viewBox="0 0 100 100"
-  class={`text-ink ${className}`}
-  role="img"
-  aria-label={label}
+  class={className || "text-ink"}
   xmlns="http://www.w3.org/2000/svg"
+  {...(decorative ? { "aria-hidden": "true" } : { role: "img", "aria-label": label })}
 >
-  <title>{label}</title>
+  {!decorative && <title>{label}</title>}
   {
     data.strokeOnly
       ? data.paths.map((d) => (

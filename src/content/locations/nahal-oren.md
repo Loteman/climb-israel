@@ -19,7 +19,7 @@ guidebooks:
   - label: "ניב אתר, עריכה: רם שני (2024)"
     url: "/guidebooks/nahal-oren-2024.pdf"
   - label: "טופו מהוויקי"
-    url: "http://wiki.imga.org.il/Topos/Oren.pdf"
+    url: "https://wiki.imga.org.il/Topos/Oren.pdf"
 externalBetaUrl: "https://he.wikipedia.org/wiki/%D7%A0%D7%97%D7%9C_%D7%90%D7%95%D7%A8%D7%9F"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---

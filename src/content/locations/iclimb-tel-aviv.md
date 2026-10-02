@@ -8,6 +8,7 @@ city: "תל אביב"
 chain: "iClimb"
 address: "שד' רוקח 42"
 phone: "050-213-7099"
+website: "https://iclimb.co.il"
 coordinates:
   lat: 32.09773
   lng: 34.78825

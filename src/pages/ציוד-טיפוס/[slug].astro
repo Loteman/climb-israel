@@ -5,6 +5,7 @@ import GuideLayout from "../../layouts/GuideLayout.astro";
 import Badge from "../../components/ui/Badge.astro";
 import Card from "../../components/ui/Card.astro";
 import GearIcon from "../../components/gear/GearIcon.astro";
+import { GEAR_CATEGORY_LABELS } from "../../lib/labels";
 
 export async function getStaticPaths() {
   const gear = await getCollection("gear");
@@ -16,14 +17,6 @@ export async function getStaticPaths() {
 
 const { item } = Astro.props;
 const { Content } = await render(item);
-
-const categoryLabels: Record<string, string> = {
-  "personal-basics": "ציוד אישי בסיסי",
-  "safety-rope-lead": "ציוד אבטחה, חבלים והובלה",
-  bouldering: "ציוד בולדרינג",
-  trad: "ציוד טיפוס מסורתי (טראד)",
-  "training-recovery": "ציוד אימון ושיקום",
-};
 
 const relevantDisciplines = item.data.relevantDisciplines
   ? await Promise.all(item.data.relevantDisciplines.map((ref) => getEntry(ref)))
@@ -54,7 +47,7 @@ const jsonLd = {
       class="h-28 w-28 shrink-0 text-rust"
     />
     <div>
-      <Badge variant="olive">{categoryLabels[item.data.category]}</Badge>
+      <Badge variant="olive">{GEAR_CATEGORY_LABELS[item.data.category]}</Badge>
       <h1 class="mt-2 font-display text-3xl font-bold text-ink">
         {item.data.nameHe}
       </h1>

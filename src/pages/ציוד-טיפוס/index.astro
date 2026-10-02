@@ -3,24 +3,9 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TopoBackground from "../../components/layout/TopoBackground.astro";
 import GearCategorySection from "../../components/gear/GearCategorySection.astro";
+import { GEAR_CATEGORY_LABELS, orderedKeys } from "../../lib/labels";
 
 const gear = await getCollection("gear");
-
-const categoryLabels: Record<string, string> = {
-  "personal-basics": "ציוד אישי בסיסי",
-  "safety-rope-lead": "ציוד אבטחה, חבלים והובלה",
-  bouldering: "ציוד בולדרינג",
-  trad: "ציוד טיפוס מסורתי (טראד)",
-  "training-recovery": "ציוד אימון ושיקום",
-};
-
-const categories = [
-  "personal-basics",
-  "safety-rope-lead",
-  "bouldering",
-  "trad",
-  "training-recovery",
-];
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -42,7 +27,7 @@ const jsonLd = {
         ציוד טיפוס
       </h1>
       <p class="mt-3 max-w-2xl leading-relaxed text-ink-soft">
-        מעולם הטיפוס הבסיסי ועד ציוד אבטחה, בולדרינג וטראד - מה צריך ולמה,
+        מהציוד האישי הבסיסי ועד ציוד אבטחה, בולדרינג וטראד - מה צריך ולמה,
         לפי סגנון הטיפוס שלכם.
       </p>
     </div>
@@ -51,9 +36,9 @@ const jsonLd = {
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
     <div class="space-y-14">
       {
-        categories.map((cat) => (
+        orderedKeys(GEAR_CATEGORY_LABELS).map((cat) => (
           <GearCategorySection
-            title={categoryLabels[cat]}
+            title={GEAR_CATEGORY_LABELS[cat]}
             items={gear.filter((g) => g.data.category === cat)}
           />
         ))

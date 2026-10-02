@@ -8,3 +8,11 @@
 // BASE_PATH hardcoded and need updating by hand if it ever changes.
 export const SITE_URL = "https://loteman.github.io";
 export const BASE_PATH = "/climb-israel";
+
+export const SITE_NAME = "טיפוס ישראל";
+
+// Where "report a mistake / suggest a site / request removal" links point.
+// GitHub Issues for now (the repo is public); swap for a form or a mailto:
+// address here and every "צרו קשר" link on the site follows.
+export const REPO_URL = "https://github.com/Loteman/climb-israel";
+export const CONTACT_URL = `${REPO_URL}/issues/new`;

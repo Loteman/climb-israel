@@ -1,15 +1,24 @@
 ---
 import { holdPaths } from "./holdPaths";
+import { uniqueId } from "../../lib/text";
 
 interface Props {
   iconId: string;
   label: string;
   class?: string;
   showArrow?: boolean;
+  /**
+   * Hide from assistive tech - for cards where the hold's name is already
+   * printed right next to the icon, so it isn't announced twice.
+   */
+  decorative?: boolean;
 }
 
-const { iconId, label, class: className = "", showArrow = true } = Astro.props;
+const { iconId, label, class: className = "", showArrow = true, decorative = false } = Astro.props;
 const data = holdPaths[iconId];
+// The arrowhead <marker> id must be unique per page - the holds index
+// renders this component 18 times, and duplicate ids are invalid HTML.
+const markerId = uniqueId(`hold-arrowhead-${iconId}`);
 
 if (!data) {
   throw new Error(
@@ -20,12 +29,11 @@ if (!data) {
 
 <svg
   viewBox="0 0 100 100"
-  class={`text-ink ${className}`}
-  role="img"
-  aria-label={label}
+  class={className || "text-ink"}
   xmlns="http://www.w3.org/2000/svg"
+  {...(decorative ? { "aria-hidden": "true" } : { role: "img", "aria-label": label })}
 >
-  <title>{label}</title>
+  {!decorative && <title>{label}</title>}
   {
     data.strokeOnly
       ? data.paths.map((d) => (
@@ -56,7 +64,7 @@ if (!data) {
         stroke-width="3"
         stroke-dasharray="1 5"
         stroke-linecap="round"
-        marker-end="url(#hold-arrowhead)"
+        marker-end={`url(#${markerId})`}
       />
     )
   }
@@ -64,7 +72,7 @@ if (!data) {
     showArrow && data.arrow && (
       <defs>
         <marker
-          id="hold-arrowhead"
+          id={markerId}
           markerWidth="6"
           markerHeight="6"
           refX="3"

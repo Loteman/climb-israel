@@ -5,6 +5,7 @@ import GuideLayout from "../../layouts/GuideLayout.astro";
 import HoldIcon from "../../components/holds/HoldIcon.astro";
 import Badge from "../../components/ui/Badge.astro";
 import Card from "../../components/ui/Card.astro";
+import { HOLD_FAMILY_LABELS } from "../../lib/labels";
 
 export async function getStaticPaths() {
   const holds = await getCollection("hold-types");
@@ -17,14 +18,6 @@ export async function getStaticPaths() {
 const { hold } = Astro.props;
 const { Content } = await render(hold);
 
-const familyLabels: Record<string, string> = {
-  foundational: "אחיזות יסוד",
-  directional: "אחיזות כיווניות",
-  "structural-special": "אחיזות גדולות, מבניות ומיוחדות",
-  "feet-only": "רגליים בלבד",
-  "outdoor-rock": "אופייניות לטיפוס בטבע",
-};
-
 const relatedHolds = hold.data.relatedHoldSlugs
   ? await Promise.all(
       hold.data.relatedHoldSlugs.map((ref) => getEntry(ref)),
@@ -36,7 +29,7 @@ const jsonLd = {
   "@type": "Article",
   headline: `${hold.data.nameHe} (${hold.data.nameEn})`,
   description: hold.data.summary,
-  articleSection: familyLabels[hold.data.family],
+  articleSection: HOLD_FAMILY_LABELS[hold.data.family],
 };
 ---
 
@@ -57,7 +50,7 @@ const jsonLd = {
       class="h-28 w-28 shrink-0 text-rust"
     />
     <div>
-      <Badge variant="olive">{familyLabels[hold.data.family]}</Badge>
+      <Badge variant="olive">{HOLD_FAMILY_LABELS[hold.data.family]}</Badge>
       <h1 class="mt-2 font-display text-3xl font-bold text-ink">
         {hold.data.nameHe}
       </h1>
@@ -85,6 +78,7 @@ const jsonLd = {
                   iconId={related.data.iconId}
                   label={related.data.nameHe}
                   class="h-8 w-8 text-rust"
+                  decorative
                 />
                 <span class="font-body text-sm font-semibold text-ink group-hover:text-rust">
                   {related.data.nameHe}

@@ -3,6 +3,8 @@ import { withBase } from "../../lib/url";
 import { getCollection, render } from "astro:content";
 import GuideLayout from "../../layouts/GuideLayout.astro";
 import Badge from "../../components/ui/Badge.astro";
+import MedicalDisclaimer from "../../components/injury-prevention/MedicalDisclaimer.astro";
+import { INJURY_CATEGORY_LABELS } from "../../lib/labels";
 
 export async function getStaticPaths() {
   const entries = await getCollection("injury-prevention");
@@ -15,18 +17,12 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 
-const categoryLabels: Record<string, string> = {
-  "warmup-prep": "חימום והכנה",
-  "common-injuries": "פציעות נפוצות ומניעתן",
-  "recovery-training": "התאוששות ואימון מונע",
-};
-
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Article",
   headline: `${entry.data.nameHe} (${entry.data.nameEn})`,
   description: entry.data.summary,
-  articleSection: categoryLabels[entry.data.category],
+  articleSection: INJURY_CATEGORY_LABELS[entry.data.category],
 };
 ---
 
@@ -40,7 +36,7 @@ const jsonLd = {
   ]}
   jsonLd={jsonLd}
 >
-  <Badge variant="olive">{categoryLabels[entry.data.category]}</Badge>
+  <Badge variant="olive">{INJURY_CATEGORY_LABELS[entry.data.category]}</Badge>
   <h1 class="mt-3 font-display text-3xl font-bold text-ink">
     {entry.data.nameHe}
   </h1>
@@ -49,6 +45,8 @@ const jsonLd = {
   <div class="prose-climbing mt-8 max-w-none leading-relaxed text-ink">
     <Content />
   </div>
+
+  <MedicalDisclaimer class="mt-10" />
 
   <a
     href={withBase("/מניעת-פציעות/")}

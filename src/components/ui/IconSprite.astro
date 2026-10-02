@@ -1,0 +1,23 @@
+---
+// Inline SVG sprite, rendered once per page by BaseLayout. Icons that
+// repeat many times on a page (the directory renders ~90 locations twice,
+// each with Maps/Waze/guidebook icons) reference these via
+// <svg><use href="#icon-..." /></svg> instead of inlining the full paths
+// every time - that alone was ~150KB of the directory page's HTML.
+---
+
+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+  <symbol id="icon-map-pin" viewBox="0 0 24 24" fill="none">
+    <path d="M12 2C7.6 2 4 5.6 4 10c0 5.4 7 11.5 7.3 11.8a1 1 0 0 0 1.4 0C13 21.5 20 15.4 20 10c0-4.4-3.6-8-8-8Z" stroke="currentColor" stroke-width="1.6"></path>
+    <circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="1.6"></circle>
+  </symbol>
+  <symbol id="icon-waze" viewBox="0 0 24 24">
+    <path d="M12 2C6.7 2 2.4 6 2.4 11c0 2.9 1.5 5.5 3.8 7.2l-.5 2.7c-.1.5.4.9.9.6l2.9-1.7c.8.2 1.6.3 2.5.3 5.3 0 9.6-4 9.6-9.1S17.3 2 12 2Z" fill="currentColor"></path>
+    <circle cx="9" cy="10.6" r="1.3" fill="var(--color-paper)"></circle>
+    <circle cx="15" cy="10.6" r="1.3" fill="var(--color-paper)"></circle>
+    <path d="M8.5 13.8c1 1 2.1 1.5 3.5 1.5s2.5-.5 3.5-1.5" stroke="var(--color-paper)" stroke-width="1.3" stroke-linecap="round" fill="none"></path>
+  </symbol>
+  <symbol id="icon-download" viewBox="0 0 24 24" fill="none">
+    <path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M5 19h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+  </symbol>
+</svg>

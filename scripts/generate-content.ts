@@ -1,14 +1,15 @@
 /**
- * One-time content generator: turns hand-encoded data (transcribed from
- * עזרים\*.txt) into Astro content-collection markdown files. Run with
- * `npm run gen:content`. Re-running overwrites files for slugs listed below
- * (safe/idempotent) but never deletes files for slugs removed from this
- * script - delete those manually if a hold/term is ever retired.
+ * Content generator: the single source of truth for every content
+ * collection (holds, glossary, disciplines, techniques, injury prevention,
+ * gear, locations). Turns the hand-encoded arrays below into the Astro
+ * content-collection markdown files under src/content/ - never edit those
+ * .md files by hand, edit this script and run `npm run gen:content`.
  *
- * Phase 1 only populates hold-types. Phase 2 will add glossary/disciplines/
- * gear/locations arrays below using the same writeCollection() helper.
+ * Re-running is safe/idempotent: every file is rewritten from the data
+ * here, and .md files whose slug is no longer listed (a retired hold, a
+ * closed gym) are deleted, so the content folders always mirror this file.
  */
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readdir, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { BASE_PATH } from "../src/site-config.ts";
 
@@ -161,7 +162,7 @@ const holdTypes: HoldType[] = [
 
 טעות נפוצה היא לנסות למשוך אנדרקלינג עם ידיים בלבד בלי לגייס את הרגליים - התוצאה היא לרוב היפתחות מהירה של הגוף מהקיר. מבחינת שרירי הגוף, אנדרקלינג מפעיל בעיקר את שרירי הגב הרחב (Lats) והבייספס, ופחות את אצבעות היד עצמן.
 
-אנדרקלינג נפוץ הן באולמות מלאכותיים (מתחת לגגות ולנפחים) והן בטבע, לרוב מתחת לשפה או לגג בסלע.`,
+אנדרקלינג נפוץ הן בקירות טיפוס מלאכותיים (מתחת לגגות ולנפחים) והן בטבע, לרוב מתחת לשפה או לגג בסלע.`,
   },
   {
     slug: "sidepull",
@@ -355,6 +356,7 @@ async function writeHoldTypes() {
     ].join("\n");
 
     await writeFile(path.join(dir, `${hold.slug}.md`), frontmatter, "utf-8");
+    recordWrite(dir, hold.slug);
   }
 
   console.log(`hold-types: wrote ${holdTypes.length} files -> ${dir}`);
@@ -374,6 +376,27 @@ async function writeMdFile(
     "\n",
   );
   await writeFile(path.join(dir, `${slug}.md`), content, "utf-8");
+  recordWrite(dir, slug);
+}
+
+// Slugs written this run, per content folder - anything else in those
+// folders is a leftover from an entry that has since been removed here.
+const writtenSlugs = new Map<string, Set<string>>();
+
+function recordWrite(dir: string, slug: string) {
+  if (!writtenSlugs.has(dir)) writtenSlugs.set(dir, new Set());
+  writtenSlugs.get(dir)!.add(slug);
+}
+
+async function pruneStaleFiles() {
+  for (const [dir, slugs] of writtenSlugs) {
+    for (const file of await readdir(dir)) {
+      if (!file.endsWith(".md")) continue;
+      if (slugs.has(file.slice(0, -".md".length))) continue;
+      await unlink(path.join(dir, file));
+      console.log(`removed stale ${path.relative(ROOT, path.join(dir, file))}`);
+    }
+  }
 }
 
 function yamlStr(value: string) {
@@ -720,7 +743,7 @@ const glossaryTerms: GlossaryTerm[] = [
 
 עבודתם משלבת יצירתיות אמנותית עם הבנה טכנית עמוקה של תנועת גוף: הם בוחרים אילו אחיזות להבריג, באיזו זווית, ובאיזה מרחק זו מזו - כל החלטה כזו קובעת אילו טכניקות (דיינו, היל הוק, דרופ ני ועוד) יידרשו כדי לפתור את הבעיה, וברמת קושי מכוונת ומדודה. ראוט סטרים מקצועיים עוברים הכשרה והסמכה רשמית, ובתחרויות בינלאומיות יש דרישות תקן מחמירות לעקביות הדירוג.
 
-מסלולים באולמות מוחלפים באופן קבוע (לרוב אחת למספר שבועות) כדי לשמור על עניין ולמנוע "שינון" של אותם מסלולים לאורך זמן רב מדי. מטפסים ותיקים לומדים לזהות "סגנון" אישי של ראוט סטר מסוים - חלקם ידועים במסלולים כוחניים, אחרים בטכניים ועדינים יותר.`,
+מסלולים בקירות טיפוס מוחלפים באופן קבוע (לרוב אחת למספר שבועות) כדי לשמור על עניין ולמנוע "שינון" של אותם מסלולים לאורך זמן רב מדי. מטפסים ותיקים לומדים לזהות "סגנון" אישי של ראוט סטר מסוים - חלקם ידועים במסלולים כוחניים, אחרים בטכניים ועדינים יותר.`,
   },
   {
     slug: "belay",
@@ -733,7 +756,7 @@ const glossaryTerms: GlossaryTerm[] = [
 
 המאבטח עומד (או יושב) למטה, מעביר את החבל דרך מכשיר האבטחה, ומבצע שתי פעולות מתחלפות לאורך כל הטיפוס: משיכת חבל עודף כשהמטפס מתקדם, ומתן חבל כשצריך - למשל כשהמטפס מקליפ ראנר במסלול הובלה. ברגע נפילה, יד הבלימה של המאבטח נועלת את החבל דרך המכשיר, שיוצר חיכוך מספיק כדי לעצור את המטפס בבטחה.
 
-אבטחה היא אחריות עצומה - טעות של המאבטח (יד בלימה שמשתחררת, חבל רופף מדי, חוסר תשומת לב) עלולה להיות מסוכנת גם אם המטפס עשה הכל נכון. לכן כל בית ספר לטיפוס ורוב האולמות דורשים הסמכת אבטחה רשמית לפני שמתירים לאדם לאבטח מטפס אחר.`,
+אבטחה היא אחריות עצומה - טעות של המאבטח (יד בלימה שמשתחררת, חבל רופף מדי, חוסר תשומת לב) עלולה להיות מסוכנת גם אם המטפס עשה הכל נכון. לכן כל בית ספר לטיפוס ורוב קירות הטיפוס דורשים הסמכת אבטחה רשמית לפני שמתירים לאדם לאבטח מטפס אחר.`,
   },
   {
     slug: "slab",
@@ -847,7 +870,7 @@ const disciplines: Discipline[] = [
 
 בניגוד להובלה, שבה המטפס גורר את החבל איתו ומכניס אותו לטבעות תוך כדי הטיפוס, בטופ-רופ החבל כבר מותקן מראש דרך עוגן בראש הקיר - כך שבכל רגע נתון החבל שומר את המטפס קרוב לגובה שבו הוא נמצא, ונפילה כמעט תמיד קצרה ומינימלית. זה הופך את הטופ-רופ לסגנון הפחות מפחיד מבין סגנונות הטיפוס בחבל, ולרוב נקודת הכניסה הראשונה לטיפוס עם חבל אחרי בולדרינג.
 
-יש שני אמצעי אבטחה אפשריים: מאבטח אנושי על הקרקע, שמושך ומשחרר חבל בעזרת מכשיר אבטחה, או מערכת Auto-Belay אוטומטית (כמו TrueBlue) שמחוברת לרתמת המטפס ומותחת ובולמת את הרצועה לבד, בלי צורך בבן זוג. אולמות רבים מציעים את שתי האפשרויות במקביל, כשה-Auto-Belay פופולרי במיוחד למטפסים שמגיעים לבד.`,
+יש שני אמצעי אבטחה אפשריים: מאבטח אנושי על הקרקע, שמושך ומשחרר חבל בעזרת מכשיר אבטחה, או מערכת Auto-Belay אוטומטית (כמו TrueBlue) שמחוברת לרתמת המטפס ומותחת ובולמת את הרצועה לבד, בלי צורך בבן זוג. קירות טיפוס רבים מציעים את שתי האפשרויות במקביל, כשה-Auto-Belay פופולרי במיוחד למטפסים שמגיעים לבד.`,
   },
   {
     slug: "lead-climbing",
@@ -860,7 +883,7 @@ const disciplines: Discipline[] = [
 
 בניגוד לטופ-רופ, שבו החבל כבר מוכן מראש מלמעלה, בהובלה המטפס עצמו "גורר" את החבל איתו מהקרקע כלפי מעלה, ובכל טבעת קבועה (בולט) שהוא עובר צריך לעצור, למשוך חבל, ולהכניס אותו לראנר (ציוד הבטיחות המחבר בין הבולט לחבל). המשמעות: בכל רגע נתון, נפילה אפשרית היא לפחות כפולה מהמרחק לבולט האחרון שהוכנס - הובלה מרגישה משמעותית "מפחידה" יותר מטופ-רופ, גם כשהיא בפועל בטוחה מאוד כשמבצעים אותה נכון.
 
-הובלה דורשת ממטפס גם מיומנות פיזית וגם רוגע מנטלי: לדעת להכניס חבל לראנר בזמן שתולים על אחיזה אחת, ולנהל את הפחד מנפילה מבלי שהוא ישתק את התנועה. אבטחת הובלה גם דורשת יותר תשומת לב מהמאבטח לעומת טופ-רופ, ולכן ברוב האולמות נדרשת הסמכת הובלה נפרדת לפני שמתירים למטפסים להוביל בעצמם.`,
+הובלה דורשת ממטפס גם מיומנות פיזית וגם רוגע מנטלי: לדעת להכניס חבל לראנר בזמן שתולים על אחיזה אחת, ולנהל את הפחד מנפילה מבלי שהוא ישתק את התנועה. אבטחת הובלה גם דורשת יותר תשומת לב מהמאבטח לעומת טופ-רופ, ולכן ברוב קירות הטיפוס נדרשת הסמכת הובלה נפרדת לפני שמתירים למטפסים להוביל בעצמם.`,
   },
   {
     slug: "sport-climbing",
@@ -1519,9 +1542,9 @@ const gearItems: GearItem[] = [
 
 - **אבקה חופשית:** הכי נפוצה וזולה, אך מתפזרת בקלות ומייצרת אבק רב באוויר.
 - **גוש (Chalk Block):** נמעך ביד לאבקה בזמן השימוש, פחות מתפזר מראש.
-- **כדור צ'וק (Chalk Ball):** רשת בד עם אבקה בפנים - משחררת כמות מבוקרת ומצומצמת לכל טבילה, ונפוצה במיוחד באולמות שמגבילים אבקה חופשית.
+- **כדור צ'וק (Chalk Ball):** רשת בד עם אבקה בפנים - משחררת כמות מבוקרת ומצומצמת לכל טבילה, ונפוצה במיוחד בקירות טיפוס שמגבילים אבקה חופשית.
 
-באולמות רבים יש הגבלות על שימוש במגנזיום (לרוב מחייבים כדור צ'וק או מגנזיום נוזלי בלבד) כדי לצמצם אבק ולשמור על ניקיון האחיזות - כדאי לבדוק את מדיניות המקום הספציפי לפני ההגעה.`,
+בקירות טיפוס רבים יש הגבלות על שימוש במגנזיום (לרוב מחייבים כדור צ'וק או מגנזיום נוזלי בלבד) כדי לצמצם אבק ולשמור על ניקיון האחיזות - כדאי לבדוק את מדיניות המקום הספציפי לפני ההגעה.`,
   },
   {
     slug: "liquid-chalk",
@@ -1533,7 +1556,7 @@ const gearItems: GearItem[] = [
     summary: "מגנזיום נוזלי הוא תערובת מגנזיום ואלכוהול שנמרחת על הידיים ומשאירה שכבת מגנזיום אחידה.",
     body: `מגנזיום נוזלי הוא תערובת מגנזיום ואלכוהול שנמרחת על הידיים ומשאירה שכבת מגנזיום אחידה.
 
-לאחר המריחה האלכוהול מתנדף תוך שניות ומותיר רק את שכבת המגנזיום הדקה והאחידה על העור - כיסוי אחיד יותר מאשר טבילה באבקה חופשית, שנוטה להצטבר בעודף במקומות מסוימים ולפספס אחרים. בזכות זה, ובזכות היעדר האבק המרחף שנוצר מאבקה רגילה, מגנזיום נוזלי נפוץ מאוד באולמות בולדרינג סגורים עם אוורור מוגבל.
+לאחר המריחה האלכוהול מתנדף תוך שניות ומותיר רק את שכבת המגנזיום הדקה והאחידה על העור - כיסוי אחיד יותר מאשר טבילה באבקה חופשית, שנוטה להצטבר בעודף במקומות מסוימים ולפספס אחרים. בזכות זה, ובזכות היעדר האבק המרחף שנוצר מאבקה רגילה, מגנזיום נוזלי נפוץ מאוד בקירות בולדרינג מקורים עם אוורור מוגבל.
 
 שכבת המגנזיום הנוזלי "נצמדת" לעור זמן ארוך יחסית, ולכן שימוש נוסף באבקה חופשית או בכדור צ'וק במהלך הטיפוס עדיין עוזר לחדש את הייבוש בין ניסיונות. יש להימנע ממריחה על עור פצוע או סדוק, שכן האלכוהול עלול לגרות ולייבש אותו מדי.`,
   },
@@ -1641,7 +1664,7 @@ const gearItems: GearItem[] = [
     summary: "קסדה חובה בטיפוס בטבע - מגנה על הראש מפגיעת אבנים מדורדרות או פגיעה בקיר.",
     body: `קסדה חובה בטיפוס בטבע - מגנה על הראש מפגיעת אבנים מדורדרות או פגיעה בקיר.
 
-שני סוגי הסיכון שהיא מגנה מפניהם שונים לגמרי: אבנים או פסולת שמתדרדרות מלמעלה (מהמטפס עצמו, מהמאבטח, או מטיילים מעל הקיר), ופגיעת ראש בסלע במקרה נפילה - במיוחד במסלולים לא אנכיים לגמרי, שבהם הגוף עלול להתנדנד ולפגוע בקיר תוך כדי נפילה. שני התרחישים האלה נדירים הרבה יותר בקיר מלאכותי מבוקר, ולכן קסדה פחות שכיחה באולמות.
+שני סוגי הסיכון שהיא מגנה מפניהם שונים לגמרי: אבנים או פסולת שמתדרדרות מלמעלה (מהמטפס עצמו, מהמאבטח, או מטיילים מעל הקיר), ופגיעת ראש בסלע במקרה נפילה - במיוחד במסלולים לא אנכיים לגמרי, שבהם הגוף עלול להתנדנד ולפגוע בקיר תוך כדי נפילה. שני התרחישים האלה נדירים הרבה יותר בקיר מלאכותי מבוקר, ולכן קסדה פחות שכיחה בקירות טיפוס מלאכותיים.
 
 קיימים שני סוגי בנייה עיקריים: קסדות קליפה קשיחה (Hardshell) עמידות יותר לפגיעות חוזרות אך כבדות יותר, וקסדות קצף עם קליפה דקה (Foam / Hybrid) קלות ומאווררות אך פחות עמידות לאורך זמן. יש להחליף קסדה אחרי כל מכה משמעותית, גם אם אינה נראית פגומה מבחוץ - חומר הקצף הפנימי נועד לספוג מכה חד-פעמית.`,
   },
@@ -1951,32 +1974,37 @@ const gyms: GymLocation[] = [
   { slug: "urban-climbing-rehovot", kind: "gym", name: "טיפוס אורבני רחובות", chain: "טיפוס אורבני", city: "רחובות", region: "shfela", address: "רח' ענטין", phone: "08-936-3455", website: "https://www.uclimb.co.il/", styles: ["bouldering"], coordinates: { lat: 31.90883, lng: 34.80575 } },
   { slug: "urban-climbing-jerusalem", kind: "gym", name: "טיפוס אורבני ירושלים", chain: "טיפוס אורבני", city: "ירושלים", region: "jerusalem", address: "בית הדפוס 11", phone: "054-762-5243", website: "https://www.uclimb.co.il/", styles: ["bouldering"], coordinates: { lat: 31.78583, lng: 35.1884 } },
   { slug: "monkeys-netanya", kind: "gym", name: "מאנקיז נתניה", chain: "Monkeys", city: "נתניה", region: "sharon", address: "מתחם ביג פולג", phone: "09-788-9933", website: "https://www.monkeysclimbinggym.co.il/", styles: ["bouldering"], coordinates: { lat: 32.27673, lng: 34.8607 } },
-  { slug: "performance-rock-beer-sheva", kind: "gym", name: "פרפורמנס רוק ב\"ש", chain: "Performance Rock", city: "באר שבע", region: "south", address: "העצמאות 4", phone: "08-627-2721", website: "https://performancerock.co.il/", styles: ["bouldering"], coordinates: { lat: 31.23911, lng: 34.79147 } },
-  { slug: "performance-rock-tel-aviv", kind: "gym", name: "פרפורמנס רוק ת\"א", chain: "Performance Rock", city: "תל אביב", region: "center", address: "ריב\"ל 3", phone: "03-687-2880", website: "https://performancerock.co.il/", styles: ["bouldering"], coordinates: { lat: 32.0853, lng: 34.78181 } },
+  { slug: "performance-rock-beer-sheva", kind: "gym", name: "פרפורמנס רוק באר שבע", chain: "Performance Rock", city: "באר שבע", region: "south", address: "העצמאות 4", phone: "08-627-2721", website: "https://performancerock.co.il/", styles: ["bouldering"], coordinates: { lat: 31.23911, lng: 34.79147 } },
+  { slug: "performance-rock-tel-aviv", kind: "gym", name: "פרפורמנס רוק תל אביב", chain: "Performance Rock", city: "תל אביב", region: "center", address: "ריב\"ל 3", phone: "03-687-2880", website: "https://performancerock.co.il/", styles: ["bouldering"], coordinates: { lat: 32.0853, lng: 34.78181 } },
   { slug: "campus-karmiel", kind: "gym", name: "קמפוס", city: "כרמיאל", region: "north", address: "החרמש 9", phone: "04-606-0536", website: "https://www.campuswall.co.il/", styles: ["bouldering"], coordinates: { lat: 32.92323, lng: 35.31145 } },
   { slug: "the-wall-modiin", kind: "gym", name: "THE WALL", city: "מודיעין", region: "shfela", address: "עמק האלה 255", phone: "08-375-0575", website: "https://thewallmodiin.com/", styles: ["bouldering", "lead", "speed"], coordinates: { lat: 31.91419, lng: 35.00576 } },
   { slug: "the-bloc-jerusalem", kind: "gym", name: "הבלוק ירושלים", chain: "The Bloc", city: "ירושלים", region: "jerusalem", address: "יצחק אלישר", phone: "02-539-8991", website: "https://www.thebloc.co.il/", styles: ["bouldering"], coordinates: { lat: 31.77885, lng: 35.22579 } },
-  { slug: "vking-tel-aviv", kind: "gym", name: "ויקינג תל אביב", city: "תל אביב", region: "center", address: "השלושה 3", phone: "03-6353-600", website: "https://vking.co.il/", styles: ["bouldering"], coordinates: { lat: 32.06215, lng: 34.78885 } },
-  { slug: "the-bloc-tel-aviv", kind: "gym", name: "הבלוק ת\"א", chain: "The Bloc", city: "תל אביב", region: "center", address: "המרץ 4", phone: "03-544-8769", website: "https://www.thebloc.co.il/tlv", styles: ["bouldering"], coordinates: { lat: 32.05125, lng: 34.7727 } },
+  { slug: "vking-tel-aviv", kind: "gym", name: "ויקינג תל אביב", city: "תל אביב", region: "center", address: "השלושה 3", phone: "03-635-3600", website: "https://vking.co.il/", styles: ["bouldering"], coordinates: { lat: 32.06215, lng: 34.78885 } },
+  { slug: "the-bloc-tel-aviv", kind: "gym", name: "הבלוק תל אביב", chain: "The Bloc", city: "תל אביב", region: "center", address: "המרץ 4", phone: "03-544-8769", website: "https://www.thebloc.co.il/tlv", styles: ["bouldering"], coordinates: { lat: 32.05125, lng: 34.7727 } },
   { slug: "kir-yoav-haifa", kind: "gym", name: "קיר יואב", city: "חיפה", region: "north", address: "פלימן", phone: "04-681-7814", website: "https://www.shafan-hasela.com/", styles: ["lead"], coordinates: { lat: 32.79025, lng: 34.96405 } },
-  { slug: "levin-climbing-hadera", kind: "gym", name: "לוין מרכז טיפוס", city: "חדרה", region: "sharon", address: "צה\"ל 35", phone: "04-6627313", website: "https://www.levinclimbing.co.il/", styles: ["bouldering"], coordinates: { lat: 32.44074, lng: 34.94011 } },
+  { slug: "levin-climbing-hadera", kind: "gym", name: "לוין מרכז טיפוס", city: "חדרה", region: "sharon", address: "צה\"ל 35", phone: "04-662-7313", website: "https://www.levinclimbing.co.il/", styles: ["bouldering"], coordinates: { lat: 32.44074, lng: 34.94011 } },
   { slug: "kir-boaz", kind: "gym", name: "קיר בועז", city: "תל מונד", region: "sharon", address: "השקד 1", phone: "09-777-7600", styles: ["lead"], coordinates: { lat: 32.25946, lng: 34.91427 } },
   { slug: "rujum", kind: "gym", name: "רוג'ום מועדון טיפוס וטבע", city: "קרית שמונה", region: "north", address: "ההסתדרות 4", phone: "053-388-8307", website: "https://rujum-ks.co.il/", styles: ["bouldering", "lead"], coordinates: { lat: 33.20747, lng: 35.57078 } },
   { slug: "park-extreme-akko", kind: "gym", name: "פארק אקסטרים", city: "עכו", region: "north", address: "שלום הגליל 3", phone: "1-700-556-070", website: "https://www.shafan-hasela.com/", styles: ["lead"], coordinates: { lat: 32.91622, lng: 35.09411 } },
   { slug: "boulder-haifa", kind: "gym", name: "בולדר חיפה", city: "חיפה", region: "north", address: "רבי יוחנן הסנדלר 18", phone: "04-870-0296", website: "https://www.boulder.co.il/", styles: ["bouldering"], coordinates: { lat: 32.81912, lng: 34.99839 } },
   { slug: "rockiz-holon", kind: "gym", name: "רוקיז", city: "חולון", region: "center", address: "שד' ירושלים 210", phone: "03-748-9494", styles: ["lead", "bouldering"], coordinates: { lat: 32.00135, lng: 34.80362 } },
-  { slug: "desert-climbing", kind: "gym", name: "טיפוס מדברי", city: "מדרשת בן גוריון", region: "south", address: "רח' אזור תעשייה", phone: "0549399829", styles: ["bouldering"], coordinates: { lat: 30.85159, lng: 34.78258 } },
-  { slug: "iclimb-jerusalem", kind: "gym", name: "אייקליימב ירושלים", chain: "iClimb", city: "ירושלים", region: "jerusalem", address: "אצטדיון טדי", phone: "02-648-2264", styles: ["lead"], coordinates: { lat: 31.75112, lng: 35.19083 } },
-  { slug: "iclimb-rishon", kind: "gym", name: "אייקליימב ראשון לציון", chain: "iClimb", city: "ראשון לציון", region: "center", address: "נדב בסקינד 12", phone: "03-612-1109", styles: ["lead"], coordinates: { lat: 31.98833, lng: 34.76874 } },
-  { slug: "iclimb-tel-aviv", kind: "gym", name: "אייקליימב תל אביב", chain: "iClimb", city: "תל אביב", region: "center", address: "שד' רוקח 42", phone: "050-213-7099", styles: ["lead"], coordinates: { lat: 32.09773, lng: 34.78825 } },
-  { slug: "roca-afikim", kind: "gym", name: "רוקה", city: "קיבוץ אפיקים, עמק הירדן", region: "north", address: "אפיקים 1", phone: "054-8330920", website: "https://www.rocaclimb.co.il/", styles: ["bouldering"], coordinates: { lat: 32.68137, lng: 35.57833 } },
-  { slug: "totem-pardes-hana", kind: "gym", name: "טוטם קיר טיפוס", city: "פרדס חנה", region: "sharon", address: "ערער 1", phone: "04-6424849", website: "https://www.totemclimbing.co.il/", styles: ["bouldering"], coordinates: { lat: 32.50666, lng: 34.97558 } },
-  { slug: "monkeys-ashdod", kind: "gym", name: "מאנקיז אשדוד", chain: "Monkeys", city: "אשדוד", region: "shfela", address: "BMALL עד הלום", phone: "08-680-6000", styles: ["bouldering"], coordinates: { lat: 31.79773, lng: 34.65299 } },
+  { slug: "desert-climbing", kind: "gym", name: "טיפוס מדברי", city: "מדרשת בן גוריון", region: "south", address: "רח' אזור תעשייה", phone: "054-939-9829", styles: ["bouldering"], coordinates: { lat: 30.85159, lng: 34.78258 } },
+  { slug: "iclimb-jerusalem", kind: "gym", name: "אייקליימב ירושלים", chain: "iClimb", city: "ירושלים", region: "jerusalem", address: "אצטדיון טדי", phone: "02-648-2264", website: "https://iclimb.co.il", styles: ["lead"], coordinates: { lat: 31.75112, lng: 35.19083 } },
+  { slug: "iclimb-rishon", kind: "gym", name: "אייקליימב ראשון לציון", chain: "iClimb", city: "ראשון לציון", region: "center", address: "נדב בסקינד 12", phone: "03-612-1109", website: "https://iclimb.co.il", styles: ["lead"], coordinates: { lat: 31.98833, lng: 34.76874 } },
+  { slug: "iclimb-tel-aviv", kind: "gym", name: "אייקליימב תל אביב", chain: "iClimb", city: "תל אביב", region: "center", address: "שד' רוקח 42", phone: "050-213-7099", website: "https://iclimb.co.il", styles: ["lead"], coordinates: { lat: 32.09773, lng: 34.78825 } },
+  { slug: "roca-afikim", kind: "gym", name: "רוקה", city: "קיבוץ אפיקים, עמק הירדן", region: "north", address: "אפיקים 1", phone: "054-833-0920", website: "https://www.rocaclimb.co.il/", styles: ["bouldering"], coordinates: { lat: 32.68137, lng: 35.57833 } },
+  { slug: "totem-pardes-hana", kind: "gym", name: "טוטם קיר טיפוס", city: "פרדס חנה", region: "sharon", address: "ערער 1", phone: "04-642-4849", website: "https://www.totemclimbing.co.il/", styles: ["bouldering"], coordinates: { lat: 32.50666, lng: 34.97558 } },
+  { slug: "monkeys-ashdod", kind: "gym", name: "מאנקיז אשדוד", chain: "Monkeys", city: "אשדוד", region: "shfela", address: "BMALL עד הלום", phone: "08-680-6000", website: "https://www.monkeysclimbinggym.co.il/", styles: ["bouldering"], coordinates: { lat: 31.79773, lng: 34.65299 } },
   { slug: "performance-rock-haifa", kind: "gym", name: "פרפורמנס רוק חיפה", chain: "Performance Rock", city: "חיפה", region: "north", address: "הנמל 32", phone: "04-601-7000", website: "https://performancerock.co.il/branch/haifa/", styles: ["bouldering"], coordinates: { lat: 32.81821, lng: 35.00127 } },
   { slug: "iclimb-kiryat-gat", kind: "gym", name: "אייקליימב קריית גת", chain: "iClimb", city: "קרית גת", region: "shfela", address: "שדרות לכיש", phone: "050-504-2222", website: "https://iclimb.co.il", styles: ["lead"], coordinates: { lat: 31.60519, lng: 34.7743 } },
   { slug: "ninja-park-rehovot", kind: "gym", name: "נינג'ה פארק", city: "רחובות", region: "shfela", address: "רחוב מוטי קינד 10", phone: "08-616-5686", website: "https://www.ninja-parks.co.il/", styles: ["bouldering"], coordinates: { lat: 31.89483, lng: 34.78965 } },
   { slug: "isaac-climbing", kind: "gym", name: "אייזיק", city: "תל אביב", region: "center", address: "יצחק שדה 41", phone: "055-992-5128", website: "https://www.isaacclimbing.com", styles: ["bouldering"], coordinates: { lat: 32.06493, lng: 34.78945 } },
-  { slug: "sragim", kind: "gym", name: "שריגים", city: "תל אביב", region: "center", address: "מטה יהודה", phone: "050-799-5627", website: "https://www.m-yehuda.sport.atarix.co.il/index.php", styles: ["bouldering"], coordinates: { lat: 31.84225, lng: 34.96897 } },
+  // The wall is in moshav Srigim (Li-On), Mateh Yehuda - it was listed under
+  // "תל אביב" with "מטה יהודה" as its street address, and pinned ~18km
+  // north of the moshav. Coordinates are the settlement's own (Wikipedia),
+  // not the building; styles per the regional council's sports site
+  // (bouldering + top-rope areas).
+  { slug: "sragim", kind: "gym", name: "שריגים", city: "שריגים (לי-און)", region: "jerusalem", phone: "050-799-5627", website: "https://www.m-yehuda.sport.atarix.co.il/index.php", styles: ["bouldering", "top-rope"], coordinates: { lat: 31.6775, lng: 34.93528 } },
   { slug: "imunim-nesher", kind: "gym", name: "אימונים", city: "נשר", region: "north", address: "המסילה 22", phone: "052-381-2035", styles: ["bouldering"], coordinates: { lat: 32.78278, lng: 35.03543 } },
   { slug: "iclimb-haifa", kind: "gym", name: "אייקליימב חיפה", chain: "iClimb", city: "חיפה", region: "north", address: "העמלים 37", phone: "04-666-1103", website: "https://iclimb.co.il/haifa/%D7%A8%D7%90%D7%A9%D7%99/", styles: ["lead"], coordinates: { lat: 32.81082, lng: 35.06032 } },
   // Not members of the climbing federation, per the user's source, but
@@ -2018,7 +2046,7 @@ const crags: CragLocation[] = [
     shade: "המצוק חשוף לשמש החל משעות הצהריים.",
     guidebooks: [
       { label: "התאחדות הטיפוס (ILCA)", url: "https://drive.google.com/file/d/1Q3jvWGMccHpgCvw_dcJbkvSbvZ4KQlr1/view?usp=sharing" },
-      { label: "טופו מאת נועה מייזליש", url: "http://wiki.imga.org.il/Topos/haavot.pdf" },
+      { label: "טופו מאת נועה מייזליש", url: "https://wiki.imga.org.il/Topos/haavot.pdf" },
     ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%9E%D7%A6%D7%95%D7%A7_%D7%94%D7%90%D7%91%D7%95%D7%AA",
   },
@@ -2073,7 +2101,7 @@ const crags: CragLocation[] = [
     shade: "המצוק חשוף לשמש עד שעות הצהריים.",
     guidebooks: [
       { label: "התאחדות הטיפוס (ILCA)", url: "https://drive.google.com/open?id=13wvHbviB4__3Ipi2L5AKfbdTtcv9-yWE" },
-      { label: "טופו מהוויקי", url: "http://wiki.imga.org.il/Topos/The%E2%80%8FOaksCrag.pdf" },
+      { label: "טופו מהוויקי", url: "https://wiki.imga.org.il/Topos/The%E2%80%8FOaksCrag.pdf" },
     ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%9E%D7%A6%D7%95%D7%A7_%D7%94%D7%90%D7%9C%D7%95%D7%A0%D7%99%D7%9D",
   },
@@ -2127,7 +2155,7 @@ const crags: CragLocation[] = [
     season: "כל השנה. לא מומלץ לאחר גשם או בימי רוח חזקה.",
     shade: "הצל מגיע אחרי הצהריים. בקיץ ניתן לטפס מהצהריים עד החשיכה - עדיף לצאת לפני החושך כדי להגיע לרכב.",
     lodging: "ניתן לישון במחצבה או במטע הזיתים - קרקע פרטית, יש לכבד את הבעלים ולא להשאיר פסולת. אסור לישון או להבעיר אש מתחת למצוק עצמו. אפשרות נוספת: לינה במושב גיתה במחיר נמוך ונוח (04-9873747).",
-    guidebooks: [{ label: "המדריך של מקס וסלאבה לגיתה מערב", url: "http://wiki.imga.org.il/images/6/66/GitaWest_NewGuidebook.pdf" }],
+    guidebooks: [{ label: "המדריך של מקס וסלאבה לגיתה מערב", url: "https://wiki.imga.org.il/images/6/66/GitaWest_NewGuidebook.pdf" }],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%92%D7%99%D7%AA%D7%94_%D7%9E%D7%96%D7%A8%D7%97",
   },
   {
@@ -2248,7 +2276,7 @@ const crags: CragLocation[] = [
     season: "הטיפוס אפשרי כל השנה - יש לבדוק בפרסומי ההתאחדות לגבי סקטורים הסגורים בחלקים מסוימים של השנה.",
     shade: "המצוק פונה צפונה, ולכן ברוב ימות השנה מוצל כל היום. בחודשי הקיץ (יוני-אוגוסט) המצוק מוצל עד השעה 14:00 בערך, אך בזכות העצים הסמוכים אליו אפשר עדיין ליהנות ממנו.",
     lodging: "אפשרית למרגלות המצוק - יש לשמור על המקום נקי ונעים גם לבאים אחריכם.",
-    externalBetaUrl: "http://wiki.imga.org.il/index.php?title=%D7%96%D7%A0%D7%95%D7%97",
+    externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%96%D7%A0%D7%95%D7%97",
   },
   {
     slug: "kfar-giladi-cliff",
@@ -2303,7 +2331,7 @@ const crags: CragLocation[] = [
     shade: "המצוק חשוף לשמש החל משעות הצהריים.",
     guidebooks: [
       { label: "התאחדות הטיפוס (ILCA)", url: "https://drive.google.com/file/d/16E2ouMUhGNGVSfsMel01BGGPtt9bh-wn/view?usp=sharing" },
-      { label: "טופו מהוויקי", url: "http://wiki.imga.org.il/Topos/kabara.pdf" },
+      { label: "טופו מהוויקי", url: "https://wiki.imga.org.il/Topos/kabara.pdf" },
     ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%9B%D7%91%D7%90%D7%A8%D7%94",
   },
@@ -2357,7 +2385,7 @@ const crags: CragLocation[] = [
     shade: "הנחל זורם כמעט צפון-דרום באזור זה, כך שהמצוקים פונים מזרח-מערב - צד אחד מוצל בבוקר והשני אחר הצהריים.",
     guidebooks: [
       { label: "התאחדות הטיפוס (ILCA)", url: "https://drive.google.com/file/d/1tDFtpZ03JMKVVaHgvg80QmOK7GmjWt19/view?usp=sharing" },
-      { label: "המדריך המקורי של נחל עמוד", url: "http://wiki.imga.org.il/Topos/Amud%20Guidebook.pdf" },
+      { label: "המדריך המקורי של נחל עמוד", url: "https://wiki.imga.org.il/Topos/Amud%20Guidebook.pdf" },
     ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A0%D7%97%D7%9C_%D7%A2%D7%9E%D7%95%D7%93",
   },
@@ -2379,8 +2407,8 @@ const crags: CragLocation[] = [
     shade: "בזכות מבנה האתר קיימים מסלולים מוצלים לאורך כל היום, כך שאפשר \"לרדוף\" אחרי הצל כמעט בכל שעה. הקיר הצפוני חשוף לשמש ישירה בערך בין 10:00 ל-17:00 - בקיץ זה \"כמו כבשן\".",
     lodging: "הלינה אסורה בכל חלקי הפארק.",
     guidebooks: [
-      { label: "Mountain-Man Guide to Ein Fara (2007)", url: "http://wiki.imga.org.il/Topos/fara.pdf" },
-      { label: "הטופו המקורי של יואב וייס", url: "http://wiki.imga.org.il/Topos/EinFaraOldTopo.webarchive" },
+      { label: "Mountain-Man Guide to Ein Fara (2007)", url: "https://wiki.imga.org.il/Topos/fara.pdf" },
+      { label: "הטופו המקורי של יואב וייס", url: "https://wiki.imga.org.il/Topos/EinFaraOldTopo.webarchive" },
     ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A2%D7%99%D7%9F_%D7%A4%D7%90%D7%A8%D7%94",
   },
@@ -2415,8 +2443,8 @@ const crags: CragLocation[] = [
     shade: "רק בלילה (מפנה דרומי מובהק).",
     guidebooks: [
       { label: "התאחדות הטיפוס (ILCA)", url: "https://drive.google.com/file/d/1H4kfwhU07xMQar50D9dgt_9EFi7yGVGt/view?usp=sharing" },
-      { label: "טופו המצוק העיקרי", url: "http://wiki.imga.org.il/Topos/TzuritCrag.pdf" },
-      { label: "גיידבוק בולדרינג", url: "http://wiki.imga.org.il/Topos/tzurit.pdf" },
+      { label: "טופו המצוק העיקרי", url: "https://wiki.imga.org.il/Topos/TzuritCrag.pdf" },
+      { label: "גיידבוק בולדרינג", url: "https://wiki.imga.org.il/Topos/tzurit.pdf" },
     ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A6%D7%95%D7%A8%D7%99%D7%AA",
   },
@@ -2474,8 +2502,8 @@ const crags: CragLocation[] = [
     lodging: "באתר הקמפינג של הפארק (בתשלום נוסף).",
     guidebooks: [
       { label: "התאחדות הטיפוס (ILCA)", url: "https://drive.google.com/file/d/1SPqifs6DLzMbfbEGSGf-TKvDo1s1sNxE/view?usp=sharing" },
-      { label: "גיידבוק מעודכן (2020)", url: "http://wiki.imga.org.il/Topos/Timna_topo_guide_2020.pdf" },
-      { label: "גיידבוק ישן", url: "http://wiki.imga.org.il/Topos/TIMNA_GUIDE_HEBREW-V4.pdf" },
+      { label: "גיידבוק מעודכן (2020)", url: "https://wiki.imga.org.il/Topos/Timna_topo_guide_2020.pdf" },
+      { label: "גיידבוק ישן", url: "https://wiki.imga.org.il/Topos/TIMNA_GUIDE_HEBREW-V4.pdf" },
     ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%AA%D7%9E%D7%A0%D7%A2",
   },
@@ -2514,7 +2542,7 @@ const crags: CragLocation[] = [
     externalBetaUrl: "https://he.wikipedia.org/wiki/%D7%A0%D7%97%D7%9C_%D7%90%D7%95%D7%A8%D7%9F",
     guidebooks: [
       { label: "ניב אתר, עריכה: רם שני (2024)", url: "/guidebooks/nahal-oren-2024.pdf" },
-      { label: "טופו מהוויקי", url: "http://wiki.imga.org.il/Topos/Oren.pdf" },
+      { label: "טופו מהוויקי", url: "https://wiki.imga.org.il/Topos/Oren.pdf" },
     ],
   },
   {
@@ -2533,7 +2561,7 @@ const crags: CragLocation[] = [
     season: "המקום מוצל רוב שעות היום, והטיפוס אפשרי במהלך כל השנה.",
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%9B%D7%A8%D7%9D_%D7%9E%D7%94%D7%A8%22%D7%9C",
     guidebooks: [
-      { label: "גיידבוק מעודכן (2024)", url: "/guidebooks/kerem-maharal-2026.pdf" },
+      { label: "גיידבוק מעודכן (2026)", url: "/guidebooks/kerem-maharal-2026.pdf" },
     ],
   },
   {
@@ -2552,7 +2580,7 @@ const crags: CragLocation[] = [
     season: "אפשרי כל השנה; בין אוקטובר לאפריל המקום מתחמם מאוד בסביבות השעה 14:00, ולכן מומלץ להגיע בשעות הבוקר המוקדמות.",
     guidebooks: [
       { label: "גיידבוק מלא - נחל דולב", url: "/guidebooks/nahal-dolev.pdf" },
-      { label: "טופו מהוויקי", url: "http://wiki.imga.org.il/Topos/Dolev.pdf" },
+      { label: "טופו מהוויקי", url: "https://wiki.imga.org.il/Topos/Dolev.pdf" },
     ],
   },
   {
@@ -2732,7 +2760,9 @@ const crags: CragLocation[] = [
     accessDescription: "יורדים לערוץ הנחל והולכים בו כ-1,600 מ', ואז פונים דרומה-מזרחה עוד כ-700 מ' לכיוון רכס חלוקים",
     routeCount: "כ-42 מסלולים במגוון דירוגים",
     season: "התנאים עלולים להחמיר אחרי גשם/שיטפונות. קסדה חובה; מומלץ קליפ-סטיק לחלק מהמסלולים.",
-    guidebooks: [{ label: "המדריך של אריה", url: "http://wiki.imga.org.il/Topos/Boker.pdf" }],
+    // The wiki's guidebook link (Topos/Boker.pdf, "המדריך של אריה") returns
+    // 404 at the source as of 2026-10 - dropped rather than shipping a dead
+    // download button. Restore it if the wiki re-uploads the file.
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A0%D7%97%D7%9C_%D7%91%D7%95%D7%A7%D7%A8",
   },
   {
@@ -2765,7 +2795,7 @@ const crags: CragLocation[] = [
     rockType: "אבן גיר, תצורת בר כוכבא (תקופת האאוקן)",
     routeCount: "9 מבני בולדר, 30+ בעיות, דירוגים V1 עד V10",
     season: "מומלץ סוף אוקטובר עד מאי (לא חם מדי). מומלץ להביא לפחות שלושה מזרוני נפילה.",
-    guidebooks: [{ label: "הטופו של לאון", url: "http://wiki.imga.org.il/Topos/achbarra_guidebook.pdf" }],
+    guidebooks: [{ label: "הטופו של לאון", url: "https://wiki.imga.org.il/Topos/achbarra_guidebook.pdf" }],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A2%D7%9B%D7%91%D7%A8%D7%94",
   },
   {
@@ -2802,7 +2832,7 @@ const crags: CragLocation[] = [
     accessDescription: "ליד רחוב אפרים לרון, סמוך לנחל באר שבע. ראו מפת הגעה בדף המקור באנציקלופדיית הטיפוס.",
     routeLength: "עד כ-10 מטר",
     routeCount: "12 מסלולים, דירוגים 5c-6c",
-    guidebooks: [{ label: "המדריך המקורי של יובל רביד", url: "http://wiki.imga.org.il/Topos/Terasa%20Gudebook.pdf" }],
+    guidebooks: [{ label: "המדריך המקורי של יובל רביד", url: "https://wiki.imga.org.il/Topos/Terasa%20Gudebook.pdf" }],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A7%D7%99%D7%A8_%D7%94%D7%98%D7%A8%D7%90%D7%A1%D7%94",
   },
   {
@@ -2819,7 +2849,7 @@ const crags: CragLocation[] = [
     routeCount: "עשרות בעיות בולדרינג, ומסלול הובלה בודד",
     season: "אפשר לבקר גם בחורף - רטוב וקר אך יפה מאוד.",
     shade: "מוצל כל היום (פונה צפונה).",
-    guidebooks: [{ label: "טופו מהוויקי", url: "http://wiki.imga.org.il/Topos/Nezirim.pdf" }],
+    guidebooks: [{ label: "טופו מהוויקי", url: "https://wiki.imga.org.il/Topos/Nezirim.pdf" }],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%9E%D7%A2%D7%A8%D7%AA_%D7%94%D7%A0%D7%96%D7%99%D7%A8%D7%99%D7%9D",
   },
   {
@@ -2830,7 +2860,7 @@ const crags: CragLocation[] = [
     coordinates: { lat: 31.33832, lng: 35.26019 },
     styles: ["lead", "trad"],
     description: "קניון במדבר יהודה. המידע שברשותנו על האתר מוגבל בשלב זה לגיידבוק שהופץ על ידי התאחדות הטיפוס - נשמח לעדכן פרטי גישה ומסלולים נוספים ברגע שיהיו זמינים.",
-    guidebooks: [{ label: "טופו מהוויקי", url: "http://wiki.imga.org.il/Topos/tzeelim.pdf" }],
+    guidebooks: [{ label: "טופו מהוויקי", url: "https://wiki.imga.org.il/Topos/tzeelim.pdf" }],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%90%D7%AA%D7%A8%D7%99_%D7%91%D7%95%D7%9C%D7%93%D7%A8%D7%99%D7%A0%D7%92",
   },
   {
@@ -2841,7 +2871,7 @@ const crags: CragLocation[] = [
     coordinates: { lat: 30.59439, lng: 34.93892 },
     styles: ["lead"],
     description: "אתר טיפוס באזור מכתש רמון. המידע שברשותנו על האתר מוגבל בשלב זה לגיידבוק שהופץ על ידי התאחדות הטיפוס - נשמח לעדכן פרטי גישה ומסלולים נוספים ברגע שיהיו זמינים.",
-    guidebooks: [{ label: "טופו מהוויקי", url: "http://wiki.imga.org.il/Topos/nekarot.pdf" }],
+    guidebooks: [{ label: "טופו מהוויקי", url: "https://wiki.imga.org.il/Topos/nekarot.pdf" }],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%90%D7%AA%D7%A8%D7%99_%D7%91%D7%95%D7%9C%D7%93%D7%A8%D7%99%D7%A0%D7%92",
   },
   {
@@ -2855,7 +2885,7 @@ const crags: CragLocation[] = [
     styles: ["lead"],
     description: "קניון בהר הנגב הצפוני, ליד מעלה עקרבים, היורד לכיוון נחל צין. המידע שברשותנו על האתר מוגבל בשלב זה לגיידבוק שהופץ על ידי התאחדות הטיפוס - נשמח לעדכן פרטי גישה ומסלולים נוספים ברגע שיהיו זמינים.",
     locationDescription: "ליד מעלה עקרבים, הר הנגב הצפוני",
-    guidebooks: [{ label: "טופו מהוויקי", url: "http://wiki.imga.org.il/Topos/Gov.pdf" }],
+    guidebooks: [{ label: "טופו מהוויקי", url: "https://wiki.imga.org.il/Topos/Gov.pdf" }],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%90%D7%AA%D7%A8%D7%99_%D7%91%D7%95%D7%9C%D7%93%D7%A8%D7%99%D7%A0%D7%92",
   },
   // --- The following are documented on the wiki as sitting inside a
@@ -2886,7 +2916,7 @@ const crags: CragLocation[] = [
     rockType: "דולומיט, תצורת ורדה",
     routeLength: "עד כ-25 מטר",
     routeCount: "כ-11 מסלולי ספורט, ועוד מספר מסלולי טראד",
-    guidebooks: [{ label: "טופו מהוויקי", url: "http://wiki.imga.org.il/images/8/80/CarmillaV110204.pdf" }],
+    guidebooks: [{ label: "טופו מהוויקי", url: "https://wiki.imga.org.il/images/8/80/CarmillaV110204.pdf" }],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%9B%D7%A8%D7%9E%D7%99%D7%9C%D7%94",
   },
   {
@@ -2921,7 +2951,7 @@ const crags: CragLocation[] = [
     styles: ["lead"],
     climbingProhibited: true,
     description: "מצוק בהר הכרמל. האתר נמצא בתחום שמורת טבע והטיפוס בו אסור - המידע מובא כתיעוד היסטורי בלבד.",
-    guidebooks: [{ label: "המדריך המקורי מאת יואב ניר", url: "http://wiki.imga.org.il/Topos/YoavNir_Nahal_Galim.pdf" }],
+    guidebooks: [{ label: "המדריך המקורי מאת יואב ניר", url: "https://wiki.imga.org.il/Topos/YoavNir_Nahal_Galim.pdf" }],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A0%D7%97%D7%9C_%D7%92%D7%9C%D7%99%D7%9D",
   },
   {
@@ -2947,8 +2977,8 @@ const crags: CragLocation[] = [
     climbingProhibited: true,
     description: "נחל בהר הכרמל היורד לים דרך יישוב מגדים - אחד מאתרי הטיפוס הראשונים בכרמל, מסוף שנות ה-70 (בעיקר מטפסי חיפה), עם המשך פיתוח משמעותי בשנות ה-80 בידי יואב ניר וחברים. רוב המסלולים על ציוד טראד. האתר נמצא בתחום שמורת טבע והטיפוס בו אסור - המידע מובא כתיעוד היסטורי בלבד.",
     guidebooks: [
-      { label: "המדריך המקורי מאת דורון בר", url: "http://wiki.imga.org.il/Topos/doronBar_Megadim_Sefoonim_Old.pdf" },
-      { label: "המדריך המעודכן מאת דורון בר", url: "http://wiki.imga.org.il/Topos/doronBar_Megadim_Sefoonim.pdf" },
+      { label: "המדריך המקורי מאת דורון בר", url: "https://wiki.imga.org.il/Topos/doronBar_Megadim_Sefoonim_Old.pdf" },
+      { label: "המדריך המעודכן מאת דורון בר", url: "https://wiki.imga.org.il/Topos/doronBar_Megadim_Sefoonim.pdf" },
     ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A0%D7%97%D7%9C_%D7%9E%D7%92%D7%93%D7%99%D7%9D",
   },
@@ -2960,7 +2990,7 @@ const crags: CragLocation[] = [
     styles: ["lead"],
     climbingProhibited: true,
     description: "מצוק בהר הכרמל, מהאתרים הראשונים שטופסו באזור. האתר נמצא בתחום שמורת טבע והטיפוס בו אסור - המידע מובא כתיעוד היסטורי בלבד.",
-    guidebooks: [{ label: "המדריך המעודכן מאת דורון בר", url: "http://wiki.imga.org.il/Topos/doronBar_Megadim_Sefoonim.pdf" }],
+    guidebooks: [{ label: "המדריך המעודכן מאת דורון בר", url: "https://wiki.imga.org.il/Topos/doronBar_Megadim_Sefoonim.pdf" }],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A1%D7%A4%D7%95%D7%A0%D7%99%D7%9D",
   },
   {
@@ -3070,3 +3100,4 @@ await writeTechniques();
 await writeInjuryPrevention();
 await writeGear();
 await writeLocations();
+await pruneStaleFiles();

@@ -5,28 +5,13 @@ import Card from "../ui/Card.astro";
 import Badge from "../ui/Badge.astro";
 import HoldIcon from "./HoldIcon.astro";
 import { holdPaths } from "./holdPaths";
+import { HOLD_FAMILY_LABELS, orderedKeys } from "../../lib/labels";
 
 interface Props {
   holds: CollectionEntry<"hold-types">[];
 }
 
 const { holds } = Astro.props;
-
-const familyLabels: Record<string, string> = {
-  foundational: "אחיזות יסוד",
-  directional: "אחיזות כיווניות",
-  "structural-special": "אחיזות גדולות, מבניות ומיוחדות",
-  "feet-only": "רגליים בלבד",
-  "outdoor-rock": "אופייניות לטיפוס בטבע",
-};
-
-const families = [
-  "foundational",
-  "directional",
-  "structural-special",
-  "feet-only",
-  "outdoor-rock",
-];
 
 for (const hold of holds) {
   if (!holdPaths[hold.data.iconId]) {
@@ -39,7 +24,7 @@ for (const hold of holds) {
 
 <div class="space-y-14">
   {
-    families.map((family) => {
+    orderedKeys(HOLD_FAMILY_LABELS).map((family) => {
       const items = holds
         .filter((h) => h.data.family === family)
         .sort((a, b) => a.data.order - b.data.order);
@@ -47,7 +32,7 @@ for (const hold of holds) {
       return (
         <section>
           <h2 class="font-display text-xl font-bold text-ink">
-            {familyLabels[family]}
+            {HOLD_FAMILY_LABELS[family]}
           </h2>
           <ul class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {items.map((hold) => (
@@ -57,6 +42,7 @@ for (const hold of holds) {
                     iconId={hold.data.iconId}
                     label={hold.data.nameHe}
                     class="h-14 w-14 shrink-0 text-rust group-hover:text-rope"
+                    decorative
                   />
                   <div>
                     <p class="font-display font-bold text-ink group-hover:text-rust">

@@ -8,6 +8,7 @@ city: "ראשון לציון"
 chain: "iClimb"
 address: "נדב בסקינד 12"
 phone: "03-612-1109"
+website: "https://iclimb.co.il"
 coordinates:
   lat: 31.98833
   lng: 34.76874

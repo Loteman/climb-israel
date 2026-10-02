@@ -4,6 +4,7 @@ import { getCollection, render } from "astro:content";
 import GuideLayout from "../../layouts/GuideLayout.astro";
 import Badge from "../../components/ui/Badge.astro";
 import Card from "../../components/ui/Card.astro";
+import { ENVIRONMENT_LABELS, ENVIRONMENT_VARIANTS } from "../../lib/labels";
 
 export async function getStaticPaths() {
   const disciplines = await getCollection("disciplines");
@@ -15,17 +16,6 @@ export async function getStaticPaths() {
 
 const { discipline } = Astro.props;
 const { Content } = await render(discipline);
-
-const envLabels: Record<string, string> = {
-  indoor: "קיר סגור",
-  outdoor: "טבע",
-  both: "קיר וטבע",
-};
-const envVariant: Record<string, "rope" | "olive" | "rust"> = {
-  indoor: "rope",
-  outdoor: "olive",
-  both: "rust",
-};
 
 const relatedGear = (await getCollection("gear")).filter((g) =>
   g.data.relevantDisciplines?.some((ref) => ref.id === discipline.id),
@@ -49,8 +39,8 @@ const jsonLd = {
   ]}
   jsonLd={jsonLd}
 >
-  <Badge variant={envVariant[discipline.data.environment]}>
-    {envLabels[discipline.data.environment]}
+  <Badge variant={ENVIRONMENT_VARIANTS[discipline.data.environment]}>
+    {ENVIRONMENT_LABELS[discipline.data.environment]}
   </Badge>
   <h1 class="mt-3 font-display text-3xl font-bold text-ink">
     {discipline.data.nameHe}
