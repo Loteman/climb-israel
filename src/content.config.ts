@@ -162,10 +162,14 @@ const cragSchema = z.object({
   season: z.string().optional(), // "עונה"
   shade: z.string().optional(), // "צל"
   lodging: z.string().optional(), // "לינה"
-  // "להורדת הגיידבוק" - one or more sources (site-hosted PDF or an
-  // external link); the tile/table show only the first, the crag page
-  // lists all of them.
-  guidebooks: z.array(z.object({ label: z.string(), url: z.string() })).optional(),
+  // Guidebooks/topos - one or more sources (site-hosted PDF or an external
+  // link); the tile/table show only the first downloadable one, the crag
+  // page lists all of them.
+  // `printed: true` = a book to buy, not a free download (UI never uses it
+  // for the download button or the "עם גיידבוק" filter).
+  guidebooks: z
+    .array(z.object({ label: z.string(), url: z.string(), printed: z.boolean().optional() }))
+    .optional(),
   externalBetaUrl: z.url().optional(), // extra map/beta link when ILCA links one that isn't the PDF guidebook
   // Site is documented (per the IMGA wiki) as sitting inside a nature
   // reserve where climbing is prohibited. Kept in the collection for the

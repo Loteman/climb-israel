@@ -5,6 +5,7 @@ import Badge from "../ui/Badge.astro";
 import NavigationButtons from "./NavigationButtons.astro";
 import { REGION_LABELS, STYLE_LABELS } from "../../lib/labels";
 import {
+  downloadableGuidebook,
   hasGuidebook,
   locationNavTarget,
   locationSearchText,
@@ -16,6 +17,7 @@ interface Props {
 
 const { location } = Astro.props;
 const { data } = location;
+const guidebook = downloadableGuidebook(location);
 ---
 
 <li
@@ -65,9 +67,9 @@ const { data } = location;
   <div class="mt-4 flex flex-wrap items-center gap-2">
     <NavigationButtons target={locationNavTarget(location)} placeName={data.name} size="sm" />
     {
-      data.kind === "crag" && data.guidebooks?.[0] && (
+      guidebook && (
         <a
-          href={withBaseIfRelative(data.guidebooks[0].url)}
+          href={withBaseIfRelative(guidebook.url)}
           target="_blank"
           rel="noopener noreferrer"
           class="flex items-center gap-1.5 border border-stone/60 px-2.5 py-1.5 font-body text-xs font-bold text-ink transition-colors hover:border-rust hover:text-rust"

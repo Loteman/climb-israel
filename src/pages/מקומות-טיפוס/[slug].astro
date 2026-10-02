@@ -10,7 +10,7 @@ import {
   sortByName,
 } from "../../lib/locations";
 import { REGION_LABELS, STYLE_LABELS } from "../../lib/labels";
-import { SITE_URL } from "../../site-config";
+import { ILCA_APP, SITE_URL } from "../../site-config";
 
 export async function getStaticPaths() {
   const locations = publiclyVisibleLocations(await getCollection("locations"));
@@ -41,19 +41,7 @@ const cragSpecs =
       ]
     : [];
 
-const gymSpecs =
-  data.kind === "gym"
-    ? [
-        {
-          label: "שעות פתיחה",
-          value: data.hours
-            ? Object.entries(data.hours)
-                .map(([day, h]) => `${day}: ${h}`)
-                .join(" · ")
-            : undefined,
-        },
-      ]
-    : [];
+const hours = data.kind === "gym" && data.hours ? Object.entries(data.hours) : [];
 
 const chainBranches =
   data.kind === "gym" && data.chain
@@ -145,14 +133,28 @@ const jsonLd = {
           </div>
         </div>
 
-        {
-          gymSpecs.map((spec) => (
-            <div>
-              <h2 class="font-body text-sm font-bold text-ink-soft">{spec.label}</h2>
-              <p class="mt-2 text-sm leading-relaxed text-ink">{spec.value || NO_INFO}</p>
-            </div>
-          ))
-        }
+        <div>
+          <h2 class="font-body text-sm font-bold text-ink-soft">שעות פתיחה</h2>
+          {
+            hours.length > 0 ? (
+              <>
+                <dl class="mt-2 grid w-fit grid-cols-[auto_auto] gap-x-6 gap-y-1 text-sm">
+                  {hours.map(([day, h]) => (
+                    <>
+                      <dt class="font-bold text-ink">{day}</dt>
+                      <dd class="text-ink">{h}</dd>
+                    </>
+                  ))}
+                </dl>
+                <p class="mt-2 text-xs text-ink-soft">
+                  לפי אתר קיר הטיפוס - כדאי לוודא לפני הגעה, במיוחד בחגים ובחופשות.
+                </p>
+              </>
+            ) : (
+              <p class="mt-2 text-sm leading-relaxed text-ink-soft">{NO_INFO}.</p>
+            )
+          }
+        </div>
 
         <div>
           <h2 class="font-body text-sm font-bold text-ink-soft">טלפון</h2>
@@ -280,11 +282,11 @@ const jsonLd = {
         </div>
 
         <div>
-          <h2 class="font-body text-sm font-bold text-ink-soft">להורדת הגיידבוק</h2>
+          <h2 class="font-body text-sm font-bold text-ink-soft">גיידבוקים וטופו</h2>
           {
             data.guidebooks && data.guidebooks.length > 0 ? (
               <ul class="mt-2 space-y-1.5">
-                {data.guidebooks.map((g: { label: string; url: string }) => (
+                {data.guidebooks.map((g: { label: string; url: string; printed?: boolean }) => (
                   <li>
                     <a
                       href={withBaseIfRelative(g.url)}
@@ -293,8 +295,12 @@ const jsonLd = {
                       class="inline-block font-body text-sm font-bold text-rope hover:underline"
                     >
                       {g.label}
-                      {g.url.toLowerCase().endsWith(".pdf") && (
-                        <span class="font-normal text-ink-soft"> (PDF)</span>
+                      {g.printed ? (
+                        <span class="font-normal text-ink-soft"> - לרכישה</span>
+                      ) : (
+                        g.url.toLowerCase().endsWith(".pdf") && (
+                          <span class="font-normal text-ink-soft"> (PDF)</span>
+                        )
                       )}{" "}
                       ←
                     </a>
@@ -314,6 +320,13 @@ const jsonLd = {
               </p>
             )
           }
+          <p class="mt-2 text-xs leading-relaxed text-ink-soft">
+            מדריך דיגיטלי לכל אתרי הטבע בארץ, שעובד גם בלי קליטה: אפליקציית{" "}
+            <span dir="ltr">{ILCA_APP.name}</span> של התאחדות הטיפוס -{" "}
+            <a href={ILCA_APP.ios} target="_blank" rel="noopener noreferrer" class="font-bold text-rope hover:underline">iPhone</a>
+            {" · "}
+            <a href={ILCA_APP.android} target="_blank" rel="noopener noreferrer" class="font-bold text-rope hover:underline">Android</a>
+          </p>
         </div>
       </div>
     )

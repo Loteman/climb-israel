@@ -5,6 +5,7 @@ import Badge from "../ui/Badge.astro";
 import NavigationButtons from "./NavigationButtons.astro";
 import { REGION_LABELS, STYLE_LABELS } from "../../lib/labels";
 import {
+  downloadableGuidebook,
   hasGuidebook,
   locationNavTarget,
   locationPlaceText,
@@ -37,6 +38,7 @@ const tdClass = "border-t border-stone/30 p-3 align-top";
       {
         locations.map((location) => {
           const { data } = location;
+          const guidebook = downloadableGuidebook(location);
           return (
             <tr
               data-location-card
@@ -97,9 +99,9 @@ const tdClass = "border-t border-stone/30 p-3 align-top";
                       </a>
                     )}
                   </div>
-                ) : data.guidebooks?.[0] ? (
+                ) : guidebook ? (
                   <a
-                    href={withBaseIfRelative(data.guidebooks[0].url)}
+                    href={withBaseIfRelative(guidebook.url)}
                     target="_blank"
                     rel="noopener noreferrer"
                     class="flex w-fit items-center gap-1.5 border border-stone/60 px-2.5 py-1.5 font-body text-xs font-bold text-ink transition-colors hover:border-rust hover:text-rust"

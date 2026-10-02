@@ -59,6 +59,16 @@ export function locationSearchText(location: Location): string {
     .toLowerCase();
 }
 
+/**
+ * First guidebook/topo that can actually be opened or downloaded - printed
+ * books (which you have to buy) are listed on the crag page only.
+ */
+export function downloadableGuidebook(location: Location) {
+  return location.data.kind === "crag"
+    ? location.data.guidebooks?.find((g) => !g.printed)
+    : undefined;
+}
+
 export function hasGuidebook(location: Location): boolean {
-  return location.data.kind === "crag" && (location.data.guidebooks?.length ?? 0) > 0;
+  return downloadableGuidebook(location) !== undefined;
 }

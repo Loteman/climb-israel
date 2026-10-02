@@ -4,6 +4,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import TopoBackground from "../../components/layout/TopoBackground.astro";
 import Badge from "../../components/ui/Badge.astro";
 import SectionDivider from "../../components/ui/SectionDivider.astro";
+import { ILCA_APP } from "../../site-config";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -155,6 +156,10 @@ const jsonLd = {
       <p class="mt-2 text-sm leading-relaxed text-ink-soft">
         מהצפון ועד הערבה - מצוקי הובלה וטראד, אתרי בולדרינג בטבע ומסלול ויה
         פראטה. לחלקם יש גם גיידבוק להורדה.
+      </p>
+      <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+        בשטח, בלי קליטה: אפליקציית <span dir="ltr">{ILCA_APP.name}</span> של התאחדות הטיפוס
+        מרכזת את כל אתרי הטבע והמסלולים ועובדת אופליין (<a href={ILCA_APP.ios} target="_blank" rel="noopener noreferrer" class="font-bold text-rope hover:underline">iPhone</a>{" · "}<a href={ILCA_APP.android} target="_blank" rel="noopener noreferrer" class="font-bold text-rope hover:underline">Android</a>).
       </p>
       <a
         href={withBase("/מקומות-טיפוס/?kind=crag")}

@@ -27,3 +27,10 @@ export const LICENSOR_NAME = "Loteman Games";
 export const LICENSOR_URL = "https://loteman.github.io/Loteman-Games/";
 export const LICENSE_NAME = "CC BY-SA 4.0";
 export const LICENSE_URL = "https://creativecommons.org/licenses/by-sa/4.0/";
+
+// ILCA's free digital guidebook app (all Israeli crags & routes, works offline).
+export const ILCA_APP = {
+  name: "ILCA Guidebook",
+  ios: "https://apps.apple.com/app/id1641007387",
+  android: "https://play.google.com/store/apps/details?id=guidebook.apk",
+};
