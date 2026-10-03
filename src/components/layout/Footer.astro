@@ -6,21 +6,17 @@ import {
   ACCESSIBILITY_LINK,
   BEGINNER_GUIDE,
   ENVIRONMENT_LINKS,
-  GUIDES,
-  HISTORY_LINK,
   LOCATIONS_LINK,
 } from "../../lib/site-nav";
 import { LICENSOR_NAME, LICENSOR_URL, SITE_NAME, contactUrl } from "../../site-config";
 
+// Deliberately short: the full guide list lives in the header menu.
 const columns = [
-  { title: "מדריכים", links: GUIDES },
+  { title: "מדריכים", links: [BEGINNER_GUIDE, ...ENVIRONMENT_LINKS] },
   {
     title: "אתר",
     links: [
-      BEGINNER_GUIDE,
-      ...ENVIRONMENT_LINKS,
       { ...LOCATIONS_LINK, label: "מקומות טיפוס בישראל" },
-      HISTORY_LINK,
       { ...ABOUT_LINK, label: "אודות הפרויקט" },
     ],
   },
@@ -29,18 +25,17 @@ const columns = [
 
 <footer class="border-t border-stone/40 bg-paper-dark">
   <SectionDivider class="text-stone/40" />
-  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-    <div class="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-[2fr_1fr_1fr] sm:gap-8">
+  <!-- Phones get a denser footer: less padding, tighter rows and gaps. -->
+  <div class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10">
+    <div class="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-[2fr_1fr_1fr] sm:gap-8">
       <div class="col-span-2 sm:col-span-1">
-        <p class="font-display text-lg font-bold text-ink">{SITE_NAME}</p>
-        <p class="mt-2 max-w-sm text-sm leading-relaxed text-ink-soft">
-          מאגר מידע חינמי וקהילתי לטיפוס בישראל - בולדרינג וטיפוס בטבע. המידע
-          נאסף ומתעדכן בהתנדבות; שעות פתיחה, מחירים ותנאי שטח עשויים להשתנות
-          - כדאי לוודא מול המקור לפני יציאה.
+        <p class="font-display text-base font-bold text-ink sm:text-lg">{SITE_NAME}</p>
+        <p class="mt-1 max-w-sm text-sm leading-relaxed text-ink-soft sm:mt-2">
+          מאגר מידע חינמי וקהילתי לטיפוס בישראל - בולדרינג וטיפוס בטבע.
         </p>
         <a
           href={contactUrl(`${SITE_NAME} - דיווח על טעות`)}
-          class="mt-2 inline-block py-2 font-body text-sm font-bold text-rope hover:underline sm:mt-3 sm:py-0"
+          class="mt-1 inline-block py-1 font-body text-sm font-bold text-rope hover:underline sm:mt-3 sm:py-0"
         >
           מצאתם טעות? דווחו לנו ←
         </a>
@@ -49,10 +44,10 @@ const columns = [
         columns.map((col) => (
           <nav aria-label={col.title}>
             <p class="font-body text-xs font-bold tracking-wide text-ink-soft">{col.title}</p>
-            <ul class="mt-2 sm:mt-3 sm:space-y-2">
+            <ul class="mt-1 sm:mt-3 sm:space-y-2">
               {col.links.map((link) => (
                 <li>
-                  <a href={withBase(link.href)} class="inline-block py-1.5 text-sm text-ink hover:text-rust sm:py-0">
+                  <a href={withBase(link.href)} class="inline-block py-1 text-sm text-ink hover:text-rust sm:py-0">
                     {link.label}
                   </a>
                 </li>
@@ -62,15 +57,15 @@ const columns = [
         ))
       }
     </div>
-    <div class="mt-10 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 font-body text-xs text-ink-soft">
+    <div class="mt-5 flex flex-wrap items-center justify-between gap-x-6 gap-y-1 border-t border-stone/30 pt-3 font-body text-xs text-ink-soft sm:mt-10 sm:gap-y-2 sm:border-t-0 sm:pt-0">
       <p>
         © {new Date().getFullYear()}{" "}
         <a href={LICENSOR_URL} target="_blank" rel="noopener noreferrer" class="hover:text-rust" dir="ltr">{LICENSOR_NAME}</a>{" "}
-        · טפסו בזהירות, תמיד עם אבטחה מתאימה.
+        · טפסו בזהירות ובחיוך.
       </p>
       <p class="flex flex-wrap gap-x-4 gap-y-1">
-        <a href={withBase(`${ABOUT_LINK.href}#sources`)} class="inline-block py-2 hover:text-rust sm:py-0">זכויות יוצרים</a>
-        <a href={withBase(ACCESSIBILITY_LINK.href)} class="inline-block py-2 hover:text-rust sm:py-0">{ACCESSIBILITY_LINK.label}</a>
+        <a href={withBase(`${ABOUT_LINK.href}#sources`)} class="inline-block py-1 hover:text-rust sm:py-0">זכויות יוצרים</a>
+        <a href={withBase(ACCESSIBILITY_LINK.href)} class="inline-block py-1 hover:text-rust sm:py-0">{ACCESSIBILITY_LINK.label}</a>
       </p>
     </div>
   </div>

@@ -29,6 +29,8 @@ const mobileGroupLabelClass = "px-3 pb-1 pt-3 font-body text-xs font-bold text-i
 const mobileGroupSummaryClass =
   "flex cursor-pointer list-none items-center justify-between px-3 py-2.5 font-body text-sm font-semibold text-ink hover:bg-paper hover:text-rust [&::-webkit-details-marker]:hidden";
 
+const GEAR_TEETH_ANGLES = [0, 45, 90, 135, 180, 225, 270, 315];
+
 const THEME_OPTIONS = [
   { value: "system", label: "לפי הגדרות המכשיר", shortLabel: "אוטומטי" },
   { value: "light", label: "בהיר", shortLabel: "בהיר" },
@@ -70,19 +72,26 @@ const THEME_OPTIONS = [
       <details class="relative hidden md:block" data-theme-menu>
         <summary
           class="flex cursor-pointer list-none items-center gap-1.5 rounded-sm border border-dashed border-stone px-2.5 py-1.5 font-body text-sm font-semibold text-ink hover:border-rust hover:text-rust [&::-webkit-details-marker]:hidden"
-          aria-label="מצב תצוגה (בהיר / כהה)"
+          aria-label="הגדרות"
         >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4"></circle>
-            <path d="M8 2a6 6 0 0 1 0 12z" fill="currentColor"></path>
+          <!-- Settings gear: solid teeth + a thick ring around an open
+               centre - reads as a gear even at 18px, unlike a thin outline. -->
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <g fill="currentColor">
+              {GEAR_TEETH_ANGLES.map((angle) => (
+                <rect x="10.25" y="1.5" width="3.5" height="5" rx="1" transform={`rotate(${angle} 12 12)`} />
+              ))}
+            </g>
+            <circle cx="12" cy="12" r="5.6" fill="none" stroke="currentColor" stroke-width="3.2"></circle>
           </svg>
-          <span class="hidden lg:inline">תצוגה</span>
+          <span class="hidden lg:inline">הגדרות</span>
         </summary>
         <div
           class="absolute end-0 top-full z-50 mt-2 w-56 border border-stone/50 bg-paper-dark p-2 shadow-lg"
           role="group"
-          aria-label="מצב תצוגה"
+          aria-labelledby="desktop-theme-label"
         >
+          <p id="desktop-theme-label" class="px-2 pb-1 pt-1 font-body text-xs font-bold text-ink-soft">מצב תצוגה</p>
           {
             THEME_OPTIONS.map((opt) => (
               <button
