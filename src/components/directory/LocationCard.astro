@@ -28,9 +28,13 @@ const guidebook = downloadableGuidebook(location);
   data-region={data.region}
   data-guidebook={hasGuidebook(location) ? "true" : undefined}
   data-search={locationSearchText(location)}
-  class="relative border border-stone/50 bg-paper-dark p-5 transition-colors hover:border-rust"
+  class="relative flex flex-col border border-stone/50 bg-paper-dark p-3 transition-colors hover:border-rust sm:p-5"
 >
-  <h2 class="font-display text-base font-bold">
+  {/* Phones show two cards per row (~165px each), so below `sm` the card
+      is tighter: smaller text and padding, a clamped location line, and
+      buttons that share the width. Actions sit at the bottom (mt-auto) so
+      they line up across a row of cards of different heights. */}
+  <h2 class="font-display text-sm font-bold leading-snug sm:text-base">
     <!-- Stretched link: its ::after covers the whole card, so a tap
          anywhere opens the place (the small title alone is a poor target
          on a phone). The action buttons below sit above it via z-10. -->
@@ -42,13 +46,13 @@ const guidebook = downloadableGuidebook(location);
     </a>
   </h2>
 
-  <p class="mt-1 text-sm text-ink-soft">
+  <p class="mt-1 text-xs text-ink-soft sm:text-sm">
     {REGION_LABELS[data.region]}
     {data.kind === "gym" && data.chain ? ` · ${data.chain}` : ""}
   </p>
   {
     data.kind === "gym" && (
-      <p class="text-sm text-ink-soft">
+      <p class="text-xs text-ink-soft sm:text-sm">
         {[data.city, data.address].filter(Boolean).join(", ")}
       </p>
     )
@@ -56,26 +60,26 @@ const guidebook = downloadableGuidebook(location);
 
   {
     data.kind === "crag" && data.locationDescription && (
-      <p class="text-sm leading-relaxed text-ink-soft">
+      <p class="line-clamp-3 text-xs leading-relaxed text-ink-soft sm:line-clamp-none sm:text-sm">
         <span class="font-body text-xs font-bold text-ink-soft">מיקום: </span>
         {data.locationDescription}
       </p>
     )
   }
 
-  <div class="mt-3 flex flex-wrap gap-1.5">
+  <div class="mt-2 flex flex-wrap gap-1 sm:mt-3 sm:gap-1.5">
     {data.styles.map((s) => <Badge variant="stone">{STYLE_LABELS[s]}</Badge>)}
   </div>
 
-  <div class="relative z-10 mt-4 flex flex-wrap items-center gap-2">
-    <NavigationButtons target={locationNavTarget(location)} placeName={data.name} size="sm" />
+  <div class="relative z-10 mt-auto flex flex-wrap items-center gap-1.5 pt-3 sm:gap-2 sm:pt-4">
+    <NavigationButtons target={locationNavTarget(location)} placeName={data.name} size="sm" compact />
     {
       guidebook && (
         <a
           href={withBaseIfRelative(guidebook.url)}
           target="_blank"
           rel="noopener noreferrer"
-          class="flex min-h-10 items-center gap-1.5 border border-stone/60 bg-paper-dark px-3 font-body text-xs font-bold text-ink transition-colors hover:border-rust hover:text-rust sm:min-h-0 sm:px-2.5 sm:py-1.5"
+          class="flex min-h-10 w-full items-center justify-center gap-1.5 border border-stone/60 bg-paper-dark px-2 font-body text-xs font-bold text-ink transition-colors hover:border-rust hover:text-rust sm:min-h-0 sm:w-auto sm:justify-start sm:px-2.5 sm:py-1.5"
           aria-label={`גיידבוק - ${data.name} (נפתח בחלון חדש)`}
         >
           <svg width="14" height="14" aria-hidden="true"><use href="#icon-download"></use></svg>

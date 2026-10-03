@@ -8,25 +8,38 @@ interface Props {
   placeName: string;
   class?: string;
   size?: "sm" | "md";
+  /**
+   * For narrow containers (the two-per-row location cards on phones): below
+   * `sm` the buttons split the available width with tighter padding. From
+   * `sm` up it looks like the regular "sm" size.
+   */
+  compact?: boolean;
 }
 
-const { target, placeName, class: className = "", size = "md" } = Astro.props;
-// "sm" is compact on desktop but keeps a 40px-tall tap target on phones.
-const sizeClass =
-  size === "sm" ? "min-h-10 px-3 text-xs sm:min-h-0 sm:px-2.5 sm:py-1.5" : "min-h-10 px-3 py-2 text-sm";
-const linkClass = `flex items-center gap-1.5 whitespace-nowrap border border-stone/60 font-body font-bold text-ink transition-colors hover:border-rust hover:text-rust ${sizeClass}`;
+const { target, placeName, class: className = "", size = "md", compact = false } = Astro.props;
+// Each mode sets its own spacing exactly once (no competing px-/gap-
+// utilities on one element). "sm" is compact on desktop but keeps a
+// 40px-tall tap target on phones.
+const spacingClass = compact
+  ? "flex-1 justify-center gap-1 px-1 sm:flex-none sm:justify-start sm:gap-1.5 sm:px-2.5 sm:py-1.5"
+  : size === "sm"
+    ? "gap-1.5 px-3 sm:px-2.5 sm:py-1.5"
+    : "gap-1.5 px-3 py-2";
+const sizeClass = size === "sm" ? "min-h-10 text-xs sm:min-h-0" : "min-h-10 text-sm";
+const linkClass = `flex items-center whitespace-nowrap border border-stone/60 font-body font-bold text-ink transition-colors hover:border-rust hover:text-rust ${sizeClass} ${spacingClass}`;
+const wrapperClass = compact ? "flex w-full flex-wrap gap-1 sm:w-auto sm:flex-nowrap sm:gap-2" : "flex gap-2";
 ---
 
-<div class={`flex gap-2 ${className}`}>
+<div class={`${wrapperClass} ${className}`}>
   <a
     href={googleMapsUrl(target)}
     target="_blank"
     rel="noopener noreferrer"
     class={linkClass}
-    aria-label={`ניווט במפות (Google Maps) אל ${placeName} - נפתח בחלון חדש`}
+    aria-label={`מפות (Google Maps) - ניווט אל ${placeName} - נפתח בחלון חדש`}
   >
     <svg width="14" height="14" aria-hidden="true"><use href="#icon-map-pin"></use></svg>
-    ניווט במפות
+    מפות
   </a>
   <a
     href={wazeUrl(target)}
@@ -35,7 +48,7 @@ const linkClass = `flex items-center gap-1.5 whitespace-nowrap border border-sto
     class={linkClass}
     aria-label={`Waze - ניווט אל ${placeName} - נפתח בחלון חדש`}
   >
-    <svg width="16" height="16" aria-hidden="true"><use href="#icon-waze"></use></svg>
+    <svg width={compact ? 14 : 16} height={compact ? 14 : 16} aria-hidden="true" class="shrink-0"><use href="#icon-waze"></use></svg>
     Waze
   </a>
 </div>

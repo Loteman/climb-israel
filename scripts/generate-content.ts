@@ -2035,8 +2035,9 @@ const gyms: GymLocation[] = [
   { slug: "koala-etzion", kind: "gym", name: "קואלה", city: "כפר עציון", region: "yosh", address: "מתחם חצר הכפר", phone: "054-671-3881", website: "https://etziontour.org.il/", styles: ["bouldering"], coordinates: { lat: 31.64987, lng: 35.11525 } },
 ];
 
+// Opening hours were taken from each gym's own website in October 2026.
 const GYM_SOURCE_NOTE =
-  "שעות הפתיחה (כשמופיעות) נלקחו מאתר הקיר באוקטובר 2026 ועשויות להשתנות, במיוחד בחגים ובחופשות. מחירים אינם כלולים - יש לבדוק מול המקום לפני יציאה.";
+  "הפרטים ושעות הפתיחה עשויים לכלול אי דיוקים, מומלץ לבדוק מול המקום לפני היציאה.";
 
 // The printed national guidebook (2015, English) by Nimrod Nachmias & Ran
 // Shadmi - listed on every crag it covers (per the book's own site-map

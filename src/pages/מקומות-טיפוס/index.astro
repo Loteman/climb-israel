@@ -67,7 +67,7 @@ const jsonLd = {
   <section class="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
     <DirectoryFilters client:load />
 
-    <ul id="location-cards-view" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <ul id="location-cards-view" class="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
       {sorted.map((location) => <LocationCard location={location} />)}
     </ul>
 
