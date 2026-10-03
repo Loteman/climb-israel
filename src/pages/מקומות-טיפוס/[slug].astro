@@ -10,7 +10,7 @@ import {
   sortByName,
 } from "../../lib/locations";
 import { AMENITY_LABELS, REGION_LABELS, STYLE_LABELS } from "../../lib/labels";
-import { ILCA_APP, SITE_URL } from "../../site-config";
+import { SITE_URL } from "../../site-config";
 
 export async function getStaticPaths() {
   const locations = publiclyVisibleLocations(await getCollection("locations"));
@@ -374,15 +374,6 @@ const jsonLd = {
               </p>
             )
           }
-          <p class="mt-2 text-xs leading-relaxed text-ink-soft">
-            מדריך דיגיטלי לכל אתרי הטבע בארץ, שעובד גם בלי קליטה: אפליקציית{" "}
-            <span dir="ltr">{ILCA_APP.name}</span> של התאחדות הטיפוס -{" "}
-            <span class="whitespace-nowrap">
-              <a href={ILCA_APP.ios} target="_blank" rel="noopener noreferrer" class="inline-block py-1.5 font-bold text-rope hover:underline">iPhone</a>
-              {" · "}
-              <a href={ILCA_APP.android} target="_blank" rel="noopener noreferrer" class="inline-block py-1.5 font-bold text-rope hover:underline">Android</a>
-            </span>
-          </p>
         </div>
       </div>
     )

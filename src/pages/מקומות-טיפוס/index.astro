@@ -8,7 +8,7 @@ import LocationTable from "../../components/directory/LocationTable.astro";
 import DirectoryFilters from "../../components/directory/DirectoryFilters";
 import LocationMap from "../../components/directory/LocationMap";
 import { publiclyVisibleLocations, sortByName } from "../../lib/locations";
-import { ILCA_APP, SITE_URL } from "../../site-config";
+import { SITE_URL } from "../../site-config";
 
 const locations = publiclyVisibleLocations(await getCollection("locations"));
 const gymCount = locations.filter((l) => l.data.kind === "gym").length;
@@ -86,10 +86,6 @@ const jsonLd = {
         <a href={withBase("/אודות/#contribute")} class="font-bold text-rope hover:underline">
           נשמח שתעזרו לנו לעדכן
         </a>. הגיידבוקים וקבצי הטופו שייכים ליוצריהם - תודה לכל מי שתיעד את האתרים.
-      </p>
-      <p>
-        מדריך דיגיטלי לכל אתרי הטבע והמסלולים בארץ, שעובד גם אופליין: אפליקציית{" "}
-        <span dir="ltr">{ILCA_APP.name}</span> של התאחדות הטיפוס (<a href={ILCA_APP.ios} target="_blank" rel="noopener noreferrer" class="inline-block py-1.5 font-bold text-rope hover:underline">iPhone</a>{" · "}<a href={ILCA_APP.android} target="_blank" rel="noopener noreferrer" class="inline-block py-1.5 font-bold text-rope hover:underline">Android</a>).
       </p>
       <p>
         נעזרנו במידע מהאתרים הבאים:{" "}
