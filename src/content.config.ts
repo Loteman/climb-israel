@@ -1,6 +1,7 @@
 import { defineCollection, reference } from "astro:content";
 import { z } from "astro/zod";
 import { glob } from "astro/loaders";
+import { AMENITY_TYPES } from "./lib/labels";
 
 const holdFamily = z.enum([
   "foundational", // אחיזות יסוד (על בסיס צורה)
@@ -144,7 +145,11 @@ const gymSchema = z.object({
   city: z.string(),
   address: z.string().optional(),
   hours: z.record(z.string(), z.string()).optional(),
-  amenities: z.array(z.string()).optional(),
+  hoursNote: z.string().optional(),
+  setting: z.enum(["indoor", "outdoor", "both"]).optional(),
+  amenities: z
+    .array(z.object({ type: z.enum(AMENITY_TYPES), note: z.string().optional() }))
+    .optional(),
   phone: z.string().optional(),
   website: z.url().optional(),
 });

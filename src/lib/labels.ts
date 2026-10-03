@@ -73,6 +73,31 @@ export const ENVIRONMENT_VARIANTS: Record<string, "rope" | "olive" | "rust"> = {
   both: "rust",
 };
 
+// Gym "מה עוד במתחם?" item types. One fixed label per type (each gym adds
+// its own detail in parentheses), listed on the page in this order - and
+// the stable keys are what a future "has a MoonBoard / café" filter will use.
+export const AMENITY_LABELS = {
+  moonboard: "MoonBoard",
+  kilter: "Kilter Board",
+  spray: "ספריי וול",
+  fingerboard: "פינגרבורד",
+  campus: "קמפוס בורד",
+  training: "אזור אימונים",
+  studio: "סטודיו ויוגה",
+  shop: "חנות ציוד",
+  rental: "השכרת ציוד",
+  food: "אוכל ושתייה",
+  kids: "מתחם ילדים",
+  ninja: "מתחם נינג'ה",
+  ropes: "פארק חבלים",
+  attractions: "אטרקציות נוספות",
+  clinic: "קליניקה טיפולית",
+  lockers: "מלתחות ולוקרים",
+} as const;
+
+export type AmenityType = keyof typeof AMENITY_LABELS;
+export const AMENITY_TYPES = Object.keys(AMENITY_LABELS) as [AmenityType, ...AmenityType[]];
+
 /** Keys of a label map, in declaration order - for rendering grouped sections. */
 export function orderedKeys(labels: Record<string, string>): string[] {
   return Object.keys(labels);

@@ -12,10 +12,13 @@ hours:
   "א'-ה'": "12:00-22:00"
   "ו'": "12:00-16:00"
   "ש'": "12:00-20:00"
+setting: indoor
 amenities:
-  - "מזנון"
-  - "חדרי הלבשה ולוקרים"
-  - "ציוד עזר למכירה"
+  - type: shop
+    note: "ציוד עזר"
+  - type: food
+    note: "מזנון"
+  - type: lockers
 coordinates:
   lat: 31.89483
   lng: 34.78965

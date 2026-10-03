@@ -8,6 +8,8 @@ city: "כפר עציון"
 address: "מתחם חצר הכפר"
 phone: "054-671-3881"
 website: "https://etziontour.org.il/"
+hoursNote: "השעות משתנות לפי העונה ומתפרסמות ביומן שבאתר"
+setting: indoor
 coordinates:
   lat: 31.64987
   lng: 35.11525

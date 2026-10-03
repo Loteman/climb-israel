@@ -9,7 +9,7 @@ import {
   publiclyVisibleLocations,
   sortByName,
 } from "../../lib/locations";
-import { REGION_LABELS, STYLE_LABELS } from "../../lib/labels";
+import { AMENITY_LABELS, REGION_LABELS, STYLE_LABELS } from "../../lib/labels";
 import { ILCA_APP, SITE_URL } from "../../site-config";
 
 export async function getStaticPaths() {
@@ -28,6 +28,11 @@ const navTarget = locationNavTarget(location);
 const pageUrl = new URL(withBase(`/מקומות-טיפוס/${location.id}/`), SITE_URL).toString();
 
 const NO_INFO = "אין מידע";
+const SETTING_LABELS: Record<"indoor" | "outdoor" | "both", string> = {
+  indoor: "קיר סגור (Indoor)",
+  outdoor: "מרחב פתוח (Outdoor)",
+  both: "קיר סגור (Indoor) ומרחב פתוח (Outdoor)",
+};
 
 const cragSpecs =
   data.kind === "crag"
@@ -150,6 +155,8 @@ const jsonLd = {
                   </>
                 ))}
               </dl>
+            ) : data.hoursNote ? (
+              <p class="mt-2 text-sm leading-relaxed text-ink">{data.hoursNote}</p>
             ) : (
               <p class="mt-2 text-sm leading-relaxed text-ink-soft">{NO_INFO}.</p>
             )
@@ -182,12 +189,26 @@ const jsonLd = {
         </div>
 
         <div>
+          <h2 class="font-body text-sm font-bold text-ink-soft">מרחב טיפוס</h2>
+          {
+            data.setting ? (
+              <p class="mt-2 text-sm leading-relaxed text-ink">{SETTING_LABELS[data.setting]}</p>
+            ) : (
+              <p class="mt-2 text-sm leading-relaxed text-ink-soft">{NO_INFO}.</p>
+            )
+          }
+        </div>
+
+        <div>
           <h2 class="font-body text-sm font-bold text-ink-soft">מה עוד במתחם?</h2>
           {
             data.amenities && data.amenities.length > 0 ? (
               <ul class="mt-2 list-disc space-y-1 ps-5 text-sm leading-relaxed text-ink marker:text-rust">
-                {data.amenities.map((item: string) => (
-                  <li>{item}</li>
+                {data.amenities.map((item) => (
+                  <li>
+                    <span class="font-bold">{AMENITY_LABELS[item.type]}</span>
+                    {item.note && <span class="text-ink-soft"> ({item.note})</span>}
+                  </li>
                 ))}
               </ul>
             ) : (

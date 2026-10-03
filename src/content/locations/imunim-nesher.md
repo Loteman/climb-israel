@@ -8,6 +8,10 @@ city: "נשר"
 address: "המסילה 22"
 phone: "052-381-2035"
 website: "https://www.facebook.com/emunim.nesher"
+hours:
+  "א'-ה'": "15:00-22:00"
+  "ו', ש'": "סגור"
+setting: indoor
 coordinates:
   lat: 32.78278
   lng: 35.03543
