@@ -239,8 +239,8 @@ export default function DirectoryFilters() {
       <div class="grid grid-cols-2 gap-2" role="group" aria-label="סוג מקום">
         {(
           [
-            ["gym", "קירות טיפוס", "Indoor"],
-            ["crag", "טבע", "Outdoor"],
+            ["gym", "קירות טיפוס", "Wall climbing"],
+            ["crag", "טבע", "Rock climbing"],
           ] as [Kind, string, string][]
         ).map(([value, label, subLabel]) => (
           <button
@@ -321,20 +321,6 @@ export default function DirectoryFilters() {
               {opt.label}
             </button>
           ))}
-          {kind === "crag" && (
-            <button
-              type="button"
-              onClick={() => setGuidebookOnly((v) => !v)}
-              aria-pressed={guidebookOnly}
-              class={`${chipBase} ${
-                guidebookOnly
-                  ? "border-rope bg-rope text-paper"
-                  : "border-stone text-ink-soft hover:border-rope hover:text-rope"
-              }`}
-            >
-              עם גיידבוק
-            </button>
-          )}
         </div>
 
         <div class="mt-3 flex flex-wrap items-center gap-2 sm:gap-1.5" role="group" aria-labelledby="filter-region-label">
@@ -356,6 +342,28 @@ export default function DirectoryFilters() {
             </button>
           ))}
         </div>
+
+        {/* Filters that are neither a climbing style nor a region. Only
+            crags have guidebooks, so the group exists only for them. */}
+        {kind === "crag" && (
+          <div class="mt-3 flex flex-wrap items-center gap-2 sm:gap-1.5" role="group" aria-labelledby="filter-extra-label">
+            <span id="filter-extra-label" class="shrink-0 font-body text-xs font-bold text-ink-soft">
+              נוספים
+            </span>
+            <button
+              type="button"
+              onClick={() => setGuidebookOnly((v) => !v)}
+              aria-pressed={guidebookOnly}
+              class={`${chipBase} ${
+                guidebookOnly
+                  ? "border-rope bg-rope text-paper"
+                  : "border-stone text-ink-soft hover:border-rope hover:text-rope"
+              }`}
+            >
+              עם גיידבוק
+            </button>
+          </div>
+        )}
       </div>
 
       <div class="mt-3 flex flex-wrap items-center justify-between gap-2">
