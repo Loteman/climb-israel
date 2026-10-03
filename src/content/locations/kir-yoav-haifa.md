@@ -7,8 +7,15 @@ styles:
 region: north
 city: "חיפה"
 address: "פלימן (מתחם X-Park)"
-phone: "04-681-7814"
-website: "https://www.shafan-hasela.com/"
+phone: "04-855-1616"
+website: "https://www.shafan-hasela.com/he/%D7%A7%D7%99%D7%A8-%D7%99%D7%95%D7%90%D7%91/"
+hours:
+  "א'-ה'": "16:00-22:00"
+  "ו'": "10:00-13:00"
+  "ש'": "סגור"
+amenities:
+  - "חדר בולדרינג גדול וממוזג"
+  - "חנות לציוד טיפוס מקצועי"
 description: "קיר טיפוס פנימי וחיצוני במתחם X-Park בחיפה, צמוד למרכז הקונגרסים, לטיפוס בהובלה ובטופ-רופ. מופעל על ידי שפן הסלע ומקיים חוגים לכל הגילאים."
 coordinates:
   lat: 32.79025

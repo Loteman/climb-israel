@@ -144,6 +144,7 @@ const gymSchema = z.object({
   city: z.string(),
   address: z.string().optional(),
   hours: z.record(z.string(), z.string()).optional(),
+  amenities: z.array(z.string()).optional(),
   phone: z.string().optional(),
   website: z.url().optional(),
 });

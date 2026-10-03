@@ -7,7 +7,9 @@ region: south
 city: "מדרשת בן גוריון"
 address: "רח' אזור תעשייה"
 phone: "054-939-9829"
-website: "https://www.facebook.com/%D7%98%D7%99%D7%A4%D7%95%D7%A1-%D7%9E%D7%93%D7%91%D7%A8%D7%99-107342504127922/"
+website: "https://www.desertclimbing.co.il/"
+amenities:
+  - "פינת ישיבה עם קפה, בירה ומיץ תפוזים טרי"
 coordinates:
   lat: 30.85159
   lng: 34.78258

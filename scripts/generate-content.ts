@@ -1933,6 +1933,9 @@ interface GymLocation {
   // day label in display order (e.g. "א'-ה'": "16:00-22:00"). Only filled
   // where the official site states them - see GYM_SOURCE_NOTE.
   hours?: Record<string, string>;
+  // "מה עוד במתחם?" - facilities beyond the climbing walls (training area,
+  // boards, studio, shop, café...). Filled from GYM_AMENITIES below.
+  amenities?: string[];
 }
 
 // A guidebook/topo source. `printed` marks a book you have to buy (not a
@@ -1986,24 +1989,24 @@ const gyms: GymLocation[] = [
   { slug: "venga", kind: "gym", name: "ונגה", city: "פתח תקווה", region: "center", address: "שוולב 7", phone: "03-904-2447", website: "https://www.vengavenga.co.il/", styles: ["bouldering"], description: "מרכז בולדרינג ותיק וממוזג בפתח תקווה (מאז 2010), בקומה השנייה, עם מסלולים בכל הרמות.", coordinates: { lat: 32.10654, lng: 34.89336 }, hours: { "א'-ה'": "15:00-23:00", "ו'": "10:00-18:00", "ש'": "12:00-22:00" } },
   { slug: "urban-climbing-rehovot", kind: "gym", name: "טיפוס אורבני רחובות", chain: "טיפוס אורבני", city: "רחובות", region: "shfela", address: "ענטין, פארק המדע", phone: "08-936-3455", website: "https://www.uclimb.co.il/rehovotbranch", styles: ["bouldering"], description: "קיר הבולדרינג השלישי שנפתח בישראל (2011), בפארק המדע ברחובות - בלובי שמימין ל-KSP, קומה 1-.", coordinates: { lat: 31.90883, lng: 34.80575 }, hours: { "א'-ה'": "16:00-22:00", "ו'": "11:00-16:00", "ש'": "16:00-21:00" } },
   { slug: "urban-climbing-jerusalem", kind: "gym", name: "טיפוס אורבני ירושלים", chain: "טיפוס אורבני", city: "ירושלים", region: "jerusalem", address: "בית הדפוס 11", phone: "054-762-5243", website: "https://www.uclimb.co.il/jerusalembranch", styles: ["bouldering"], description: "קיר בולדרינג גדול בגבעת שאול (בית לב הגבעה, קומה 4-) עם כ-180 בעיות בכל הרמות - בעיות חדשות עולות על הקיר מדי שבוע - ומתחם אימונים משלים: פינגרבורד, קמפוס בורד ועוד.", coordinates: { lat: 31.78583, lng: 35.1884 }, hours: { "א'-ה'": "16:00-22:00", "ו'": "11:00-16:00", "ש'": "15:00-21:00" } },
-  { slug: "monkeys-netanya", kind: "gym", name: "מאנקיז נתניה", chain: "Monkeys", city: "נתניה", region: "sharon", address: "מתחם ביג פולג", phone: "09-788-9933", website: "https://www.monkeysclimbinggym.co.il/", styles: ["bouldering", "top-rope"], description: "מתחם טיפוס בנתניה עם אזור בולדרינג (מגיל 9, בתדריך ובליווי מבוגר) ומתחם טיפוס בחבל בגובה של כ-7 מטרים, שמתאים גם למתחילים ולילדים מגיל 5. שעות מתחם החבלים מצומצמות יותר.", coordinates: { lat: 32.27673, lng: 34.8607 }, hours: { "א', ב', ד', ה'": "10:00-22:30", "ג'": "09:00-22:30", "ו'": "09:00-17:00", "ש'": "10:00-22:00" } },
+  { slug: "monkeys-netanya", kind: "gym", name: "מאנקיז נתניה", chain: "Monkeys", city: "נתניה", region: "sharon", address: "מתחם ביג פולג", phone: "09-788-9933", website: "https://www.monkeysclimbinggym.co.il/", styles: ["bouldering", "top-rope"], description: "מתחם טיפוס בנתניה עם אזור בולדרינג (מגיל 9, בתדריך ובליווי מבוגר) ומתחם טיפוס בחבל בגובה של כ-7 מטרים, שמתאים גם למתחילים ולילדים מגיל 5. שעות מתחם החבלים מצומצמות יותר.", coordinates: { lat: 32.27673, lng: 34.8607 }, hours: { "בולדר א', ב', ד', ה'": "10:00-22:30", "בולדר ג'": "09:00-22:30", "בולדר ו'": "09:00-17:00", "בולדר ש'": "10:00-22:00", "קיר גובה א', ג', ה'": "18:00-21:30", "קיר גובה ו'": "11:00-15:00", "קיר גובה ש'": "10:00-19:00" } },
   { slug: "performance-rock-beer-sheva", kind: "gym", name: "פרפורמנס רוק באר שבע", chain: "Performance Rock", city: "באר שבע", region: "south", address: "העצמאות 4", phone: "08-627-2721", website: "https://performancerock.co.il/branch/beer-sheva/", styles: ["bouldering"], description: "קיר הבולדרינג הראשון בדרום, של רשת Performance Rock.", coordinates: { lat: 31.23911, lng: 34.79147 }, hours: { "א', ג', ד'": "16:00-22:00", "ב', ה'": "16:00-23:00", "ו'": "09:00-13:00", "ש'": "12:00-20:00" } },
   { slug: "performance-rock-tel-aviv", kind: "gym", name: "פרפורמנס רוק תל אביב", chain: "Performance Rock", city: "תל אביב", region: "center", address: "דרך מנחם בגין 144", phone: "03-687-2880", website: "https://performancerock.co.il/branch/midtown-tlv/", styles: ["bouldering"], description: "סניף תל אביב של Performance Rock - לדברי הרשת, קיר הטיפוס הראשון בישראל שהוקדש כולו לבולדרינג. נמצא במתחם מידטאון שבדרך בגין.", coordinates: { lat: 32.06872, lng: 34.78678 }, hours: { "א', ג'": "07:00-23:00", "ב', ד'": "07:00-23:00 (מ-18:00 מנויים בלבד)", "ה'": "07:00-24:00", "ו'": "08:00-18:00", "ש'": "10:00-22:00" } },
   { slug: "campus-karmiel", kind: "gym", name: "קמפוס", city: "כרמיאל", region: "north", address: "החרמש 9", phone: "04-606-0536", website: "https://www.campuswall.co.il/", styles: ["bouldering"], coordinates: { lat: 32.92323, lng: 35.31145 }, hours: { "א', ה'": "16:00-23:00", "ב'-ד'": "16:00-22:00", "ו'": "10:00-16:00", "ש'": "11:00-18:00" } },
-  { slug: "the-wall-modiin", kind: "gym", name: "THE WALL", city: "מודיעין", region: "shfela", address: "עמק האלה 255", phone: "08-375-0575", website: "https://thewallmodiin.com/", styles: ["bouldering", "lead", "top-rope", "speed"], description: "מתחם טיפוס מגוון במודיעין: קיר הובלה וטופ-רופ עם 14 מכשירי אבטחה אוטומטית, קיר ספיד וקיר בולדר תחרותי.", coordinates: { lat: 31.91419, lng: 35.00576 } },
+  { slug: "the-wall-modiin", kind: "gym", name: "THE WALL", city: "מודיעין", region: "shfela", address: "עמק האלה 255", phone: "08-375-0575", website: "https://thewallmodiin.com/", styles: ["bouldering", "lead", "top-rope", "speed"], description: "מתחם טיפוס מגוון במודיעין: קיר הובלה וטופ-רופ עם 14 מכשירי אבטחה אוטומטית, קיר ספיד וקיר בולדר תחרותי.", coordinates: { lat: 31.91419, lng: 35.00576 }, hours: { "א', ג', ה'": "16:00-23:00", "ב', ד'": "08:00-23:00", "ו'": "08:00-16:00", "ש'": "08:00-23:00" } },
   { slug: "the-bloc-jerusalem", kind: "gym", name: "הבלוק ירושלים", chain: "The Bloc", city: "ירושלים", region: "jerusalem", address: "יצחק אלישר", phone: "02-539-8991", website: "https://www.thebloc.co.il/jlm", styles: ["bouldering"], coordinates: { lat: 31.77885, lng: 35.22579 }, hours: { "א', ה'": "08:00-23:00", "ב', ד'": "10:00-23:00", "ג'": "16:00-19:00 (19:00-23:00 מנויים בלבד)", "ו'": "08:00-17:00", "ש'": "10:00-23:00" } },
-  { slug: "vking-tel-aviv", kind: "gym", name: "ויקינג תל אביב", city: "תל אביב", region: "center", address: "השלושה 3", phone: "03-635-3600", website: "https://vking.co.il/", styles: ["bouldering"], coordinates: { lat: 32.06215, lng: 34.78885 } },
+  { slug: "vking-tel-aviv", kind: "gym", name: "ויקינג תל אביב", city: "תל אביב", region: "center", address: "השלושה 3", phone: "03-635-3600", website: "https://vking.co.il/", styles: ["bouldering"], coordinates: { lat: 32.06215, lng: 34.78885 }, hours: { "א'-ג', ה'": "07:00-23:00", "ד'": "15:00-23:00", "ו'": "09:00-17:00", "ש'": "12:00-22:00" } },
   { slug: "the-bloc-tel-aviv", kind: "gym", name: "הבלוק תל אביב", chain: "The Bloc", city: "תל אביב", region: "center", address: "המרץ 4", phone: "03-544-8769", website: "https://www.thebloc.co.il/tlv", styles: ["bouldering"], coordinates: { lat: 32.05125, lng: 34.7727 }, hours: { "א'": "16:00-23:00", "ב'-ה'": "08:00-23:00", "ו'": "09:00-16:00", "ש'": "09:00-22:00" } },
-  { slug: "kir-yoav-haifa", kind: "gym", name: "קיר יואב", city: "חיפה", region: "north", address: "פלימן (מתחם X-Park)", phone: "04-681-7814", website: "https://www.shafan-hasela.com/", styles: ["lead", "top-rope"], description: "קיר טיפוס פנימי וחיצוני במתחם X-Park בחיפה, צמוד למרכז הקונגרסים, לטיפוס בהובלה ובטופ-רופ. מופעל על ידי שפן הסלע ומקיים חוגים לכל הגילאים.", coordinates: { lat: 32.79025, lng: 34.96405 } },
-  { slug: "levin-climbing-hadera", kind: "gym", name: "לוין מרכז טיפוס", city: "חדרה", region: "sharon", address: "צה\"ל 35", phone: "04-662-7313", website: "https://www.levinclimbing.co.il/", styles: ["bouldering"], coordinates: { lat: 32.44074, lng: 34.94011 } },
+  { slug: "kir-yoav-haifa", kind: "gym", name: "קיר יואב", city: "חיפה", region: "north", address: "פלימן (מתחם X-Park)", phone: "04-855-1616", website: "https://www.shafan-hasela.com/he/%D7%A7%D7%99%D7%A8-%D7%99%D7%95%D7%90%D7%91/", styles: ["lead", "top-rope"], description: "קיר טיפוס פנימי וחיצוני במתחם X-Park בחיפה, צמוד למרכז הקונגרסים, לטיפוס בהובלה ובטופ-רופ. מופעל על ידי שפן הסלע ומקיים חוגים לכל הגילאים.", coordinates: { lat: 32.79025, lng: 34.96405 }, hours: { "א'-ה'": "16:00-22:00", "ו'": "10:00-13:00", "ש'": "סגור" } },
+  { slug: "levin-climbing-hadera", kind: "gym", name: "לוין מרכז טיפוס", city: "חדרה", region: "sharon", address: "צה\"ל 35", phone: "04-662-7313", website: "https://www.levinclimbing.co.il/", styles: ["bouldering"], coordinates: { lat: 32.44074, lng: 34.94011 }, hours: { "א', ג'": "15:30-22:00", "ב', ד'": "15:30-23:00", "ה'": "10:00-23:00", "ו'": "10:00-17:00", "ש'": "10:00-22:00" } },
   // Phone is the wall's own (WhatsApp) number from kirboaz.co.il - the old
   // 09-777-7600 doesn't appear anywhere on the wall's site.
   { slug: "kir-boaz", kind: "gym", name: "קיר בועז", city: "תל מונד", region: "sharon", address: "השקד 1", phone: "051-586-2878", website: "https://kirboaz.co.il/", styles: ["top-rope", "lead"], description: "קיר טיפוס קהילתי בגובה 8 מטרים במתחם הקהילתי של תל מונד, שהוקם לזכרו של בועז לחובר ז\"ל ופועל יחד עם המתנ\"ס: טופ-רופ, הובלה ומכשירי אבטחה אוטומטיים, השכרת ציוד, חוגים שבועיים מגיל בית ספר וטיפוס חופשי. שעות הפתיחה משתנות לפי העונה ומתפרסמות ביומן שבאתר; הדרך המהירה ליצור קשר היא וואטסאפ.", coordinates: { lat: 32.25946, lng: 34.91427 } },
   { slug: "rujum", kind: "gym", name: "רוג'ום מועדון טיפוס וטבע", city: "קרית שמונה", region: "north", address: "ההסתדרות 4", phone: "053-388-8307", website: "https://rujum-ks.co.il/", styles: ["bouldering", "lead"], description: "מועדון טיפוס וטבע בקריית שמונה: מתחם בולדר עם כ-100 בעיות שמתחלפות מדי שבוע, וקיר גובה עם חבלים.", coordinates: { lat: 33.20747, lng: 35.57078 }, hours: { "בולדר א'-ה'": "16:00-22:00", "קיר גובה א', ג'-ה'": "16:00-22:00", "קיר גובה ב'": "18:30-22:00", "ו'": "10:00-15:00", "מוצאי שבת (בולדר)": "עד 22:30" } },
   { slug: "park-extreme-akko", kind: "gym", name: "פארק אקסטרים", city: "עכו", region: "north", address: "שלום הגליל 3", phone: "1-700-556-070", website: "https://www.shafan-hasela.com/", styles: ["lead"], coordinates: { lat: 32.91622, lng: 35.09411 } },
   { slug: "boulder-haifa", kind: "gym", name: "בולדר חיפה", city: "נשר", region: "north", address: "החרושת 4", phone: "04-870-0296", website: "https://www.boulder.co.il/", styles: ["bouldering"], description: "בולדר חיפה עבר לבית חדש באזור התעשייה תל חנן בנשר - לדבריו, קיר הבולדרינג הגדול בישראל.", coordinates: { lat: 32.77757, lng: 35.0376 }, hours: { "א', ג', ה'": "07:00-23:00", "ב', ד'": "15:00-23:00", "ו'": "09:00-16:30", "ש'": "10:00-23:00" } },
-  { slug: "rockiz-holon", kind: "gym", name: "רוקיז", city: "חולון", region: "center", address: "שד' ירושלים 210", phone: "03-748-9494", website: "https://www.rockiz.co.il/", styles: ["lead", "top-rope", "bouldering"], description: "מתחם טיפוס ופארק אתגרי בחולון: קיר של כ-1,000 מ\"ר בגובה של עד 16 מטרים, אזור הובלה עם תקרה ארוכה, עמדות אבטחה אוטומטית, מתחם טיפוס לילדים ופארק חבלים. הטיפוס מגיל 4, והכניסה בסבבים כל חצי שעה - אחרי הדרכת בטיחות קצרה שעוברים בכל ביקור.", coordinates: { lat: 32.00135, lng: 34.80362 } },
-  { slug: "desert-climbing", kind: "gym", name: "טיפוס מדברי", city: "מדרשת בן גוריון", region: "south", address: "רח' אזור תעשייה", phone: "054-939-9829", website: "https://www.facebook.com/%D7%98%D7%99%D7%A4%D7%95%D7%A1-%D7%9E%D7%93%D7%91%D7%A8%D7%99-107342504127922/", styles: ["bouldering"], coordinates: { lat: 30.85159, lng: 34.78258 } },
+  { slug: "rockiz-holon", kind: "gym", name: "רוקיז", city: "חולון", region: "center", address: "שד' ירושלים 210", phone: "03-748-9494", website: "https://www.rockiz.co.il/", styles: ["lead", "top-rope", "bouldering"], description: "מתחם טיפוס ופארק אתגרי בחולון: קיר של כ-1,000 מ\"ר בגובה של עד 16 מטרים, אזור הובלה עם תקרה ארוכה, עמדות אבטחה אוטומטית, מתחם טיפוס לילדים ופארק חבלים. הטיפוס מגיל 4, והכניסה בסבבים כל חצי שעה - אחרי הדרכת בטיחות קצרה שעוברים בכל ביקור.", coordinates: { lat: 32.00135, lng: 34.80362 }, hours: { "א'-ה'": "09:00-12:00, 15:00-22:00", "ו'": "10:00-18:00", "ש'": "10:00-22:00" } },
+  { slug: "desert-climbing", kind: "gym", name: "טיפוס מדברי", city: "מדרשת בן גוריון", region: "south", address: "רח' אזור תעשייה", phone: "054-939-9829", website: "https://www.desertclimbing.co.il/", styles: ["bouldering"], coordinates: { lat: 30.85159, lng: 34.78258 } },
   { slug: "iclimb-jerusalem", kind: "gym", name: "אייקליימב ירושלים", chain: "iClimb", city: "ירושלים", region: "jerusalem", address: "אצטדיון טדי", phone: "02-648-2264", website: "https://iclimb.co.il/jerusalem/%D7%A8%D7%90%D7%A9%D7%99/", styles: ["lead", "top-rope"], coordinates: { lat: 31.75112, lng: 35.19083 } },
   // Hours left out for the iClimb branches: their hours pages only show a
   // seasonal ("August") schedule.
@@ -2015,11 +2018,11 @@ const gyms: GymLocation[] = [
   { slug: "performance-rock-haifa", kind: "gym", name: "פרפורמנס רוק חיפה", chain: "Performance Rock", city: "חיפה", region: "north", address: "הנמל 32", phone: "04-601-7000", website: "https://performancerock.co.il/branch/haifa/", styles: ["bouldering"], coordinates: { lat: 32.81821, lng: 35.00127 }, hours: { "א'-ה'": "08:00-23:00", "ו'": "09:00-18:00", "ש'": "10:00-23:00" } },
   // iClimb's branch page puts the wall in Karmei Gat Park (their Waze tip:
   // "חניון פארק כרמי גת"); the old pin sat on Sderot Lachish in the city
-  // centre, ~2km south. Coordinates are the park's own OSM point. No hours:
-  // the chain's pages give three different schedules for this branch.
-  { slug: "iclimb-kiryat-gat", kind: "gym", name: "אייקליימב קריית גת", chain: "iClimb", city: "קרית גת", region: "shfela", address: "פארק כרמי גת", phone: "050-504-2222", website: "https://iclimb.co.il/%D7%A1%D7%A0%D7%99%D7%A3-%D7%A7%D7%A8%D7%99%D7%AA-%D7%92%D7%AA/", styles: ["lead", "top-rope", "bouldering"], description: "מתחם טיפוס פתוח בפארק כרמי גת: קירות בגובה 15 מטרים להובלה ולטיפוס עם אבטחה אוטומטית, ובמרכזם אזור בולדר מקורה שפתוח כל השנה. לצד הקירות פועלים פארק חבלים ואומגה. לניווט בווייז: \"חניון פארק כרמי גת\".", coordinates: { lat: 31.62428, lng: 34.77273 } },
-  { slug: "ninja-park-rehovot", kind: "gym", name: "נינג'ה פארק", city: "רחובות", region: "shfela", address: "רחוב מוטי קינד 10", phone: "08-616-5686", website: "https://www.ninja-parks.co.il/", styles: ["bouldering"], coordinates: { lat: 31.89483, lng: 34.78965 } },
-  { slug: "isaac-climbing", kind: "gym", name: "אייזיק", city: "תל אביב", region: "center", address: "יצחק שדה 41", phone: "055-992-5128", website: "https://www.isaacclimbing.com", styles: ["bouldering"], description: "מרכז בולדרינג בתל אביב עם ארבעה מתחמי טיפוס; מתחם הבולדר מיועד לגילאי 12 ומעלה.", coordinates: { lat: 32.06493, lng: 34.78945 }, hours: { "א'-ה'": "07:00-23:00", "ו'": "08:00-16:00", "ש'": "10:00-22:00" } },
+  // centre, ~2km south. Coordinates are the park's own OSM point. Hours
+  // are the ones on the branch's own page.
+  { slug: "iclimb-kiryat-gat", kind: "gym", name: "אייקליימב קריית גת", chain: "iClimb", city: "קרית גת", region: "shfela", address: "פארק כרמי גת", phone: "050-504-2222", website: "https://iclimb.co.il/%D7%A1%D7%A0%D7%99%D7%A3-%D7%A7%D7%A8%D7%99%D7%AA-%D7%92%D7%AA/", styles: ["lead", "top-rope", "bouldering"], description: "מתחם טיפוס פתוח בפארק כרמי גת: קירות בגובה 15 מטרים להובלה ולטיפוס עם אבטחה אוטומטית, ובמרכזם אזור בולדר מקורה שפתוח כל השנה. לצד הקירות פועלים פארק חבלים ואומגה. לניווט בווייז: \"חניון פארק כרמי גת\".", coordinates: { lat: 31.62428, lng: 34.77273 }, hours: { "א'-ה'": "16:00-21:00", "ו'": "11:00-15:00", "ש'": "11:00-20:00" } },
+  { slug: "ninja-park-rehovot", kind: "gym", name: "נינג'ה פארק", city: "רחובות", region: "shfela", address: "רחוב מוטי קינד 10", phone: "08-616-5686", website: "https://www.ninja-parks.co.il/", styles: ["bouldering"], coordinates: { lat: 31.89483, lng: 34.78965 }, hours: { "א'-ה'": "12:00-22:00", "ו'": "12:00-16:00", "ש'": "12:00-20:00" } },
+  { slug: "isaac-climbing", kind: "gym", name: "אייזיק", city: "תל אביב", region: "center", address: "יצחק שדה 41", phone: "055-992-5128", website: "https://www.isaacclimbing.com", styles: ["bouldering", "lead", "top-rope"], description: "מרכז בולדרינג בתל אביב עם ארבעה מתחמי טיפוס; מתחם הבולדר מיועד לגילאי 12 ומעלה.", coordinates: { lat: 32.06493, lng: 34.78945 }, hours: { "א'-ה'": "07:00-23:00", "ו'": "08:00-16:00", "ש'": "10:00-22:00" } },
   // The wall is in moshav Srigim (Li-On), Mateh Yehuda - it was listed under
   // "תל אביב" with "מטה יהודה" as its street address, and pinned ~18km
   // north of the moshav. Coordinates are the settlement's own (Wikipedia),
@@ -2031,9 +2034,118 @@ const gyms: GymLocation[] = [
   // Not members of the climbing federation, per the user's source, but
   // included in the same real-address table.
   { slug: "top94-eilat", kind: "gym", name: "טופ 94", city: "אילת", region: "south", address: "השרברב 1", phone: "08-610-9009", website: "https://www.top94.co.il/", styles: ["lead"], description: "מתחם אטרקציות באילת שכולל קיר טיפוס לגובה.", coordinates: { lat: 29.60005, lng: 34.9728 }, hours: { "א'-ה'": "10:00-18:00", "ו'": "10:00-15:00", "ש' וחג": "סגור" } },
-  { slug: "ale-jerusalem", kind: "gym", name: "עלה", city: "ירושלים", region: "jerusalem", address: "האומן 20", phone: "053-301-6368", website: "https://alleclimb.com/", styles: ["bouldering"], coordinates: { lat: 31.7519, lng: 35.20813 } },
+  { slug: "ale-jerusalem", kind: "gym", name: "עלה", city: "ירושלים", region: "jerusalem", address: "האומן 20", phone: "053-301-6368", website: "https://alleclimb.com/", styles: ["bouldering"], coordinates: { lat: 31.7519, lng: 35.20813 }, hours: { "א'": "09:00-22:00", "ב'-ד'": "15:00-22:00", "ה'": "11:00-23:00", "ו'": "09:00-15:00", "מוצאי שבת": "19:00-23:00" } },
   { slug: "koala-etzion", kind: "gym", name: "קואלה", city: "כפר עציון", region: "yosh", address: "מתחם חצר הכפר", phone: "054-671-3881", website: "https://etziontour.org.il/", styles: ["bouldering"], coordinates: { lat: 31.64987, lng: 35.11525 } },
 ];
+
+// "מה עוד במתחם?" per gym - what the gym's own website (October 2026) says
+// it has besides the climbing walls. Gyms missing here show "אין מידע.":
+// their sites don't list facilities (or they only have a Facebook page).
+const GYM_AMENITIES: Record<string, string[]> = {
+  venga: [
+    "MoonBoard",
+    "הנגבורד (פינגרבורד) וקמפוס בורד",
+    "מתחם אימון משלים: קיר סיבולת, משקולות ואביזרים פונקציונליים",
+    "חנות: נעלי טיפוס, שקי מגנזיום ואביזרי אימון",
+    "השכרת מזרני בולדרינג",
+  ],
+  "urban-climbing-rehovot": [
+    "שיעורי יוגה (אשטנגה, בימי שלישי בבוקר)",
+    "נעלי טיפוס וציוד למכירה",
+    "בר קפה ובירה מהחבית",
+    "WiFi חינם",
+  ],
+  "urban-climbing-jerusalem": [
+    "מתחם אימונים משלים: פינגרבורד, קמפוס בורד ועוד",
+    "נעלי טיפוס וציוד למכירה",
+    "בר קפה ובירות",
+    "WiFi חינם",
+  ],
+  "monkeys-netanya": [
+    "אזור אימונים: קירות אימון, משקולות, TRX, טבעות, פינגרבורדים, קיר טרוורס והליכון",
+    "חנות ציוד טיפוס וכושר",
+    "בר קפה: אספרסו, שייקים, חטיפי חלבון ופיצות",
+  ],
+  "performance-rock-beer-sheva": ["שיעורי סטודיו למנויים (יוגה, יוגילאטיס ועוד)", "בר קפה ובירה"],
+  "performance-rock-tel-aviv": ["שיעורי סטודיו למנויים (יוגה, ג'ימנסטיקס ועוד)", "בר קפה ובירה"],
+  "performance-rock-haifa": ["שיעורי סטודיו למנויים (יוגה, פלדנקרייז ועוד)"],
+  "campus-karmiel": [
+    "Kilter Board",
+    "מרחב אימון עם מתקני כושר ומשקולות",
+    "מתחם נינג'ה (כולל רצועות טיסו לתרגילים באוויר)",
+    "בר קפה ומשקאות בריאות",
+  ],
+  "the-wall-modiin": ["קיר קמפוס בורד", "קירות ספריי וול (25 ו-35 מעלות)", "קיר ילדים"],
+  "vking-tel-aviv": [
+    "MoonBoard",
+    "מתקני קמפוס ושני קירות אימונים",
+    "מתחם משקולות חופשיות, TRX ומתקני סטריט וורקאוט",
+    "אזור יוגה",
+    "מתחם טיפוס לגיל הרך",
+    "חנות: נעלי טיפוס, שקי מגנזיום ופינגרבורדים",
+    "בר בירה",
+    "מלתחות ולוקרים",
+  ],
+  "kir-yoav-haifa": ["חדר בולדרינג גדול וממוזג", "חנות לציוד טיפוס מקצועי"],
+  "levin-climbing-hadera": [
+    "חדר טוקיו - חדר אימונים ברמה עולמית (מגיל 14)",
+    "חדר כושר ייעודי לטיפוס",
+    "אזור יוגה ומתיחות",
+    "חנות ציוד טיפוס (רכישה במקום)",
+  ],
+  "kir-boaz": ["השכרת נעלי טיפוס, רתמות ושקי מגנזיום"],
+  rujum: ["מתחם נינג'ה", "חנות ציוד טיפוס"],
+  "park-extreme-akko": [
+    "פארק אתגרי: גשרים תלויים, אומגה ומתקן באנג'י דרופ",
+    "בולדר מקורה ובולדר חיצוני",
+    "מגרש שעשועים לילדים",
+    "שירותי מזון במקום",
+  ],
+  "boulder-haifa": [
+    "מתחם אימונים \"המעבדה\"",
+    "סטודיו לשיעורים משלימים (מגיל 18)",
+    "קליניקה טיפולית: פיזיותרפיה, ריפוי בעיסוק, קלינאות תקשורת וטיפוס טיפולי",
+    "בר קפה",
+  ],
+  "rockiz-holon": [
+    "פארק חבלים בשתי קומות, כולל קפיצת פחד",
+    "מתחם ROCKIDS לילדים וקיר אינטראקטיבי",
+    "מתקני אימונים וקומת חוגים",
+    "חניה חינם",
+  ],
+  "desert-climbing": ["פינת ישיבה עם קפה, בירה ומיץ תפוזים טרי"],
+  "iclimb-rishon": [
+    "מתקני אימון משלימים וסטודיו לחוגים",
+    "קפיטריה ופינות ישיבה",
+    "מתחם Funtopia לילדים",
+    "מלתחות עם מקלחות ולוקרים",
+    "WiFi",
+  ],
+  "iclimb-tel-aviv": ["מתחם Funtopia לילדים"],
+  "iclimb-haifa": ["מתחם ילדים: Funtopia, בולדר ילדים, מגלשה אנכית וקפיצת אומץ", "פארק חבלים"],
+  "iclimb-kiryat-gat": [
+    "פארק חבלים בגובה 15 מטר (כולל מסלול לכיסאות גלגלים)",
+    "אומגה באורך 100 מטר",
+  ],
+  "roca-afikim": [
+    "חנות ציוד מלאה, כולל פינגרבורדים ואביזרי אימון",
+    "בר קפה: שייקים, בירות, קפה וחטיפי בריאות",
+  ],
+  "totem-pardes-hana": ["מתחם טיפוס נפרד לילדים (גילאי 3.5-9)"],
+  "ninja-park-rehovot": ["מזנון", "חדרי הלבשה ולוקרים", "ציוד עזר למכירה"],
+  "isaac-climbing": [
+    "אזור אימונים עם ספריי וול ענק וקירות מתכווננים שפועלים דרך אפליקציה",
+    "סטודיו לאימונים, חימום וסדנאות",
+    "חנות ציוד",
+  ],
+  "top94-eilat": ["מסעדה ובית קפה כשר", "אטרקציות נוספות במתחם: מיני בנג'י, חץ וקשת וג'ימבורי"],
+  "ale-jerusalem": [
+    "Kilter Board",
+    "חדר כושר מותאם למטפסים",
+    "סטודיו ליוגה, פילאטיס, אימוני כוח וגמישות",
+    "קליניקה טיפולית: פיזיותרפיה, ריפוי בעיסוק, קלינאות תקשורת ופסיכולוגיה",
+  ],
+};
 
 // Opening hours were taken from each gym's own website in October 2026.
 const GYM_SOURCE_NOTE =
@@ -3175,6 +3287,9 @@ async function writeLocations() {
       ...(g?.website ? [`website: ${yamlStr(g.website)}`] : []),
       ...(g?.hours
         ? ["hours:", ...Object.entries(g.hours).map(([day, h]) => `  ${yamlStr(day)}: ${yamlStr(h)}`)]
+        : []),
+      ...(g && GYM_AMENITIES[g.slug]?.length
+        ? ["amenities:", ...GYM_AMENITIES[g.slug].map((a) => `  - ${yamlStr(a)}`)]
         : []),
       ...(loc.description ? [`description: ${yamlStr(loc.description)}`] : []),
       ...(loc.coordinates

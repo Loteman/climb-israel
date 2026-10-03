@@ -182,6 +182,21 @@ const jsonLd = {
         </div>
 
         <div>
+          <h2 class="font-body text-sm font-bold text-ink-soft">מה עוד במתחם?</h2>
+          {
+            data.amenities && data.amenities.length > 0 ? (
+              <ul class="mt-2 list-disc space-y-1 ps-5 text-sm leading-relaxed text-ink marker:text-rust">
+                {data.amenities.map((item: string) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            ) : (
+              <p class="mt-2 text-sm leading-relaxed text-ink-soft">{NO_INFO}.</p>
+            )
+          }
+        </div>
+
+        <div>
           <h2 class="font-body text-sm font-bold text-ink-soft">אתר קיר הטיפוס</h2>
           {
             data.website ? (
