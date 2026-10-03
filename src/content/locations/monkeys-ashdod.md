@@ -14,6 +14,17 @@ hours:
   "ו'": "10:00-16:00"
   "ש'": "10:00-22:00"
 setting: indoor
+amenities:
+  - type: training
+    note: "אימונים משלימים"
+  - type: studio
+    note: "שיעורי תנועה ויוגה"
+  - type: shop
+  - type: food
+    note: "בר שייקים, משקאות קלים, קפה וחלבון"
+  - type: kids
+    note: "קיר לקטנטנים, מגיל 5"
+  - type: ninja
 coordinates:
   lat: 31.79773
   lng: 34.65299

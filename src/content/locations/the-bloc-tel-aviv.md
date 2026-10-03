@@ -15,6 +15,11 @@ hours:
   "ו'": "09:00-16:00"
   "ש'": "09:00-22:00"
 setting: indoor
+amenities:
+  - type: training
+    note: "אזור אימונים גדול"
+  - type: food
+    note: "קפה"
 coordinates:
   lat: 32.05125
   lng: 34.7727

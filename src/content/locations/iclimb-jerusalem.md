@@ -16,6 +16,14 @@ hours:
   "ו'": "10:00-16:00"
   "מוצאי שבת": "21:00-22:45"
 setting: indoor
+amenities:
+  - type: shop
+  - type: rental
+    note: "נעלי טיפוס, מגנזיום ורתמות"
+  - type: food
+    note: "בית קפה"
+  - type: kids
+    note: "Funtopia"
 coordinates:
   lat: 31.75112
   lng: 35.19083

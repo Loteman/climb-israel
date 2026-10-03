@@ -16,6 +16,9 @@ hours:
   "ו'": "08:00-17:00"
   "ש'": "10:00-23:00"
 setting: indoor
+amenities:
+  - type: rental
+    note: "נעלי טיפוס"
 coordinates:
   lat: 31.77885
   lng: 35.22579

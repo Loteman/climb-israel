@@ -2153,6 +2153,29 @@ const GYM_AMENITIES: Record<string, [AmenityType, string?][]> = {
     ["food", "מסעדה ובית קפה כשר"],
     ["attractions", "מיני בנג'י, חץ וקשת וג'ימבורי"],
   ],
+  // Second pass (gyms whose own site lists nothing) - from other sources:
+  // Gecko's own price list, monkeysashdod.com (indexed copy; the domain no
+  // longer resolves), and listings: atly.com (The Bloc TLV), Fun In
+  // Jerusalem (The Bloc JLM), ligdol + cpnclub (iClimb JLM), Fun In
+  // Jerusalem (Koala).
+  "geko-kir-shagi": [["rental", "רתמות ונעלי טיפוס"]],
+  "monkeys-ashdod": [
+    ["training", "אימונים משלימים"],
+    ["studio", "שיעורי תנועה ויוגה"],
+    ["shop"],
+    ["food", "בר שייקים, משקאות קלים, קפה וחלבון"],
+    ["kids", "קיר לקטנטנים, מגיל 5"],
+    ["ninja"],
+  ],
+  "the-bloc-tel-aviv": [["training", "אזור אימונים גדול"], ["food", "קפה"]],
+  "the-bloc-jerusalem": [["rental", "נעלי טיפוס"]],
+  "iclimb-jerusalem": [
+    ["shop"],
+    ["rental", "נעלי טיפוס, מגנזיום ורתמות"],
+    ["food", "בית קפה"],
+    ["kids", "Funtopia"],
+  ],
+  "koala-etzion": [["food", "מכונת שתייה קרה"]],
   "ale-jerusalem": [
     ["kilter"],
     ["training", "חדר כושר מותאם למטפסים"],
