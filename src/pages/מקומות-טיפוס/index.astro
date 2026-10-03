@@ -47,7 +47,7 @@ const jsonLd = {
   description={`מדריך לכל מקומות הטיפוס בישראל: ${gymCount} קירות טיפוס מלאכותיים ו-${cragCount} אתרי טיפוס בטבע, לפי עיר, אזור וסגנון.`}
   jsonLd={jsonLd}
 >
-  <section class="relative overflow-hidden border-b border-stone/40 py-14">
+  <section class="relative overflow-hidden border-b border-stone/40 py-10 sm:py-14">
     <TopoBackground opacity={0.3} />
     <div class="relative mx-auto max-w-4xl px-4 sm:px-6">
       <h1 class="font-display text-3xl font-bold text-ink sm:text-4xl">
@@ -64,7 +64,7 @@ const jsonLd = {
     </div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+  <section class="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
     <DirectoryFilters client:load />
 
     <ul id="location-cards-view" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -89,7 +89,7 @@ const jsonLd = {
       </p>
       <p>
         מדריך דיגיטלי לכל אתרי הטבע והמסלולים בארץ, שעובד גם אופליין: אפליקציית{" "}
-        <span dir="ltr">{ILCA_APP.name}</span> של התאחדות הטיפוס (<a href={ILCA_APP.ios} target="_blank" rel="noopener noreferrer" class="font-bold text-rope hover:underline">iPhone</a>{" · "}<a href={ILCA_APP.android} target="_blank" rel="noopener noreferrer" class="font-bold text-rope hover:underline">Android</a>).
+        <span dir="ltr">{ILCA_APP.name}</span> של התאחדות הטיפוס (<a href={ILCA_APP.ios} target="_blank" rel="noopener noreferrer" class="inline-block py-1.5 font-bold text-rope hover:underline">iPhone</a>{" · "}<a href={ILCA_APP.android} target="_blank" rel="noopener noreferrer" class="inline-block py-1.5 font-bold text-rope hover:underline">Android</a>).
       </p>
       <p>
         נעזרנו במידע מהאתרים הבאים:{" "}

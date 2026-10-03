@@ -115,7 +115,7 @@ const THEME_OPTIONS = [
           </svg>
         </summary>
         <div
-          class="absolute end-0 top-full z-50 mt-2 max-h-[calc(100vh-5rem)] w-64 overflow-y-auto border border-stone/50 bg-paper-dark shadow-lg"
+          class="absolute end-0 top-full z-50 mt-2 max-h-[calc(100dvh-5rem)] w-64 overflow-y-auto border border-stone/50 bg-paper-dark shadow-lg"
         >
           <!-- Separators only between top-level entries. The groups (and the
                settings section below) are collapsed by default and expand in
@@ -140,7 +140,7 @@ const THEME_OPTIONS = [
                 {
                   GUIDE_GROUPS.map((group) => (
                     <Fragment>
-                      <p class={`${mobileGroupLabelClass} ps-5 text-[11px]`}>{group.label}</p>
+                      <p class={`${mobileGroupLabelClass} ps-5`}>{group.label}</p>
                       {group.items.map((item) => (
                         <a href={withBase(item.href)} class:list={mobileLinkClass(item.href, "ps-7")} aria-current={linkState(path, item.href)}>
                           {item.label}

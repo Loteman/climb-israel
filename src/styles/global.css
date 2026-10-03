@@ -89,6 +89,9 @@
 html {
   color-scheme: light;
   scroll-behavior: smooth;
+  /* In-page anchors (#sources, #license...) land below the sticky header
+     instead of under it. */
+  scroll-padding-top: 5rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

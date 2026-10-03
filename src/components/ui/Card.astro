@@ -6,20 +6,32 @@ interface Props {
 }
 
 const { as: Tag = "div", class: className = "", href } = Astro.props;
+const linkClass = `group relative block border border-stone/50 bg-paper-dark p-5 transition-colors hover:border-rust ${className}`;
 ---
 
 {
   href ? (
-    <a
-      href={href}
-      class={`group relative block border border-stone/50 bg-paper-dark p-5 transition-colors hover:border-rust ${className}`}
-    >
-      <span
-        class="absolute end-3 top-0 h-3 w-px bg-stone/50 transition-colors group-hover:bg-rust"
-        aria-hidden="true"
-      />
-      <slot />
-    </a>
+    Tag === "li" ? (
+      // A list card is an <li> holding the link (a bare <a> can't be a
+      // child of <ul>/<ol>); the link fills the li so grid rows stay even.
+      <li class="flex">
+        <a href={href} class={`${linkClass} w-full`}>
+          <span
+            class="absolute end-3 top-0 h-3 w-px bg-stone/50 transition-colors group-hover:bg-rust"
+            aria-hidden="true"
+          />
+          <slot />
+        </a>
+      </li>
+    ) : (
+      <a href={href} class={linkClass}>
+        <span
+          class="absolute end-3 top-0 h-3 w-px bg-stone/50 transition-colors group-hover:bg-rust"
+          aria-hidden="true"
+        />
+        <slot />
+      </a>
+    )
   ) : (
     <Tag class={`relative border border-stone/50 bg-paper-dark p-5 ${className}`}>
       <span

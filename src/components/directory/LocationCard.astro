@@ -28,12 +28,15 @@ const guidebook = downloadableGuidebook(location);
   data-region={data.region}
   data-guidebook={hasGuidebook(location) ? "true" : undefined}
   data-search={locationSearchText(location)}
-  class="border border-stone/50 bg-paper-dark p-5"
+  class="relative border border-stone/50 bg-paper-dark p-5 transition-colors hover:border-rust"
 >
   <h2 class="font-display text-base font-bold">
+    <!-- Stretched link: its ::after covers the whole card, so a tap
+         anywhere opens the place (the small title alone is a poor target
+         on a phone). The action buttons below sit above it via z-10. -->
     <a
       href={withBase(`/מקומות-טיפוס/${location.id}/`)}
-      class="text-ink hover:text-rust"
+      class="text-ink after:absolute after:inset-0 hover:text-rust"
     >
       {data.name}
     </a>
@@ -64,7 +67,7 @@ const guidebook = downloadableGuidebook(location);
     {data.styles.map((s) => <Badge variant="stone">{STYLE_LABELS[s]}</Badge>)}
   </div>
 
-  <div class="mt-4 flex flex-wrap items-center gap-2">
+  <div class="relative z-10 mt-4 flex flex-wrap items-center gap-2">
     <NavigationButtons target={locationNavTarget(location)} placeName={data.name} size="sm" />
     {
       guidebook && (
@@ -72,7 +75,7 @@ const guidebook = downloadableGuidebook(location);
           href={withBaseIfRelative(guidebook.url)}
           target="_blank"
           rel="noopener noreferrer"
-          class="flex items-center gap-1.5 border border-stone/60 px-2.5 py-1.5 font-body text-xs font-bold text-ink transition-colors hover:border-rust hover:text-rust"
+          class="flex min-h-10 items-center gap-1.5 border border-stone/60 bg-paper-dark px-3 font-body text-xs font-bold text-ink transition-colors hover:border-rust hover:text-rust sm:min-h-0 sm:px-2.5 sm:py-1.5"
           aria-label={`גיידבוק - ${data.name} (נפתח בחלון חדש)`}
         >
           <svg width="14" height="14" aria-hidden="true"><use href="#icon-download"></use></svg>

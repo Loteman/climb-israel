@@ -19,14 +19,22 @@ interface Props {
 const { locations } = Astro.props;
 const thClass = "p-3 text-start font-display text-sm font-bold text-ink";
 const tdClass = "border-t border-stone/30 p-3 align-top";
+// The name column stays put while the rest of the (wide) table scrolls
+// sideways on a phone. Sticky cells need an opaque background, so the
+// zebra stripe is mixed into a solid colour instead of a translucent one.
+const stickyClass =
+  "sticky start-0 z-[1] bg-paper shadow-[-1px_0_0_var(--color-stone)] [tr:nth-child(even)>&]:bg-[color-mix(in_srgb,var(--color-paper-dark)_40%,var(--color-paper))]";
 ---
 
+<p class="mb-2 font-body text-xs text-ink-soft sm:hidden">
+  הטבלה רחבה מהמסך - גללו הצידה לעוד עמודות.
+</p>
 <div class="overflow-x-auto border border-stone/50">
   <table class="w-full min-w-[760px] border-collapse text-start">
     <caption class="sr-only">מקומות טיפוס - טבלה</caption>
     <thead>
       <tr class="border-b border-stone/50 bg-paper-dark">
-        <th scope="col" class={thClass}>שם</th>
+        <th scope="col" class={`${thClass} sticky start-0 z-[1] bg-paper-dark shadow-[-1px_0_0_var(--color-stone)]`}>שם</th>
         <th scope="col" class={thClass}>אזור</th>
         <th scope="col" class={thClass}>מיקום</th>
         <th scope="col" class={thClass}>סגנון</th>
@@ -50,7 +58,7 @@ const tdClass = "border-t border-stone/30 p-3 align-top";
               data-search={locationSearchText(location)}
               class="even:bg-paper-dark/40"
             >
-              <th scope="row" class={`${tdClass} text-start font-normal`}>
+              <th scope="row" class={`${tdClass} ${stickyClass} w-36 min-w-36 text-start font-normal sm:w-auto`}>
                 <a
                   href={withBase(`/מקומות-טיפוס/${location.id}/`)}
                   class="font-display font-bold text-ink hover:text-rust"

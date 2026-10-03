@@ -157,7 +157,8 @@ export default function LocationMap({ locations }: Props) {
 
             const link = document.createElement("a");
             link.href = withBase(`/מקומות-טיפוס/${loc.id}/`);
-            link.className = "text-xs hover:underline";
+            // Block + padding: a finger-sized tap target inside the popup.
+            link.className = "mt-1 inline-block py-1.5 text-sm font-bold hover:underline";
             link.textContent = "לדף המקום ←";
             wrap.appendChild(link);
 
@@ -213,9 +214,11 @@ export default function LocationMap({ locations }: Props) {
       {/* The loading note is a sibling, not a child, of the map container:
           Leaflet takes over that element's children once it initializes. */}
       <div class="relative">
+        {/* Israel is tall and narrow: on a phone the map gets most of the
+            screen height (but leaves a strip to scroll the page past it). */}
         <div
           ref={containerRef}
-          class="h-[420px] w-full border border-stone/50 bg-paper-dark sm:h-[520px]"
+          class="h-[clamp(420px,70svh,640px)] w-full border border-stone/50 bg-paper-dark sm:h-[520px]"
           role="region"
           aria-label="מפת מקומות הטיפוס"
         />

@@ -21,7 +21,7 @@ const jsonLd = {
   description="מדריך למתחילים בטיפוס: איך להתחיל, מה ההבדל בין בולדרינג להובלה, אילו אחיזות ומושגים כדאי להכיר, ומה ההבדל בין טיפוס בקיר מלאכותי לטיפוס בטבע."
   jsonLd={jsonLd}
 >
-  <section class="relative overflow-hidden border-b border-stone/40 py-14">
+  <section class="relative overflow-hidden border-b border-stone/40 py-10 sm:py-14">
     <TopoBackground opacity={0.3} />
     <div class="relative mx-auto max-w-4xl px-4 sm:px-6">
       <Badge variant="rope">התחילו כאן</Badge>
@@ -35,7 +35,7 @@ const jsonLd = {
     </div>
   </section>
 
-  <section class="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+  <section class="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12">
     <h2 class="font-display text-2xl font-bold text-ink">
       מה צריך לעשות בפועל
     </h2>
@@ -139,9 +139,9 @@ const jsonLd = {
       - גבוהה בהרבה. מומלץ לצבור ניסיון בקיר טיפוס ולצאת לטבע רק בליווי
       מטפסים מנוסים.
     </p>
-    <div class="mt-5 flex flex-wrap gap-4">
-      <a href={withBase("/קיר-טיפוס-מלאכותי/")} class="font-bold text-rope hover:underline">קראו על קיר טיפוס (מלאכותי) ←</a>
-      <a href={withBase("/טיפוס-בטבע/")} class="font-bold text-rope hover:underline">קראו על טיפוס בטבע ←</a>
+    <div class="mt-3 flex flex-wrap gap-x-4">
+      <a href={withBase("/קיר-טיפוס-מלאכותי/")} class="inline-block py-2 font-bold text-rope hover:underline">קראו על קיר טיפוס (מלאכותי) ←</a>
+      <a href={withBase("/טיפוס-בטבע/")} class="inline-block py-2 font-bold text-rope hover:underline">קראו על טיפוס בטבע ←</a>
     </div>
 
     <SectionDivider class="my-10 text-stone/40" />

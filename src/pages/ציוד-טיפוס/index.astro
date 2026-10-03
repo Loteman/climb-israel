@@ -20,7 +20,7 @@ const jsonLd = {
   description="מדריך לכל ציוד הטיפוס: נעלי טיפוס, מגנזיום, רתמות, חבלים, מכשירי אבטחה, קראש פאד, ועד ציוד טראד כמו נאטס וקאמים."
   jsonLd={jsonLd}
 >
-  <section class="relative overflow-hidden border-b border-stone/40 py-14">
+  <section class="relative overflow-hidden border-b border-stone/40 py-10 sm:py-14">
     <TopoBackground opacity={0.3} />
     <div class="relative mx-auto max-w-4xl px-4 sm:px-6">
       <h1 class="font-display text-3xl font-bold text-ink sm:text-4xl">
@@ -33,7 +33,7 @@ const jsonLd = {
     </div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+  <section class="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
     <div class="space-y-14">
       {
         orderedKeys(GEAR_CATEGORY_LABELS).map((cat) => (

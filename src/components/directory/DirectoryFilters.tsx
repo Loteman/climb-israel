@@ -65,8 +65,9 @@ function styleLabelsFromParam(kind: Kind, param: string | null): Set<string> {
   );
 }
 
+// Chips are 36px tall on phones (finger-sized), compact from `sm` up.
 const chipBase =
-  "rounded-sm border border-dashed px-2.5 py-1 font-mono text-xs tracking-wide transition-colors";
+  "min-h-9 rounded-sm border border-dashed px-3 py-1 font-mono text-xs tracking-wide transition-colors sm:min-h-0 sm:px-2.5";
 
 export default function DirectoryFilters() {
   // Always start from the same neutral defaults Astro's SSR pass renders
@@ -83,7 +84,11 @@ export default function DirectoryFilters() {
   const [guidebookOnly, setGuidebookOnly] = useState(false);
   const [search, setSearch] = useState("");
   const [visibleCount, setVisibleCount] = useState<number | null>(null);
-  const [filtersVisible, setFiltersVisible] = useState(true);
+  // null = untouched: CSS decides (chips collapsed on phones, where they'd
+  // push every result below the fold, and open from `sm` up). Using CSS for
+  // the default avoids a layout jump after hydration on either screen size.
+  const [filtersVisible, setFiltersVisible] = useState<boolean | null>(null);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>("cards");
   // Flipped once the URL has been read - until that state update has
   // rendered, the URL-writing effect below must not run, or it would wipe
@@ -103,13 +108,40 @@ export default function DirectoryFilters() {
     setGuidebookOnly(urlKind === "crag" && params.get("guidebook") === "1");
     setSearch(params.get("q") ?? "");
     if (urlView === "table" || urlView === "map") setViewMode(urlView);
+    // A shared link with chip filters already applied: show the chips, so
+    // it's visible on a phone too what is filtering the list.
+    if (params.has("style") || params.has("region") || params.get("guidebook") === "1") {
+      setFiltersVisible(true);
+    }
     setUrlLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 639.98px)");
+    const update = () => setIsSmallScreen(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
   }, []);
 
   const options = styleOptionsFor(kind);
   const regionOptions = regionOptionsFor(kind);
   const hasActiveFilters =
     styleLabels.size > 0 || regions.size > 0 || guidebookOnly || search.trim().length > 0;
+  const activeChipCount = styleLabels.size + regions.size + (guidebookOnly ? 1 : 0);
+  const chipsExpanded = filtersVisible ?? !isSmallScreen;
+  // Classes for the chips panel and the toggle button; in the untouched
+  // state they follow the breakpoint purely in CSS.
+  const chipsPanelClass =
+    filtersVisible === null ? "hidden sm:block" : filtersVisible ? "block" : "hidden";
+  const toggleOnClass = "border-rope bg-rope text-paper";
+  const toggleOffClass = "border-stone/60 text-ink hover:border-rust hover:text-rust";
+  const toggleClass =
+    filtersVisible === null
+      ? `${toggleOffClass} sm:border-rope sm:bg-rope sm:text-paper sm:hover:border-rope sm:hover:text-paper`
+      : filtersVisible
+        ? toggleOnClass
+        : toggleOffClass;
 
   useEffect(() => {
     const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-location-card]"));
@@ -223,7 +255,7 @@ export default function DirectoryFilters() {
           >
             <span class="block font-display text-base font-bold">{label}</span>
             <span
-              class={`block font-mono text-[11px] uppercase tracking-wide ${
+              class={`block font-mono text-xs uppercase tracking-wide ${
                 kind === value ? "text-paper" : "text-ink-soft"
               }`}
               aria-hidden="true"
@@ -235,24 +267,22 @@ export default function DirectoryFilters() {
       </div>
 
       <div class="mt-3 flex flex-wrap items-center gap-2">
+        {/* 16px text on phones: iOS Safari zooms the whole page into any
+            field with smaller text when it's focused. */}
         <input
           type="search"
           value={search}
           onInput={(e) => setSearch((e.target as HTMLInputElement).value)}
           placeholder={kind === "gym" ? "חיפוש לפי שם, עיר או רשת..." : "חיפוש לפי שם או אזור..."}
           aria-label="חיפוש מקום טיפוס"
-          class="min-w-[200px] flex-1 border border-stone bg-paper px-3 py-2 text-sm text-ink placeholder:text-ink-soft focus:border-rope focus:outline-none"
+          class="min-w-0 flex-1 basis-48 border border-stone bg-paper px-3 py-2 text-base text-ink placeholder:text-ink-soft focus:border-rope focus:outline-none sm:text-sm"
         />
         <button
           type="button"
-          onClick={() => setFiltersVisible((v) => !v)}
-          aria-expanded={filtersVisible}
+          onClick={() => setFiltersVisible(!chipsExpanded)}
+          aria-expanded={chipsExpanded}
           aria-controls="directory-filter-chips"
-          class={`flex shrink-0 items-center gap-1.5 border px-3 py-2 font-body text-sm font-bold transition-colors ${
-            filtersVisible
-              ? "border-rope bg-rope text-paper"
-              : "border-stone/60 text-ink hover:border-rust hover:text-rust"
-          }`}
+          class={`flex min-h-10 shrink-0 items-center gap-1.5 border px-3 py-2 font-body text-sm font-bold transition-colors ${toggleClass}`}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path
@@ -264,11 +294,16 @@ export default function DirectoryFilters() {
             />
           </svg>
           סינון
+          {activeChipCount > 0 && !chipsExpanded && (
+            <span class="font-mono text-xs" aria-label={`${activeChipCount} מסננים פעילים`}>
+              ({activeChipCount})
+            </span>
+          )}
         </button>
       </div>
 
-      <div id="directory-filter-chips" hidden={!filtersVisible}>
-        <div class="mt-3 flex flex-wrap items-center gap-1.5" role="group" aria-labelledby="filter-style-label">
+      <div id="directory-filter-chips" class={chipsPanelClass}>
+        <div class="mt-3 flex flex-wrap items-center gap-2 sm:gap-1.5" role="group" aria-labelledby="filter-style-label">
           <span id="filter-style-label" class="shrink-0 font-body text-xs font-bold text-ink-soft">
             סגנון
           </span>
@@ -302,7 +337,7 @@ export default function DirectoryFilters() {
           )}
         </div>
 
-        <div class="mt-3 flex flex-wrap items-center gap-1.5" role="group" aria-labelledby="filter-region-label">
+        <div class="mt-3 flex flex-wrap items-center gap-2 sm:gap-1.5" role="group" aria-labelledby="filter-region-label">
           <span id="filter-region-label" class="shrink-0 font-body text-xs font-bold text-ink-soft">
             אזור בארץ
           </span>
@@ -332,7 +367,7 @@ export default function DirectoryFilters() {
             <button
               type="button"
               onClick={clearFilters}
-              class="font-body text-xs font-bold text-rope underline-offset-2 hover:underline"
+              class="py-2 font-body text-xs font-bold text-rope underline-offset-2 hover:underline sm:py-0"
             >
               ניקוי סינון
             </button>
@@ -345,7 +380,7 @@ export default function DirectoryFilters() {
               type="button"
               onClick={() => setViewMode(mode)}
               aria-pressed={viewMode === mode}
-              class={`px-3 py-1.5 font-mono text-xs tracking-wide transition-colors ${
+              class={`min-h-10 px-3.5 font-mono text-xs tracking-wide transition-colors sm:min-h-0 sm:px-3 sm:py-1.5 ${
                 i > 0 ? "border-s border-stone/60" : ""
               } ${viewMode === mode ? "bg-rope text-paper" : "text-ink-soft hover:text-rust"}`}
             >

@@ -19,7 +19,7 @@ const { title, description, breadcrumbs, jsonLd, ogType = "article" } = Astro.pr
 ---
 
 <BaseLayout title={title} description={description} jsonLd={jsonLd} ogType={ogType}>
-  <div class="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+  <div class="mx-auto max-w-3xl px-4 py-6 sm:px-6 sm:py-10">
     <Breadcrumbs items={breadcrumbs} />
     <article class="mt-6">
       <slot />

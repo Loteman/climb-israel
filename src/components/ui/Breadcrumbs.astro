@@ -25,7 +25,7 @@ const jsonLd = {
 ---
 
 <nav aria-label="פירורי לחם" class="font-body text-xs text-ink-soft">
-  <ol class="flex flex-wrap items-center gap-1">
+  <ol class="flex flex-wrap items-center gap-x-1">
     {
       items.map((item, i) => (
         <li class="flex items-center gap-1">
@@ -35,7 +35,9 @@ const jsonLd = {
               {item.label}
             </span>
           ) : (
-            <a href={withBase(item.href)} class="hover:text-rust">
+            // Vertical padding gives the small links a finger-sized tap
+            // area on phones without changing how the line looks.
+            <a href={withBase(item.href)} class="inline-block py-2 hover:text-rust sm:py-1">
               {item.label}
             </a>
           )}

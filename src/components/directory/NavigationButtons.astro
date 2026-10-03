@@ -11,8 +11,10 @@ interface Props {
 }
 
 const { target, placeName, class: className = "", size = "md" } = Astro.props;
-const sizeClass = size === "sm" ? "px-2.5 py-1.5 text-xs" : "px-3 py-2 text-sm";
-const linkClass = `flex items-center gap-1.5 border border-stone/60 font-body font-bold text-ink transition-colors hover:border-rust hover:text-rust ${sizeClass}`;
+// "sm" is compact on desktop but keeps a 40px-tall tap target on phones.
+const sizeClass =
+  size === "sm" ? "min-h-10 px-3 text-xs sm:min-h-0 sm:px-2.5 sm:py-1.5" : "min-h-10 px-3 py-2 text-sm";
+const linkClass = `flex items-center gap-1.5 whitespace-nowrap border border-stone/60 font-body font-bold text-ink transition-colors hover:border-rust hover:text-rust ${sizeClass}`;
 ---
 
 <div class={`flex gap-2 ${className}`}>
