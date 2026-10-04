@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import type L from "leaflet";
 import { withBase } from "../../lib/url";
-import { REGION_LABELS } from "../../lib/labels";
+import { regionLabel } from "../../lib/labels";
 
 export interface MapLocation {
   id: string;
@@ -152,7 +152,7 @@ export default function LocationMap({ locations }: Props) {
 
             const sub = document.createElement("p");
             sub.className = "text-xs text-ink-soft";
-            sub.textContent = [REGION_LABELS[loc.region], loc.city].filter(Boolean).join(" · ");
+            sub.textContent = [regionLabel(loc.region, loc.kind), loc.city].filter(Boolean).join(" · ");
             wrap.appendChild(sub);
 
             const link = document.createElement("a");

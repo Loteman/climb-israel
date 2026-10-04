@@ -3,7 +3,7 @@ import { withBase, withBaseIfRelative } from "../../lib/url";
 import type { CollectionEntry } from "astro:content";
 import Badge from "../ui/Badge.astro";
 import NavigationButtons from "./NavigationButtons.astro";
-import { REGION_LABELS, STYLE_LABELS } from "../../lib/labels";
+import { STYLE_LABELS, regionLabel } from "../../lib/labels";
 import {
   downloadableGuidebook,
   hasGuidebook,
@@ -69,7 +69,7 @@ const stickyClass =
                   <div class="mt-0.5 font-mono text-xs text-ink-soft">{data.chain}</div>
                 )}
               </th>
-              <td class={`${tdClass} text-sm text-ink-soft`}>{REGION_LABELS[data.region]}</td>
+              <td class={`${tdClass} text-sm text-ink-soft`}>{regionLabel(data.region, data.kind)}</td>
               <td class={`${tdClass} text-sm leading-relaxed text-ink-soft`}>
                 {locationPlaceText(location) ?? "אין מידע"}
               </td>

@@ -1,6 +1,6 @@
 import type { CollectionEntry } from "astro:content";
 import type { NavTarget } from "./navigation";
-import { REGION_LABELS } from "./labels";
+import { regionLabel } from "./labels";
 
 type Location = CollectionEntry<"locations">;
 
@@ -49,7 +49,7 @@ export function locationSearchText(location: Location): string {
   const { data } = location;
   return [
     data.name,
-    REGION_LABELS[data.region],
+    regionLabel(data.region, data.kind),
     ...(data.kind === "gym"
       ? [data.city, data.chain, data.address]
       : [data.locationDescription]),

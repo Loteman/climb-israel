@@ -3,7 +3,7 @@ import { withBase, withBaseIfRelative } from "../../lib/url";
 import type { CollectionEntry } from "astro:content";
 import Badge from "../ui/Badge.astro";
 import NavigationButtons from "./NavigationButtons.astro";
-import { REGION_LABELS, STYLE_LABELS } from "../../lib/labels";
+import { STYLE_LABELS, regionLabel } from "../../lib/labels";
 import {
   downloadableGuidebook,
   hasGuidebook,
@@ -47,7 +47,7 @@ const guidebook = downloadableGuidebook(location);
   </h2>
 
   <p class="mt-1 text-xs text-ink-soft sm:text-sm">
-    {REGION_LABELS[data.region]}
+    {regionLabel(data.region, data.kind)}
     {data.kind === "gym" && data.chain ? ` · ${data.chain}` : ""}
   </p>
   {

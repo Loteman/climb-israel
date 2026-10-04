@@ -9,7 +9,7 @@ import {
   publiclyVisibleLocations,
   sortByName,
 } from "../../lib/locations";
-import { AMENITY_LABELS, REGION_LABELS, STYLE_LABELS } from "../../lib/labels";
+import { AMENITY_LABELS, STYLE_LABELS, regionLabel } from "../../lib/labels";
 import { SITE_URL } from "../../site-config";
 
 export async function getStaticPaths() {
@@ -94,7 +94,7 @@ const jsonLd = {
   title={`${data.name} - ${data.kind === "gym" ? "קיר טיפוס" : "אתר טיפוס בטבע"}`}
   description={
     data.description ??
-    `${data.name} - ${data.kind === "gym" ? `קיר טיפוס ב${data.city}` : `אתר טיפוס בטבע באזור ${REGION_LABELS[data.region]}`}.`
+    `${data.name} - ${data.kind === "gym" ? `קיר טיפוס ב${data.city}` : `אתר טיפוס בטבע באזור ${regionLabel(data.region, data.kind)}`}.`
   }
   breadcrumbs={[
     { href: "/", label: "בית" },
@@ -111,7 +111,7 @@ const jsonLd = {
     </Badge>
     <span class="text-sm text-ink-soft" aria-hidden="true">·</span>
     <p class="text-sm text-ink-soft">
-      {REGION_LABELS[data.region]}
+      {regionLabel(data.region, data.kind)}
       {data.kind === "gym" && data.chain ? ` · רשת ${data.chain}` : ""}
     </p>
   </div>

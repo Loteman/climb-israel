@@ -24,6 +24,15 @@ export const REGION_LABELS: Record<string, string> = {
   south: "דרום",
 };
 
+// Gyms split the center into שרון/שפלה, so their "center" is really Gush
+// Dan; crags fold שרון/שפלה into it and keep the broader "מרכז".
+const GYM_REGION_LABELS: Record<string, string> = { ...REGION_LABELS, center: "גוש דן" };
+
+/** Display name of a region, as worded for the given location kind. */
+export function regionLabel(region: string, kind: "gym" | "crag"): string {
+  return (kind === "gym" ? GYM_REGION_LABELS : REGION_LABELS)[region];
+}
+
 export const HOLD_FAMILY_LABELS: Record<string, string> = {
   foundational: "אחיזות יסוד",
   directional: "אחיזות כיווניות",

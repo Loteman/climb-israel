@@ -1,5 +1,5 @@
 import { useEffect, useState } from "preact/hooks";
-import { REGION_LABELS } from "../../lib/labels";
+import { regionLabel } from "../../lib/labels";
 
 interface StyleOption {
   label: string;
@@ -20,16 +20,16 @@ const CRAG_STYLE_OPTIONS: StyleOption[] = [
   { label: "ויה פראטה", values: ["via-ferrata"] },
 ];
 
-const regionOption = (value: string) => ({ value, label: REGION_LABELS[value] });
-
 const GYM_REGION_OPTIONS = ["north", "sharon", "center", "shfela", "jerusalem", "yosh", "south"].map(
-  regionOption,
+  (value) => ({ value, label: regionLabel(value, "gym") }),
 );
 
 // Crags don't get the שרון/שפלה split - too few natural sites in those
 // areas to justify it, so both are folded into "מרכז" (both in the
 // filter chips here and in the crags' own region tag in generate-content.ts).
-const CRAG_REGION_OPTIONS = ["north", "center", "jerusalem", "yosh", "south"].map(regionOption);
+const CRAG_REGION_OPTIONS = ["north", "center", "jerusalem", "yosh", "south"].map(
+  (value) => ({ value, label: regionLabel(value, "crag") }),
+);
 
 type Kind = "gym" | "crag";
 type ViewMode = "cards" | "table" | "map";
