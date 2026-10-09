@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://loteman.github.io/climb-israel/sitemap-index.xml
+Sitemap: https://climb-israel.loteman.com/sitemap-index.xml

@@ -2,7 +2,7 @@
 
 אתר מידע חינמי וקהילתי לטיפוס בישראל — גם טיפוס בקירות מלאכותיים וגם טיפוס בטבע. כולל מדריך למתחילים, אנציקלופדיה של אחיזות/מושגים/סגנונות/ציוד, מדריכי טכניקה ומניעת פציעות, ומדריך קירות טיפוס ואתרי טבע ברחבי הארץ עם מפה אינטראקטיבית.
 
-אתר חי: [loteman.github.io/climb-israel](https://loteman.github.io/climb-israel/)
+אתר חי: [climb-israel.loteman.com](https://climb-israel.loteman.com/)
 
 ## טכנולוגיה
 
@@ -69,7 +69,7 @@ npm run build    # בנייה סטטית ל-dist/
 
 ## פריסה
 
-פריסה אוטומטית ל-GitHub Pages דרך GitHub Actions (`.github/workflows/deploy.yml`) בכל push ל-`main`: בנייה עם `astro build` והעלאה כ-Pages artifact. האתר מוגש תחת הנתיב `/climb-israel/` (`base` ב-`astro.config.mjs`), ללא דומיין מותאם אישית.
+פריסה אוטומטית ל-GitHub Pages דרך GitHub Actions (`.github/workflows/deploy.yml`) בכל push ל-`main`: בנייה עם `astro build` והעלאה כ-Pages artifact. האתר מוגש מהשורש של הדומיין המותאם אישית `climb-israel.loteman.com` (מוגדר ב-`src/site-config.ts`, ב-`public/CNAME` ובהגדרות ה-Pages של המאגר).
 
 ## רישיון
 

@@ -1,8 +1,8 @@
 // Bump this on every deploy that changes cached static assets or this
 // file's caching rules, so old caches get cleared out in `activate` below.
-const CACHE_NAME = "tipus-israel-v2";
-const OFFLINE_URL = "/climb-israel/offline.html";
-const APP_SHELL = ["/climb-israel/", OFFLINE_URL, "/climb-israel/manifest.webmanifest"];
+const CACHE_NAME = "tipus-israel-v3";
+const OFFLINE_URL = "/offline.html";
+const APP_SHELL = ["/", OFFLINE_URL, "/manifest.webmanifest"];
 
 // Only complete, successful, same-origin responses are worth keeping. A
 // 404/500 page cached under a real URL would be served offline as if it
