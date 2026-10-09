@@ -69,7 +69,7 @@ npm run build    # בנייה סטטית ל-dist/
 
 ## פריסה
 
-פריסה אוטומטית ל-GitHub Pages דרך GitHub Actions (`.github/workflows/deploy.yml`) בכל push ל-`main`: בנייה עם `astro build` והעלאה כ-Pages artifact. האתר מוגש מהשורש של הדומיין המותאם אישית `climb-israel.loteman.com` (מוגדר ב-`src/site-config.ts`, ב-`public/CNAME` ובהגדרות ה-Pages של המאגר).
+האתר מתארח ב-Cloudflare ומוגש מהשורש של הדומיין `climb-israel.loteman.com` (מוגדר ב-`src/site-config.ts`). פקודת בנייה: `npm run build`, תיקיית פלט: `dist/`, גרסת Node: 22 (`.node-version`).
 
 ## רישיון
 

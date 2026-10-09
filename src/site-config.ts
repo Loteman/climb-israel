@@ -6,8 +6,8 @@
 // The only things that DON'T read from here, because they're static files
 // with no build step of their own, are public/manifest.webmanifest,
 // public/robots.txt, public/sw.js and public/offline.html (BASE_PATH
-// hardcoded), and public/CNAME + robots.txt (domain hardcoded) - those need
-// updating by hand if either ever changes.
+// hardcoded, plus the domain in robots.txt) - those need updating by hand
+// if either ever changes.
 export const SITE_URL = "https://climb-israel.loteman.com";
 export const BASE_PATH = "";
 
@@ -26,6 +26,6 @@ export function contactUrl(subject = SITE_NAME): string {
 // party content (guidebooks/topos, texts quoted from ILCA, OSM map tiles,
 // trademarks) stays with its owners; see the About page's license section.
 export const LICENSOR_NAME = "Loteman Games";
-export const LICENSOR_URL = "https://loteman.github.io/Loteman-Games/";
+export const LICENSOR_URL = "https://loteman.com/";
 export const LICENSE_NAME = "CC BY-SA 4.0";
 export const LICENSE_URL = "https://creativecommons.org/licenses/by-sa/4.0/";
