@@ -253,19 +253,20 @@ const jsonLd = {
               <h2 class="font-body text-sm font-bold text-ink-soft">
                 סניפים נוספים ברשת {data.chain}
               </h2>
-              <p class="mt-2 text-sm leading-relaxed">
-                {chainBranches.map((branch, i) => (
-                  <Fragment>
+              {/* Bordered buttons rather than a comma-separated line of
+                  inline links, which were small targets on a phone. */}
+              <ul class="mt-2 flex flex-wrap gap-2">
+                {chainBranches.map((branch) => (
+                  <li>
                     <a
                       href={withBase(`/מקומות-טיפוס/${branch.id}/`)}
-                      class="font-body font-bold text-ink hover:text-rust"
+                      class="inline-flex min-h-10 items-center border border-stone/60 px-3 font-body text-xs font-bold text-ink transition-colors hover:border-rust hover:text-rust sm:min-h-0 sm:px-2.5 sm:py-1.5"
                     >
                       {branch.data.name}
                     </a>
-                    {i < chainBranches.length - 1 ? ", " : ""}
-                  </Fragment>
+                  </li>
                 ))}
-              </p>
+              </ul>
             </div>
           )
         }
@@ -346,7 +347,7 @@ const jsonLd = {
                       href={withBaseIfRelative(g.url)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="inline-block py-1.5 font-body text-sm font-bold text-rope hover:underline"
+                      class="inline-block py-2 font-body text-sm font-bold text-rope hover:underline"
                     >
                       {g.label}
                       {g.printed ? (
@@ -390,7 +391,28 @@ const jsonLd = {
   <a
     href={withBase("/מקומות-טיפוס/")}
     class="mt-8 inline-block py-2 font-body text-sm font-bold text-rope hover:underline"
+    data-back-to-directory
   >
     → חזרה לכל המקומות
   </a>
 </GuideLayout>
+
+<script>
+  // Arrived from the directory? Then "back" should return to it as it was -
+  // same filters (they live in its query string) and same scroll position -
+  // instead of a fresh, unfiltered list scrolled to the top.
+  const backLink = document.querySelector<HTMLAnchorElement>("[data-back-to-directory]");
+  try {
+    const referrer = new URL(document.referrer);
+    if (backLink && referrer.origin === location.origin && referrer.pathname === backLink.pathname) {
+      backLink.href = referrer.href;
+      backLink.addEventListener("click", (event) => {
+        if (window.history.length < 2) return;
+        event.preventDefault();
+        window.history.back();
+      });
+    }
+  } catch {
+    /* no (or a cross-site) referrer - keep the plain link */
+  }
+</script>

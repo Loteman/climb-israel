@@ -128,9 +128,12 @@ export default function LocationMap({ locations }: Props) {
         // border-white (not border-paper) on purpose: the map tiles
         // themselves are always light regardless of site theme, so the
         // marker's halo needs to stay light too, not follow dark mode.
-        html: '<span class="block h-[18px] w-[18px] rounded-full border-2 border-white bg-rope shadow-[0_1px_3px_rgba(0,0,0,0.4)]"></span>',
-        iconSize: [18, 18],
-        iconAnchor: [9, 9],
+        // The visible dot stays 18px, but it sits in a transparent 32px box
+        // that is the actual tap target - an 18px dot is hard to hit with
+        // a finger, especially where markers cluster.
+        html: '<span class="flex h-8 w-8 items-center justify-center"><span class="block h-[18px] w-[18px] rounded-full border-2 border-white bg-rope shadow-[0_1px_3px_rgba(0,0,0,0.4)]"></span></span>',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
         popupAnchor: [0, -10],
       });
 

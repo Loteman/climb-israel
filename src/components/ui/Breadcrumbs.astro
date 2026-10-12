@@ -35,9 +35,10 @@ const jsonLd = {
               {item.label}
             </span>
           ) : (
-            // Vertical padding gives the small links a finger-sized tap
-            // area on phones without changing how the line looks.
-            <a href={withBase(item.href)} class="inline-block py-2 hover:text-rust sm:py-1">
+            // Padding (offset by a negative margin sideways) gives the small
+            // links a finger-sized tap area on phones without changing how
+            // the line looks - "בית" alone is only ~17px wide.
+            <a href={withBase(item.href)} class="-mx-1 inline-block px-1 py-2 hover:text-rust sm:py-1">
               {item.label}
             </a>
           )}

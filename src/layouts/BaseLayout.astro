@@ -45,7 +45,10 @@ const swUrl = withBase("/sw.js");
     <link rel="license" href={LICENSE_URL} />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- "default", not "black-translucent": translucent draws the installed
+         app under the iOS status bar, which hid the sticky header (and its
+         white status-bar text was unreadable on the light paper colour). -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content={SITE_NAME} />
     <SeoHead title={title} description={description} jsonLd={jsonLd} noindex={noindex} ogType={ogType} />
   </head>
@@ -62,14 +65,22 @@ const swUrl = withBase("/sw.js");
       <slot />
     </main>
     <Footer />
-    <script define:vars={{ swUrl }}>
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker.register(swUrl).catch(() => {
-            /* offline support is a progressive enhancement - ignore failures */
-          });
-        });
-      }
-    </script>
+    {/* Production builds only: under `astro dev` the worker cached Vite's
+        dev modules and served stale copies after the dependency optimizer
+        re-hashed them (the map then failed to load until caches were
+        cleared by hand). */}
+    {
+      import.meta.env.PROD && (
+        <script define:vars={{ swUrl }}>
+          if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+              navigator.serviceWorker.register(swUrl).catch(() => {
+                /* offline support is a progressive enhancement - ignore failures */
+              });
+            });
+          }
+        </script>
+      )
+    }
   </body>
 </html>
