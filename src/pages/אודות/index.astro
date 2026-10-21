@@ -208,12 +208,20 @@ const linkClass = "font-bold text-rope hover:underline";
         </a>
       </p>
 
-      <p class="text-sm text-ink-soft">
-        האתר שואף להיות נגיש לכולם - ראו את{" "}
-        <a href={withBase(ACCESSIBILITY_LINK.href)} class={linkClass}>{ACCESSIBILITY_LINK.label}</a>. האתר
-        לא אוסף מידע אישי - ראו את{" "}
-        <a href={withBase(PRIVACY_LINK.href)} class={linkClass}>{PRIVACY_LINK.label}</a>.
-      </p>
+      {/* The site's policy pages are linked from here only, not from the
+          footer of every page. */}
+      <nav aria-label="מסמכי האתר" class="flex flex-wrap gap-2 border-t border-dashed border-stone/50 pt-6">
+        {
+          [PRIVACY_LINK, ACCESSIBILITY_LINK].map((link) => (
+            <a
+              href={withBase(link.href)}
+              class="inline-flex min-h-10 items-center border border-stone/60 px-3 font-body text-sm font-bold text-ink transition-colors hover:border-rust hover:text-rust sm:min-h-0 sm:py-1.5"
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
     </div>
   </section>
 </BaseLayout>
