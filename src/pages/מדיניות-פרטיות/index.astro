@@ -1,0 +1,116 @@
+---
+import { withBase } from "../../lib/url";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TopoBackground from "../../components/layout/TopoBackground.astro";
+import { ABOUT_LINK } from "../../lib/site-nav";
+import { CONTACT_EMAIL, LICENSOR_NAME, SITE_NAME, contactUrl } from "../../site-config";
+
+const linkClass = "font-bold text-rope hover:underline";
+---
+
+<BaseLayout
+  title="מדיניות פרטיות"
+  description="מדיניות הפרטיות של טיפוס ישראל: בלי הרשמה, עוגיות או כלי מעקב. מה נשמר רק במכשיר שלכם, אילו שירותים חיצוניים מעורבים, ואיך מוחקים."
+>
+  <section class="relative overflow-hidden border-b border-stone/40 py-10 sm:py-14">
+    <TopoBackground opacity={0.3} />
+    <div class="relative mx-auto max-w-4xl px-4 sm:px-6">
+      <h1 class="font-display text-3xl font-bold text-ink sm:text-4xl">מדיניות פרטיות</h1>
+      <p class="mt-3 max-w-2xl leading-relaxed text-ink-soft">
+        בקצרה: אין באתר הרשמה, טפסים, פרסומות, עוגיות או כלי מעקב. אנחנו לא
+        אוספים ולא שומרים מידע אישי עליכם.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12">
+    <div class="space-y-6 leading-relaxed text-ink">
+      <h2 class="font-display text-xl font-bold text-ink">מי אנחנו</h2>
+      <p>
+        {SITE_NAME} הוא אתר מידע קהילתי וחינמי על טיפוס בישראל, שמופעל על ידי{" "}
+        <span dir="ltr">{LICENSOR_NAME}</span>. לכל שאלה בנושא פרטיות:{" "}
+        <a href={contactUrl(`${SITE_NAME} - פרטיות`)} class={linkClass} dir="ltr">{CONTACT_EMAIL}</a>.
+      </p>
+
+      <h2 class="font-display text-xl font-bold text-ink">מה נשמר במכשיר שלכם</h2>
+      <ul class="list-disc space-y-2 ps-5 marker:text-rust">
+        <li>
+          <strong class="text-rust">מצב התצוגה:</strong> אם בחרתם תצוגה בהירה או
+          כהה, הבחירה נשמרת בזיכרון הדפדפן (localStorage) כדי שהאתר יזכור אותה
+          בביקור הבא.
+        </li>
+        <li>
+          <strong class="text-rust">עמודים לשימוש בלי קליטה:</strong> עמודים
+          שביקרתם בהם נשמרים במטמון של הדפדפן (באמצעות Service Worker), כדי
+          שהאתר ייטען מהר ויעבוד גם בשטח בלי חיבור.
+        </li>
+      </ul>
+      <p>
+        המידע הזה נשאר רק במכשיר שלכם ולא נשלח אלינו.
+      </p>
+
+      <h2 class="font-display text-xl font-bold text-ink">אחסון האתר</h2>
+      <p>
+        האתר מתארח ב-Cloudflare. כמו כל שרת אינטרנט, Cloudflare מעבד נתונים
+        טכניים של כל בקשה, כמו כתובת IP וסוג הדפדפן, כדי להגיש את האתר ולהגן
+        עליו מפני תקיפות, בהתאם ל
+        <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer" class={linkClass}>
+          מדיניות הפרטיות של Cloudflare
+        </a>. אנחנו לא מתקינים באתר כלי סטטיסטיקה או מעקב. בלוח הבקרה של
+        Cloudflare מוצגים לנו רק נתוני תעבורה כלליים ומצטברים, כמו מספר
+        הביקורים, בלי פרטים שמזהים מבקר מסוים.
+      </p>
+
+      <h2 class="font-display text-xl font-bold text-ink">שירותים חיצוניים</h2>
+      <ul class="list-disc space-y-2 ps-5 marker:text-rust">
+        <li>
+          <strong class="text-rust">המפה:</strong> רק כשפותחים את תצוגת המפה במדריך
+          המקומות, אריחי המפה נטענים מהשרתים של OpenStreetMap. לשם כך הדפדפן
+          שולח אליהם בקשה, שכוללת את כתובת ה-IP שלכם (ראו{" "}
+          <a href="https://osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener noreferrer" class={linkClass}>
+            מדיניות הפרטיות של OpenStreetMap
+          </a>).
+        </li>
+        <li>
+          <strong class="text-rust">גופנים:</strong> הגופנים מתארחים באתר עצמו, ולא
+          נטענים מ-Google Fonts או משירות חיצוני אחר.
+        </li>
+        <li>
+          <strong class="text-rust">קישורים לאתרים אחרים:</strong> כפתורי הניווט
+          (מפות ו-Waze), אתרי קירות הטיפוס, הגיידבוקים והמקורות מובילים לאתרים
+          אחרים. ברגע שעוברים אליהם, חלה עליכם מדיניות הפרטיות שלהם.
+        </li>
+        <li>
+          <strong class="text-rust">פנייה אלינו:</strong> קישורי "צרו קשר" פותחים את
+          תוכנת הדוא"ל שלכם. אם תכתבו לנו, נשתמש בכתובת ובתוכן הפנייה רק כדי
+          לענות ולטפל בה, ולא נעביר אותם לאף אחד.
+        </li>
+      </ul>
+
+      <h2 class="font-display text-xl font-bold text-ink">מחיקת מידע</h2>
+      <p>
+        את מה שנשמר במכשיר אפשר למחוק בכל רגע דרך הגדרות הדפדפן ("ניקוי נתוני
+        אתרים" או Clear site data). כתבתם לנו ותרצו שנמחק את ההתכתבות? כתבו לנו
+        ונמחק אותה.
+      </p>
+
+      <h2 class="font-display text-xl font-bold text-ink">ילדים</h2>
+      <p>
+        האתר מתאים לכל הגילאים. הוא לא אוסף מידע אישי מאף אחד, כולל ילדים.
+      </p>
+
+      <h2 class="font-display text-xl font-bold text-ink">אבטחה</h2>
+      <p>האתר מוגש רק בחיבור מוצפן (HTTPS).</p>
+
+      <h2 class="font-display text-xl font-bold text-ink">שינויים במדיניות</h2>
+      <p>
+        אם נוסיף לאתר משהו שאוסף מידע, למשל סטטיסטיקת ביקורים, נעדכן את הדף
+        הזה לפני כן.
+      </p>
+      <p class="text-sm text-ink-soft">
+        המדיניות עודכנה לאחרונה באוקטובר 2026. לפרטים נוספים על האתר ראו{" "}
+        <a href={withBase(ABOUT_LINK.href)} class={linkClass}>אודות הפרויקט</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

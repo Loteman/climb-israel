@@ -12,7 +12,7 @@ import {
   SITE_NAME,
   contactUrl,
 } from "../../site-config";
-import { ACCESSIBILITY_LINK } from "../../lib/site-nav";
+import { ACCESSIBILITY_LINK, PRIVACY_LINK } from "../../lib/site-nav";
 
 const linkClass = "font-bold text-rope hover:underline";
 ---
@@ -210,7 +210,9 @@ const linkClass = "font-bold text-rope hover:underline";
 
       <p class="text-sm text-ink-soft">
         האתר שואף להיות נגיש לכולם - ראו את{" "}
-        <a href={withBase(ACCESSIBILITY_LINK.href)} class={linkClass}>{ACCESSIBILITY_LINK.label}</a>.
+        <a href={withBase(ACCESSIBILITY_LINK.href)} class={linkClass}>{ACCESSIBILITY_LINK.label}</a>. האתר
+        לא אוסף מידע אישי - ראו את{" "}
+        <a href={withBase(PRIVACY_LINK.href)} class={linkClass}>{PRIVACY_LINK.label}</a>.
       </p>
     </div>
   </section>

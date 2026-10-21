@@ -38,6 +38,30 @@ const maskableSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 51
 await sharp(Buffer.from(maskableSvg)).png().toFile(path.join(outDir, "icon-512-maskable.png"));
 console.log("wrote icon-512-maskable.png (512x512, full-bleed)");
 
+// /favicon.ico, for browsers, crawlers and tools that request it directly
+// (modern browsers use the SVG favicon). An ICO file may hold PNG images,
+// so it is just a small directory header in front of the PNGs.
+const icoSizes = [16, 32, 48];
+const icoPngs = await Promise.all(
+  icoSizes.map((size) => sharp(source, { density: 384 }).resize(size, size).png().toBuffer()),
+);
+const icoHeader = Buffer.alloc(6 + 16 * icoSizes.length);
+icoHeader.writeUInt16LE(1, 2); // type 1 = icon
+icoHeader.writeUInt16LE(icoSizes.length, 4);
+let icoOffset = icoHeader.length;
+icoSizes.forEach((size, i) => {
+  const entry = 6 + 16 * i;
+  icoHeader.writeUInt8(size, entry); // width
+  icoHeader.writeUInt8(size, entry + 1); // height
+  icoHeader.writeUInt16LE(1, entry + 4); // colour planes
+  icoHeader.writeUInt16LE(32, entry + 6); // bits per pixel
+  icoHeader.writeUInt32LE(icoPngs[i].length, entry + 8);
+  icoHeader.writeUInt32LE(icoOffset, entry + 12);
+  icoOffset += icoPngs[i].length;
+});
+await writeFile(path.join(ROOT, "public/favicon.ico"), Buffer.concat([icoHeader, ...icoPngs]));
+console.log(`wrote favicon.ico (${icoSizes.join("/")}px)`);
+
 // ---------------------------------------------------------------------------
 // Open Graph / social card (1200x630) -> public/og-image.png
 // ---------------------------------------------------------------------------

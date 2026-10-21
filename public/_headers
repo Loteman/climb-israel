@@ -1,0 +1,19 @@
+# Cloudflare Pages response headers. Astro copies this file to the output
+# root unchanged. Cloudflare already sends X-Content-Type-Options: nosniff
+# and Referrer-Policy: strict-origin-when-cross-origin on every response,
+# so they are not repeated here (a header set twice is sent as "a, a").
+
+/*
+  Strict-Transport-Security: max-age=31536000
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+
+# The service worker decides what phones keep offline; it must always be
+# revalidated, or a phone can keep running an old worker for hours.
+/sw.js
+  Cache-Control: no-cache
+
+# Astro's build output has content hashes in its file names, so a changed
+# file always gets a new URL - these can be cached for good.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable

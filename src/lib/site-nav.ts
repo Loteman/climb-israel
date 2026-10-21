@@ -86,3 +86,4 @@ export const LOCATIONS_LINK: NavLink = { href: "/מקומות-טיפוס/", labe
 export const HISTORY_LINK: NavLink = { href: "/היסטוריית-הטיפוס-בישראל/", label: "היסטוריית הטיפוס בישראל" };
 export const ABOUT_LINK: NavLink = { href: "/אודות/", label: "אודות" };
 export const ACCESSIBILITY_LINK: NavLink = { href: "/הצהרת-נגישות/", label: "הצהרת נגישות" };
+export const PRIVACY_LINK: NavLink = { href: "/מדיניות-פרטיות/", label: "מדיניות פרטיות" };
