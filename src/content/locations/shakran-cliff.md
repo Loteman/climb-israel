@@ -19,9 +19,6 @@ lodging: "ניתן לישון ליד הסקטור השחור, ליד פינת ה
 guidebooks:
   - label: "Ramim Ridge - מדריך המועדון האלפיני (אנגלית, 2013), נמרוד נחמיאס ורן שדמי"
     url: "https://wiki.imga.org.il/Topos/%D7%A8%D7%9E%D7%99%D7%9D.pdf"
-  - label: "The Israeli Climbing Guidebook - ספר מודפס (2015, אנגלית)"
-    url: "https://www.climbing-israel.com/"
-    printed: true
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%94%D7%9E%D7%A6%D7%95%D7%A7_%D7%94%D7%A9%D7%A7%D7%A8%D7%9F"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---

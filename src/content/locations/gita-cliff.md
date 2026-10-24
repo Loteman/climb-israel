@@ -20,9 +20,6 @@ lodging: "ניתן לישון במחצבה או במטע הזיתים - קרקע
 guidebooks:
   - label: "המדריך של מקס וסלאבה לגיתה מערב"
     url: "https://wiki.imga.org.il/images/6/66/GitaWest_NewGuidebook.pdf"
-  - label: "The Israeli Climbing Guidebook - ספר מודפס (2015, אנגלית)"
-    url: "https://www.climbing-israel.com/"
-    printed: true
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%92%D7%99%D7%AA%D7%94_%D7%9E%D7%96%D7%A8%D7%97"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---

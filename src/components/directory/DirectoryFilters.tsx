@@ -1,5 +1,6 @@
 import { useEffect, useState } from "preact/hooks";
 import { regionLabel } from "../../lib/labels";
+import { isOpenAt, type WeeklyInterval } from "../../lib/opening-hours";
 
 interface StyleOption {
   label: string;
@@ -82,6 +83,10 @@ export default function DirectoryFilters() {
   const [styleLabels, setStyleLabels] = useState<Set<string>>(new Set());
   const [regions, setRegions] = useState<Set<string>>(new Set());
   const [guidebookOnly, setGuidebookOnly] = useState(false);
+  const [openNow, setOpenNow] = useState(false);
+  // Bumped every minute while "פתוח עכשיו" is on, so gyms drop out (or
+  // come in) at closing/opening time without touching the filters.
+  const [clockTick, setClockTick] = useState(0);
   const [search, setSearch] = useState("");
   const [visibleCount, setVisibleCount] = useState<number | null>(null);
   // null = untouched: CSS decides (chips collapsed on phones, where they'd
@@ -106,11 +111,17 @@ export default function DirectoryFilters() {
       new Set((params.get("region")?.split(",") ?? []).filter((r) => validRegions.has(r))),
     );
     setGuidebookOnly(urlKind === "crag" && params.get("guidebook") === "1");
+    setOpenNow(urlKind === "gym" && params.get("open") === "1");
     setSearch(params.get("q") ?? "");
     if (urlView === "table" || urlView === "map") setViewMode(urlView);
     // A shared link with chip filters already applied: show the chips, so
     // it's visible on a phone too what is filtering the list.
-    if (params.has("style") || params.has("region") || params.get("guidebook") === "1") {
+    if (
+      params.has("style") ||
+      params.has("region") ||
+      params.get("guidebook") === "1" ||
+      params.get("open") === "1"
+    ) {
       setFiltersVisible(true);
     }
     setUrlLoaded(true);
@@ -127,8 +138,14 @@ export default function DirectoryFilters() {
   const options = styleOptionsFor(kind);
   const regionOptions = regionOptionsFor(kind);
   const hasActiveFilters =
-    styleLabels.size > 0 || regions.size > 0 || guidebookOnly || search.trim().length > 0;
-  const activeChipCount = styleLabels.size + regions.size + (guidebookOnly ? 1 : 0);
+    styleLabels.size > 0 || regions.size > 0 || guidebookOnly || openNow || search.trim().length > 0;
+  const activeChipCount = styleLabels.size + regions.size + (guidebookOnly ? 1 : 0) + (openNow ? 1 : 0);
+
+  useEffect(() => {
+    if (!openNow) return;
+    const timer = window.setInterval(() => setClockTick((t) => t + 1), 60_000);
+    return () => window.clearInterval(timer);
+  }, [openNow]);
   const chipsExpanded = filtersVisible ?? !isSmallScreen;
   // Classes for the chips panel and the toggle button; in the untouched
   // state they follow the breakpoint purely in CSS.
@@ -150,6 +167,7 @@ export default function DirectoryFilters() {
       options.filter((opt) => styleLabels.has(opt.label)).flatMap((opt) => opt.values),
     );
     const visibleIds = new Set<string>();
+    const now = new Date();
 
     for (const card of cards) {
       const matchesKind = card.dataset.kind === kind;
@@ -157,10 +175,22 @@ export default function DirectoryFilters() {
       const matchesStyles = activeValues.size === 0 || cardStyles.some((s) => activeValues.has(s));
       const matchesRegion = regions.size === 0 || regions.has(card.dataset.region ?? "");
       const matchesGuidebook = !guidebookOnly || card.dataset.guidebook === "true";
+      // Gyms with no usable hours (none listed, or "by phone") never count
+      // as open - better to leave one out than to send someone to a
+      // closed door.
+      const matchesOpenNow =
+        !openNow ||
+        (card.dataset.openHours !== undefined &&
+          isOpenAt(JSON.parse(card.dataset.openHours) as WeeklyInterval[], now));
       const matchesSearch = q.length === 0 || (card.dataset.search ?? "").includes(q);
 
       const visible =
-        matchesKind && matchesStyles && matchesRegion && matchesGuidebook && matchesSearch;
+        matchesKind &&
+        matchesStyles &&
+        matchesRegion &&
+        matchesGuidebook &&
+        matchesOpenNow &&
+        matchesSearch;
       card.classList.toggle("hidden", !visible);
       if (visible && card.dataset.locationId) visibleIds.add(card.dataset.locationId);
     }
@@ -172,7 +202,7 @@ export default function DirectoryFilters() {
     const detail = { visibleIds: Array.from(visibleIds), kind };
     window.__directoryFilterState = detail;
     window.dispatchEvent(new CustomEvent("directory:filterchange", { detail }));
-  }, [kind, styleLabels, regions, guidebookOnly, search]);
+  }, [kind, styleLabels, regions, guidebookOnly, openNow, clockTick, search]);
 
   useEffect(() => {
     document.getElementById("location-cards-view")?.classList.toggle("hidden", viewMode !== "cards");
@@ -196,6 +226,7 @@ export default function DirectoryFilters() {
     if (styleValues.length > 0) params.set("style", styleValues.join(","));
     if (regions.size > 0) params.set("region", [...regions].join(","));
     if (guidebookOnly) params.set("guidebook", "1");
+    if (openNow) params.set("open", "1");
     if (search.trim()) params.set("q", search.trim());
     if (viewMode !== "cards") params.set("view", viewMode);
     const query = params.toString();
@@ -203,12 +234,13 @@ export default function DirectoryFilters() {
     if (next !== `${window.location.pathname}${window.location.search}${window.location.hash}`) {
       window.history.replaceState(window.history.state, "", next);
     }
-  }, [urlLoaded, kind, styleLabels, regions, guidebookOnly, search, viewMode]);
+  }, [urlLoaded, kind, styleLabels, regions, guidebookOnly, openNow, search, viewMode]);
 
   function changeKind(next: Kind) {
     setKind(next);
     setStyleLabels(new Set());
     if (next !== "crag") setGuidebookOnly(false);
+    if (next !== "gym") setOpenNow(false);
     // A region chip like שרון/שפלה only exists for gyms - if one was
     // selected there, carrying it into the crag view would silently
     // filter out every crag with no visible chip left to undo it.
@@ -231,6 +263,7 @@ export default function DirectoryFilters() {
     setStyleLabels(new Set());
     setRegions(new Set());
     setGuidebookOnly(false);
+    setOpenNow(false);
     setSearch("");
   }
 
@@ -343,13 +376,26 @@ export default function DirectoryFilters() {
           ))}
         </div>
 
-        {/* Filters that are neither a climbing style nor a region. Only
-            crags have guidebooks, so the group exists only for them. */}
-        {kind === "crag" && (
-          <div class="mt-3 flex flex-wrap items-center gap-2 sm:gap-1.5" role="group" aria-labelledby="filter-extra-label">
-            <span id="filter-extra-label" class="shrink-0 font-body text-xs font-bold text-ink-soft">
-              נוספים
-            </span>
+        {/* Filters that are neither a climbing style nor a region: opening
+            hours for gyms, guidebooks for crags. */}
+        <div class="mt-3 flex flex-wrap items-center gap-2 sm:gap-1.5" role="group" aria-labelledby="filter-extra-label">
+          <span id="filter-extra-label" class="shrink-0 font-body text-xs font-bold text-ink-soft">
+            נוספים
+          </span>
+          {kind === "gym" ? (
+            <button
+              type="button"
+              onClick={() => setOpenNow((v) => !v)}
+              aria-pressed={openNow}
+              class={`${chipBase} ${
+                openNow
+                  ? "border-rope bg-rope text-paper"
+                  : "border-stone text-ink-soft hover:border-rope hover:text-rope"
+              }`}
+            >
+              פתוח עכשיו
+            </button>
+          ) : (
             <button
               type="button"
               onClick={() => setGuidebookOnly((v) => !v)}
@@ -362,8 +408,8 @@ export default function DirectoryFilters() {
             >
               עם גיידבוק
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       <div class="mt-3 flex flex-wrap items-center justify-between gap-2">

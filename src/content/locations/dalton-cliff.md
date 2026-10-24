@@ -16,10 +16,6 @@ routeCount: "18 מסלולים"
 season: "כל השנה. בחורף מומלץ ביגוד חם."
 shade: "המצוק במפנה צפוני, ולכן הצל מגיע סביב השעה 11:30."
 lodging: "ניתן לישון בראש המצוק ליד הרכבים - יש לשמור על המקום נקי ונעים גם לבאים אחריכם."
-guidebooks:
-  - label: "The Israeli Climbing Guidebook - ספר מודפס (2015, אנגלית)"
-    url: "https://www.climbing-israel.com/"
-    printed: true
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%93%D7%9C%D7%AA%D7%95%D7%9F"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---

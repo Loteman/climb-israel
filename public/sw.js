@@ -1,7 +1,9 @@
 // Bump this on every deploy that changes cached static assets or this
 // file's caching rules, so old caches get cleared out in `activate` below.
-const CACHE_NAME = "tipus-israel-v3";
-const OFFLINE_URL = "/offline.html";
+const CACHE_NAME = "tipus-israel-v4";
+// Cloudflare Pages serves offline.html at /offline (the .html URL is a 308
+// redirect), so cache it under the URL that answers directly.
+const OFFLINE_URL = "/offline";
 const APP_SHELL = ["/", OFFLINE_URL, "/manifest.webmanifest"];
 
 // Only complete, successful, same-origin responses are worth keeping. A
@@ -10,6 +12,19 @@ const APP_SHELL = ["/", OFFLINE_URL, "/manifest.webmanifest"];
 // cache.put() rejects it.
 function isCacheable(response) {
   return response && response.status === 200 && response.type === "basic";
+}
+
+// Browsers refuse a redirected response as the answer to a page
+// navigation, so a cached copy that came through a redirect (e.g.
+// /offline.html -> /offline, or a page URL without its trailing slash) is
+// re-wrapped as a plain response before it is served.
+async function withoutRedirect(response) {
+  if (!response || !response.redirected) return response;
+  return new Response(await response.blob(), {
+    status: response.status,
+    statusText: response.statusText,
+    headers: response.headers,
+  });
 }
 
 function putInCache(request, response) {
@@ -65,9 +80,13 @@ self.addEventListener("fetch", (event) => {
           putInCache(request, response);
           return response;
         })
-        .catch(
-          async () =>
-            (await caches.match(request)) ?? (await caches.match(OFFLINE_URL)),
+        .catch(async () =>
+          // ignoreSearch: a filtered directory link (?kind=crag) still
+          // finds the cached directory page instead of the offline page.
+          withoutRedirect(
+            (await caches.match(request, { ignoreSearch: true })) ??
+              (await caches.match(OFFLINE_URL)),
+          ),
         ),
     );
     return;

@@ -11,6 +11,7 @@ import {
   locationPlaceText,
   locationSearchText,
 } from "../../lib/locations";
+import { parseOpeningHours } from "../../lib/opening-hours";
 
 interface Props {
   locations: CollectionEntry<"locations">[];
@@ -47,6 +48,7 @@ const stickyClass =
         locations.map((location) => {
           const { data } = location;
           const guidebook = downloadableGuidebook(location);
+          const openHours = data.kind === "gym" ? parseOpeningHours(data.hours) : [];
           return (
             <tr
               data-location-card
@@ -55,6 +57,7 @@ const stickyClass =
               data-styles={data.styles.join(",")}
               data-region={data.region}
               data-guidebook={hasGuidebook(location) ? "true" : undefined}
+              data-open-hours={openHours.length > 0 ? JSON.stringify(openHours) : undefined}
               data-search={locationSearchText(location)}
               class="even:bg-paper-dark/40"
             >

@@ -10,6 +10,7 @@ import {
   locationNavTarget,
   locationSearchText,
 } from "../../lib/locations";
+import { parseOpeningHours } from "../../lib/opening-hours";
 
 interface Props {
   location: CollectionEntry<"locations">;
@@ -18,6 +19,8 @@ interface Props {
 const { location } = Astro.props;
 const { data } = location;
 const guidebook = downloadableGuidebook(location);
+// Weekly intervals for the directory's "פתוח עכשיו" filter (gyms only).
+const openHours = data.kind === "gym" ? parseOpeningHours(data.hours) : [];
 ---
 
 <li
@@ -27,6 +30,7 @@ const guidebook = downloadableGuidebook(location);
   data-styles={data.styles.join(",")}
   data-region={data.region}
   data-guidebook={hasGuidebook(location) ? "true" : undefined}
+  data-open-hours={openHours.length > 0 ? JSON.stringify(openHours) : undefined}
   data-search={locationSearchText(location)}
   class="relative flex flex-col border border-stone/50 bg-paper-dark p-3 transition-colors hover:border-rust sm:p-5"
 >

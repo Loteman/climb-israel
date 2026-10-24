@@ -27,9 +27,6 @@ guidebooks:
     url: "https://wiki.imga.org.il/Topos/Timna_topo_guide_2020.pdf"
   - label: "גיידבוק ישן"
     url: "https://wiki.imga.org.il/Topos/TIMNA_GUIDE_HEBREW-V4.pdf"
-  - label: "The Israeli Climbing Guidebook - ספר מודפס (2015, אנגלית)"
-    url: "https://www.climbing-israel.com/"
-    printed: true
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%AA%D7%9E%D7%A0%D7%A2"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---

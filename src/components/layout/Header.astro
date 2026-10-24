@@ -16,8 +16,11 @@ const path = currentPathname(Astro.url);
 const topLinks = [LOCATIONS_LINK, BEGINNER_GUIDE];
 const trailingLinks = [ABOUT_LINK];
 
+// Tighter padding between md and lg and no wrapping: at tablet width
+// (768px) the full row only just fits, and the labels used to break onto
+// two lines.
 const desktopLinkClass = (href: string) => [
-  "rounded-sm px-3 py-2 font-body text-sm font-semibold transition-colors",
+  "whitespace-nowrap rounded-sm px-2 py-2 font-body text-sm font-semibold transition-colors lg:px-3",
   linkState(path, href) ? "text-rope" : "text-ink-soft hover:text-rust",
 ];
 const mobileLinkClass = (href: string, indent = "") => [
@@ -40,7 +43,7 @@ const THEME_OPTIONS = [
 
 <header class="sticky top-0 z-50 border-b border-stone/40 bg-paper">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-    <a href={withBase("/")} class="flex items-center gap-2 py-1 font-display text-lg font-bold text-ink">
+    <a href={withBase("/")} class="flex items-center gap-2 whitespace-nowrap py-1 font-display text-lg font-bold text-ink">
       <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
         <circle cx="13" cy="13" r="11" fill="none" stroke="var(--color-rope)" stroke-width="2"></circle>
         <circle cx="13" cy="13" r="2.5" fill="var(--color-rope)"></circle>

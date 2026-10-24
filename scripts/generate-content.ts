@@ -2014,7 +2014,9 @@ const gyms: GymLocation[] = [
   { slug: "desert-climbing", kind: "gym", name: "טיפוס מדברי", city: "מדרשת בן גוריון", region: "south", address: "רח' אזור תעשייה", phone: "054-939-9829", website: "https://www.desertclimbing.co.il/", styles: ["bouldering"], coordinates: { lat: 30.85159, lng: 34.78258 }, hours: { "א'-ה'": "בתיאום טלפוני: 052-460-6335", "ש'": "סגור" } },
   { slug: "iclimb-jerusalem", kind: "gym", name: "אייקליימב ירושלים", chain: "iClimb", city: "ירושלים", region: "jerusalem", address: "אצטדיון טדי", phone: "02-648-2264", website: "https://iclimb.co.il/jerusalem/%D7%A8%D7%90%D7%A9%D7%99/", styles: ["lead", "top-rope"], coordinates: { lat: 31.75112, lng: 35.19083 }, hours: { "א'-ד'": "16:00-22:00", "ה'": "16:00-22:30", "ו'": "10:00-16:00", "מוצאי שבת": "21:00-22:45" } },
   // iClimb hours: the "August" schedule from each branch's hours page.
-  { slug: "iclimb-rishon", kind: "gym", name: "אייקליימב ראשון לציון", chain: "iClimb", city: "ראשון לציון", region: "center", address: "נדב בסקינד 12", phone: "03-612-1109", website: "https://iclimb-rishon.co.il/", styles: ["lead", "top-rope", "bouldering"], description: "מתחם של כ-1,200 מ\"ר באזור התעשייה המערבי של ראשון לציון: קירות הובלה בגובה 15 מטרים, קירות טופ-רופ עם אבטחה אוטומטית, אזור בולדר ומתחם טיפוס לילדים (פנטופיה).", coordinates: { lat: 31.98833, lng: 34.76874 }, hours: { "א'-ד'": "10:00-22:00", "ה'": "10:00-22:30", "ו'": "10:00-17:00", "ש'": "10:00-22:30" } },
+  // The branch's own domain (iclimb-rishon.co.il) stopped resolving in October
+  // 2026, so this links the chain's main site instead.
+  { slug: "iclimb-rishon", kind: "gym", name: "אייקליימב ראשון לציון", chain: "iClimb", city: "ראשון לציון", region: "center", address: "נדב בסקינד 12", phone: "03-612-1109", website: "https://iclimb.co.il/", styles: ["lead", "top-rope", "bouldering"], description: "מתחם של כ-1,200 מ\"ר באזור התעשייה המערבי של ראשון לציון: קירות הובלה בגובה 15 מטרים, קירות טופ-רופ עם אבטחה אוטומטית, אזור בולדר ומתחם טיפוס לילדים (פנטופיה).", coordinates: { lat: 31.98833, lng: 34.76874 }, hours: { "א'-ד'": "10:00-22:00", "ה'": "10:00-22:30", "ו'": "10:00-17:00", "ש'": "10:00-22:30" } },
   { slug: "iclimb-tel-aviv", kind: "gym", name: "אייקליימב תל אביב", chain: "iClimb", city: "תל אביב", region: "center", address: "שד' רוקח 42", phone: "050-213-7099", website: "https://iclimb.co.il/%D7%A1%D7%A0%D7%99%D7%A3-%D7%AA%D7%9C-%D7%90%D7%91%D7%99%D7%91-%D7%A8%D7%90%D7%A9%D7%99/", styles: ["lead", "top-rope"], description: "קיר טיפוס בפארק הירקון: קיר בגובה 18 מטרים להובלה ולטופ-רופ, אזורים עם אבטחה אוטומטית שמתאימים גם למי שמטפס בפעם הראשונה, ומתחם טיפוס לילדים (פנטופיה).", coordinates: { lat: 32.09773, lng: 34.78825 }, hours: { "א'-ה'": "10:00-22:00", "ו'": "10:00-16:00", "ש'": "10:00-22:00" } },
   { slug: "roca-afikim", kind: "gym", name: "רוקה", city: "קיבוץ אפיקים, עמק הירדן", region: "north", address: "אפיקים 1", phone: "054-833-0920", website: "https://www.rocaclimb.co.il/", styles: ["bouldering", "top-rope"], description: "קיר טיפוס בקיבוץ אפיקים שבעמק הירדן: עשרות בעיות בולדר בכל הרמות, קיר בגובה 8 מטרים עם אבטחה אוטומטית, וחנות ציוד.", coordinates: { lat: 32.68137, lng: 35.57833 }, hours: { "א'-ה'": "16:00-22:00", "ו'": "10:00-16:00", "ש'": "10:00-20:00" } },
   { slug: "totem-pardes-hana", kind: "gym", name: "טוטם קיר טיפוס", city: "פרדס חנה", region: "sharon", address: "ערער 1", phone: "04-642-4849", website: "https://www.totemclimbing.co.il/", styles: ["bouldering"], coordinates: { lat: 32.50666, lng: 34.97558 }, hours: { "א', ג', ד'": "15:00-22:30", "ב', ה'": "08:00-22:30", "ו'": "08:00-14:00", "ש'": "09:00-22:30" } },
@@ -2233,15 +2235,6 @@ const GYM_SETTING: Record<string, "indoor" | "outdoor" | "both"> = {
 const GYM_SOURCE_NOTE =
   "הפרטים ושעות הפתיחה עשויים לכלול אי דיוקים, מומלץ לבדוק מול המקום לפני היציאה.";
 
-// The printed national guidebook (2015, English) by Nimrod Nachmias & Ran
-// Shadmi - listed on every crag it covers (per the book's own site-map
-// page on climbing-israel.com), always after the free downloads.
-const ISRAELI_CLIMBING_GUIDEBOOK: GuidebookLink = {
-  label: "The Israeli Climbing Guidebook - ספר מודפס (2015, אנגלית)",
-  url: "https://www.climbing-israel.com/",
-  printed: true,
-};
-
 // Sourced from ILCA's (התאחדות הטיפוס בישראל) official crag database at
 // https://ilca.org.il/rock-3/אתרי-טיפוס/ - every field below (description,
 // rock type, route length/count, season, shade, lodging, guidebook links)
@@ -2293,9 +2286,6 @@ const crags: CragLocation[] = [
     season: "תחילת/סוף החורף וימי חורף שמשיים.",
     shade: "המצוק פונה דרומה ולכן קשה מאוד לטפס בקיץ, אם כי ניתן לגנוב כמה שעות לפנות ערב.",
     lodging: "ניתן לאלתר לינה באזור, אך בשל הקרבה לעיר נראה שאין בכך צורך.",
-    guidebooks: [
-      ISRAELI_CLIMBING_GUIDEBOOK,
-    ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%9E%D7%97%D7%A6%D7%91%D7%95%D7%AA_%D7%A7%D7%93%D7%95%D7%9E%D7%99%D7%9D",
   },
   {
@@ -2370,7 +2360,6 @@ const crags: CragLocation[] = [
     shade: "בקיץ המצוק מוצל החל משעה 13:00. בחורף המצוק מוצל ברוב שעות היום.",
     guidebooks: [
       { label: "התאחדות הטיפוס (ILCA) - המצוק הקטן", url: "https://drive.google.com/file/d/1_rSawfOQfRyBzn8Ifj-UsHJbqNtdflmK/view" },
-      ISRAELI_CLIMBING_GUIDEBOOK,
     ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%91%D7%99%D7%AA_%D7%90%D7%A8%D7%99%D7%94",
     accessDescription: "מכביש 444 (בין ראש העין למחלף גמזו) פונים מזרחה בצומת כ\"ח לבית אריה. ביישוב פונים בפנייה הראשונה שמאלה, ממשיכים ישר בכיכרות, ואחרי כיכר מאיר אריאל הכביש מתעקל ימינה; חונים בחנייה שמעל הגן לזכר מטפס שנהרג ב-2016. את המצוק עוקפים משמאל או מימין (הירידה הישירה, בדרגה 3, אינה מומלצת). המפתחות לשער האחורי של היישוב נמצאים אצל השומר בכניסה.",
@@ -2392,7 +2381,6 @@ const crags: CragLocation[] = [
     lodging: "ניתן לישון במחצבה או במטע הזיתים - קרקע פרטית, יש לכבד את הבעלים ולא להשאיר פסולת. אסור לישון או להבעיר אש מתחת למצוק עצמו. אפשרות נוספת: לינה במושב גיתה במחיר נמוך ונוח (04-9873747).",
     guidebooks: [
       { label: "המדריך של מקס וסלאבה לגיתה מערב", url: "https://wiki.imga.org.il/images/6/66/GitaWest_NewGuidebook.pdf" },
-      ISRAELI_CLIMBING_GUIDEBOOK,
     ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%92%D7%99%D7%AA%D7%94_%D7%9E%D7%96%D7%A8%D7%97",
     accessDescription: "מצומת כליל נוסעים בכביש 8721 לכיוון ג'ת וגיתה. בכביש שבין ג'ת לירכא, מיד אחרי חציית הערוץ, פונים מזרחה לדרך עפר, חונים במטע הזיתים ועולים בשביל המסומן ירוק עד המצוק. אפשר גם להגיע מלמעלה - דרך המחצבה (לסקטור הילטון) או מהיישוב גיתה (לסקטור הטבעי).",
@@ -2414,7 +2402,6 @@ const crags: CragLocation[] = [
     lodging: "לינה בשמורות טבע אסורה, אך בשל הקרבה לירושלים מומלץ למצוא סידורי לינה בעיר.",
     guidebooks: [
       { label: "המדריך המקורי מהמועדון", url: "https://wiki.imga.org.il/Topos/Gey%20Ben%20Hinom%20Guidebook.webarchive" },
-      ISRAELI_CLIMBING_GUIDEBOOK,
     ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%92%D7%99%D7%90_%D7%91%D7%9F_%D7%94%D7%99%D7%A0%D7%95%D7%9D",
     accessDescription: "שלוש אפשרויות חנייה: למעלה - בדרך ללא מוצא ליד הכנסייה הסקוטית, שמסתיימת בגשר הסינמטק, ומשם יורדים לדרך העפר; באמצע - מול מלון הר ציון (שמאלה ברמזור אבו טור) וממשיכים ברגל לגשר הסינמטק; למטה - מרמזור אבו טור ישר ובפנייה הראשונה שמאלה (כביש צר ותלול), חונים מתחת למצוק.",
@@ -2434,9 +2421,6 @@ const crags: CragLocation[] = [
     season: "כל השנה. בחורף מומלץ ביגוד חם.",
     shade: "המצוק במפנה צפוני, ולכן הצל מגיע סביב השעה 11:30.",
     lodging: "ניתן לישון בראש המצוק ליד הרכבים - יש לשמור על המקום נקי ונעים גם לבאים אחריכם.",
-    guidebooks: [
-      ISRAELI_CLIMBING_GUIDEBOOK,
-    ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%93%D7%9C%D7%AA%D7%95%D7%9F",
     accessDescription: "מצומת עין זיתים נוסעים בדרך הנוף של יער בירייה כ-4 ק\"מ (אחרי בית הכנסת העתיק בנבוריה) עד כיכר עין נבוריה; משם כ-10 דקות הליכה, או נסיעה בדרך העפר, עד המצוק. חונים לאורך הדרך ויורדים בשביל המסומן בחיצים כחולים. וייז מנווט בדרך עפר אחרת מדרום-מערב, פחות מתאימה לרכב פרטי.",
   },
@@ -2457,7 +2441,6 @@ const crags: CragLocation[] = [
     lodging: "ניתן לישון בתחתית המצוק, ממש עם ההגעה אליו - יש לשמור על המקום נקי ונעים גם לבאים אחריכם.",
     guidebooks: [
       { label: "Ramim Ridge - מדריך המועדון האלפיני (אנגלית, 2013), נמרוד נחמיאס ורן שדמי", url: "https://wiki.imga.org.il/Topos/%D7%A8%D7%9E%D7%99%D7%9D.pdf" },
-      ISRAELI_CLIMBING_GUIDEBOOK,
     ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%94%D7%9E%D7%A6%D7%95%D7%A7_%D7%94%D7%A0%D7%A2%D7%9C%D7%9D",
     accessDescription: "מכביש 90 צפונה, מיד אחרי צומת הגומא, יוצאת דרך עפר קטנה מצפון לגדר מטעי האבוקדו (מגיעים אליה בפניית פרסה ליד הכניסה לפארק הרכבל). אפשר גם מהגן הגיאולוגי בקריית שמונה, לאורך שביל ישראל כקילומטר, עד חץ אדום שמאלה.",
@@ -2479,7 +2462,6 @@ const crags: CragLocation[] = [
     lodging: "ניתן לישון ליד הסקטור השחור, ליד פינת הקפה - יש לשמור על המקום נקי ונעים גם לבאים אחריכם.",
     guidebooks: [
       { label: "Ramim Ridge - מדריך המועדון האלפיני (אנגלית, 2013), נמרוד נחמיאס ורן שדמי", url: "https://wiki.imga.org.il/Topos/%D7%A8%D7%9E%D7%99%D7%9D.pdf" },
-      ISRAELI_CLIMBING_GUIDEBOOK,
     ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%94%D7%9E%D7%A6%D7%95%D7%A7_%D7%94%D7%A9%D7%A7%D7%A8%D7%9F",
     accessDescription: "מכביש 90 בצומת כ\"ח עולים בכביש 899, עוברים את צומת ישע ופונים ימינה בצומת יפתח לכביש 886 לכיוון מנרה. כ-10 ק\"מ מצומת יפתח (אחרי סימון ק\"מ 71) פונים ימינה לצוק מנרה וממשיכים לכיוון התצפית ובית העלמין. בחלק האחרון של הירידה למצוק יש חבל קבוע - חלקלק אחרי גשם.",
@@ -2501,7 +2483,6 @@ const crags: CragLocation[] = [
     lodging: "ניתן לישון בתחתית המצוק - יש לשמור על המקום נקי ונעים גם לבאים אחריכם.",
     guidebooks: [
       { label: "Ramim Ridge - מדריך המועדון האלפיני (אנגלית, 2013), נמרוד נחמיאס ורן שדמי", url: "https://wiki.imga.org.il/Topos/%D7%A8%D7%9E%D7%99%D7%9D.pdf" },
-      ISRAELI_CLIMBING_GUIDEBOOK,
     ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%94%D7%9E%D7%A6%D7%95%D7%A7_%D7%A9%D7%9C_%D7%A0%D7%99%D7%A8",
     accessDescription: "מכביש 90 בצומת כ\"ח עולים בכביש 899, עוברים את צומת ישע ופונים ימינה בצומת יפתח לכביש 886 לכיוון מנרה. כ-10 ק\"מ מצומת יפתח (מיד אחרי סימון ק\"מ 70) פונים ימינה לצוק מנרה וממשיכים לכיוון התצפית ובית העלמין.",
@@ -2521,9 +2502,6 @@ const crags: CragLocation[] = [
     season: "כל השנה, פרט לקיץ. יש להימנע מטיפוס מסלולים 16-21 בין אמצע מרץ לאמצע יולי, בשל קינון קבוע של תנשמות.",
     shade: "המצוק במפנה דרום-מערבי, ולכן אינו מוצל לאחר השעה 11:00.",
     lodging: "ניתן לישון בתחתית המצוק, אך בשל מיקומו הנוח בין חיפה לתל אביב נראה שאין בכך צורך.",
-    guidebooks: [
-      ISRAELI_CLIMBING_GUIDEBOOK,
-    ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%94%D7%9E%D7%97%D7%A6%D7%91%D7%94_%D7%91%D7%96%D7%9B%D7%A8%D7%95%D7%9F",
     accessDescription: "מכביש 652 (זכרון יעקב-בנימינה): אחרי תחנת הדלק \"דור\" (בית ספר אורט מימין) פונים בפנייה הראשונה שמאלה; אחרי כ-0.5 ק\"מ, לפני העיקול החד, שמאלה לדרך עפר (קל לפספס) וממשיכים בה ולאורך שביל ישראל כ-2 ק\"מ עד המצוק. חלופה, מומלצת אחרי גשם: חנייה בשכונת נווה שרת וכ-10 דקות הליכה. האתר גובל במטעים - לא לקטוף פירות, ולסגור כל שער אחריכם.",
   },
@@ -2542,9 +2520,6 @@ const crags: CragLocation[] = [
     season: "הטיפוס אפשרי כל השנה - יש לבדוק בפרסומי ההתאחדות לגבי סקטורים הסגורים בחלקים מסוימים של השנה.",
     shade: "המצוק פונה צפונה, ולכן ברוב ימות השנה מוצל כל היום. בחודשי הקיץ (יוני-אוגוסט) המצוק מוצל עד השעה 14:00 בערך, אך בזכות העצים הסמוכים אליו אפשר עדיין ליהנות ממנו.",
     lodging: "אפשרית למרגלות המצוק - יש לשמור על המקום נקי ונעים גם לבאים אחריכם.",
-    guidebooks: [
-      ISRAELI_CLIMBING_GUIDEBOOK,
-    ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%96%D7%A0%D7%95%D7%97",
     accessDescription: "מחניון \"חירבת חנות\" שמצפון לכביש 375 נוסעים בדרך העפר (סימון ירוק ואחר כך כחול) לנחל זנוח: אחרי כ-1.5 ק\"מ רוג'ום גדול מסמן את העלייה לסקטורים קיסוסית ויוני; אחרי כ-2 ק\"מ - סקטור דרך המלך; אחרי כ-2.4 ק\"מ - המצוק המרכזי.",
   },
@@ -2581,9 +2556,6 @@ const crags: CragLocation[] = [
     season: "בשל מגוון הסקטורים ניתן לטפס כל השנה.",
     shade: "המצוק במפנה דרומי, ולכן בקיץ הצל מגיע סביב השעה 14:00, ובחורף סביב 12:30. המערה עצמה מוצלת תמיד.",
     lodging: "ניתן לישון בחניה או מתחת לסקטור \"Dome\" - יש להימנע מהבערת אש בתחתית המצוק! שימו לב לשמור על המקום נקי ונעים גם לבאים אחריכם.",
-    guidebooks: [
-      ISRAELI_CLIMBING_GUIDEBOOK,
-    ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%9E%D7%A6%D7%95%D7%A7_%D7%94%D7%99%D7%95%D7%A0%D7%99%D7%9D",
     accessDescription: "מכביש 85 (עכו-צפת) פונים צפונה בצומת שלפני מג'ד אל-כרום (לבאים ממערב) - הצומת עם תחנת הדלק, מול הפנייה דרומה לכביש 8512 לגילון. חונים לאורך הכביש או בדרך העפר שעוקפת את סוללת האבנים (אם הגעתם למחנה הצבאי - פספסתם), ויורדים בשביל המסומן אדום.",
   },
@@ -2623,9 +2595,6 @@ const crags: CragLocation[] = [
     season: "המערה מאושרת לטיפוס רק בין אפריל לנובמבר - ביתר השנה הטיפוס אסור, ולרוב גם רטוב וקר.",
     shade: "המערה מוצלת כל היום, פרט לחלק מסקטור \"טופי\" שנחשף לשמש בצהריים.",
     lodging: "שתי אפשרויות ללינה: מצפה חוסיין או חניון האלה.",
-    guidebooks: [
-      ISRAELI_CLIMBING_GUIDEBOOK,
-    ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%9E%D7%A2%D7%A8%D7%AA_%D7%A0%D7%96%D7%A8",
     accessDescription: "מכביש 90 בצומת כ\"ח עולים בכביש 899, עוברים את הפנייה למחנה יפתח ופונים צפונה בכביש 886 לכיוון מנרה. אחרי כ-7 ק\"מ פונים שמאלה לכביש צדדי שהופך לדרך עפר; חונים בפנייה החדה שלפני דרך העפר וממשיכים ברגל במורד, דרך השער (סגרו אותו אחריכם).",
   },
@@ -2685,7 +2654,6 @@ const crags: CragLocation[] = [
     guidebooks: [
       { label: "Mountain-Man Guide to Ein Fara (2007)", url: "https://wiki.imga.org.il/Topos/fara.pdf" },
       { label: "הטופו המקורי של יואב וייס", url: "https://wiki.imga.org.il/Topos/EinFaraOldTopo.webarchive" },
-      ISRAELI_CLIMBING_GUIDEBOOK,
     ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A2%D7%99%D7%9F_%D7%A4%D7%90%D7%A8%D7%94",
     accessDescription: "דרך היישוב ענתות (עלמון): חונים בתוך היישוב, לפני השער הצהוב של שמורת עין פרת, בלי לחסום את הדרך. הכניסה לשמורה בתשלום (חינם למנויי \"מטמון\"/כרטיס פלטינה); שעות השמורה: בחורף 8:00-16:00 (שישי עד 15:00), בקיץ 8:00-17:00.",
@@ -2705,9 +2673,6 @@ const crags: CragLocation[] = [
     season: "כל השנה, פרט לקיץ.",
     shade: "בין נובמבר לפברואר המצוק מוצל החל מהשעה 12:00. בשאר השנה המצוק מוצל רק אחרי הצהריים - בימים קרים אפשר לטפס גם בשמש.",
     lodging: "ניתן לישון בשטח קרוב למצוק - יש לשמור על המקום נקי ונעים גם לבאים אחריכם.",
-    guidebooks: [
-      ISRAELI_CLIMBING_GUIDEBOOK,
-    ],
   },
   {
     slug: "tzurit-cliff",
@@ -2746,9 +2711,6 @@ const crags: CragLocation[] = [
     season: "הטיפוס אפשרי כל השנה - הסלע מתייבש באיטיות לאחר גשם.",
     shade: "בחורף המצוק מוצל כל היום. בקיץ מוצל החל משעה 13:00.",
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A9%D7%99%D7%9C%D7%AA",
-    guidebooks: [
-      ISRAELI_CLIMBING_GUIDEBOOK,
-    ],
   },
   {
     slug: "kisra-rock-park",
@@ -2767,7 +2729,6 @@ const crags: CragLocation[] = [
     lodging: "ניתן לישון בפארק ברחבת הכניסה - יש להיזהר בעת הבערת אש, ומומלץ להשתמש במקומות שבהם כבר הובערה אש בעבר. שימו לב לשמור על המקום נקי ונעים גם לבאים אחריכם.",
     guidebooks: [
       { label: "המועדון האלפיני הישראלי", url: "/guidebooks/kisra.pdf" },
-      ISRAELI_CLIMBING_GUIDEBOOK,
     ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A4%D7%90%D7%A8%D7%A7_%D7%94%D7%A1%D7%9C%D7%A2%D7%99%D7%9D_-_%D7%9B%D7%99%D7%A1%D7%A8%D7%90",
     accessDescription: "מכביש 85 (עכו-צפת) פונים צפונה בצומת כרמיאל (לא כרמיאל מערב) לכביש 854 עד הכפר כיסרא; חוצים את הכפר, ומהמרכז יש שילוט לפארק הסלעים.",
@@ -2791,7 +2752,6 @@ const crags: CragLocation[] = [
       { label: "התאחדות הטיפוס (ILCA)", url: "https://drive.google.com/file/d/1SPqifs6DLzMbfbEGSGf-TKvDo1s1sNxE/view?usp=sharing" },
       { label: "גיידבוק מעודכן (2020)", url: "https://wiki.imga.org.il/Topos/Timna_topo_guide_2020.pdf" },
       { label: "גיידבוק ישן", url: "https://wiki.imga.org.il/Topos/TIMNA_GUIDE_HEBREW-V4.pdf" },
-      ISRAELI_CLIMBING_GUIDEBOOK,
     ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%AA%D7%9E%D7%A0%D7%A2",
     accessDescription: "כ-40 ק\"מ לפני אילת פונים מערבה לפארק תמנע וממשיכים לפי השילוט לאגם ולעמודי שלמה.",
@@ -2812,9 +2772,6 @@ const crags: CragLocation[] = [
     season: "כל עונה פרט לקיץ - המקום כבשן רציני בימים חמים. בחורף חשוב לשים לב לשטפונות הפוקדים את המקום. שימו לב: זו ירידה בדרדרת לא נעימה - יש להיזהר במיוחד מהפלת אבנים על השותף.",
     shade: "אין זמן ספציפי, בשל השוני בכיווני המסלולים - בגדול עדיף להגיע בחצי השני של היום.",
     lodging: "אסור לישון בתחומי שמורת הטבע.",
-    guidebooks: [
-      ISRAELI_CLIMBING_GUIDEBOOK,
-    ],
     externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A0%D7%97%D7%9C_%D7%AA%D7%9E%D7%A8%D7%99%D7%9D",
   },
   { slug: "ein-hod", kind: "crag", name: "עין הוד (יער כרמל)", region: "north", styles: ["bouldering"], coordinates: { lat: 32.69154, lng: 34.99953 } },
@@ -3165,7 +3122,9 @@ const crags: CragLocation[] = [
     slug: "nahal-tzeelim-canyon",
     kind: "crag",
     name: "נחל צאלים",
-    region: "jerusalem",
+    // Near Masada, ~70km south of Jerusalem - the "דרום" filter is where
+    // people look for it.
+    region: "south",
     coordinates: { lat: 31.33832, lng: 35.26019 },
     styles: ["lead", "trad"],
     description: "קניון במדבר יהודה. המידע שברשותנו על האתר מוגבל בשלב זה לגיידבוק שהופץ על ידי התאחדות הטיפוס - נשמח לעדכן פרטי גישה ומסלולים נוספים ברגע שיהיו זמינים.",

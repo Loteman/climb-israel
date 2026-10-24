@@ -23,7 +23,7 @@ const active = allGroups.some((g) => g.items.some((item) => linkState(path, item
 <details class="group relative">
   <summary
     class:list={[
-      "flex cursor-pointer list-none items-center gap-1 rounded-sm px-3 py-2 font-body text-sm font-semibold transition-colors [&::-webkit-details-marker]:hidden",
+      "flex cursor-pointer list-none items-center gap-1 whitespace-nowrap rounded-sm px-2 py-2 font-body text-sm font-semibold transition-colors lg:px-3 [&::-webkit-details-marker]:hidden",
       active ? "text-rope" : "text-ink-soft hover:text-rust",
     ]}
   >

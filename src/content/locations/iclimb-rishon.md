@@ -10,7 +10,7 @@ city: "ראשון לציון"
 chain: "iClimb"
 address: "נדב בסקינד 12"
 phone: "03-612-1109"
-website: "https://iclimb-rishon.co.il/"
+website: "https://iclimb.co.il/"
 hours:
   "א'-ד'": "10:00-22:00"
   "ה'": "10:00-22:30"

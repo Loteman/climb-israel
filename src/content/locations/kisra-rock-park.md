@@ -21,9 +21,6 @@ lodging: "ניתן לישון בפארק ברחבת הכניסה - יש להיז
 guidebooks:
   - label: "המועדון האלפיני הישראלי"
     url: "/guidebooks/kisra.pdf"
-  - label: "The Israeli Climbing Guidebook - ספר מודפס (2015, אנגלית)"
-    url: "https://www.climbing-israel.com/"
-    printed: true
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A4%D7%90%D7%A8%D7%A7_%D7%94%D7%A1%D7%9C%D7%A2%D7%99%D7%9D_-_%D7%9B%D7%99%D7%A1%D7%A8%D7%90"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---

@@ -123,7 +123,9 @@ export default function LocationMap({ locations }: Props) {
         })
         .addTo(map);
 
-      const dotIcon = leaflet.divIcon({
+      // `shift` moves the dot sideways in pixels - see the repeat handling
+      // below. The popup opens above the dot, wherever it was drawn.
+      const dotIcon = (shift: number) => leaflet.divIcon({
         className: "",
         // border-white (not border-paper) on purpose: the map tiles
         // themselves are always light regardless of site theme, so the
@@ -133,13 +135,21 @@ export default function LocationMap({ locations }: Props) {
         // a finger, especially where markers cluster.
         html: '<span class="flex h-8 w-8 items-center justify-center"><span class="block h-[18px] w-[18px] rounded-full border-2 border-white bg-rope shadow-[0_1px_3px_rgba(0,0,0,0.4)]"></span></span>',
         iconSize: [32, 32],
-        iconAnchor: [16, 16],
-        popupAnchor: [0, -10],
+        iconAnchor: [16 - shift, 16],
+        popupAnchor: [shift, -10],
       });
 
+      // Places that share a point (two crags reached from the same parking
+      // spot) would stack into one clickable marker. Each repeat is drawn
+      // 22px to the side instead - a pixel offset, so they stay apart at any
+      // zoom, while the marker (and navigation) keep the real point.
+      const seenPoints = new Map<string, number>();
       for (const loc of locations) {
+        const key = `${loc.lat},${loc.lng}`;
+        const repeat = seenPoints.get(key) ?? 0;
+        seenPoints.set(key, repeat + 1);
         const marker = leaflet.marker([loc.lat, loc.lng], {
-          icon: dotIcon,
+          icon: dotIcon(repeat * 22),
           title: loc.name,
         });
 

@@ -18,10 +18,6 @@ routeLength: "15-25 מטר"
 routeCount: "24 מסלולי ספורט, 5 מסלולי טראד"
 season: "הטיפוס אפשרי כל השנה - הסלע מתייבש באיטיות לאחר גשם."
 shade: "בחורף המצוק מוצל כל היום. בקיץ מוצל החל משעה 13:00."
-guidebooks:
-  - label: "The Israeli Climbing Guidebook - ספר מודפס (2015, אנגלית)"
-    url: "https://www.climbing-israel.com/"
-    printed: true
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A9%D7%99%D7%9C%D7%AA"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---

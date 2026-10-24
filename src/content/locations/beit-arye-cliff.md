@@ -21,9 +21,6 @@ shade: "בקיץ המצוק מוצל החל משעה 13:00. בחורף המצו�
 guidebooks:
   - label: "התאחדות הטיפוס (ILCA) - המצוק הקטן"
     url: "https://drive.google.com/file/d/1_rSawfOQfRyBzn8Ifj-UsHJbqNtdflmK/view"
-  - label: "The Israeli Climbing Guidebook - ספר מודפס (2015, אנגלית)"
-    url: "https://www.climbing-israel.com/"
-    printed: true
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%91%D7%99%D7%AA_%D7%90%D7%A8%D7%99%D7%94"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---

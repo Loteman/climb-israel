@@ -48,6 +48,18 @@ const cragSpecs =
 
 const hours = data.kind === "gym" && data.hours ? Object.entries(data.hours) : [];
 
+// "Read more" names the site it leads to. Hosts not listed fall back to
+// the bare domain.
+const EXTERNAL_SITE_NAMES: Record<string, string> = {
+  "wiki.imga.org.il": "wiki",
+  "he.wikipedia.org": "ויקיפדיה",
+  "vfisrael.co.il": "ויה פראטה ישראל",
+};
+function externalSiteName(url: string): string {
+  const host = new URL(url).hostname.replace(/^www\./, "");
+  return EXTERNAL_SITE_NAMES[host] ?? host;
+}
+
 const chainBranches =
   data.kind === "gym" && data.chain
     ? sortByName(
@@ -326,7 +338,7 @@ const jsonLd = {
                 rel="noopener noreferrer"
                 class="mt-1 inline-block py-2 font-body text-sm font-bold text-rope hover:underline"
               >
-                לקריאה נוספת ←
+                לקריאה נוספת באתר {externalSiteName(data.externalBetaUrl)} ←
               </a>
             ) : (
               <p class="mt-2 text-sm leading-relaxed text-ink-soft">

@@ -26,9 +26,6 @@ guidebooks:
     url: "https://wiki.imga.org.il/Topos/fara.pdf"
   - label: "הטופו המקורי של יואב וייס"
     url: "https://wiki.imga.org.il/Topos/EinFaraOldTopo.webarchive"
-  - label: "The Israeli Climbing Guidebook - ספר מודפס (2015, אנגלית)"
-    url: "https://www.climbing-israel.com/"
-    printed: true
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%A2%D7%99%D7%9F_%D7%A4%D7%90%D7%A8%D7%94"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---

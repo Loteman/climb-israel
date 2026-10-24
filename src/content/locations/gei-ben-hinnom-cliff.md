@@ -23,9 +23,6 @@ lodging: "לינה בשמורות טבע אסורה, אך בשל הקרבה לי
 guidebooks:
   - label: "המדריך המקורי מהמועדון"
     url: "https://wiki.imga.org.il/Topos/Gey%20Ben%20Hinom%20Guidebook.webarchive"
-  - label: "The Israeli Climbing Guidebook - ספר מודפס (2015, אנגלית)"
-    url: "https://www.climbing-israel.com/"
-    printed: true
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%92%D7%99%D7%90_%D7%91%D7%9F_%D7%94%D7%99%D7%A0%D7%95%D7%9D"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---

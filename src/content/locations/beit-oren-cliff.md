@@ -15,10 +15,6 @@ routeCount: "20 מסלולי הובלה"
 season: "תחילת/סוף החורף וימי חורף שמשיים."
 shade: "המצוק פונה דרומה ולכן קשה מאוד לטפס בקיץ, אם כי ניתן לגנוב כמה שעות לפנות ערב."
 lodging: "ניתן לאלתר לינה באזור, אך בשל הקרבה לעיר נראה שאין בכך צורך."
-guidebooks:
-  - label: "The Israeli Climbing Guidebook - ספר מודפס (2015, אנגלית)"
-    url: "https://www.climbing-israel.com/"
-    printed: true
 externalBetaUrl: "https://wiki.imga.org.il/index.php?title=%D7%9E%D7%97%D7%A6%D7%91%D7%95%D7%AA_%D7%A7%D7%93%D7%95%D7%9E%D7%99%D7%9D"
 sourceNote: "מקור: מאגר אתרי הטיפוס של התאחדות הטיפוס בישראל (ILCA), בתוספת עדכונים קהילתיים. תנאי השטח והבילוט משתנים עם הזמן - יש לוודא מידע עדכני מול הגיידבוק או ההתאחדות לפני יציאה."
 ---

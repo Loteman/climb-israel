@@ -18,5 +18,11 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
+    // Leaflet is only imported dynamically (when the map view opens), so the
+    // dev server used to discover it late, re-bundle its dependencies, and
+    // fail that first import ("Outdated Optimize Dep") - the map then showed
+    // its load-error message. Pre-bundling it up front avoids that. No
+    // effect on production builds.
+    optimizeDeps: { include: ["leaflet"] },
   },
 });
