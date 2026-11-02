@@ -18,7 +18,7 @@ const linkClass = "font-bold text-rope hover:underline";
       <h1 class="font-display text-3xl font-bold text-ink sm:text-4xl">מדיניות פרטיות</h1>
       <p class="mt-3 max-w-2xl leading-relaxed text-ink-soft">
         בקצרה: אין באתר הרשמה, טפסים, פרסומות, עוגיות או כלי מעקב. אנחנו לא
-        אוספים ולא שומרים מידע אישי עליכם.
+        אוספים ולא שומרים מידע אישי עליכם - רק סטטיסטיקת ביקורים אנונימית.
       </p>
     </div>
   </section>
@@ -56,9 +56,19 @@ const linkClass = "font-bold text-rope hover:underline";
         עליו מפני תקיפות, בהתאם ל
         <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer" class={linkClass}>
           מדיניות הפרטיות של Cloudflare
-        </a>. אנחנו לא מתקינים באתר כלי סטטיסטיקה או מעקב. בלוח הבקרה של
-        Cloudflare מוצגים לנו רק נתוני תעבורה כלליים ומצטברים, כמו מספר
-        הביקורים, בלי פרטים שמזהים מבקר מסוים.
+        </a>.
+      </p>
+
+      <h2 class="font-display text-xl font-bold text-ink">סטטיסטיקת ביקורים</h2>
+      <p>
+        כדי לדעת אילו עמודים מועילים ומה כדאי לשפר, האתר משתמש ב-
+        <a href="https://www.cloudflare.com/web-analytics/" target="_blank" rel="noopener noreferrer" class={linkClass}>
+          Cloudflare Web Analytics
+        </a>. זה כלי סטטיסטיקה בלי עוגיות, שלא שומר מידע במכשיר שלכם ולא
+        עוקב אחריכם בין אתרים. הוא סופר ביקורים בכל עמוד, ומראה לנו רק נתונים
+        מצטברים: מאיזו מדינה ומאיזה סוג מכשיר ודפדפן הגיעו, מאיזה אתר הגיעו
+        (למשל גוגל), וכמה מהר העמודים נטענו. אנחנו לא רואים מי ביקר, ולא
+        מקבלים כתובות IP או פרטים שמזהים מבקר מסוים.
       </p>
 
       <h2 class="font-display text-xl font-bold text-ink">שירותים חיצוניים</h2>
@@ -104,11 +114,10 @@ const linkClass = "font-bold text-rope hover:underline";
 
       <h2 class="font-display text-xl font-bold text-ink">שינויים במדיניות</h2>
       <p>
-        אם נוסיף לאתר משהו שאוסף מידע, למשל סטטיסטיקת ביקורים, נעדכן את הדף
-        הזה לפני כן.
+        אם נוסיף לאתר משהו נוסף שאוסף מידע, נעדכן את הדף הזה לפני כן.
       </p>
       <p class="text-sm text-ink-soft">
-        המדיניות עודכנה לאחרונה באוקטובר 2026. לפרטים נוספים על האתר ראו{" "}
+        המדיניות עודכנה לאחרונה בנובמבר 2026. לפרטים נוספים על האתר ראו{" "}
         <a href={withBase(ABOUT_LINK.href)} class={linkClass}>אודות הפרויקט</a>.
       </p>
     </div>
