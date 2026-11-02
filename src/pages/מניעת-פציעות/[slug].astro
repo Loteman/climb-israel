@@ -1,4 +1,5 @@
 ---
+import { extendedDescription } from "../../lib/text";
 import { withBase } from "../../lib/url";
 import { getCollection, render } from "astro:content";
 import GuideLayout from "../../layouts/GuideLayout.astro";
@@ -28,7 +29,7 @@ const jsonLd = {
 
 <GuideLayout
   title={`${entry.data.nameHe} (${entry.data.nameEn}) - מניעת פציעות בטיפוס`}
-  description={entry.data.summary}
+  description={extendedDescription(entry.data.summary, entry.body)}
   breadcrumbs={[
     { href: "/", label: "בית" },
     { href: "/מניעת-פציעות/", label: "מניעת פציעות" },

@@ -2,6 +2,7 @@
 import { withBase, withBaseIfRelative } from "../../lib/url";
 import { getCollection, render } from "astro:content";
 import GuideLayout from "../../layouts/GuideLayout.astro";
+import { extendedDescription } from "../../lib/text";
 import Badge from "../../components/ui/Badge.astro";
 import NavigationButtons from "../../components/directory/NavigationButtons.astro";
 import {
@@ -47,6 +48,22 @@ const cragSpecs =
     : [];
 
 const hours = data.kind === "gym" && data.hours ? Object.entries(data.hours) : [];
+
+// Search snippet: the place's own description, extended (when short) with
+// its text and the key facts a searcher looks for.
+const styleList = data.styles.map((s: string) => STYLE_LABELS[s]).join(", ");
+const metaDescription = extendedDescription(
+  data.description ??
+    `${data.name} - ${data.kind === "gym" ? `קיר טיפוס ב${data.city}` : `אתר טיפוס בטבע באזור ${regionLabel(data.region, data.kind)}`}.`,
+  location.body,
+  data.kind === "gym"
+    ? `${[data.city, data.address].filter(Boolean).join(", ")} (${regionLabel(data.region, data.kind)}). ${styleList}.${
+        data.amenities?.length
+          ? ` במתחם: ${data.amenities.slice(0, 3).map((a) => AMENITY_LABELS[a.type]).join(", ")}.`
+          : ""
+      } שעות פתיחה, טלפון וניווט.`
+    : `${styleList}. ${data.locationDescription ? `מיקום: ${data.locationDescription}. ` : ""}דרכי הגעה, עונה וגיידבוקים.`,
+);
 
 // "Read more" names the site it leads to. Hosts not listed fall back to
 // the bare domain.
@@ -104,10 +121,7 @@ const jsonLd = {
 
 <GuideLayout
   title={`${data.name} - ${data.kind === "gym" ? "קיר טיפוס" : "אתר טיפוס בטבע"}`}
-  description={
-    data.description ??
-    `${data.name} - ${data.kind === "gym" ? `קיר טיפוס ב${data.city}` : `אתר טיפוס בטבע באזור ${regionLabel(data.region, data.kind)}`}.`
-  }
+  description={metaDescription}
   breadcrumbs={[
     { href: "/", label: "בית" },
     { href: "/מקומות-טיפוס/", label: "מקומות טיפוס" },
