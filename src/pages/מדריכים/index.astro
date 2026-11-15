@@ -1,0 +1,67 @@
+---
+import { withBase } from "../../lib/url";
+import { ENVIRONMENT_CARDS, GUIDE_CARDS, HISTORY_LINK } from "../../lib/site-nav";
+import { SITE_URL } from "../../site-config";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TopoBackground from "../../components/layout/TopoBackground.astro";
+import GuideCardGrid from "../../components/ui/GuideCardGrid.astro";
+
+const allGuides = [...GUIDE_CARDS, ...ENVIRONMENT_CARDS];
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "מדריכי טיפוס",
+  numberOfItems: allGuides.length,
+  itemListElement: allGuides.map((g, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: g.title,
+    url: new URL(withBase(g.href), SITE_URL).toString(),
+  })),
+};
+---
+
+<BaseLayout
+  title="מדריכים - כל מדריכי הטיפוס באתר"
+  description="כל מדריכי הטיפוס במקום אחד: מדריך למתחילים, אחיזות, מושגים, דירוג מסלולים, סגנונות, ציוד, טכניקות ומניעת פציעות, וטיפוס בקיר מלאכותי ובטבע."
+  jsonLd={jsonLd}
+>
+  <section class="relative overflow-hidden border-b border-stone/40 py-10 sm:py-14">
+    <TopoBackground opacity={0.3} />
+    <div class="relative mx-auto max-w-4xl px-4 sm:px-6">
+      <h1 class="font-display text-3xl font-bold text-ink sm:text-4xl">מדריכים</h1>
+      <p class="mt-3 max-w-2xl leading-relaxed text-ink-soft">
+        מהצעד הראשון על הקיר ועד תכנון היום הבא על סלע - כל המדריכים באתר.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
+    <h2 class="font-display text-2xl font-bold text-ink">מפת הדרכים</h2>
+    <p class="mt-2 max-w-2xl text-ink-soft">
+      בלי ניסיון קודם? התחילו מהמדריך למתחילים, ומשם לפי מה שמעניין אתכם.
+    </p>
+    <GuideCardGrid cards={GUIDE_CARDS} />
+  </section>
+
+  <section class="border-t border-stone/40 bg-paper-dark py-8 sm:py-12">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <h2 class="font-display text-2xl font-bold text-ink">סביבות טיפוס</h2>
+      <p class="mt-2 max-w-2xl text-ink-soft">
+        אותם סגנונות מרגישים אחרת לגמרי בקיר מלאכותי לעומת סלע טבעי - הנה
+        מה שונה בכל אחד.
+      </p>
+      <GuideCardGrid cards={ENVIRONMENT_CARDS} columns="" />
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
+    <h2 class="font-display text-2xl font-bold text-ink">עוד לקריאה</h2>
+    <a
+      href={withBase(HISTORY_LINK.href)}
+      class="mt-1 inline-block py-2 font-body text-sm font-bold text-rope hover:underline"
+    >
+      {HISTORY_LINK.label} ←
+    </a>
+  </section>
+</BaseLayout>

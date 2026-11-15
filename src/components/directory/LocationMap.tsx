@@ -225,8 +225,11 @@ export default function LocationMap({ locations }: Props) {
   return (
     <div>
       {/* The loading note is a sibling, not a child, of the map container:
-          Leaflet takes over that element's children once it initializes. */}
-      <div class="relative">
+          Leaflet takes over that element's children once it initializes.
+          `isolate` keeps Leaflet's high z-index panes (400-1000) inside the
+          map - without it, scrolling drew the map over the sticky header
+          and the phone tab bar. */}
+      <div class="relative isolate">
         {/* Israel is tall and narrow: on a phone the map gets most of the
             screen height (but leaves a strip to scroll the page past it). */}
         <div

@@ -9,7 +9,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "gen:content": "tsx scripts/generate-content.ts",
-    "gen:icons": "node scripts/generate-icons.mjs"
+    "gen:icons": "tsx scripts/generate-icons.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.2",

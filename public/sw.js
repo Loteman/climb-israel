@@ -1,6 +1,6 @@
 // Bump this on every deploy that changes cached static assets or this
 // file's caching rules, so old caches get cleared out in `activate` below.
-const CACHE_NAME = "tipus-israel-v4";
+const CACHE_NAME = "tipus-israel-v5";
 // Cloudflare Pages serves offline.html at /offline (the .html URL is a 308
 // redirect), so cache it under the URL that answers directly.
 const OFFLINE_URL = "/offline";

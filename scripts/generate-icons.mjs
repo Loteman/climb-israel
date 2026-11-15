@@ -1,14 +1,41 @@
-// Generates the PWA icons and the social-share card into public/.
-// Run with `npm run gen:icons` after changing the logo or the OG design.
+// Generates the favicon, the PWA icons and the social-share card into public/.
+// Run with `npm run gen:icons` after changing the logo (src/lib/logo.ts) or
+// the OG design.
 import sharp from "sharp";
 import path from "node:path";
 import os from "node:os";
 import { inflateSync } from "node:zlib";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { logoSvg } from "../src/lib/logo.ts";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
-const source = path.join(ROOT, "scripts/icon-source.svg");
 const outDir = path.join(ROOT, "public/icons");
+
+const ORANGE = "#E14D2A";
+const PAPER = "#F3EDE0";
+const INK = "#2B2620";
+
+/** The logo nested at (x, y) with the given size, for embedding in a larger SVG. */
+const placedLogo = (x, y, size, color) =>
+  logoSvg({ color, id: "logo", attrs: `x="${x}" y="${y}" width="${size}" height="${size}"` });
+
+// App icon: the logo on a dark rounded tile.
+const source = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="${INK}"/>
+  ${placedLogo(76, 76, 360, ORANGE)}
+</svg>`);
+
+// Browser-tab favicon: the logo on a paper square, so it stays visible on
+// both light and dark tab strips.
+await writeFile(
+  path.join(ROOT, "public/favicon.svg"),
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" fill="${PAPER}"/>
+  ${placedLogo(0, 0, 100, ORANGE)}
+</svg>
+`,
+);
+console.log("wrote favicon.svg");
 
 await mkdir(outDir, { recursive: true });
 
@@ -31,9 +58,8 @@ for (const t of targets) {
 // corners showing through. Same mark, square background, and the logo
 // kept inside the central 80% "safe zone".
 const maskableSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" fill="#2B2620"/>
-  <circle cx="256" cy="256" r="132" fill="none" stroke="#E14D2A" stroke-width="30"/>
-  <circle cx="256" cy="256" r="37" fill="#E14D2A"/>
+  <rect width="512" height="512" fill="${INK}"/>
+  ${placedLogo(101, 101, 310, ORANGE)}
 </svg>`;
 await sharp(Buffer.from(maskableSvg)).png().toFile(path.join(outDir, "icon-512-maskable.png"));
 console.log("wrote icon-512-maskable.png (512x512, full-bleed)");
@@ -145,8 +171,8 @@ const background = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height=
   <rect width="${W}" height="${H}" fill="#f3ede0"/>
   ${contours}
   <rect x="0" y="${H - 18}" width="${W}" height="18" fill="#b4361a"/>
-  <circle cx="${W / 2}" cy="150" r="58" fill="#f3ede0" stroke="#b4361a" stroke-width="10"/>
-  <circle cx="${W / 2}" cy="150" r="14" fill="#b4361a"/>
+  <circle cx="${W / 2}" cy="150" r="66" fill="#f3ede0"/>
+  ${placedLogo(W / 2 - 68, 82, 136, "#b4361a")}
   <line x1="${W / 2 - 220}" y1="455" x2="${W / 2 + 220}" y2="455" stroke="#b4361a" stroke-width="5" stroke-dasharray="2 16" stroke-linecap="round"/>
   <circle cx="${W / 2 - 220}" cy="455" r="9" fill="#b4361a"/>
   <circle cx="${W / 2 + 220}" cy="455" r="9" fill="#b4361a"/>

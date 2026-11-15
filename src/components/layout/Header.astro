@@ -10,6 +10,7 @@ import {
   LOCATIONS_LINK,
 } from "../../lib/site-nav";
 import { SITE_NAME } from "../../site-config";
+import { logoSvg } from "../../lib/logo";
 
 const path = currentPathname(Astro.url);
 // Climbing spots first - it's what most visitors come for.
@@ -24,13 +25,13 @@ const desktopLinkClass = (href: string) => [
   linkState(path, href) ? "text-rope" : "text-ink-soft hover:text-rust",
 ];
 const mobileLinkClass = (href: string, indent = "") => [
-  "block px-3 py-2.5 font-body text-sm font-semibold hover:bg-paper hover:text-rust",
+  "block px-4 py-3 font-body text-base font-semibold hover:bg-paper hover:text-rust",
   indent,
   linkState(path, href) ? "text-rope" : "text-ink",
 ];
-const mobileGroupLabelClass = "px-3 pb-1 pt-3 font-body text-xs font-bold text-ink-soft";
+const mobileGroupLabelClass = "px-4 pb-1 pt-3 font-body text-xs font-bold text-ink-soft";
 const mobileGroupSummaryClass =
-  "flex cursor-pointer list-none items-center justify-between px-3 py-2.5 font-body text-sm font-semibold text-ink hover:bg-paper hover:text-rust [&::-webkit-details-marker]:hidden";
+  "flex cursor-pointer list-none items-center justify-between px-4 py-3 font-body text-base font-semibold text-ink hover:bg-paper hover:text-rust [&::-webkit-details-marker]:hidden";
 
 const GEAR_TEETH_ANGLES = [0, 45, 90, 135, 180, 225, 270, 315];
 
@@ -44,10 +45,8 @@ const THEME_OPTIONS = [
 <header class="sticky top-0 z-50 border-b border-stone/40 bg-paper">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
     <a href={withBase("/")} class="flex items-center gap-2 whitespace-nowrap py-1 font-display text-lg font-bold text-ink">
-      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
-        <circle cx="13" cy="13" r="11" fill="none" stroke="var(--color-rope)" stroke-width="2"></circle>
-        <circle cx="13" cy="13" r="2.5" fill="var(--color-rope)"></circle>
-      </svg>
+      {/* 30px (was 26 for the ring-and-dot mark): the shoe needs a little more room to read. */}
+      <Fragment set:html={logoSvg({ id: "site-logo", attrs: 'width="30" height="30" class="shrink-0 text-rope" aria-hidden="true"' })} />
       <span>{SITE_NAME}</span>
     </a>
 
@@ -114,116 +113,144 @@ const THEME_OPTIONS = [
         </div>
       </details>
 
-      <details class="group relative md:hidden">
-        <summary
-          class="flex cursor-pointer list-none items-center justify-center rounded-sm border border-dashed border-stone p-2 text-ink hover:border-rust hover:text-rust [&::-webkit-details-marker]:hidden"
-          aria-label="תפריט ראשי"
-        >
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" class="group-open:hidden">
-            <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
-          </svg>
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" class="hidden group-open:block">
-            <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
-          </svg>
-        </summary>
-        <div
-          class="absolute end-0 top-full z-50 mt-2 max-h-[calc(100dvh-5rem)] w-64 overflow-y-auto border border-stone/50 bg-paper-dark shadow-lg"
-        >
-          <!-- Separators only between top-level entries. The groups (and the
-               settings section below) are collapsed by default and expand in
-               place when tapped. -->
-          <nav aria-label="ניווט ראשי (מובייל)" class="divide-y divide-stone/30">
-            {
-              topLinks.map((item) => (
-                <a href={withBase(item.href)} class:list={mobileLinkClass(item.href)} aria-current={linkState(path, item.href)}>
-                  {item.label}
-                </a>
-              ))
-            }
-
-            <details class="group/sub">
-              <summary class={mobileGroupSummaryClass}>
-                מדריכים
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" class="transition-transform group-open/sub:rotate-180">
-                  <path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
-                </svg>
-              </summary>
-              <div class="pb-1">
-                {
-                  GUIDE_GROUPS.map((group) => (
-                    <Fragment>
-                      <p class={`${mobileGroupLabelClass} ps-5`}>{group.label}</p>
-                      {group.items.map((item) => (
-                        <a href={withBase(item.href)} class:list={mobileLinkClass(item.href, "ps-7")} aria-current={linkState(path, item.href)}>
-                          {item.label}
-                        </a>
-                      ))}
-                    </Fragment>
-                  ))
-                }
-              </div>
-            </details>
-
-            <details class="group/sub">
-              <summary class={mobileGroupSummaryClass}>
-                סביבות טיפוס
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" class="transition-transform group-open/sub:rotate-180">
-                  <path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
-                </svg>
-              </summary>
-              <div class="pb-1">
-                {
-                  ENVIRONMENT_LINKS.map((item) => (
-                    <a href={withBase(item.href)} class:list={mobileLinkClass(item.href, "ps-5")} aria-current={linkState(path, item.href)}>
-                      {item.label}
-                    </a>
-                  ))
-                }
-              </div>
-            </details>
-
-            {
-              trailingLinks.map((item) => (
-                <a href={withBase(item.href)} class:list={mobileLinkClass(item.href)} aria-current={linkState(path, item.href)}>
-                  {item.label}
-                </a>
-              ))
-            }
-          </nav>
-
-          <details class="group/sub border-t border-stone/50">
-            <summary class={mobileGroupSummaryClass}>
-              הגדרות
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" class="transition-transform group-open/sub:rotate-180">
-                <path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            </summary>
-            <div class="px-3 pb-3 pt-1" role="group" aria-labelledby="mobile-theme-label">
-              <p id="mobile-theme-label" class="font-body text-xs font-bold text-ink-soft">מצב תצוגה</p>
-              <div class="mt-2 grid grid-cols-3 overflow-hidden border border-stone/60">
-                {
-                  THEME_OPTIONS.map((opt, i) => (
-                    <button
-                      type="button"
-                      data-theme-choice={opt.value}
-                      aria-pressed={opt.value === "system" ? "true" : "false"}
-                      class:list={[
-                        "px-2 py-2.5 font-body text-xs font-semibold text-ink hover:text-rust aria-pressed:bg-rope aria-pressed:text-paper",
-                        i > 0 && "border-s border-stone/60",
-                      ]}
-                    >
-                      {opt.shortLabel}
-                    </button>
-                  ))
-                }
-              </div>
-            </div>
-          </details>
-        </div>
-      </details>
+      <button
+        type="button"
+        class="flex items-center justify-center rounded-sm border border-dashed border-stone p-2 text-ink hover:border-rust hover:text-rust md:hidden"
+        aria-label="תפריט ראשי"
+        aria-haspopup="dialog"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-open-mobile-menu
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+        </svg>
+      </button>
     </div>
   </div>
 </header>
+
+<!-- Phones: the hamburger opens a full-height side panel. A modal <dialog>
+     gives focus trapping, Esc and an inert page behind it for free; it
+     slides in from the left, the side the hamburger sits on. -->
+<dialog
+  id="mobile-menu"
+  class="mobile-drawer bg-paper-dark text-ink md:hidden"
+  aria-labelledby="mobile-menu-title"
+  closedby="any"
+>
+  <div class="flex h-full flex-col">
+    <div class="flex items-center justify-between gap-3 border-b border-stone/50 px-4 py-3">
+      <p id="mobile-menu-title" class="font-display text-lg font-bold text-ink">{SITE_NAME}</p>
+      <button
+        type="button"
+        class="flex items-center justify-center rounded-sm border border-dashed border-stone p-2 text-ink hover:border-rust hover:text-rust"
+        aria-label="סגירת התפריט"
+        data-close-mobile-menu
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+        </svg>
+      </button>
+    </div>
+    <!-- Separators only between top-level entries. The groups (and the
+         settings section below) are collapsed by default and expand in
+         place when tapped. -->
+    <nav aria-label="ניווט ראשי (מובייל)" class="flex-1 divide-y divide-stone/30 overflow-y-auto">
+      {
+        topLinks.map((item) => (
+          <a href={withBase(item.href)} class:list={mobileLinkClass(item.href)} aria-current={linkState(path, item.href)}>
+            {item.label}
+          </a>
+        ))
+      }
+
+      <details class="group/sub">
+        <summary class={mobileGroupSummaryClass}>
+          מדריכים
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" class="transition-transform group-open/sub:rotate-180">
+            <path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </summary>
+        <div class="pb-1">
+          {
+            GUIDE_GROUPS.map((group) => (
+              <Fragment>
+                <p class={`${mobileGroupLabelClass} ps-6`}>{group.label}</p>
+                {group.items.map((item) => (
+                  <a href={withBase(item.href)} class:list={mobileLinkClass(item.href, "ps-8")} aria-current={linkState(path, item.href)}>
+                    {item.label}
+                  </a>
+                ))}
+              </Fragment>
+            ))
+          }
+        </div>
+      </details>
+
+      <details class="group/sub">
+        <summary class={mobileGroupSummaryClass}>
+          סביבות טיפוס
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" class="transition-transform group-open/sub:rotate-180">
+            <path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </summary>
+        <div class="pb-1">
+          {
+            ENVIRONMENT_LINKS.map((item) => (
+              <a href={withBase(item.href)} class:list={mobileLinkClass(item.href, "ps-6")} aria-current={linkState(path, item.href)}>
+                {item.label}
+              </a>
+            ))
+          }
+        </div>
+      </details>
+
+      {
+        trailingLinks.map((item) => (
+          <a href={withBase(item.href)} class:list={mobileLinkClass(item.href)} aria-current={linkState(path, item.href)}>
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    {/* The logo, centred in the free space above the settings. Decorative,
+        and dropped on very short screens so the links keep the room. */}
+    <div class="flex shrink-0 justify-center py-6 text-rope [@media(max-height:560px)]:hidden" aria-hidden="true">
+      <Fragment set:html={logoSvg({ id: "drawer-logo", attrs: 'width="72" height="72"' })} />
+    </div>
+
+    <details class="group/sub border-t border-stone/50">
+      <summary class={mobileGroupSummaryClass}>
+        הגדרות
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" class="transition-transform group-open/sub:rotate-180">
+          <path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </summary>
+      <div class="px-4 pb-4 pt-1" role="group" aria-labelledby="mobile-theme-label">
+        <p id="mobile-theme-label" class="font-body text-xs font-bold text-ink-soft">מצב תצוגה</p>
+        <div class="mt-2 grid grid-cols-3 overflow-hidden border border-stone/60">
+          {
+            THEME_OPTIONS.map((opt, i) => (
+              <button
+                type="button"
+                data-theme-choice={opt.value}
+                aria-pressed={opt.value === "system" ? "true" : "false"}
+                class:list={[
+                  "px-2 py-3 font-body text-sm font-semibold text-ink hover:text-rust aria-pressed:bg-rope aria-pressed:text-paper",
+                  i > 0 && "border-s border-stone/60",
+                ]}
+              >
+                {opt.shortLabel}
+              </button>
+            ))
+          }
+        </div>
+      </div>
+    </details>
+  </div>
+</dialog>
 
 <script>
   // Close any open header <details> dropdown when clicking outside it,
@@ -291,6 +318,33 @@ const THEME_OPTIONS = [
     if (choice === "system") document.documentElement.removeAttribute("data-theme");
     else document.documentElement.setAttribute("data-theme", choice);
     syncThemeUi(choice);
+  }
+
+  // Phone side panel (the <dialog> after the header).
+  const drawer = document.getElementById("mobile-menu") as HTMLDialogElement | null;
+  const openButton = document.querySelector<HTMLButtonElement>("[data-open-mobile-menu]");
+  if (drawer && openButton) {
+    openButton.addEventListener("click", () => {
+      drawer.showModal();
+      openButton.setAttribute("aria-expanded", "true");
+    });
+    drawer.addEventListener("close", () => {
+      openButton.setAttribute("aria-expanded", "false");
+      openButton.focus();
+    });
+    drawer.addEventListener("click", (event) => {
+      const target = event.target as Element;
+      // A tap on the dimmed backdrop lands on the <dialog> itself (its
+      // content fills the panel); browsers without closedby="any" need this.
+      if (target === drawer || target.closest("[data-close-mobile-menu]") || target.closest("a")) {
+        drawer.close();
+      }
+    });
+    // Rotating a phone to landscape can cross the `md` breakpoint, where the
+    // panel is hidden - close it so the page isn't left inert.
+    window.matchMedia("(min-width: 48rem)").addEventListener("change", (event) => {
+      if (event.matches && drawer.open) drawer.close();
+    });
   }
 
   syncThemeUi(storedChoice());

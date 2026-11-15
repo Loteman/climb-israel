@@ -1,0 +1,99 @@
+---
+import { withBase } from "../../lib/url";
+import { currentPathname, linkState } from "../../lib/active-link";
+import {
+  BEGINNER_GUIDE,
+  ENVIRONMENT_LINKS,
+  GUIDES,
+  GUIDES_PAGE_LINK,
+  HISTORY_LINK,
+  LOCATIONS_LINK,
+} from "../../lib/site-nav";
+
+// Phones only (below `md`, where the header collapses to the hamburger):
+// a fixed bar with the three places people go most. DOM order is the
+// visual order right-to-left: guides, home, climbing places.
+const path = currentPathname(Astro.url);
+
+// The guides tab stays highlighted inside any guide, not only on its index.
+const guideHrefs = [GUIDES_PAGE_LINK, BEGINNER_GUIDE, ...GUIDES, ...ENVIRONMENT_LINKS, HISTORY_LINK].map(
+  (link) => link.href,
+);
+const guidesState =
+  linkState(path, GUIDES_PAGE_LINK.href) ??
+  (guideHrefs.some((href) => linkState(path, href)) ? "true" : undefined);
+
+const tabs = [
+  { href: GUIDES_PAGE_LINK.href, label: GUIDES_PAGE_LINK.label, icon: "guides", state: guidesState },
+  { href: "/", label: "בית", icon: "home", state: linkState(path, "/") },
+  { href: LOCATIONS_LINK.href, label: LOCATIONS_LINK.label, icon: "places", state: linkState(path, LOCATIONS_LINK.href) },
+] as const;
+---
+
+<nav
+  aria-label="ניווט מהיר"
+  data-tab-bar
+  class="fixed inset-x-0 bottom-0 z-40 border-t border-stone/40 bg-paper pb-[env(safe-area-inset-bottom)] shadow-[0_-2px_10px_rgb(0_0_0/0.06)] md:hidden"
+>
+  <ul class="grid h-16 grid-cols-3">
+    {
+      tabs.map((tab) => (
+        <li>
+          <a
+            href={withBase(tab.href)}
+            aria-current={tab.state}
+            class:list={[
+              "relative flex h-full flex-col items-center justify-center gap-1 font-body text-xs transition-colors",
+              tab.state ? "font-bold text-rope" : "text-ink-soft hover:text-rust",
+            ]}
+          >
+            {/* Active tab: a short bar on the top edge, plus colour and weight. */}
+            {tab.state && <span class="absolute inset-x-6 top-0 h-0.5 rounded-full bg-rope" aria-hidden="true" />}
+            {tab.icon === "guides" && (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M12 6.8C10.2 5.4 7.8 4.8 4.5 4.8H3.5v13.5h1c3.3 0 5.7.6 7.5 2 1.8-1.4 4.2-2 7.5-2h1V4.8h-1c-3.3 0-5.7.6-7.5 2Zm0 0v13.4"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            )}
+            {tab.icon === "home" && (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M3.5 11 12 4l8.5 7M5.5 9.5V20h5v-5.5h3V20h5V9.5"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            )}
+            {tab.icon === "places" && (
+              <svg width="24" height="24" aria-hidden="true">
+                <use href="#icon-map-pin" />
+              </svg>
+            )}
+            <span>{tab.label}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<script>
+  // Phones resize the page when the on-screen keyboard opens, which would
+  // lift this bar up over the field being typed in (the directory search).
+  // Hide it while a text field has focus.
+  const bar = document.querySelector<HTMLElement>("[data-tab-bar]");
+  const isTextField = (el: EventTarget | null) =>
+    el instanceof HTMLElement && el.matches("input:not([type=checkbox]):not([type=radio]), textarea, select");
+  document.addEventListener("focusin", (event) => {
+    if (isTextField(event.target)) bar?.classList.add("hidden");
+  });
+  document.addEventListener("focusout", (event) => {
+    if (isTextField(event.target)) bar?.classList.remove("hidden");
+  });
+</script>

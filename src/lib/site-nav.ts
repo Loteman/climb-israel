@@ -87,3 +87,49 @@ export const HISTORY_LINK: NavLink = { href: "/היסטוריית-הטיפוס-�
 export const ABOUT_LINK: NavLink = { href: "/אודות/", label: "אודות" };
 export const ACCESSIBILITY_LINK: NavLink = { href: "/הצהרת-נגישות/", label: "הצהרת נגישות" };
 export const PRIVACY_LINK: NavLink = { href: "/מדיניות-פרטיות/", label: "מדיניות פרטיות" };
+
+/** The page listing every guide (the "מדריכים" tab of the phone tab bar). */
+export const GUIDES_PAGE_LINK: NavLink = { href: "/מדריכים/", label: "מדריכים" };
+
+export interface GuideCard {
+  href: string;
+  title: string;
+  badge: string;
+  variant: "rope" | "rust" | "olive";
+  desc: string;
+}
+
+// Card data shared by the homepage and the guides page.
+export const GUIDE_CARDS: GuideCard[] = [
+  {
+    href: BEGINNER_GUIDE.href,
+    title: BEGINNER_GUIDE.label,
+    badge: "התחילו כאן",
+    variant: "rope",
+    desc: "אין לכם ניסיון קודם? הצעד הראשון - מה צריך לעשות, ואיפה כל שאר המדריכים נכנסים לתמונה.",
+  },
+  ...GUIDES.map((g): GuideCard => ({
+    href: g.href,
+    title: g.label,
+    badge: GUIDE_LEVEL_LABELS[g.level],
+    variant: g.level === "beginner" ? "rope" : "rust",
+    desc: g.desc,
+  })),
+];
+
+export const ENVIRONMENT_CARDS: GuideCard[] = [
+  {
+    href: "/קיר-טיפוס-מלאכותי/",
+    title: "קיר טיפוס (מלאכותי)",
+    badge: "Wall climbing",
+    variant: "rope",
+    desc: "הדרך הכי נגישה להתחיל - קיר מלאכותי, ציוד להשכרה, וסביבה מבוקרת.",
+  },
+  {
+    href: "/טיפוס-בטבע/",
+    title: "טיפוס בטבע",
+    badge: "Rock climbing",
+    variant: "olive",
+    desc: "סלע אמיתי, ציוד מלא, ואחריות אישית גבוהה יותר. מה שונה ואיך מתכוננים.",
+  },
+];

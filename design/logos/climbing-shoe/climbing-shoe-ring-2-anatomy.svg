@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="45" fill="none" stroke="#E14D2A" stroke-width="5.0"/>
+  <g transform="translate(50.6 49.6) scale(0.1253) translate(-307 -261) "
+     fill="none" stroke="#E14D2A" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke-width="23.1">
+      <mask id="straps-v2" maskUnits="userSpaceOnUse" x="-2000" y="-2000" width="5000" height="5000"><rect x="-2000" y="-2000" width="5000" height="5000" fill="white"/><rect x="327.2" y="138.2" width="100" height="32" rx="15" transform="rotate(-25 377.2 154.2)" fill="black"/><rect x="353.2" y="208.2" width="104" height="32" rx="15" transform="rotate(-25 405.2 224.2)" fill="black"/></mask>
+      <g mask="url(#straps-v2)">
+        <path d="M170 282 C260 292 380 330 470 385 C495 400 510 420 517.6 426.75 C518.5 440 516 451.5 510 458 C498 470 470 462 440 445 C380 410 300 350 200 300 Z" fill="#E14D2A"/>
+        <path d="M83 112 C70 150 75 220 120 274 C100 271 85 268 70 265 C40 255 28 230 30 205 C31.2 181 45.36 151.6 69.9 125 Z" fill="#E14D2A"/>
+        <rect x="149" y="14" width="32" height="72" rx="15" transform="rotate(35 165 50)"/>
+        <path d="M160 88 C180 125 210 160 245 163 C280 165 302 134 322 114 C332 104 342 100 352 102 C362 104 368 110 374 118 C390 134 410 175 430 215 C445 250 470 320 505 385 C520 412 522 445 510 458 C498 470 470 462 440 445 C380 410 300 350 200 300 C150 278 100 272 70 265 C40 255 28 230 30 205 C32 165 70 110 132 78 Z"/>
+        <path d="M245 246 C330 252 420 298 475 345 C490 360 500 375 505 386"/>
+      </g>
+      <rect x="327.2" y="138.2" width="100" height="32" rx="15" transform="rotate(-25 377.2 154.2)"/><rect x="353.2" y="208.2" width="104" height="32" rx="15" transform="rotate(-25 405.2 224.2)"/>
+    </g>
+  </g>
+</svg>

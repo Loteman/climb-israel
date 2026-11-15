@@ -8,6 +8,7 @@ import {
   LOCATIONS_LINK,
 } from "../../lib/site-nav";
 import { LICENSOR_NAME, LICENSOR_URL, SITE_NAME, contactUrl } from "../../site-config";
+import { logoSvg } from "../../lib/logo";
 
 // Deliberately short: the full guide list lives in the header menu.
 const columns = [
@@ -23,11 +24,19 @@ const columns = [
 ---
 
 <footer class="border-t border-stone/40 bg-paper-dark">
-  <SectionDivider class="text-stone/40" />
+  {/* The logo sits on the rock line, centred on it like a badge (so it
+      also crosses the footer's top edge). Absolutely positioned so the rest
+      of the footer doesn't move; the disc behind it breaks the line. */}
+  <div class="relative">
+    <SectionDivider class="text-stone/40" />
+    <div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-paper-dark p-1 text-rope" aria-hidden="true">
+      <Fragment set:html={logoSvg({ id: "footer-logo", attrs: 'width="52" height="52" class="block"' })} />
+    </div>
+  </div>
   <!-- Phones get a denser footer: less padding, tighter rows and gaps. -->
   <div class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10">
-    <div class="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-[2fr_1fr_1fr] sm:gap-8">
-      <div class="col-span-2 sm:col-span-1">
+    <div class="grid grid-cols-2 gap-x-6 gap-y-5 sm:gap-8 md:grid-cols-[2fr_1fr_1fr]">
+      <div class="col-span-2 md:col-span-1">
         <p class="font-display text-base font-bold text-ink sm:text-lg">{SITE_NAME}</p>
         <p class="mt-1 max-w-sm text-sm leading-relaxed text-ink-soft sm:mt-2">
           מאגר מידע חינמי וקהילתי לטיפוס בישראל - בולדרינג וטיפוס בטבע.
@@ -41,7 +50,9 @@ const columns = [
       </div>
       {
         columns.map((col) => (
-          <nav aria-label={col.title}>
+          // Phones don't get the link columns: the tab bar and the menu
+          // already cover these pages.
+          <nav aria-label={col.title} class="hidden md:block">
             <p class="font-body text-xs font-bold tracking-wide text-ink-soft">{col.title}</p>
             <ul class="mt-1 sm:mt-3 sm:space-y-2">
               {col.links.map((link) => (

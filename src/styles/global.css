@@ -242,3 +242,60 @@ h4 {
   color: var(--color-rope);
   font-weight: 700;
 }
+
+/*
+ * Phone side panel (Header.astro's <dialog id="mobile-menu">). A modal
+ * dialog sits in the top layer above everything, map included. It is
+ * pinned to the left edge - the hamburger's side - at full height, and
+ * slides in/out; browsers without @starting-style simply skip the slide.
+ */
+.mobile-drawer {
+  position: fixed;
+  inset: 0 auto 0 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: min(85vw, 22rem);
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  box-shadow: 0 0 24px rgb(0 0 0 / 0.25);
+  transform: translateX(-100%);
+  transition:
+    transform 250ms ease,
+    overlay 250ms allow-discrete,
+    display 250ms allow-discrete;
+}
+
+.mobile-drawer[open] {
+  transform: translateX(0);
+}
+
+@starting-style {
+  .mobile-drawer[open] {
+    transform: translateX(-100%);
+  }
+}
+
+.mobile-drawer::backdrop {
+  background-color: rgb(0 0 0 / 0);
+  transition:
+    background-color 250ms ease,
+    overlay 250ms allow-discrete,
+    display 250ms allow-discrete;
+}
+
+.mobile-drawer[open]::backdrop {
+  background-color: rgb(0 0 0 / 0.45);
+}
+
+@starting-style {
+  .mobile-drawer[open]::backdrop {
+    background-color: rgb(0 0 0 / 0);
+  }
+}
+
+/* The page behind an open panel doesn't scroll. */
+html:has(.mobile-drawer[open]) {
+  overflow: hidden;
+}

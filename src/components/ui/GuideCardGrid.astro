@@ -1,0 +1,34 @@
+---
+import { withBase } from "../../lib/url";
+import type { GuideCard } from "../../lib/site-nav";
+import Card from "./Card.astro";
+import Badge from "./Badge.astro";
+
+interface Props {
+  cards: GuideCard[];
+  /** Column classes from `sm` up; phones always get two cards per row. */
+  columns?: string;
+}
+
+const { cards, columns = "lg:grid-cols-3" } = Astro.props;
+---
+
+{/* Two cards per row on phones too (~165px each), so below `sm` the
+    cards are tighter: less padding and smaller text. */}
+<ul class={`mt-6 grid grid-cols-2 gap-3 sm:mt-8 sm:gap-4 ${columns}`}>
+  {
+    cards.map((card) => (
+      <Card as="li" href={withBase(card.href)} class="flex h-full flex-col" compact>
+        <Badge variant={card.variant} class="w-fit">
+          {card.badge}
+        </Badge>
+        <h3 class="mt-2 font-display text-xl font-bold leading-snug text-ink group-hover:text-rust sm:mt-3">
+          {card.title}
+        </h3>
+        <p class="mt-1.5 flex-1 text-xs leading-relaxed text-ink-soft sm:mt-2 sm:text-sm">
+          {card.desc}
+        </p>
+      </Card>
+    ))
+  }
+</ul>

@@ -1,46 +1,14 @@
 ---
 import { withBase } from "../lib/url";
-import { BEGINNER_GUIDE, GUIDES, GUIDE_LEVEL_LABELS, HISTORY_LINK } from "../lib/site-nav";
+import { ENVIRONMENT_CARDS, GUIDE_CARDS, HISTORY_LINK } from "../lib/site-nav";
 import { SITE_NAME, SITE_URL } from "../site-config";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import TopoBackground from "../components/layout/TopoBackground.astro";
 import RouteLine from "../components/ui/RouteLine.astro";
-import Card from "../components/ui/Card.astro";
-import Badge from "../components/ui/Badge.astro";
+import GuideCardGrid from "../components/ui/GuideCardGrid.astro";
 
-const guides = [
-  {
-    href: BEGINNER_GUIDE.href,
-    title: BEGINNER_GUIDE.label,
-    badge: "התחילו כאן",
-    variant: "rope" as const,
-    desc: "אין לכם ניסיון קודם? הצעד הראשון - מה צריך לעשות, ואיפה כל שאר המדריכים נכנסים לתמונה.",
-  },
-  ...GUIDES.map((g) => ({
-    href: g.href,
-    title: g.label,
-    badge: GUIDE_LEVEL_LABELS[g.level],
-    variant: g.level === "beginner" ? ("rope" as const) : ("rust" as const),
-    desc: g.desc,
-  })),
-];
-
-const environments = [
-  {
-    href: "/קיר-טיפוס-מלאכותי/",
-    title: "קיר טיפוס (מלאכותי)",
-    badge: "Wall climbing",
-    variant: "rope" as const,
-    desc: "הדרך הכי נגישה להתחיל - קיר מלאכותי, ציוד להשכרה, וסביבה מבוקרת.",
-  },
-  {
-    href: "/טיפוס-בטבע/",
-    title: "טיפוס בטבע",
-    badge: "Rock climbing",
-    variant: "olive" as const,
-    desc: "סלע אמיתי, ציוד מלא, ואחריות אישית גבוהה יותר. מה שונה ואיך מתכוננים.",
-  },
-];
+const guides = GUIDE_CARDS;
+const environments = ENVIRONMENT_CARDS;
 
 const quickLocationLinks = [
   { href: "/מקומות-טיפוס/?kind=crag&style=bouldering", label: "בולדר בטבע" },
@@ -81,8 +49,15 @@ const jsonLd = [
         {SITE_NAME}
       </h1>
       <p class="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-ink-soft">
-        מאגר מידע קהילתי וחינמי לכל מי שרוצה לטפס. בולדרינג בקיר או בטבע,
-        טיפוס ספורטיבי, וטראד. מהאחיזה הראשונה ועד המצוק הבא.
+        {/* Phones: if the sentence doesn't fit on one line, it may only break
+            between these two halves. */}
+        <span class="whitespace-nowrap md:whitespace-normal">מאגר מידע קהילתי וחינמי</span>{" "}
+        <span class="whitespace-nowrap md:whitespace-normal">לכל מי שרוצה לטפס.</span>{" "}
+        {/* Phones get the first sentence only. */}
+        <span class="hidden md:inline">
+          בולדרינג בקיר או בטבע, טיפוס ספורטיבי, וטראד. מהאחיזה הראשונה ועד
+          המצוק הבא.
+        </span>
       </p>
       <div class="mx-auto mt-8 max-w-xs">
         <RouteLine />
@@ -110,25 +85,7 @@ const jsonLd = [
       מהצעד הראשון על הקיר ועד תכנון היום הבא על סלע - כל המדריכים באתר.
     </p>
 
-    {/* Two cards per row on phones too (~165px each), so below `sm` the
-        cards are tighter: less padding, smaller title and text. */}
-    <ul class="mt-6 grid grid-cols-2 gap-3 sm:mt-8 sm:gap-4 lg:grid-cols-3">
-      {
-        guides.map((g) => (
-          <Card as="li" href={withBase(g.href)} class="flex h-full flex-col" compact>
-            <Badge variant={g.variant} class="w-fit">
-              {g.badge}
-            </Badge>
-            <h3 class="mt-2 font-display text-xl font-bold leading-snug text-ink group-hover:text-rust sm:mt-3">
-              {g.title}
-            </h3>
-            <p class="mt-1.5 flex-1 text-xs leading-relaxed text-ink-soft sm:mt-2 sm:text-sm">
-              {g.desc}
-            </p>
-          </Card>
-        ))
-      }
-    </ul>
+    <GuideCardGrid cards={guides} />
   </section>
 
   <section class="border-t border-stone/40 bg-paper-dark py-12 sm:py-16">
@@ -168,24 +125,7 @@ const jsonLd = [
       מה שונה בכל אחד.
     </p>
 
-    {/* Two per row on phones as well - same compact card as above. */}
-    <ul class="mt-6 grid grid-cols-2 gap-3 sm:mt-8 sm:gap-4">
-      {
-        environments.map((e) => (
-          <Card as="li" href={withBase(e.href)} class="flex h-full flex-col" compact>
-            <Badge variant={e.variant} class="w-fit">
-              {e.badge}
-            </Badge>
-            <h3 class="mt-2 font-display text-xl font-bold leading-snug text-ink group-hover:text-rust sm:mt-3">
-              {e.title}
-            </h3>
-            <p class="mt-1.5 flex-1 text-xs leading-relaxed text-ink-soft sm:mt-2 sm:text-sm">
-              {e.desc}
-            </p>
-          </Card>
-        ))
-      }
-    </ul>
+    <GuideCardGrid cards={environments} columns="" />
   </section>
 
   <section class="border-t border-stone/40 bg-paper-dark py-12 sm:py-16">
