@@ -8,6 +8,8 @@ city: "תל אביב"
 address: "השלושה 3"
 phone: "03-635-3600"
 website: "https://vking.co.il/"
+instagram: "https://www.instagram.com/vkingclimb/"
+facebook: "https://www.facebook.com/vkingclimb"
 hours:
   "א'-ג', ה'": "07:00-23:00"
   "ד'": "15:00-23:00"

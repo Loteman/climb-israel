@@ -11,6 +11,8 @@ chain: "iClimb"
 address: "העמלים 37"
 phone: "04-666-1103"
 website: "https://iclimb.co.il/haifa/%D7%A8%D7%90%D7%A9%D7%99/"
+instagram: "https://www.instagram.com/iclimbhaifa/"
+facebook: "https://www.facebook.com/iclimbhaifa"
 hours:
   "א'-ד'": "10:00-22:00"
   "ה'": "10:00-23:00"

@@ -9,6 +9,8 @@ chain: "The Bloc"
 address: "המרץ 4"
 phone: "03-544-8769"
 website: "https://www.thebloc.co.il/tlv"
+instagram: "https://www.instagram.com/bloc_tlv/"
+facebook: "https://www.facebook.com/The.Bloc.TLV"
 hours:
   "א'": "16:00-23:00"
   "ב'-ה'": "08:00-23:00"

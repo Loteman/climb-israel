@@ -10,6 +10,8 @@ chain: "Monkeys"
 address: "מתחם ביג פולג"
 phone: "09-788-9933"
 website: "https://www.monkeysclimbinggym.co.il/"
+instagram: "https://www.instagram.com/monkeysclimbinggym/"
+facebook: "https://www.facebook.com/MonkeysClimbingGym"
 hours:
   "בולדר א', ב', ד', ה'": "10:00-22:30"
   "בולדר ג'": "09:00-22:30"

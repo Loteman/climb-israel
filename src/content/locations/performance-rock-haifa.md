@@ -9,6 +9,8 @@ chain: "Performance Rock"
 address: "הנמל 32"
 phone: "04-601-7000"
 website: "https://performancerock.co.il/branch/haifa/"
+instagram: "https://www.instagram.com/prockhaifa/"
+facebook: "https://www.facebook.com/p/Performance-Rock-Haifa-61595320379900/"
 hours:
   "א'-ה'": "08:00-23:00"
   "ו'": "09:00-18:00"

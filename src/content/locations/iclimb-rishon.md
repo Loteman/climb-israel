@@ -11,6 +11,8 @@ chain: "iClimb"
 address: "נדב בסקינד 12"
 phone: "03-612-1109"
 website: "https://iclimb.co.il/"
+instagram: "https://www.instagram.com/iclimb.rishon/"
+facebook: "https://www.facebook.com/iclimbrsl"
 hours:
   "א'-ד'": "10:00-22:00"
   "ה'": "10:00-22:30"

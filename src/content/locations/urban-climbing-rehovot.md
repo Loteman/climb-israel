@@ -9,6 +9,8 @@ chain: "טיפוס אורבני"
 address: "ענטין, פארק המדע"
 phone: "08-936-3455"
 website: "https://www.uclimb.co.il/rehovotbranch"
+instagram: "https://www.instagram.com/uclimbr/"
+facebook: "https://www.facebook.com/uclimb"
 hours:
   "א'-ה'": "16:00-22:00"
   "ו'": "11:00-16:00"

@@ -29,6 +29,9 @@ const navTarget = locationNavTarget(location);
 const pageUrl = new URL(withBase(`/מקומות-טיפוס/${location.id}/`), SITE_URL).toString();
 
 const NO_INFO = "אין מידע";
+// Bordered link buttons, 40px tall on phones (same look as the phone button).
+const onlineLinkClass =
+  "inline-flex min-h-10 items-center gap-1.5 border border-stone/60 px-3 font-body text-xs font-bold text-ink transition-colors hover:border-rust hover:text-rust sm:min-h-0 sm:px-2.5 sm:py-1.5";
 const SETTING_LABELS: Record<"indoor" | "outdoor" | "both", string> = {
   indoor: "קיר סגור (Indoor)",
   outdoor: "מרחב פתוח (Outdoor)",
@@ -244,31 +247,68 @@ const jsonLd = {
         </div>
 
         <div>
-          <h2 class="font-body text-sm font-bold text-ink-soft">אתר קיר הטיפוס</h2>
+          <h2 class="font-body text-sm font-bold text-ink-soft">קיר הטיפוס ברשת</h2>
           {
-            data.website ? (
-              <a
-                href={data.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="mt-2 inline-flex min-h-10 items-center gap-1.5 border border-stone/60 px-3 font-body text-xs font-bold text-ink transition-colors hover:border-rust hover:text-rust sm:min-h-0 sm:px-2.5 sm:py-1.5"
-                aria-label={`לאתר ${data.name} (נפתח בחלון חדש)`}
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8" />
-                  <path
-                    d="M3 12h18M12 3c2.5 2.5 3.8 5.6 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.6-3.8-9S9.5 5.5 12 3z"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-                לאתר קיר הטיפוס
-              </a>
+            data.website || data.instagram || data.facebook ? (
+              <div class="mt-2 flex flex-wrap gap-2">
+                {data.website && (
+                  <a
+                    href={data.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class={onlineLinkClass}
+                    aria-label={`לאתר ${data.name} (נפתח בחלון חדש)`}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8" />
+                      <path
+                        d="M3 12h18M12 3c2.5 2.5 3.8 5.6 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.6-3.8-9S9.5 5.5 12 3z"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                    לאתר קיר הטיפוס
+                  </a>
+                )}
+                {data.instagram && (
+                  <a
+                    href={data.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class={onlineLinkClass}
+                    aria-label={`${data.name} באינסטגרם (נפתח בחלון חדש)`}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="1.8" />
+                      <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8" />
+                      <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" />
+                    </svg>
+                    אינסטגרם
+                  </a>
+                )}
+                {data.facebook && (
+                  <a
+                    href={data.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class={onlineLinkClass}
+                    aria-label={`${data.name} בפייסבוק (נפתח בחלון חדש)`}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path
+                        d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H8v3h2.5V21"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                    פייסבוק
+                  </a>
+                )}
+              </div>
             ) : (
-              <p class="mt-2 text-sm leading-relaxed text-ink-soft">
-                אין אתר זמין כרגע.
-              </p>
+              <p class="mt-2 text-sm leading-relaxed text-ink-soft">{NO_INFO}.</p>
             )
           }
         </div>

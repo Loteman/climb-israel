@@ -8,6 +8,8 @@ city: "פתח תקווה"
 address: "שוולב 7"
 phone: "03-904-2447"
 website: "https://www.vengavenga.co.il/"
+instagram: "https://www.instagram.com/vengaclimbinggym/"
+facebook: "https://www.facebook.com/Venga.Petah.Tikva"
 hours:
   "א'-ה'": "15:00-23:00"
   "ו'": "10:00-18:00"

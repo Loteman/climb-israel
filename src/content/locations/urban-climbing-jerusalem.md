@@ -9,6 +9,8 @@ chain: "טיפוס אורבני"
 address: "בית הדפוס 11"
 phone: "054-762-5243"
 website: "https://www.uclimb.co.il/jerusalembranch"
+instagram: "https://www.instagram.com/uclimbj/"
+facebook: "https://www.facebook.com/p/%D7%98%D7%99%D7%A4%D7%95%D7%A1-%D7%90%D7%95%D7%A8%D7%91%D7%A0%D7%99-%D7%99%D7%A8%D7%95%D7%A9%D7%9C%D7%99%D7%9D-100064291440816/"
 hours:
   "א'-ה'": "16:00-22:00"
   "ו'": "11:00-16:00"

@@ -8,6 +8,8 @@ city: "מדרשת בן גוריון"
 address: "רח' אזור תעשייה"
 phone: "054-939-9829"
 website: "https://www.desertclimbing.co.il/"
+instagram: "https://www.instagram.com/desertclimbing/"
+facebook: "https://www.facebook.com/desertclimbing"
 hours:
   "א'-ה'": "בתיאום טלפוני: 052-460-6335"
   "ש'": "סגור"

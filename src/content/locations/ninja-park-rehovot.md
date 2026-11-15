@@ -8,6 +8,8 @@ city: "רחובות"
 address: "רחוב מוטי קינד 10"
 phone: "08-616-5686"
 website: "https://www.ninja-parks.co.il/"
+instagram: "https://www.instagram.com/ninja_park_/"
+facebook: "https://www.facebook.com/NINJAPARKREHOVOT"
 hours:
   "א'-ה'": "12:00-22:00"
   "ו'": "12:00-16:00"

@@ -9,6 +9,8 @@ chain: "Performance Rock"
 address: "העצמאות 4"
 phone: "08-627-2721"
 website: "https://performancerock.co.il/branch/beer-sheva/"
+instagram: "https://www.instagram.com/performancerocktlv/"
+facebook: "https://www.facebook.com/PerformanceRock.ClimbingGym"
 hours:
   "א', ג', ד'": "16:00-22:00"
   "ב', ה'": "16:00-23:00"

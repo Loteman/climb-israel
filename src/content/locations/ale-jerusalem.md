@@ -8,6 +8,8 @@ city: "ירושלים"
 address: "האומן 20"
 phone: "053-301-6368"
 website: "https://alleclimb.com/"
+instagram: "https://www.instagram.com/alle.climb/"
+facebook: "https://www.facebook.com/profile.php?id=61560757573784"
 hours:
   "א'": "09:00-22:00"
   "ב'-ד'": "15:00-22:00"

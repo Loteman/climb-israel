@@ -11,6 +11,8 @@ chain: "iClimb"
 address: "פארק כרמי גת"
 phone: "050-504-2222"
 website: "https://iclimb.co.il/%D7%A1%D7%A0%D7%99%D7%A3-%D7%A7%D7%A8%D7%99%D7%AA-%D7%92%D7%AA/"
+instagram: "https://www.instagram.com/iclimb_kiryatgat/"
+facebook: "https://www.facebook.com/iclimb.kiryatgat"
 hours:
   "א'-ה'": "16:00-21:00"
   "ו'": "11:00-15:00"

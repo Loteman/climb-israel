@@ -7,7 +7,8 @@ region: north
 city: "נשר"
 address: "המסילה 22"
 phone: "052-381-2035"
-website: "https://www.facebook.com/emunim.nesher"
+instagram: "https://www.instagram.com/emunim.gym/"
+facebook: "https://www.facebook.com/emunim.nesher"
 hours:
   "א'-ה'": "15:00-22:00"
   "ו', ש'": "סגור"

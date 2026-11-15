@@ -8,6 +8,8 @@ city: "חדרה"
 address: "צה\"ל 35"
 phone: "04-662-7313"
 website: "https://www.levinclimbing.co.il/"
+instagram: "https://www.instagram.com/levin.climbing/"
+facebook: "https://www.facebook.com/hakirgym"
 hours:
   "א', ג'": "15:30-22:00"
   "ב', ד'": "15:30-23:00"

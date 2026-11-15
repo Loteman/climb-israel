@@ -8,6 +8,8 @@ city: "כרמיאל"
 address: "החרמש 9"
 phone: "04-606-0536"
 website: "https://www.campuswall.co.il/"
+instagram: "https://www.instagram.com/campusclimbing/"
+facebook: "https://www.facebook.com/karmielclimbingclub"
 hours:
   "א', ה'": "16:00-23:00"
   "ב'-ד'": "16:00-22:00"

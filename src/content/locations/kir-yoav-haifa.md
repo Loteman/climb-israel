@@ -9,6 +9,8 @@ city: "חיפה"
 address: "פלימן (מתחם X-Park)"
 phone: "04-855-1616"
 website: "https://www.shafan-hasela.com/he/%D7%A7%D7%99%D7%A8-%D7%99%D7%95%D7%90%D7%91/"
+instagram: "https://www.instagram.com/kir.yoav/"
+facebook: "https://www.facebook.com/KirYoavHaifa"
 hours:
   "א'-ה'": "16:00-22:00"
   "ו'": "10:00-13:00"

@@ -9,6 +9,8 @@ city: "קיבוץ אפיקים, עמק הירדן"
 address: "אפיקים 1"
 phone: "054-833-0920"
 website: "https://www.rocaclimb.co.il/"
+instagram: "https://www.instagram.com/roca_climbing/"
+facebook: "https://www.facebook.com/rocaclimbingclub"
 hours:
   "א'-ה'": "16:00-22:00"
   "ו'": "10:00-16:00"

@@ -1989,6 +1989,9 @@ const CROWD_SOURCE_NOTE =
 // Region classification is a colloquial approximation (Israeli regional
 // boundaries are genuinely fuzzy) based on each city, not sourced data -
 // good enough for a coarse filter, not a claim of official geography.
+// Closed - don't re-add (ILCA's list can still show some of them):
+// Performance Modiin, Boulderland/iClimb Kfar Saba, Kir HaOgen, Kir Ono/
+// Ayelet, iClimb Manara, Koala (Kfar Etzion, closed late 2026).
 const gyms: GymLocation[] = [
   { slug: "geko-kir-shagi", kind: "gym", name: "גקו קיר שגיא", city: "רמת ישי", region: "north", address: "נרקיסים 11", phone: "04-625-2321", website: "https://www.geckoclimbing.co.il/", styles: ["lead", "top-rope", "bouldering"], description: "קיר טיפוס ותיק ברמת ישי, שהוקם ב-1993 לזכרו של שגיא בלאו. מציע טיפוס בהובלה ובטופ-רופ לצד אזור בולדרינג, וחוגים לכל הגילאים.", coordinates: { lat: 32.70017, lng: 35.16497 }, hours: { "א', ב', ד', ה'": "15:00-22:30", "ג'": "09:00-13:00, 15:00-22:30", "ו'": "10:00-17:00", "ש'": "10:00-21:45" } },
   { slug: "venga", kind: "gym", name: "ונגה", city: "פתח תקווה", region: "center", address: "שוולב 7", phone: "03-904-2447", website: "https://www.vengavenga.co.il/", styles: ["bouldering"], description: "מרכז בולדרינג ותיק וממוזג בפתח תקווה (מאז 2010), בקומה השנייה, עם מסלולים בכל הרמות.", coordinates: { lat: 32.10654, lng: 34.89336 }, hours: { "א'-ה'": "15:00-23:00", "ו'": "10:00-18:00", "ש'": "12:00-22:00" } },
@@ -2020,7 +2023,7 @@ const gyms: GymLocation[] = [
   { slug: "iclimb-tel-aviv", kind: "gym", name: "אייקליימב תל אביב", chain: "iClimb", city: "תל אביב", region: "center", address: "שד' רוקח 42", phone: "050-213-7099", website: "https://iclimb.co.il/%D7%A1%D7%A0%D7%99%D7%A3-%D7%AA%D7%9C-%D7%90%D7%91%D7%99%D7%91-%D7%A8%D7%90%D7%A9%D7%99/", styles: ["lead", "top-rope"], description: "קיר טיפוס בפארק הירקון: קיר בגובה 18 מטרים להובלה ולטופ-רופ, אזורים עם אבטחה אוטומטית שמתאימים גם למי שמטפס בפעם הראשונה, ומתחם טיפוס לילדים (פנטופיה).", coordinates: { lat: 32.09773, lng: 34.78825 }, hours: { "א'-ה'": "10:00-22:00", "ו'": "10:00-16:00", "ש'": "10:00-22:00" } },
   { slug: "roca-afikim", kind: "gym", name: "רוקה", city: "קיבוץ אפיקים, עמק הירדן", region: "north", address: "אפיקים 1", phone: "054-833-0920", website: "https://www.rocaclimb.co.il/", styles: ["bouldering", "top-rope"], description: "קיר טיפוס בקיבוץ אפיקים שבעמק הירדן: עשרות בעיות בולדר בכל הרמות, קיר בגובה 8 מטרים עם אבטחה אוטומטית, וחנות ציוד.", coordinates: { lat: 32.68137, lng: 35.57833 }, hours: { "א'-ה'": "16:00-22:00", "ו'": "10:00-16:00", "ש'": "10:00-20:00" } },
   { slug: "totem-pardes-hana", kind: "gym", name: "טוטם קיר טיפוס", city: "פרדס חנה", region: "sharon", address: "ערער 1", phone: "04-642-4849", website: "https://www.totemclimbing.co.il/", styles: ["bouldering"], coordinates: { lat: 32.50666, lng: 34.97558 }, hours: { "א', ג', ד'": "15:00-22:30", "ב', ה'": "08:00-22:30", "ו'": "08:00-14:00", "ש'": "09:00-22:30" } },
-  { slug: "monkeys-ashdod", kind: "gym", name: "מאנקיז אשדוד", chain: "Monkeys", city: "אשדוד", region: "shfela", address: "BMALL עד הלום", phone: "08-680-6000", website: "https://www.facebook.com/monkeysclimbinggymashdod/", styles: ["bouldering"], coordinates: { lat: 31.79773, lng: 34.65299 }, hours: { "א'-ה'": "16:00-22:00", "ו'": "10:00-16:00", "ש'": "10:00-22:00" } },
+  { slug: "monkeys-ashdod", kind: "gym", name: "מאנקיז אשדוד", chain: "Monkeys", city: "אשדוד", region: "shfela", address: "BMALL עד הלום", phone: "08-680-6000", styles: ["bouldering"], coordinates: { lat: 31.79773, lng: 34.65299 }, hours: { "א'-ה'": "16:00-22:00", "ו'": "10:00-16:00", "ש'": "10:00-22:00" } },
   { slug: "performance-rock-haifa", kind: "gym", name: "פרפורמנס רוק חיפה", chain: "Performance Rock", city: "חיפה", region: "north", address: "הנמל 32", phone: "04-601-7000", website: "https://performancerock.co.il/branch/haifa/", styles: ["bouldering"], coordinates: { lat: 32.81821, lng: 35.00127 }, hours: { "א'-ה'": "08:00-23:00", "ו'": "09:00-18:00", "ש'": "10:00-23:00" } },
   // iClimb's branch page puts the wall in Karmei Gat Park (their Waze tip:
   // "חניון פארק כרמי גת"); the old pin sat on Sderot Lachish in the city
@@ -2035,13 +2038,12 @@ const gyms: GymLocation[] = [
   // not the building; styles per the regional council's sports site
   // (bouldering + top-rope areas).
   { slug: "sragim", kind: "gym", name: "שריגים", city: "שריגים (לי-און)", region: "jerusalem", phone: "050-799-5627", website: "https://www.m-yehuda.sport.atarix.co.il/index.php", styles: ["bouldering", "top-rope"], coordinates: { lat: 31.6775, lng: 34.93528 } },
-  { slug: "imunim-nesher", kind: "gym", name: "אימונים", city: "נשר", region: "north", address: "המסילה 22", phone: "052-381-2035", website: "https://www.facebook.com/emunim.nesher", styles: ["bouldering"], coordinates: { lat: 32.78278, lng: 35.03543 }, hours: { "א'-ה'": "15:00-22:00", "ו', ש'": "סגור" } },
+  { slug: "imunim-nesher", kind: "gym", name: "אימונים", city: "נשר", region: "north", address: "המסילה 22", phone: "052-381-2035", styles: ["bouldering"], coordinates: { lat: 32.78278, lng: 35.03543 }, hours: { "א'-ה'": "15:00-22:00", "ו', ש'": "סגור" } },
   { slug: "iclimb-haifa", kind: "gym", name: "אייקליימב חיפה", chain: "iClimb", city: "חיפה", region: "north", address: "העמלים 37", phone: "04-666-1103", website: "https://iclimb.co.il/haifa/%D7%A8%D7%90%D7%A9%D7%99/", styles: ["lead", "top-rope", "bouldering"], coordinates: { lat: 32.81082, lng: 35.06032 }, hours: { "א'-ד'": "10:00-22:00", "ה'": "10:00-23:00", "ו'": "08:00-17:00", "ש'": "10:00-23:00" } },
   // Not members of the climbing federation, per the user's source, but
   // included in the same real-address table.
   { slug: "top94-eilat", kind: "gym", name: "טופ 94", city: "אילת", region: "south", address: "השרברב 1", phone: "08-610-9009", website: "https://www.top94.co.il/", styles: ["lead"], description: "מתחם אטרקציות באילת שכולל קיר טיפוס לגובה.", coordinates: { lat: 29.60005, lng: 34.9728 }, hours: { "א'-ה'": "10:00-18:00", "ו'": "10:00-15:00", "ש' וחג": "סגור" } },
   { slug: "ale-jerusalem", kind: "gym", name: "עלה", city: "ירושלים", region: "jerusalem", address: "האומן 20", phone: "053-301-6368", website: "https://alleclimb.com/", styles: ["bouldering"], coordinates: { lat: 31.7519, lng: 35.20813 }, hours: { "א'": "09:00-22:00", "ב'-ד'": "15:00-22:00", "ה'": "11:00-23:00", "ו'": "09:00-15:00", "מוצאי שבת": "19:00-23:00" } },
-  { slug: "koala-etzion", kind: "gym", name: "קואלה", city: "כפר עציון", region: "yosh", address: "מתחם חצר הכפר", phone: "054-671-3881", website: "https://etziontour.org.il/", styles: ["bouldering"], coordinates: { lat: 31.64987, lng: 35.11525 }, hoursNote: "השעות משתנות לפי העונה ומתפרסמות ביומן שבאתר" },
 ];
 
 // "מה עוד במתחם?" per gym - what the gym's own website (October 2026) says
@@ -2158,8 +2160,7 @@ const GYM_AMENITIES: Record<string, [AmenityType, string?][]> = {
   // Second pass (gyms whose own site lists nothing) - from other sources:
   // Gecko's own price list, monkeysashdod.com (indexed copy; the domain no
   // longer resolves), and listings: atly.com (The Bloc TLV), Fun In
-  // Jerusalem (The Bloc JLM), ligdol + cpnclub (iClimb JLM), Fun In
-  // Jerusalem (Koala).
+  // Jerusalem (The Bloc JLM), ligdol + cpnclub (iClimb JLM).
   "geko-kir-shagi": [["rental", "רתמות ונעלי טיפוס"]],
   "monkeys-ashdod": [
     ["training", "אימונים משלימים"],
@@ -2177,7 +2178,6 @@ const GYM_AMENITIES: Record<string, [AmenityType, string?][]> = {
     ["food", "בית קפה"],
     ["kids", "Funtopia"],
   ],
-  "koala-etzion": [["food", "מכונת שתייה קרה"]],
   "ale-jerusalem": [
     ["kilter"],
     ["training", "חדר כושר מותאם למטפסים"],
@@ -2228,7 +2228,49 @@ const GYM_SETTING: Record<string, "indoor" | "outdoor" | "both"> = {
   "imunim-nesher": "indoor",
   "top94-eilat": "indoor",
   "ale-jerusalem": "indoor",
-  "koala-etzion": "indoor",
+};
+
+// "קיר הטיפוס ברשת": each gym's Instagram and Facebook page (a page, never a
+// group), November 2026. Most come from the gym's own website or Facebook
+// page; the rest from a web search, matched by name and location. Where a
+// chain has no account for a branch, a sibling's is used: Performance Rock
+// Beer Sheva shares the TLV Instagram and the chain's Facebook page (as TLV).
+const GYM_SOCIAL: Record<string, { instagram?: string; facebook?: string }> = {
+  "ale-jerusalem": { instagram: "https://www.instagram.com/alle.climb/", facebook: "https://www.facebook.com/profile.php?id=61560757573784" },
+  "boulder-haifa": { instagram: "https://www.instagram.com/boulderhaifa/", facebook: "https://www.facebook.com/BoulderHaifa" },
+  "campus-karmiel": { instagram: "https://www.instagram.com/campusclimbing/", facebook: "https://www.facebook.com/karmielclimbingclub" },
+  "desert-climbing": { instagram: "https://www.instagram.com/desertclimbing/", facebook: "https://www.facebook.com/desertclimbing" },
+  "geko-kir-shagi": { instagram: "https://www.instagram.com/geckoclimbing/", facebook: "https://www.facebook.com/geckoclimbing" },
+  "iclimb-haifa": { instagram: "https://www.instagram.com/iclimbhaifa/", facebook: "https://www.facebook.com/iclimbhaifa" },
+  "iclimb-jerusalem": { instagram: "https://www.instagram.com/iclimb_jerusalem/", facebook: "https://www.facebook.com/iclimbjer" },
+  "iclimb-kiryat-gat": { instagram: "https://www.instagram.com/iclimb_kiryatgat/", facebook: "https://www.facebook.com/iclimb.kiryatgat" },
+  "iclimb-rishon": { instagram: "https://www.instagram.com/iclimb.rishon/", facebook: "https://www.facebook.com/iclimbrsl" },
+  "iclimb-tel-aviv": { instagram: "https://www.instagram.com/iclimb_tlv/", facebook: "https://www.facebook.com/iclimbTLV" },
+  "imunim-nesher": { instagram: "https://www.instagram.com/emunim.gym/", facebook: "https://www.facebook.com/emunim.nesher" },
+  "isaac-climbing": { instagram: "https://www.instagram.com/isaacclimbing/", facebook: "https://www.facebook.com/Isaac.climbing" },
+  "kir-boaz": { instagram: "https://www.instagram.com/kir_boaz/", facebook: "https://www.facebook.com/kirboaz" },
+  "kir-yoav-haifa": { instagram: "https://www.instagram.com/kir.yoav/", facebook: "https://www.facebook.com/KirYoavHaifa" },
+  "levin-climbing-hadera": { instagram: "https://www.instagram.com/levin.climbing/", facebook: "https://www.facebook.com/hakirgym" },
+  "monkeys-ashdod": { instagram: "https://www.instagram.com/monkeysclimbinggym_ashdod/", facebook: "https://www.facebook.com/monkeysclimbinggymashdod" },
+  "monkeys-netanya": { instagram: "https://www.instagram.com/monkeysclimbinggym/", facebook: "https://www.facebook.com/MonkeysClimbingGym" },
+  "ninja-park-rehovot": { instagram: "https://www.instagram.com/ninja_park_/", facebook: "https://www.facebook.com/NINJAPARKREHOVOT" },
+  "park-extreme-akko": { instagram: "https://www.instagram.com/park_extreme_akko/", facebook: "https://www.facebook.com/pex.acre" },
+  "performance-rock-beer-sheva": { instagram: "https://www.instagram.com/performancerocktlv/", facebook: "https://www.facebook.com/PerformanceRock.ClimbingGym" },
+  "performance-rock-haifa": { instagram: "https://www.instagram.com/prockhaifa/", facebook: "https://www.facebook.com/p/Performance-Rock-Haifa-61595320379900/" },
+  "performance-rock-tel-aviv": { instagram: "https://www.instagram.com/performancerocktlv/", facebook: "https://www.facebook.com/PerformanceRock.ClimbingGym" },
+  "roca-afikim": { instagram: "https://www.instagram.com/roca_climbing/", facebook: "https://www.facebook.com/rocaclimbingclub" },
+  "rockiz-holon": { instagram: "https://www.instagram.com/rockiz_climbing/", facebook: "https://www.facebook.com/Rockiz-%D7%A8%D7%95%D7%A7%D7%99%D7%96-%D7%97%D7%95%D7%9C%D7%95%D7%9F-2432686780295385" },
+  "rujum": { instagram: "https://www.instagram.com/rujumclimbinggym/", facebook: "https://www.facebook.com/rujumclimbinggym" },
+  "sragim": { instagram: "https://www.instagram.com/srigym/" },
+  "the-bloc-jerusalem": { instagram: "https://www.instagram.com/bloc_jlm/", facebook: "https://www.facebook.com/profile.php?id=61566535666998" },
+  "the-bloc-tel-aviv": { instagram: "https://www.instagram.com/bloc_tlv/", facebook: "https://www.facebook.com/The.Bloc.TLV" },
+  "the-wall-modiin": { instagram: "https://www.instagram.com/thewall_modiin/", facebook: "https://www.facebook.com/profile.php?id=61573763360468" },
+  "top94-eilat": { instagram: "https://www.instagram.com/top94park/", facebook: "https://www.facebook.com/top94park" },
+  "totem-pardes-hana": { instagram: "https://www.instagram.com/totem_climbing/", facebook: "https://www.facebook.com/Totemclimbinghouse" },
+  "urban-climbing-jerusalem": { instagram: "https://www.instagram.com/uclimbj/", facebook: "https://www.facebook.com/p/%D7%98%D7%99%D7%A4%D7%95%D7%A1-%D7%90%D7%95%D7%A8%D7%91%D7%A0%D7%99-%D7%99%D7%A8%D7%95%D7%A9%D7%9C%D7%99%D7%9D-100064291440816/" },
+  "urban-climbing-rehovot": { instagram: "https://www.instagram.com/uclimbr/", facebook: "https://www.facebook.com/uclimb" },
+  "venga": { instagram: "https://www.instagram.com/vengaclimbinggym/", facebook: "https://www.facebook.com/Venga.Petah.Tikva" },
+  "vking-tel-aviv": { instagram: "https://www.instagram.com/vkingclimb/", facebook: "https://www.facebook.com/vkingclimb" },
 };
 
 // Opening hours were taken from each gym's own website in October 2026.
@@ -3326,6 +3368,8 @@ async function writeLocations() {
       ...(g?.address ? [`address: ${yamlStr(g.address)}`] : []),
       ...(g?.phone ? [`phone: ${yamlStr(g.phone)}`] : []),
       ...(g?.website ? [`website: ${yamlStr(g.website)}`] : []),
+      ...(g && GYM_SOCIAL[g.slug]?.instagram ? [`instagram: ${yamlStr(GYM_SOCIAL[g.slug].instagram!)}`] : []),
+      ...(g && GYM_SOCIAL[g.slug]?.facebook ? [`facebook: ${yamlStr(GYM_SOCIAL[g.slug].facebook!)}`] : []),
       ...(g?.hours
         ? ["hours:", ...Object.entries(g.hours).map(([day, h]) => `  ${yamlStr(day)}: ${yamlStr(h)}`)]
         : []),

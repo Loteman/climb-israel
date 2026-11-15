@@ -8,6 +8,8 @@ city: "אילת"
 address: "השרברב 1"
 phone: "08-610-9009"
 website: "https://www.top94.co.il/"
+instagram: "https://www.instagram.com/top94park/"
+facebook: "https://www.facebook.com/top94park"
 hours:
   "א'-ה'": "10:00-18:00"
   "ו'": "10:00-15:00"

@@ -9,6 +9,8 @@ city: "קרית שמונה"
 address: "ההסתדרות 4"
 phone: "053-388-8307"
 website: "https://rujum-ks.co.il/"
+instagram: "https://www.instagram.com/rujumclimbinggym/"
+facebook: "https://www.facebook.com/rujumclimbinggym"
 hours:
   "בולדר א'-ה'": "16:00-22:00"
   "קיר גובה א', ג'-ה'": "16:00-22:00"

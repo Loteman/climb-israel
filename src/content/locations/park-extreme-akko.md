@@ -8,6 +8,8 @@ city: "עכו"
 address: "שלום הגליל 3"
 phone: "1-700-556-070"
 website: "https://www.shafan-hasela.com/"
+instagram: "https://www.instagram.com/park_extreme_akko/"
+facebook: "https://www.facebook.com/pex.acre"
 setting: both
 amenities:
   - type: food

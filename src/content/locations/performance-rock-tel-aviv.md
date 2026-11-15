@@ -9,6 +9,8 @@ chain: "Performance Rock"
 address: "דרך מנחם בגין 144"
 phone: "03-687-2880"
 website: "https://performancerock.co.il/branch/midtown-tlv/"
+instagram: "https://www.instagram.com/performancerocktlv/"
+facebook: "https://www.facebook.com/PerformanceRock.ClimbingGym"
 hours:
   "א', ג'": "07:00-23:00"
   "ב', ד'": "07:00-23:00 (מ-18:00 מנויים בלבד)"

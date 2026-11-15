@@ -9,6 +9,8 @@ city: "תל מונד"
 address: "השקד 1"
 phone: "051-586-2878"
 website: "https://kirboaz.co.il/"
+instagram: "https://www.instagram.com/kir_boaz/"
+facebook: "https://www.facebook.com/kirboaz"
 hoursNote: "השעות משתנות לפי העונה ומתפרסמות ביומן שבאתר"
 setting: outdoor
 amenities:

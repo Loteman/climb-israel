@@ -10,6 +10,8 @@ city: "תל אביב"
 address: "יצחק שדה 41"
 phone: "055-992-5128"
 website: "https://www.isaacclimbing.com"
+instagram: "https://www.instagram.com/isaacclimbing/"
+facebook: "https://www.facebook.com/Isaac.climbing"
 hours:
   "א'-ה'": "07:00-23:00"
   "ו'": "08:00-16:00"

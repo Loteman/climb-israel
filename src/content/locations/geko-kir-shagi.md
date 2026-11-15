@@ -10,6 +10,8 @@ city: "רמת ישי"
 address: "נרקיסים 11"
 phone: "04-625-2321"
 website: "https://www.geckoclimbing.co.il/"
+instagram: "https://www.instagram.com/geckoclimbing/"
+facebook: "https://www.facebook.com/geckoclimbing"
 hours:
   "א', ב', ד', ה'": "15:00-22:30"
   "ג'": "09:00-13:00, 15:00-22:30"

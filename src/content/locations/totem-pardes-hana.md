@@ -8,6 +8,8 @@ city: "פרדס חנה"
 address: "ערער 1"
 phone: "04-642-4849"
 website: "https://www.totemclimbing.co.il/"
+instagram: "https://www.instagram.com/totem_climbing/"
+facebook: "https://www.facebook.com/Totemclimbinghouse"
 hours:
   "א', ג', ד'": "15:00-22:30"
   "ב', ה'": "08:00-22:30"

@@ -8,6 +8,8 @@ city: "נשר"
 address: "החרושת 4"
 phone: "04-870-0296"
 website: "https://www.boulder.co.il/"
+instagram: "https://www.instagram.com/boulderhaifa/"
+facebook: "https://www.facebook.com/BoulderHaifa"
 hours:
   "א', ג', ה'": "07:00-23:00"
   "ב', ד'": "15:00-23:00"

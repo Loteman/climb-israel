@@ -152,6 +152,8 @@ const gymSchema = z.object({
     .optional(),
   phone: z.string().optional(),
   website: z.url().optional(),
+  instagram: z.url().optional(),
+  facebook: z.url().optional(),
 });
 
 const cragSchema = z.object({

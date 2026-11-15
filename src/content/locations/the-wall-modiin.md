@@ -11,6 +11,8 @@ city: "מודיעין"
 address: "עמק האלה 255"
 phone: "08-375-0575"
 website: "https://thewallmodiin.com/"
+instagram: "https://www.instagram.com/thewall_modiin/"
+facebook: "https://www.facebook.com/profile.php?id=61573763360468"
 hours:
   "א', ג', ה'": "16:00-23:00"
   "ב', ד'": "08:00-23:00"

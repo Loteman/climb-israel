@@ -10,6 +10,8 @@ chain: "iClimb"
 address: "שד' רוקח 42"
 phone: "050-213-7099"
 website: "https://iclimb.co.il/%D7%A1%D7%A0%D7%99%D7%A3-%D7%AA%D7%9C-%D7%90%D7%91%D7%99%D7%91-%D7%A8%D7%90%D7%A9%D7%99/"
+instagram: "https://www.instagram.com/iclimb_tlv/"
+facebook: "https://www.facebook.com/iclimbTLV"
 hours:
   "א'-ה'": "10:00-22:00"
   "ו'": "10:00-16:00"

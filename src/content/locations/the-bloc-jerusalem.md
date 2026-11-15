@@ -9,6 +9,8 @@ chain: "The Bloc"
 address: "יצחק אלישר"
 phone: "02-539-8991"
 website: "https://www.thebloc.co.il/jlm"
+instagram: "https://www.instagram.com/bloc_jlm/"
+facebook: "https://www.facebook.com/profile.php?id=61566535666998"
 hours:
   "א', ה'": "08:00-23:00"
   "ב', ד'": "10:00-23:00"
