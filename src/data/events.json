@@ -1,0 +1,88 @@
+[
+  {
+    "title": "טיפוס ישראל עלה לאוויר!",
+    "date": "2026-11-15",
+    "kind": "announcement",
+    "description": "קירות טיפוס, אתרי טבע ומדריכים, הכל במקום אחד - בחינם ובלי הרשמה.",
+    "url": "/אודות/",
+    "linkLabel": "עוד על הפרויקט",
+    "pinned": true
+  },
+  {
+    "title": "מבצע נעלי טיפוס Scarpa Vapor S",
+    "date": "2026-11-15",
+    "endDate": "2026-11-29",
+    "place": "גקו קיר שגיא, רמת ישי",
+    "kind": "sale",
+    "description": "זוג נעלי Vapor S ב-500 ₪, לשבועיים בלבד ולפי המידות במלאי.",
+    "url": "https://www.instagram.com/p/DfxDqD9Mroc/",
+    "source": "Instagram · גקו"
+  },
+  {
+    "title": "ערב סטודנטים בבולדר",
+    "date": "2026-11-16",
+    "place": "בולדר, נשר",
+    "kind": "special",
+    "description": "ערב פתיחת סמסטר לסטודנטים: טיפוס עם מדריכים על המזרן, סנגרייה חמה ומבצעים מיוחדים לסטודנטים.",
+    "url": "https://www.instagram.com/p/De7L_yNM8S7/",
+    "source": "Instagram · בולדר"
+  },
+  {
+    "title": "יום הסטודנט: 1+1 על כניסה",
+    "date": "2026-11-17",
+    "place": "פרפורמנס רוק, תל אביב",
+    "kind": "sale",
+    "description": "לכבוד יום הסטודנט הבינלאומי, 1+1 על כניסה חד-פעמית בהצגת תעודת סטודנט.",
+    "url": "https://www.instagram.com/p/DfufLS8omlI/",
+    "source": "Instagram · פרפורמנס רוק"
+  },
+  {
+    "title": "סימולציית ליגת העל ותחרות ליגה ארצית לנוער",
+    "date": "2026-11-17",
+    "endDate": "2026-11-20",
+    "place": "פרפורמנס רוק, חיפה",
+    "kind": "competition",
+    "description": "שבוע תחרויות בקיר, ב-17.11 וב-20.11. בזמן התחרויות חלק מהסקטורים סגורים לקהל ושאר הקיר פתוח.",
+    "url": "https://www.instagram.com/p/Dfw39OtDZ-j/",
+    "source": "Instagram · פרפורמנס רוק חיפה"
+  },
+  {
+    "title": "פסטיבל העשור של המאנקיז",
+    "date": "2026-11-19",
+    "place": "מאנקיז, נתניה",
+    "kind": "special",
+    "description": "פסטיבל טיפוס גדול לכבוד עשר שנים לקיר. הכניסה חינם למנויים.",
+    "url": "https://www.instagram.com/p/DfU04DJsrqZ/",
+    "source": "Instagram · מאנקיז"
+  },
+  {
+    "title": "Late Night Session בבלוק",
+    "date": "2026-11-26",
+    "time": "18:00-01:00",
+    "place": "הבלוק, תל אביב",
+    "kind": "special",
+    "description": "ערב טיפוס עד אחרי חצות בשיתוף לה ספורטיבה: בנייה מיוחדת על חצי מהקיר, די-ג'יי, אוכל, אתגרים והגרלות.",
+    "url": "https://www.instagram.com/p/DfmwEMRulZV/",
+    "source": "Instagram · הבלוק תל אביב"
+  },
+  {
+    "title": "ליגה ארצית לילדים ונוער",
+    "date": "2026-12-04",
+    "time": "09:00-15:30",
+    "place": "פרפורמנס רוק, תל אביב",
+    "kind": "competition",
+    "description": "סבב של הליגה הארצית בקטגוריות U15 עד U19. ההרשמה בקישור שבפרופיל של הקיר.",
+    "url": "https://www.instagram.com/p/Dfw3itDozK0/",
+    "source": "Instagram · פרפורמנס רוק"
+  },
+  {
+    "title": "תחרות קהילה למנויים",
+    "date": "2026-12-04",
+    "time": "16:00-17:30",
+    "place": "פרפורמנס רוק, תל אביב",
+    "kind": "competition",
+    "description": "תחרות קהילתית עם פרסים למנויי הקיר מגיל 18, בשני מקצים לפי גיל לנשים ולגברים.",
+    "url": "https://www.instagram.com/p/DfxLS49IeMi/",
+    "source": "Instagram · פרפורמנס רוק"
+  }
+]

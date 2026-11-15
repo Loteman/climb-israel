@@ -1,0 +1,287 @@
+---
+// "אירועים קרובים": a swipeable carousel of rounded event cards with dots
+// underneath (the current one stands out). It advances every 7 seconds
+// unless the visitor is interacting with it, has paused it, or prefers
+// reduced motion - auto-moving content needs a pause control (WCAG 2.2.2).
+import { withBase } from "../../lib/url";
+import { EVENT_KIND_LABELS, expiresOn, upcomingEvents } from "../../data/events";
+import { SITE_NAME, contactUrl } from "../../site-config";
+
+const events = upcomingEvents();
+// Gyms and organisers can send an event the Instagram scan wouldn't find.
+const submitEventUrl = contactUrl(
+  `${SITE_NAME} - אירוע חדש`,
+  ["שם האירוע:", "תאריך ושעה:", "מקום:", "קישור לפרטים:", "כמה מילים על האירוע:"].join("\n"),
+);
+const dateParts = (iso: string) => {
+  const d = new Date(`${iso}T12:00:00+02:00`);
+  const fmt = (opts: Intl.DateTimeFormatOptions) =>
+    new Intl.DateTimeFormat("he-IL", { timeZone: "Asia/Jerusalem", ...opts }).format(d);
+  return { day: fmt({ day: "numeric" }), month: fmt({ month: "short" }), weekday: fmt({ weekday: "long" }) };
+};
+---
+
+{
+  events.length > 0 && (
+    <section aria-labelledby="events-title" class="mx-auto max-w-3xl px-4 pt-5 sm:px-6 sm:pt-12">
+      <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+        <h2 id="events-title" class="font-display text-2xl font-bold text-ink">
+          אירועים קרובים
+        </h2>
+        <a href={submitEventUrl} class="py-2 font-body text-sm font-bold text-rope hover:underline">
+          יש לכם אירוע? ספרו לנו
+        </a>
+      </div>
+
+      <div class="mt-2 sm:mt-5" data-events-carousel aria-roledescription="קרוסלה" aria-label="אירועים קרובים">
+        {/* items-start + a JS-set height: the track is as tall as the card
+            being shown, not the tallest card (no empty space under short ones). */}
+        <div
+          class="flex snap-x snap-mandatory items-start gap-4 overflow-x-auto overflow-y-hidden transition-[height] duration-300 [scrollbar-width:none] motion-reduce:transition-none [&::-webkit-scrollbar]:hidden"
+          data-track
+        >
+          {events.map((event, i) => {
+            const { day, month, weekday } = dateParts(event.date);
+            const internal = event.url?.startsWith("/");
+            return (
+              <article
+                class="w-full shrink-0 snap-center rounded-2xl border border-stone/50 bg-paper-dark p-4 sm:p-6"
+                role="group"
+                aria-roledescription="אירוע"
+                aria-label={`${i + 1} מתוך ${events.length}: ${event.title}`}
+                data-title={event.title}
+                data-expires={expiresOn(event)}
+                data-slide
+              >
+                <div class="flex items-start gap-4">
+                  <div class="flex w-16 shrink-0 flex-col items-center rounded-xl border-2 border-rope/70 py-2 text-center text-rope sm:w-20">
+                    <span class="font-display text-3xl font-bold leading-none sm:text-4xl">{day}</span>
+                    <span class="mt-1 font-body text-sm font-bold">{month}</span>
+                  </div>
+                  <div class="min-w-0 flex-1">
+                    <span class="inline-block rounded-full border border-dashed border-rust px-2.5 py-0.5 font-body text-xs font-bold text-rust">
+                      {EVENT_KIND_LABELS[event.kind]}
+                    </span>
+                    <h3 class="mt-2 font-display text-lg font-bold leading-snug text-ink sm:text-xl">
+                      {event.title}
+                    </h3>
+                    <p class="mt-1 font-body text-sm text-ink-soft">
+                      {event.place && (
+                        <>
+                          <bdi>{event.place}</bdi>
+                          {" · "}
+                        </>
+                      )}
+                      {weekday}
+                      {event.endDate && ` · עד ${dateParts(event.endDate).day} ב${dateParts(event.endDate).month}`}
+                      {event.time && ` · ${event.time}`}
+                    </p>
+                    <p class="mt-2 line-clamp-3 text-sm leading-relaxed text-ink">{event.description}</p>
+                    {event.url && (
+                      <a
+                        href={internal ? withBase(event.url) : event.url}
+                        {...(internal ? {} : { target: "_blank", rel: "noopener noreferrer" })}
+                        class="mt-1 -mb-2 inline-block py-2 font-body text-sm font-bold text-rope hover:underline"
+                      >
+                        {event.linkLabel ?? "לפרטים"} ←
+                      </a>
+                    )}
+                    {event.source && !event.url && (
+                      <p class="mt-2 font-body text-xs text-ink-soft">מקור: {event.source}</p>
+                    )}
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+
+        {events.length > 1 && (
+          <div class="mt-1 flex items-center justify-center gap-1">
+            <button
+              type="button"
+              class="flex h-9 w-9 items-center justify-center rounded-full text-ink-soft hover:text-rust"
+              aria-label="עצירת המעבר האוטומטי"
+              data-pause
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" data-icon-pause>
+                <rect x="2.5" y="2" width="3" height="10" rx="1" fill="currentColor" />
+                <rect x="8.5" y="2" width="3" height="10" rx="1" fill="currentColor" />
+              </svg>
+              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" class="hidden" data-icon-play>
+                <path d="M11.5 7 4 2.5v9z" fill="currentColor" />
+              </svg>
+            </button>
+            {events.map((event, i) => (
+              <button
+                type="button"
+                class="group flex h-9 min-w-6 items-center justify-center px-1"
+                aria-label={`אירוע ${i + 1} מתוך ${events.length}: ${event.title}`}
+                data-dot
+              >
+                <span class="block h-2 w-2 rounded-full bg-stone/60 transition-all duration-300 group-hover:bg-rust group-data-[active]:w-6 group-data-[active]:bg-rope" />
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
+<script>
+  const AUTOPLAY_MS = 7000;
+
+  document.querySelectorAll<HTMLElement>("[data-events-carousel]").forEach((root) => {
+    const track = root.querySelector<HTMLElement>("[data-track]")!;
+    const pauseButton = root.querySelector<HTMLButtonElement>("[data-pause]");
+
+    // The page is static, so an event that expired since the last deploy
+    // (EXPIRE_AFTER_DAYS after its date) is removed here, with its dot.
+    const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Jerusalem" }).format(new Date());
+    const allDots = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-dot]"));
+    Array.from(root.querySelectorAll<HTMLElement>("[data-slide]")).forEach((slide, i) => {
+      if ((slide.dataset.expires ?? "") < today) {
+        slide.remove();
+        allDots[i]?.remove();
+      }
+    });
+    const slides = Array.from(root.querySelectorAll<HTMLElement>("[data-slide]"));
+    const dots = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-dot]"));
+    if (slides.length === 0) {
+      root.closest("section")?.remove();
+      return;
+    }
+    slides.forEach((slide, i) => {
+      const label = `${i + 1} מתוך ${slides.length}: ${slide.dataset.title}`;
+      slide.setAttribute("aria-label", label);
+      dots[i]?.setAttribute("aria-label", `אירוע ${label}`);
+    });
+    if (slides.length < 2) {
+      pauseButton?.parentElement?.remove();
+      return;
+    }
+
+    let current = 0;
+    let timer: number | undefined;
+    let pausedByUser = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let hovering = false;
+    let focusInside = false;
+    let visible = false;
+
+    // Scroll so slide i is centred in the track. Works in RTL too, because it
+    // moves by the slide's distance from where it should be, not to an
+    // absolute (direction-dependent) scrollLeft.
+    function goTo(i: number) {
+      const slide = slides[i];
+      const trackBox = track.getBoundingClientRect();
+      const box = slide.getBoundingClientRect();
+      const delta = box.left - trackBox.left - (trackBox.width - box.width) / 2;
+      track.scrollTo({ left: track.scrollLeft + delta, behavior: "smooth" });
+    }
+
+    // Size the track to the slides currently in view: mid-swipe that's both
+    // neighbours (so neither is clipped), once settled just the one shown.
+    function fitHeight() {
+      const trackBox = track.getBoundingClientRect();
+      const inView = slides.filter((s) => {
+        const b = s.getBoundingClientRect();
+        return b.right > trackBox.left + 1 && b.left < trackBox.right - 1;
+      });
+      const height = Math.max(...(inView.length ? inView : [slides[current]]).map((s) => s.offsetHeight));
+      track.style.height = `${height}px`;
+    }
+
+    function markActive(i: number) {
+      current = i;
+      fitHeight();
+      dots.forEach((dot, d) => {
+        dot.toggleAttribute("data-active", d === i);
+        if (d === i) dot.setAttribute("aria-current", "true");
+        else dot.removeAttribute("aria-current");
+      });
+    }
+
+    // Which slide is centred right now (after a swipe or a programmatic move).
+    function nearest() {
+      const centre = track.getBoundingClientRect().left + track.clientWidth / 2;
+      let best = 0;
+      let bestDist = Infinity;
+      slides.forEach((s, i) => {
+        const b = s.getBoundingClientRect();
+        const dist = Math.abs(b.left + b.width / 2 - centre);
+        if (dist < bestDist) [best, bestDist] = [i, dist];
+      });
+      return best;
+    }
+
+    function schedule() {
+      window.clearTimeout(timer);
+      if (pausedByUser || hovering || focusInside || !visible || document.hidden) return;
+      timer = window.setTimeout(() => goTo((current + 1) % slides.length), AUTOPLAY_MS);
+    }
+
+    // Settle on the centred slide once scrolling stops (scrollend where
+    // supported, a short debounce otherwise), then restart the 7s countdown.
+    let settle: number | undefined;
+    track.addEventListener("scroll", () => {
+      fitHeight();
+      window.clearTimeout(settle);
+      settle = window.setTimeout(() => {
+        markActive(nearest());
+        schedule();
+      }, 120);
+    });
+
+    dots.forEach((dot, i) => dot.addEventListener("click", () => goTo(i)));
+
+    pauseButton?.addEventListener("click", () => {
+      pausedByUser = !pausedByUser;
+      pauseButton.setAttribute("aria-label", pausedByUser ? "הפעלת המעבר האוטומטי" : "עצירת המעבר האוטומטי");
+      pauseButton.querySelector("[data-icon-pause]")?.classList.toggle("hidden", pausedByUser);
+      pauseButton.querySelector("[data-icon-play]")?.classList.toggle("hidden", !pausedByUser);
+      schedule();
+    });
+    if (pausedByUser && pauseButton) {
+      pauseButton.setAttribute("aria-label", "הפעלת המעבר האוטומטי");
+      pauseButton.querySelector("[data-icon-pause]")?.classList.add("hidden");
+      pauseButton.querySelector("[data-icon-play]")?.classList.remove("hidden");
+    }
+
+    // Hold still while a pointer rests on it or keyboard focus is inside -
+    // nobody wants the card to slide away mid-read.
+    root.addEventListener("pointerenter", (e) => {
+      if (e.pointerType === "mouse") {
+        hovering = true;
+        schedule();
+      }
+    });
+    root.addEventListener("pointerleave", () => {
+      hovering = false;
+      schedule();
+    });
+    root.addEventListener("focusin", () => {
+      focusInside = true;
+      schedule();
+    });
+    root.addEventListener("focusout", (e) => {
+      if (!root.contains(e.relatedTarget as Node)) {
+        focusInside = false;
+        schedule();
+      }
+    });
+
+    // Only run while the carousel is on screen and the tab is visible.
+    new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        schedule();
+      },
+      { threshold: 0.5 },
+    ).observe(root);
+    document.addEventListener("visibilitychange", schedule);
+    window.addEventListener("resize", fitHeight);
+
+    markActive(0);
+  });
+</script>

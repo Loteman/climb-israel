@@ -17,9 +17,10 @@ export const SITE_NAME = "טיפוס ישראל";
 // "צרו קשר" link on the site is built from this address.
 export const CONTACT_EMAIL = "lotemangames@gmail.com";
 
-/** mailto: link to CONTACT_EMAIL, with a pre-filled subject line. */
-export function contactUrl(subject = SITE_NAME): string {
-  return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}`;
+/** mailto: link to CONTACT_EMAIL, with a pre-filled subject (and optional body). */
+export function contactUrl(subject = SITE_NAME, body?: string): string {
+  const query = `subject=${encodeURIComponent(subject)}${body ? `&body=${encodeURIComponent(body)}` : ""}`;
+  return `mailto:${CONTACT_EMAIL}?${query}`;
 }
 
 // Content license. Covers only the site's own original material - third-
