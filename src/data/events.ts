@@ -42,6 +42,10 @@ export interface ClimbingEvent {
   pinned?: boolean;
   /** Never expires - stays up until it's removed from events.json by hand. */
   noExpiry?: boolean;
+  /** An association competition (national league, super-league simulation)
+   *  found through a gym's post - filed under "התאחדות" like the ones taken
+   *  from the association's own list. */
+  association?: boolean;
 }
 
 export const EVENTS = eventsJson as ClimbingEvent[];

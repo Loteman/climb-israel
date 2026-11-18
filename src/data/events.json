@@ -27,7 +27,18 @@
     "kind": "competition",
     "description": "שבוע תחרויות בקיר, ב-17.11 וב-20.11. בזמן התחרויות חלק מהסקטורים סגורים לקהל ושאר הקיר פתוח.",
     "url": "https://www.instagram.com/p/Dfw39OtDZ-j/",
-    "source": "Instagram · פרפורמנס רוק חיפה"
+    "source": "Instagram · פרפורמנס רוק חיפה",
+    "association": true
+  },
+  {
+    "title": "הגרלה על זוג נעלי Scarpa Vapor S",
+    "date": "2026-11-17",
+    "endDate": "2026-11-24",
+    "place": "גקו קיר שגיא, רמת ישי",
+    "kind": "sale",
+    "description": "מצלמים את עצמכם על מסלול מהבנייה החדשה בקירות הגבוהים, מעלים לאינסטגרם ומתייגים את הקיר. כל סרטון עד 24.11 נכנס להגרלה.",
+    "url": "https://www.facebook.com/geckoclimbing/posts/pfbid02YuTL4YRtmVtHdCZTw5xtryydRCnyg5xQ9vrmuKWEFpiNUwZgM8f5jdXrxzLcWPqRl",
+    "source": "Facebook · גקו"
   },
   {
     "title": "פסטיבל העשור של המאנקיז",
@@ -82,6 +93,15 @@
     "source": "Instagram · הבלוק תל אביב"
   },
   {
+    "title": "Monkey Madness",
+    "date": "2026-11-26",
+    "place": "מאנקיז, אשדוד",
+    "kind": "special",
+    "description": "ערב מיוחד בקיר: בנייה חדשה ומיוחדת, אוכל, עמדות נינטנדו עם פרסים ועוד הפתעות.",
+    "url": "https://www.facebook.com/monkeysclimbinggymashdod/posts/pfbid0FLJjmEW8pNiywF6jVCfYxU6zmvGQxFs5RoguyKzjK55acpjLhMHtpu9s3vErNHmUl",
+    "source": "Facebook · מאנקיז אשדוד"
+  },
+  {
     "title": "ליגה ארצית לילדים ונוער",
     "date": "2026-12-04",
     "time": "09:00-15:30",
@@ -89,7 +109,8 @@
     "kind": "competition",
     "description": "סבב של הליגה הארצית בקטגוריות U15 עד U19. ההרשמה בקישור שבפרופיל של הקיר.",
     "url": "https://www.instagram.com/p/Dfw3itDozK0/",
-    "source": "Instagram · פרפורמנס רוק"
+    "source": "Instagram · פרפורמנס רוק",
+    "association": true
   },
   {
     "title": "תחרות קהילה למנויים",

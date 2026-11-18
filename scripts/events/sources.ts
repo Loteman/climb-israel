@@ -1,6 +1,7 @@
-// Lists where events are looked for: every gym's Instagram account (from the
-// gym pages' data, one entry per account - chains sharing an account appear
-// once) and the climbing association's competitions page.
+// Lists where events are looked for: every gym's Instagram account and
+// Facebook page (from the gym pages' data, one entry per account - chains
+// sharing an account appear once) and the climbing association's
+// competitions page.
 // Run: npm run events:sources
 import fs from "node:fs";
 import path from "node:path";
@@ -14,16 +15,27 @@ export const ILCA_COMPETITIONS_URL =
 const dir = path.resolve(import.meta.dirname, "../../src/content/locations");
 const field = (text: string, name: string) => text.match(new RegExp(`^${name}: "?([^"\\n]*)"?$`, "m"))?.[1];
 
-const accounts = new Map<string, { account: string; instagram: string; gyms: string[] }>();
+type Account = { account: string; url: string; gyms: string[] };
+const instagram = new Map<string, Account>();
+const facebook = new Map<string, Account>();
+function add(map: Map<string, Account>, url: string, account: string, gym: string) {
+  const entry = map.get(account) ?? { account, url, gyms: [] };
+  entry.gyms.push(gym);
+  map.set(account, entry);
+}
+
 for (const file of fs.readdirSync(dir).filter((f) => f.endsWith(".md")).sort()) {
   const front = fs.readFileSync(path.join(dir, file), "utf8").split("---")[1] ?? "";
   if (field(front, "kind") !== "gym") continue;
-  const instagram = field(front, "instagram");
-  if (!instagram) continue;
-  const account = instagram.replace(/^https?:\/\/(www\.)?instagram\.com\//, "").replace(/\/.*$/, "");
-  const entry = accounts.get(account) ?? { account, instagram, gyms: [] };
-  entry.gyms.push(field(front, "name") ?? file.replace(/\.md$/, ""));
-  accounts.set(account, entry);
+  const gym = field(front, "name") ?? file.replace(/\.md$/, "");
+  const ig = field(front, "instagram");
+  if (ig) add(instagram, ig, ig.replace(/^https?:\/\/(www\.)?instagram\.com\//, "").replace(/\/.*$/, ""), gym);
+  // Facebook pages come as /name, /profile.php?id=N or /p/Name-N/ - the URL
+  // itself is the key (chains like Performance Rock share one page).
+  const fb = field(front, "facebook");
+  if (fb) add(facebook, fb, fb.replace(/^https?:\/\/(www\.)?facebook\.com\//, "").replace(/\/$/, ""), gym);
 }
 
-console.log(JSON.stringify({ ilca: ILCA_COMPETITIONS_URL, instagram: [...accounts.values()] }, null, 2));
+console.log(
+  JSON.stringify({ ilca: ILCA_COMPETITIONS_URL, instagram: [...instagram.values()], facebook: [...facebook.values()] }, null, 2),
+);

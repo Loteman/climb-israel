@@ -19,7 +19,7 @@ const shownCount = events.filter((e) => !notYet(e)).length;
 // everything else (special evenings, festivals, meetups, the site's own news).
 const ASSOCIATION = "התאחדות הטיפוס";
 const groupOf = (e: (typeof events)[number]) =>
-  e.source === ASSOCIATION ? "association" : e.kind === "competition" ? "competition" : e.kind === "sale" ? "deals" : "special";
+  e.source === ASSOCIATION || e.association ? "association" : e.kind === "competition" ? "competition" : e.kind === "sale" ? "deals" : "special";
 const groups = new Set(events.map(groupOf));
 // Only groups that have an event get a button, and the filter is only worth
 // showing when there are at least two of them.

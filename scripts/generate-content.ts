@@ -1991,7 +1991,8 @@ const CROWD_SOURCE_NOTE =
 // good enough for a coarse filter, not a claim of official geography.
 // Closed - don't re-add (ILCA's list can still show some of them):
 // Performance Modiin, Boulderland/iClimb Kfar Saba, Kir HaOgen, Kir Ono/
-// Ayelet, iClimb Manara, Koala (Kfar Etzion, closed late 2026).
+// Ayelet, iClimb Manara, Koala (Kfar Etzion, closed late 2026), Vking
+// (Tel Aviv, closed 2026 - confirmed by the user 2026-11-19).
 const gyms: GymLocation[] = [
   { slug: "geko-kir-shagi", kind: "gym", name: "גקו קיר שגיא", city: "רמת ישי", region: "north", address: "נרקיסים 11", phone: "04-625-2321", website: "https://www.geckoclimbing.co.il/", styles: ["lead", "top-rope", "bouldering"], description: "קיר טיפוס ותיק ברמת ישי, שהוקם ב-1993 לזכרו של שגיא בלאו. מציע טיפוס בהובלה ובטופ-רופ לצד אזור בולדרינג, וחוגים לכל הגילאים.", coordinates: { lat: 32.70017, lng: 35.16497 }, hours: { "א', ב', ד', ה'": "15:00-22:30", "ג'": "09:00-13:00, 15:00-22:30", "ו'": "10:00-17:00", "ש'": "10:00-21:45" } },
   { slug: "venga", kind: "gym", name: "ונגה", city: "פתח תקווה", region: "center", address: "שוולב 7", phone: "03-904-2447", website: "https://www.vengavenga.co.il/", styles: ["bouldering"], description: "מרכז בולדרינג ותיק וממוזג בפתח תקווה (מאז 2010), בקומה השנייה, עם מסלולים בכל הרמות.", coordinates: { lat: 32.10654, lng: 34.89336 }, hours: { "א'-ה'": "15:00-23:00", "ו'": "10:00-18:00", "ש'": "12:00-22:00" } },
@@ -2003,7 +2004,6 @@ const gyms: GymLocation[] = [
   { slug: "campus-karmiel", kind: "gym", name: "קמפוס", city: "כרמיאל", region: "north", address: "החרמש 9", phone: "04-606-0536", website: "https://www.campuswall.co.il/", styles: ["bouldering"], coordinates: { lat: 32.92323, lng: 35.31145 }, hours: { "א', ה'": "16:00-23:00", "ב'-ד'": "16:00-22:00", "ו'": "10:00-16:00", "ש'": "11:00-18:00" } },
   { slug: "the-wall-modiin", kind: "gym", name: "THE WALL", city: "מודיעין", region: "shfela", address: "עמק האלה 255", phone: "08-375-0575", website: "https://thewallmodiin.com/", styles: ["bouldering", "lead", "top-rope", "speed"], description: "מתחם טיפוס מגוון במודיעין: קיר הובלה וטופ-רופ עם 14 מכשירי אבטחה אוטומטית, קיר ספיד וקיר בולדר תחרותי.", coordinates: { lat: 31.91419, lng: 35.00576 }, hours: { "א', ג', ה'": "16:00-23:00", "ב', ד'": "08:00-23:00", "ו'": "08:00-16:00", "ש'": "08:00-23:00" } },
   { slug: "the-bloc-jerusalem", kind: "gym", name: "הבלוק ירושלים", chain: "The Bloc", city: "ירושלים", region: "jerusalem", address: "יצחק אלישר", phone: "02-539-8991", website: "https://www.thebloc.co.il/jlm", styles: ["bouldering"], coordinates: { lat: 31.77885, lng: 35.22579 }, hours: { "א', ה'": "08:00-23:00", "ב', ד'": "10:00-23:00", "ג'": "16:00-19:00 (19:00-23:00 מנויים בלבד)", "ו'": "08:00-17:00", "ש'": "10:00-23:00" } },
-  { slug: "vking-tel-aviv", kind: "gym", name: "ויקינג תל אביב", city: "תל אביב", region: "center", address: "השלושה 3", phone: "03-635-3600", website: "https://vking.co.il/", styles: ["bouldering"], coordinates: { lat: 32.06215, lng: 34.78885 }, hours: { "א'-ג', ה'": "07:00-23:00", "ד'": "15:00-23:00", "ו'": "09:00-17:00", "ש'": "12:00-22:00" } },
   { slug: "the-bloc-tel-aviv", kind: "gym", name: "הבלוק תל אביב", chain: "The Bloc", city: "תל אביב", region: "center", address: "המרץ 4", phone: "03-544-8769", website: "https://www.thebloc.co.il/tlv", styles: ["bouldering"], coordinates: { lat: 32.05125, lng: 34.7727 }, hours: { "א'": "16:00-23:00", "ב'-ה'": "08:00-23:00", "ו'": "09:00-16:00", "ש'": "09:00-22:00" } },
   { slug: "kir-yoav-haifa", kind: "gym", name: "קיר יואב", city: "חיפה", region: "north", address: "פלימן (מתחם X-Park)", phone: "04-855-1616", website: "https://www.shafan-hasela.com/he/%D7%A7%D7%99%D7%A8-%D7%99%D7%95%D7%90%D7%91/", styles: ["lead", "top-rope"], description: "קיר טיפוס פנימי וחיצוני במתחם X-Park בחיפה, צמוד למרכז הקונגרסים, לטיפוס בהובלה ובטופ-רופ. מופעל על ידי שפן הסלע ומקיים חוגים לכל הגילאים.", coordinates: { lat: 32.79025, lng: 34.96405 }, hours: { "א'-ה'": "16:00-22:00", "ו'": "10:00-13:00", "ש'": "סגור" } },
   { slug: "levin-climbing-hadera", kind: "gym", name: "לוין מרכז טיפוס", city: "חדרה", region: "sharon", address: "צה\"ל 35", phone: "04-662-7313", website: "https://www.levinclimbing.co.il/", styles: ["bouldering"], coordinates: { lat: 32.44074, lng: 34.94011 }, hours: { "א', ג'": "15:30-22:00", "ב', ד'": "15:30-23:00", "ה'": "10:00-23:00", "ו'": "10:00-17:00", "ש'": "10:00-22:00" } },
@@ -2093,16 +2093,6 @@ const GYM_AMENITIES: Record<string, [AmenityType, string?][]> = {
     ["food", "בר קפה ומשקאות בריאות"],
   ],
   "the-wall-modiin": [["spray", "25 ו-35 מעלות"], ["campus"], ["kids", "קיר ילדים"]],
-  "vking-tel-aviv": [
-    ["moonboard"],
-    ["campus"],
-    ["training", "שני קירות אימונים, משקולות חופשיות, TRX ומתקני סטריט וורקאוט"],
-    ["studio", "אזור יוגה"],
-    ["shop", "נעלי טיפוס, שקי מגנזיום ופינגרבורדים"],
-    ["food", "בר בירה"],
-    ["kids", "טיפוס לגיל הרך"],
-    ["lockers"],
-  ],
   "kir-yoav-haifa": [["shop", "ציוד טיפוס מקצועי"]],
   "levin-climbing-hadera": [
     ["training", "חדר טוקיו - חדר אימונים ברמה עולמית (מגיל 14) וחדר כושר ייעודי לטיפוס"],
@@ -2214,7 +2204,6 @@ const GYM_SETTING: Record<string, "indoor" | "outdoor" | "both"> = {
   "campus-karmiel": "indoor",
   "the-bloc-jerusalem": "indoor",
   "the-bloc-tel-aviv": "indoor",
-  "vking-tel-aviv": "indoor",
   "levin-climbing-hadera": "indoor",
   "boulder-haifa": "indoor",
   "desert-climbing": "indoor",
@@ -2259,7 +2248,7 @@ const GYM_SOCIAL: Record<string, { instagram?: string; facebook?: string }> = {
   "performance-rock-haifa": { instagram: "https://www.instagram.com/prockhaifa/", facebook: "https://www.facebook.com/p/Performance-Rock-Haifa-61595320379900/" },
   "performance-rock-tel-aviv": { instagram: "https://www.instagram.com/performancerocktlv/", facebook: "https://www.facebook.com/PerformanceRock.ClimbingGym" },
   "roca-afikim": { instagram: "https://www.instagram.com/roca_climbing/", facebook: "https://www.facebook.com/rocaclimbingclub" },
-  "rockiz-holon": { instagram: "https://www.instagram.com/rockiz_climbing/", facebook: "https://www.facebook.com/Rockiz-%D7%A8%D7%95%D7%A7%D7%99%D7%96-%D7%97%D7%95%D7%9C%D7%95%D7%9F-2432686780295385" },
+  "rockiz-holon": { instagram: "https://www.instagram.com/rockiz.climb/", facebook: "https://www.facebook.com/Rockiz-%D7%A8%D7%95%D7%A7%D7%99%D7%96-%D7%97%D7%95%D7%9C%D7%95%D7%9F-2432686780295385" },
   "rujum": { instagram: "https://www.instagram.com/rujumclimbinggym/", facebook: "https://www.facebook.com/rujumclimbinggym" },
   "sragim": { instagram: "https://www.instagram.com/srigym/" },
   "the-bloc-jerusalem": { instagram: "https://www.instagram.com/bloc_jlm/", facebook: "https://www.facebook.com/profile.php?id=61566535666998" },
@@ -2270,7 +2259,6 @@ const GYM_SOCIAL: Record<string, { instagram?: string; facebook?: string }> = {
   "urban-climbing-jerusalem": { instagram: "https://www.instagram.com/uclimbj/", facebook: "https://www.facebook.com/p/%D7%98%D7%99%D7%A4%D7%95%D7%A1-%D7%90%D7%95%D7%A8%D7%91%D7%A0%D7%99-%D7%99%D7%A8%D7%95%D7%A9%D7%9C%D7%99%D7%9D-100064291440816/" },
   "urban-climbing-rehovot": { instagram: "https://www.instagram.com/uclimbr/", facebook: "https://www.facebook.com/uclimb" },
   "venga": { instagram: "https://www.instagram.com/vengaclimbinggym/", facebook: "https://www.facebook.com/Venga.Petah.Tikva" },
-  "vking-tel-aviv": { instagram: "https://www.instagram.com/vkingclimb/", facebook: "https://www.facebook.com/vkingclimb" },
 };
 
 // Opening hours were taken from each gym's own website in October 2026.
