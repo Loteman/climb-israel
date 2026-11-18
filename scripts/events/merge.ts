@@ -3,12 +3,14 @@
 //   npm run events:merge                        just drop the expired ones
 //
 // Each candidate is checked (required fields, real dates, known kind, a link
-// to its source). An event is identified by its link + date, so running again
-// over the same posts updates instead of duplicating. Expired events
-// (EXPIRE_AFTER_DAYS after their date) are removed from the file.
+// to its source). An event is identified by its link + date + place (one
+// association page lists many competitions), so running again over the same
+// sources updates instead of duplicating. Expired events (EXPIRE_AFTER_DAYS
+// after their date) are removed from the file; ones too far ahead to show yet
+// (SHOW_BEFORE_DAYS) stay in it and appear on their own when the time comes.
 import fs from "node:fs";
 import path from "node:path";
-import { EVENT_KIND_LABELS, expiresOn, israelToday, upcomingEvents, type ClimbingEvent } from "../../src/data/events.ts";
+import { EVENT_KIND_LABELS, expiresOn, israelToday, showsFrom, upcomingEvents, type ClimbingEvent } from "../../src/data/events.ts";
 
 const FILE = path.resolve(import.meta.dirname, "../../src/data/events.json");
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
@@ -24,7 +26,7 @@ function problems(e: Partial<ClimbingEvent>): string[] {
   return out;
 }
 
-const key = (e: ClimbingEvent) => `${e.url ?? ""}|${e.date}`;
+const key = (e: ClimbingEvent) => `${e.url ?? ""}|${e.date}|${e.place ?? ""}`;
 const existing: ClimbingEvent[] = JSON.parse(fs.readFileSync(FILE, "utf8"));
 const byKey = new Map(existing.map((e) => [key(e), e]));
 
@@ -58,4 +60,7 @@ for (const e of expired) console.log(`  expired: ${e.date} ${e.title}`);
 console.log(
   `events.json: ${kept.length} events (added ${added}, updated ${updated}, rejected ${rejected}, expired removed ${expired.length})`,
 );
-for (const e of kept) console.log(`  ${e.date}${e.endDate ? `-${e.endDate}` : ""}  [${e.kind}] ${e.title}${e.source ? `  (${e.source})` : ""}`);
+for (const e of kept) {
+  const waiting = showsFrom(e) > today ? `  (shows from ${showsFrom(e)})` : "";
+  console.log(`  ${e.date}${e.endDate ? `-${e.endDate}` : ""}  [${e.kind}] ${e.title}${e.source ? `  (${e.source})` : ""}${waiting}`);
+}

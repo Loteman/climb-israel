@@ -4,10 +4,36 @@
 // unless the visitor is interacting with it, has paused it, or prefers
 // reduced motion - auto-moving content needs a pause control (WCAG 2.2.2).
 import { withBase } from "../../lib/url";
-import { EVENT_KIND_LABELS, expiresOn, upcomingEvents } from "../../data/events";
+import { EVENT_KIND_LABELS, expiresOn, israelToday, showsFrom, upcomingEvents } from "../../data/events";
 import { SITE_NAME, contactUrl } from "../../site-config";
 
+// Every event that hasn't expired goes into the page, so the visitor's
+// browser can bring one in when its SHOW_BEFORE_DAYS window opens, even if the
+// site hasn't been rebuilt since. Ones not in their window yet start hidden.
 const events = upcomingEvents();
+const today = israelToday();
+const notYet = (e: (typeof events)[number]) => showsFrom(e) > today;
+const shownCount = events.filter((e) => !notYet(e)).length;
+// Filter groups: the climbing association's competitions (national league
+// and simulations), the gyms' own competitions, sales, and "אירועים" for
+// everything else (special evenings, festivals, meetups, the site's own news).
+const ASSOCIATION = "התאחדות הטיפוס";
+const groupOf = (e: (typeof events)[number]) =>
+  e.source === ASSOCIATION ? "association" : e.kind === "competition" ? "competition" : e.kind === "sale" ? "deals" : "special";
+const groups = new Set(events.map(groupOf));
+// Only groups that have an event get a button, and the filter is only worth
+// showing when there are at least two of them.
+const FILTERS = [
+  { value: "all", label: "הכל" },
+  { value: "special", label: "אירועים" },
+  { value: "deals", label: "מבצעים" },
+  { value: "competition", label: "תחרויות" },
+  { value: "association", label: "התאחדות" },
+].filter((f) => f.value === "all" || groups.has(f.value));
+const showFilter = groups.size > 1;
+// More events than this and the dots make way for a numbered pager.
+const MAX_DOTS = 10;
+const usePager = shownCount > MAX_DOTS;
 // Gyms and organisers can send an event the Instagram scan wouldn't find.
 const submitEventUrl = contactUrl(
   `${SITE_NAME} - אירוע חדש`,
@@ -23,7 +49,11 @@ const dateParts = (iso: string) => {
 
 {
   events.length > 0 && (
-    <section aria-labelledby="events-title" class="mx-auto max-w-3xl px-4 pt-5 sm:px-6 sm:pt-12">
+    <section
+      aria-labelledby="events-title"
+      class:list={["mx-auto max-w-3xl px-4 pt-4 sm:px-6 sm:pt-12", shownCount === 0 && "hidden"]}
+      data-events-section
+    >
       <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
         <h2 id="events-title" class="font-display text-2xl font-bold text-ink">
           אירועים קרובים
@@ -34,6 +64,20 @@ const dateParts = (iso: string) => {
       </div>
 
       <div class="mt-2 sm:mt-5" data-events-carousel aria-roledescription="קרוסלה" aria-label="אירועים קרובים">
+        {showFilter && (
+          <div class="-mx-4 mb-2.5 flex gap-1.5 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:mb-3 sm:flex-wrap sm:gap-2 sm:px-0 [&::-webkit-scrollbar]:hidden" role="group" aria-label="סינון אירועים" data-filters>
+            {FILTERS.map((f) => (
+              <button
+                type="button"
+                class="shrink-0 whitespace-nowrap rounded-full border border-stone/60 px-2 py-1 font-body text-sm sm:px-3.5 sm:py-1.5 font-bold text-ink-soft transition-colors hover:border-rust hover:text-rust aria-pressed:border-rope aria-pressed:bg-rope aria-pressed:text-paper"
+                aria-pressed={f.value === "all" ? "true" : "false"}
+                data-filter={f.value}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+        )}
         {/* items-start + a JS-set height: the track is as tall as the card
             being shown, not the tallest card (no empty space under short ones). */}
         <div
@@ -42,27 +86,50 @@ const dateParts = (iso: string) => {
         >
           {events.map((event, i) => {
             const { day, month, weekday } = dateParts(event.date);
+            const end = event.endDate ? dateParts(event.endDate) : undefined;
+            const ongoing = Boolean(event.endDate) && event.date < today;
             const internal = event.url?.startsWith("/");
             return (
               <article
-                class="w-full shrink-0 snap-center rounded-2xl border border-stone/50 bg-paper-dark p-4 sm:p-6"
+                class:list={[
+                  "w-full shrink-0 snap-center rounded-2xl border border-stone/50 bg-paper-dark p-4 sm:p-6",
+                  notYet(event) && "hidden",
+                ]}
                 role="group"
                 aria-roledescription="אירוע"
                 aria-label={`${i + 1} מתוך ${events.length}: ${event.title}`}
                 data-title={event.title}
                 data-expires={expiresOn(event)}
+                data-from={showsFrom(event)}
+                data-start={event.date}
+                data-group={groupOf(event)}
                 data-slide
               >
                 <div class="flex items-start gap-4">
-                  <div class="flex w-16 shrink-0 flex-col items-center rounded-xl border-2 border-rope/70 py-2 text-center text-rope sm:w-20">
-                    <span class="font-display text-3xl font-bold leading-none sm:text-4xl">{day}</span>
-                    <span class="mt-1 font-body text-sm font-bold">{month}</span>
-                  </div>
-                  <div class="min-w-0 flex-1">
-                    <span class="inline-block rounded-full border border-dashed border-rust px-2.5 py-0.5 font-body text-xs font-bold text-rust">
+                  {/* Fixed-width column so every card's text starts at the same
+                      place, whatever the badge under the date says. */}
+                  <div class="flex w-20 shrink-0 flex-col items-center gap-2">
+                    <div class="flex w-full flex-col items-center rounded-xl border-2 border-rope/70 py-2 text-center text-rope">
+                      {/* A multi-day event that has already started shows its
+                          last day ("עד 29 נוב׳") instead of a start date in the past. */}
+                      <div class:list={["flex flex-col items-center", ongoing && "hidden"]} data-box-start>
+                        <span class="font-display text-3xl font-bold leading-none sm:text-4xl">{day}</span>
+                        <span class="mt-1 font-body text-sm font-bold">{month}</span>
+                      </div>
+                      {end && (
+                        <div class:list={["flex flex-col items-center", !ongoing && "hidden"]} data-box-end>
+                          <span class="mb-0.5 font-body text-xs font-bold leading-none">עד</span>
+                          <span class="font-display text-3xl font-bold leading-none sm:text-4xl">{end.day}</span>
+                          <span class="mt-1 font-body text-sm font-bold">{end.month}</span>
+                        </div>
+                      )}
+                    </div>
+                    <span class="whitespace-nowrap rounded-full border border-dashed border-rust px-1.5 py-0.5 font-body text-xs font-bold text-rust">
                       {EVENT_KIND_LABELS[event.kind]}
                     </span>
-                    <h3 class="mt-2 font-display text-lg font-bold leading-snug text-ink sm:text-xl">
+                  </div>
+                  <div class="min-w-0 flex-1">
+                    <h3 class="font-display text-lg font-bold leading-snug text-ink sm:text-xl">
                       {event.title}
                     </h3>
                     <p class="mt-1 font-body text-sm text-ink-soft">
@@ -72,8 +139,17 @@ const dateParts = (iso: string) => {
                           {" · "}
                         </>
                       )}
-                      {weekday}
-                      {event.endDate && ` · עד ${dateParts(event.endDate).day} ב${dateParts(event.endDate).month}`}
+                      {/* Once a multi-day event is under way the box shows its
+                          last day, so this says "מתקיים עכשיו" instead. */}
+                      <span class:list={[ongoing && "hidden"]} data-meta-dates>
+                        {weekday}
+                        {end && ` · עד ${end.day} ב${end.month}`}
+                      </span>
+                      {end && (
+                        <span class:list={[!ongoing && "hidden"]} data-meta-now>
+                          מתקיים עכשיו
+                        </span>
+                      )}
                       {event.time && ` · ${event.time}`}
                     </p>
                     <p class="mt-2 line-clamp-3 text-sm leading-relaxed text-ink">{event.description}</p>
@@ -97,7 +173,7 @@ const dateParts = (iso: string) => {
         </div>
 
         {events.length > 1 && (
-          <div class="mt-1 flex items-center justify-center gap-1">
+          <div class="mt-1 flex items-center justify-center gap-1" data-controls data-max-dots={MAX_DOTS}>
             <button
               type="button"
               class="flex h-9 w-9 items-center justify-center rounded-full text-ink-soft hover:text-rust"
@@ -112,16 +188,42 @@ const dateParts = (iso: string) => {
                 <path d="M11.5 7 4 2.5v9z" fill="currentColor" />
               </svg>
             </button>
-            {events.map((event, i) => (
+            {/* Dots for a handful of events; past MAX_DOTS they wouldn't fit a
+                phone, so a "‹ 4 מתוך 17 ›" pager takes their place. */}
+            <div class:list={["items-center", usePager ? "hidden" : "flex"]} data-dots>
+              {events.map((event, i) => (
+                <button
+                  type="button"
+                  class="group flex h-9 min-w-6 items-center justify-center px-1"
+                  aria-label={`אירוע ${i + 1} מתוך ${events.length}: ${event.title}`}
+                  data-group={groupOf(event)}
+                  data-dot
+                >
+                  <span class="block h-2 w-2 rounded-full bg-stone/60 transition-all duration-300 group-hover:bg-rust group-data-[active]:w-6 group-data-[active]:bg-rope" />
+                </button>
+              ))}
+            </div>
+            <div class:list={["items-center", usePager ? "flex" : "hidden"]} data-pager>
               <button
                 type="button"
-                class="group flex h-9 min-w-6 items-center justify-center px-1"
-                aria-label={`אירוע ${i + 1} מתוך ${events.length}: ${event.title}`}
-                data-dot
+                class="flex h-9 w-9 items-center justify-center rounded-full font-body text-lg font-bold text-ink-soft hover:text-rust"
+                aria-label="האירוע הקודם"
+                data-prev
               >
-                <span class="block h-2 w-2 rounded-full bg-stone/60 transition-all duration-300 group-hover:bg-rust group-data-[active]:w-6 group-data-[active]:bg-rope" />
+                →
               </button>
-            ))}
+              <span class="min-w-20 text-center font-body text-sm font-bold text-ink-soft" aria-live="polite" data-counter>
+                1 מתוך {shownCount}
+              </span>
+              <button
+                type="button"
+                class="flex h-9 w-9 items-center justify-center rounded-full font-body text-lg font-bold text-ink-soft hover:text-rust"
+                aria-label="האירוע הבא"
+                data-next
+              >
+                ←
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -134,34 +236,54 @@ const dateParts = (iso: string) => {
 
   document.querySelectorAll<HTMLElement>("[data-events-carousel]").forEach((root) => {
     const track = root.querySelector<HTMLElement>("[data-track]")!;
+    const controls = root.querySelector<HTMLElement>("[data-controls]");
     const pauseButton = root.querySelector<HTMLButtonElement>("[data-pause]");
+    const filterBar = root.querySelector<HTMLElement>("[data-filters]");
+    const filterButtons = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-filter]"));
+    const dotsBox = root.querySelector<HTMLElement>("[data-dots]");
+    const pager = root.querySelector<HTMLElement>("[data-pager]");
+    const counter = root.querySelector<HTMLElement>("[data-counter]");
+    const maxDots = Number(controls?.dataset.maxDots ?? 10);
 
-    // The page is static, so an event that expired since the last deploy
-    // (EXPIRE_AFTER_DAYS after its date) is removed here, with its dot.
+    // The page is static, so the dates are checked again here: an event that
+    // expired since the last deploy, or whose SHOW_BEFORE_DAYS window hasn't
+    // opened yet, is removed with its dot; one whose window opened is shown.
     const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Jerusalem" }).format(new Date());
-    const allDots = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-dot]"));
+    const initialDots = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-dot]"));
     Array.from(root.querySelectorAll<HTMLElement>("[data-slide]")).forEach((slide, i) => {
-      if ((slide.dataset.expires ?? "") < today) {
+      if ((slide.dataset.expires ?? "") < today || (slide.dataset.from ?? "") > today) {
         slide.remove();
-        allDots[i]?.remove();
+        initialDots[i]?.remove();
       }
     });
-    const slides = Array.from(root.querySelectorAll<HTMLElement>("[data-slide]"));
-    const dots = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-dot]"));
-    if (slides.length === 0) {
+    const allSlides = Array.from(root.querySelectorAll<HTMLElement>("[data-slide]"));
+    // A multi-day event that started before today shows "עד <last day>".
+    allSlides.forEach((slide) => {
+      const end = slide.querySelector("[data-box-end]");
+      if (!end) return;
+      const ongoing = (slide.dataset.start ?? "") < today;
+      end.classList.toggle("hidden", !ongoing);
+      slide.querySelector("[data-box-start]")?.classList.toggle("hidden", ongoing);
+      slide.querySelector("[data-meta-dates]")?.classList.toggle("hidden", ongoing);
+      slide.querySelector("[data-meta-now]")?.classList.toggle("hidden", !ongoing);
+    });
+    const allDots = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-dot]"));
+    if (allSlides.length === 0) {
       root.closest("section")?.remove();
       return;
     }
-    slides.forEach((slide, i) => {
-      const label = `${i + 1} מתוך ${slides.length}: ${slide.dataset.title}`;
-      slide.setAttribute("aria-label", label);
-      dots[i]?.setAttribute("aria-label", `אירוע ${label}`);
+    root.closest("section")?.classList.remove("hidden");
+    // Expiry can empty a group: drop its button, and the whole bar if fewer
+    // than two groups are left.
+    const liveGroups = new Set(allSlides.map((s) => s.dataset.group));
+    if (liveGroups.size < 2) filterBar?.remove();
+    filterButtons.forEach((b) => {
+      if (b.dataset.filter !== "all" && !liveGroups.has(b.dataset.filter)) b.remove();
     });
-    if (slides.length < 2) {
-      pauseButton?.parentElement?.remove();
-      return;
-    }
 
+    // The slides and dots of the current filter; everything below works on these.
+    let slides = allSlides;
+    let dots = allDots;
     let current = 0;
     let timer: number | undefined;
     let pausedByUser = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -169,15 +291,38 @@ const dateParts = (iso: string) => {
     let focusInside = false;
     let visible = false;
 
+    function applyFilter(group: string) {
+      const shown = (el: HTMLElement) => group === "all" || el.dataset.group === group;
+      allSlides.forEach((s) => s.classList.toggle("hidden", !shown(s)));
+      allDots.forEach((d) => d.classList.toggle("hidden", !shown(d)));
+      slides = allSlides.filter(shown);
+      dots = allDots.filter(shown);
+      slides.forEach((slide, i) => {
+        const label = `${i + 1} מתוך ${slides.length}: ${slide.dataset.title}`;
+        slide.setAttribute("aria-label", label);
+        dots[i]?.setAttribute("aria-label", `אירוע ${label}`);
+      });
+      controls?.classList.toggle("hidden", slides.length < 2);
+      const usePager = slides.length > maxDots;
+      dotsBox?.classList.toggle("hidden", usePager);
+      dotsBox?.classList.toggle("flex", !usePager);
+      pager?.classList.toggle("hidden", !usePager);
+      pager?.classList.toggle("flex", usePager);
+      goTo(0, "instant"); // back to the first card of the group
+      markActive(0);
+      schedule();
+    }
+
     // Scroll so slide i is centred in the track. Works in RTL too, because it
     // moves by the slide's distance from where it should be, not to an
     // absolute (direction-dependent) scrollLeft.
-    function goTo(i: number) {
+    function goTo(i: number, behavior: ScrollBehavior = "smooth") {
       const slide = slides[i];
+      if (!slide) return;
       const trackBox = track.getBoundingClientRect();
       const box = slide.getBoundingClientRect();
       const delta = box.left - trackBox.left - (trackBox.width - box.width) / 2;
-      track.scrollTo({ left: track.scrollLeft + delta, behavior: "smooth" });
+      track.scrollTo({ left: track.scrollLeft + delta, behavior });
     }
 
     // Size the track to the slides currently in view: mid-swipe that's both
@@ -188,16 +333,18 @@ const dateParts = (iso: string) => {
         const b = s.getBoundingClientRect();
         return b.right > trackBox.left + 1 && b.left < trackBox.right - 1;
       });
-      const height = Math.max(...(inView.length ? inView : [slides[current]]).map((s) => s.offsetHeight));
-      track.style.height = `${height}px`;
+      const pool = inView.length ? inView : slides.slice(current, current + 1);
+      if (pool.length) track.style.height = `${Math.max(...pool.map((s) => s.offsetHeight))}px`;
     }
 
     function markActive(i: number) {
       current = i;
       fitHeight();
-      dots.forEach((dot, d) => {
-        dot.toggleAttribute("data-active", d === i);
-        if (d === i) dot.setAttribute("aria-current", "true");
+      if (counter) counter.textContent = `${i + 1} מתוך ${slides.length}`;
+      allDots.forEach((dot) => {
+        const active = dot === dots[i];
+        dot.toggleAttribute("data-active", active);
+        if (active) dot.setAttribute("aria-current", "true");
         else dot.removeAttribute("aria-current");
       });
     }
@@ -217,12 +364,12 @@ const dateParts = (iso: string) => {
 
     function schedule() {
       window.clearTimeout(timer);
-      if (pausedByUser || hovering || focusInside || !visible || document.hidden) return;
+      if (slides.length < 2 || pausedByUser || hovering || focusInside || !visible || document.hidden) return;
       timer = window.setTimeout(() => goTo((current + 1) % slides.length), AUTOPLAY_MS);
     }
 
-    // Settle on the centred slide once scrolling stops (scrollend where
-    // supported, a short debounce otherwise), then restart the 7s countdown.
+    // Settle on the centred slide once scrolling stops (a short debounce),
+    // then restart the 7s countdown.
     let settle: number | undefined;
     track.addEventListener("scroll", () => {
       fitHeight();
@@ -233,20 +380,29 @@ const dateParts = (iso: string) => {
       }, 120);
     });
 
-    dots.forEach((dot, i) => dot.addEventListener("click", () => goTo(i)));
+    allDots.forEach((dot) => dot.addEventListener("click", () => goTo(dots.indexOf(dot))));
+    root.querySelector("[data-prev]")?.addEventListener("click", () => goTo((current - 1 + slides.length) % slides.length));
+    root.querySelector("[data-next]")?.addEventListener("click", () => goTo((current + 1) % slides.length));
 
-    pauseButton?.addEventListener("click", () => {
-      pausedByUser = !pausedByUser;
+    filterButtons.forEach((button) =>
+      button.addEventListener("click", () => {
+        filterButtons.forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+        applyFilter(button.dataset.filter ?? "all");
+      }),
+    );
+
+    function syncPauseButton() {
+      if (!pauseButton) return;
       pauseButton.setAttribute("aria-label", pausedByUser ? "הפעלת המעבר האוטומטי" : "עצירת המעבר האוטומטי");
       pauseButton.querySelector("[data-icon-pause]")?.classList.toggle("hidden", pausedByUser);
       pauseButton.querySelector("[data-icon-play]")?.classList.toggle("hidden", !pausedByUser);
+    }
+    pauseButton?.addEventListener("click", () => {
+      pausedByUser = !pausedByUser;
+      syncPauseButton();
       schedule();
     });
-    if (pausedByUser && pauseButton) {
-      pauseButton.setAttribute("aria-label", "הפעלת המעבר האוטומטי");
-      pauseButton.querySelector("[data-icon-pause]")?.classList.add("hidden");
-      pauseButton.querySelector("[data-icon-play]")?.classList.remove("hidden");
-    }
+    syncPauseButton();
 
     // Hold still while a pointer rests on it or keyboard focus is inside -
     // nobody wants the card to slide away mid-read.
@@ -282,6 +438,6 @@ const dateParts = (iso: string) => {
     document.addEventListener("visibilitychange", schedule);
     window.addEventListener("resize", fitHeight);
 
-    markActive(0);
+    applyFilter("all");
   });
 </script>

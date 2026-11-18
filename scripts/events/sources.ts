@@ -5,8 +5,11 @@
 import fs from "node:fs";
 import path from "node:path";
 
+// The national league page; its "רשימת תחרויות" link is a Google Drive PDF
+// with the season's table (gym, date, categories, discipline, hours).
+// Cancelled rows are struck through in the PDF.
 export const ILCA_COMPETITIONS_URL =
-  "https://ilca.org.il/%D7%A1%D7%A4%D7%95%D7%A8%D7%98/%D7%AA%D7%97%D7%A8%D7%95%D7%99%D7%95%D7%AA-%D7%9C%D7%90%D7%95%D7%9E%D7%99%D7%95%D7%AA/";
+  "https://ilca.org.il/%D7%A1%D7%A4%D7%95%D7%A8%D7%98/%D7%AA%D7%97%D7%A8%D7%95%D7%99%D7%95%D7%AA-%D7%9C%D7%90%D7%95%D7%9E%D7%99%D7%95%D7%AA-2/%D7%9C%D7%99%D7%92%D7%94-%D7%90%D7%A8%D7%A6%D7%99%D7%AA/";
 
 const dir = path.resolve(import.meta.dirname, "../../src/content/locations");
 const field = (text: string, name: string) => text.match(new RegExp(`^${name}: "?([^"\\n]*)"?$`, "m"))?.[1];

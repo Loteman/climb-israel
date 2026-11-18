@@ -2,9 +2,10 @@
 //
 // The events themselves live in events.json, which the events run updates
 // (gyms' Instagram posts + the climbing association's competitions page -
-// see scripts/events/README.md). Every event has a date and disappears
-// EXPIRE_AFTER_DAYS after it: at build time here, and again in the visitor's
-// browser (UpcomingEvents.astro), so it also goes away between deploys.
+// see scripts/events/README.md). Every event has a date. It appears
+// SHOW_BEFORE_DAYS before it and disappears EXPIRE_AFTER_DAYS after it: at
+// build time here, and again in the visitor's browser (UpcomingEvents.astro),
+// so both also happen between deploys.
 import eventsJson from "./events.json";
 
 export type EventKind = "announcement" | "competition" | "special" | "sale" | "meetup" | "workshop" | "outdoor";
@@ -37,20 +38,39 @@ export interface ClimbingEvent {
   linkLabel?: string;
   /** Who published it, e.g. "Instagram · מאנקיז". */
   source?: string;
-  /** Shown first, before the dated events (site news). Still expires like any event. */
+  /** Shown first, before the dated events (site news). */
   pinned?: boolean;
+  /** Never expires - stays up until it's removed from events.json by hand. */
+  noExpiry?: boolean;
 }
 
 export const EVENTS = eventsJson as ClimbingEvent[];
 
-/** An event stays up until this many days after its date (or end date), then disappears. */
-export const EXPIRE_AFTER_DAYS = 2;
+/** An event stays up until this many days after its date (or end date), then
+ *  disappears. 0: shown through its last day, gone the next morning. */
+export const EXPIRE_AFTER_DAYS = 0;
+
+/** An event only appears this many days before its date, so a season's worth
+ *  of competitions can sit in events.json without flooding the carousel. */
+export const SHOW_BEFORE_DAYS = 30;
+
+/** For events with noExpiry. */
+const NEVER = "9999-12-31";
+
+const addDays = (iso: string, days: number) => {
+  const d = new Date(`${iso}T12:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + days);
+  return d.toISOString().slice(0, 10);
+};
 
 /** Last day the event is shown, YYYY-MM-DD: its (end) date plus EXPIRE_AFTER_DAYS. */
 export function expiresOn(event: ClimbingEvent): string {
-  const d = new Date(`${event.endDate ?? event.date}T12:00:00Z`);
-  d.setUTCDate(d.getUTCDate() + EXPIRE_AFTER_DAYS);
-  return d.toISOString().slice(0, 10);
+  return event.noExpiry ? NEVER : addDays(event.endDate ?? event.date, EXPIRE_AFTER_DAYS);
+}
+
+/** First day the event is shown, YYYY-MM-DD: SHOW_BEFORE_DAYS before its date. */
+export function showsFrom(event: ClimbingEvent): string {
+  return addDays(event.date, -SHOW_BEFORE_DAYS);
 }
 
 /** Today in Israel, YYYY-MM-DD. */
@@ -58,7 +78,8 @@ export function israelToday(now = new Date()): string {
   return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Jerusalem" }).format(now);
 }
 
-/** Events still in date: pinned news first, then soonest first. */
+/** Events not yet expired (including ones too far ahead to show yet): pinned
+ *  news first, then soonest first. */
 export function upcomingEvents(now = new Date(), events: ClimbingEvent[] = EVENTS): ClimbingEvent[] {
   const today = israelToday(now);
   const live = events.filter((e) => expiresOn(e) >= today);
