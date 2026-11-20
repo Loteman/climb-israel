@@ -7,6 +7,8 @@ import {
   BEGINNER_GUIDE,
   ENVIRONMENT_LINKS,
   GUIDE_GROUPS,
+  GUIDES_PAGE_LINK,
+  HISTORY_LINK,
   LOCATIONS_LINK,
 } from "../../lib/site-nav";
 import { SITE_NAME } from "../../site-config";
@@ -16,6 +18,9 @@ const path = currentPathname(Astro.url);
 // Climbing spots first - it's what most visitors come for.
 const topLinks = [LOCATIONS_LINK, BEGINNER_GUIDE];
 const trailingLinks = [ABOUT_LINK];
+// The phone panel has room for one more: the history page (with "קירות
+// שהיו ואינם"), which is otherwise only linked from the home and guides pages.
+const mobileTrailingLinks = [HISTORY_LINK, ABOUT_LINK];
 
 // Tighter padding between md and lg and no wrapping: at tablet width
 // (768px) the full row only just fits, and the labels used to break onto
@@ -58,7 +63,7 @@ const THEME_OPTIONS = [
           </a>
         ))
       }
-      <NavDropdown label="מדריכים" groups={GUIDE_GROUPS} />
+      <NavDropdown label="מדריכים" groups={GUIDE_GROUPS} allLink={{ href: GUIDES_PAGE_LINK.href, label: "לכל המדריכים" }} />
       <NavDropdown label="סביבות טיפוס" items={ENVIRONMENT_LINKS} />
       {
         trailingLinks.map((item) => (
@@ -173,6 +178,13 @@ const THEME_OPTIONS = [
           </svg>
         </summary>
         <div class="pb-1">
+          <a
+            href={withBase(GUIDES_PAGE_LINK.href)}
+            class:list={mobileLinkClass(GUIDES_PAGE_LINK.href, "ps-6")}
+            aria-current={linkState(path, GUIDES_PAGE_LINK.href)}
+          >
+            לכל המדריכים ←
+          </a>
           {
             GUIDE_GROUPS.map((group) => (
               <Fragment>
@@ -207,12 +219,28 @@ const THEME_OPTIONS = [
       </details>
 
       {
-        trailingLinks.map((item) => (
+        mobileTrailingLinks.map((item) => (
           <a href={withBase(item.href)} class:list={mobileLinkClass(item.href)} aria-current={linkState(path, item.href)}>
             {item.label}
           </a>
         ))
       }
+
+      {/* Share the site: the phone's own share sheet where there is one,
+          otherwise copy the link. */}
+      <button
+        type="button"
+        class="flex w-full items-center gap-2 px-4 py-3 text-start font-body text-base font-semibold text-ink hover:bg-paper hover:text-rust"
+        data-share-site
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="18" cy="5" r="3"></circle>
+          <circle cx="6" cy="12" r="3"></circle>
+          <circle cx="18" cy="19" r="3"></circle>
+          <path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"></path>
+        </svg>
+        <span data-share-label>שיתוף</span>
+      </button>
     </nav>
 
     {/* The logo, centred in the free space above the settings. Decorative,
@@ -253,6 +281,8 @@ const THEME_OPTIONS = [
 </dialog>
 
 <script>
+  import { SITE_NAME as SHARE_SITE_NAME, SITE_URL as SHARE_SITE_URL } from "../../site-config";
+
   // Close any open header <details> dropdown when clicking outside it,
   // when a link inside it is clicked, or on Escape (native <details>
   // stays open otherwise, which feels broken for a nav dropdown).
@@ -346,6 +376,37 @@ const THEME_OPTIONS = [
       if (event.matches && drawer.open) drawer.close();
     });
   }
+
+  // "שיתוף" in the phone panel: always shares the live site's home page.
+  // Uses the phone's share sheet when there is one; otherwise copies the link
+  // and says so on the button for a moment.
+  document.querySelectorAll<HTMLButtonElement>("[data-share-site]").forEach((button) => {
+    const label = button.querySelector<HTMLElement>("[data-share-label]");
+    const shareData = {
+      title: SHARE_SITE_NAME,
+      text: `${SHARE_SITE_NAME} - קירות טיפוס, אתרי טבע ומדריכים, הכל במקום אחד`,
+      url: SHARE_SITE_URL,
+    };
+    button.addEventListener("click", async () => {
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+        } catch {
+          // Closing the share sheet without picking anything is fine.
+        }
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(shareData.url);
+        if (label) {
+          label.textContent = "הקישור הועתק";
+          window.setTimeout(() => (label.textContent = "שיתוף"), 2000);
+        }
+      } catch {
+        window.prompt("העתיקו את הקישור:", shareData.url);
+      }
+    });
+  });
 
   syncThemeUi(storedChoice());
   document.querySelectorAll<HTMLButtonElement>("[data-theme-choice]").forEach((button) => {

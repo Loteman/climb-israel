@@ -144,6 +144,16 @@ const jsonLd = {
       {data.kind === "gym" && data.chain ? ` · רשת ${data.chain}` : ""}
     </p>
   </div>
+  {
+    data.kind === "gym" && data.notice && (
+      <p
+        role="note"
+        class="mt-4 rounded-xl border-2 border-dashed border-rust bg-rust/10 px-4 py-3 font-body text-sm font-bold leading-relaxed text-rust"
+      >
+        {data.notice}
+      </p>
+    )
+  }
 
   {
     data.kind === "gym" && (

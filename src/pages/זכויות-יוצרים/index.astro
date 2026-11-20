@@ -1,0 +1,109 @@
+---
+// Sources, third-party rights and the content license - moved here from the
+// About page so it's a page of its own, like the privacy policy and the
+// accessibility statement (all three are linked from the bottom of About).
+import { withBase } from "../../lib/url";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TopoBackground from "../../components/layout/TopoBackground.astro";
+import SectionDivider from "../../components/ui/SectionDivider.astro";
+import { ABOUT_LINK } from "../../lib/site-nav";
+import { LICENSE_NAME, LICENSE_URL, LICENSOR_NAME, LICENSOR_URL, SITE_NAME, contactUrl } from "../../site-config";
+
+const linkClass = "font-bold text-rope hover:underline";
+---
+
+<BaseLayout
+  title="זכויות יוצרים ורישיון שימוש"
+  description="מאיפה המידע בטיפוס ישראל מגיע, למי שייכים גיידבוקים, מפות ושמות מסחריים, ומה מותר לעשות בתוכן המקורי של האתר (רישיון CC BY-SA 4.0)."
+>
+  <section class="relative overflow-hidden border-b border-stone/40 py-10 sm:py-14">
+    <TopoBackground opacity={0.3} />
+    <div class="relative mx-auto max-w-4xl px-4 sm:px-6">
+      <h1 class="font-display text-3xl font-bold text-ink sm:text-4xl">זכויות יוצרים</h1>
+      <p class="mt-3 max-w-2xl leading-relaxed text-ink-soft">
+        בקצרה: את התוכן המקורי של האתר מותר לשתף ולעבד, עם קרדיט ובאותו רישיון.
+        תכנים של אחרים, כמו גיידבוקים ומפות, שייכים ליוצריהם.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12">
+    <div class="space-y-6 leading-relaxed text-ink">
+      <h2 id="sources" class="scroll-mt-24 font-display text-xl font-bold text-ink">
+        מקורות וזכויות יוצרים
+      </h2>
+      <ul class="list-disc space-y-2 ps-5 marker:text-rust">
+        <li>
+          פרטי האתרים והקירות (תיאורים, סוג סלע, עונות, דרכי הגעה) מבוססים על
+          המקורות שמפורטים בעמוד{" "}
+          <a href={withBase(`${ABOUT_LINK.href}`)} class={linkClass}>אודות</a>, וכל דף מקום
+          מציין את המקור שלו וקישור אליו.
+        </li>
+        <li>
+          גיידבוקים וקבצי טופו - כל הזכויות שמורות ליוצריהם, ששמם מופיע ליד כל
+          קובץ. הקבצים מוצגים לטובת הקהילה; יוצר/ת שמעדיפים שהקובץ יוסר או
+          יוחלף בקישור למקור - פנו אלינו ונטפל בכך מיד.
+        </li>
+        <li>
+          שמות קירות הטיפוס, הרשתות והמותגים (כמו MoonBoard או Waze) שייכים
+          לבעליהם ומוזכרים לצורך מידע בלבד. האתר אינו קשור לאף אחד מהם.
+        </li>
+        <li>
+          המפה מבוססת על{" "}
+          <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer" class={linkClass}>
+            OpenStreetMap
+          </a>{" "}
+          ועל ספריית{" "}
+          <a href="https://leafletjs.com/" target="_blank" rel="noopener noreferrer" class={linkClass}>
+            Leaflet
+          </a>, והגופנים (Heebo, IBM Plex) מופצים ברישיון SIL Open Font License.
+        </li>
+      </ul>
+
+      <SectionDivider class="text-stone/40" />
+
+      <h2 id="license" class="scroll-mt-24 font-display text-xl font-bold text-ink">
+        רישיון שימוש בתוכן
+      </h2>
+      <p>
+        התוכן המקורי של טיפוס ישראל - הטקסטים במדריכים, האיורים ועיצוב
+        האתר - הוא ©{" "}
+        <a href={LICENSOR_URL} target="_blank" rel="noopener noreferrer" class={linkClass} dir="ltr">{LICENSOR_NAME}</a>, ומופץ
+        ברישיון{" "}
+        <a href={LICENSE_URL} target="_blank" rel="license noopener noreferrer" class={linkClass} dir="ltr">
+          {LICENSE_NAME}
+        </a>{" "}
+        (ייחוס-שיתוף זהה 4.0 בינלאומי). בפשטות: מותר להעתיק, לשתף, לתרגם
+        ולעבד את התוכן - גם לשימוש מסחרי - בתנאי ש:
+      </p>
+      <ul class="list-disc space-y-2 ps-5 marker:text-rust">
+        <li>
+          <strong class="text-rust">נותנים קרדיט</strong> - "טיפוס ישראל /{" "}
+          <bdi>{LICENSOR_NAME}</bdi>" עם קישור לאתר, ומציינים אם בוצעו שינויים.
+        </li>
+        <li>
+          <strong class="text-rust">משתפים באותו רישיון</strong> - עבודה שמבוססת
+          על התוכן מופצת גם היא ברישיון{" "}
+          <bdi class="whitespace-nowrap">{LICENSE_NAME}</bdi>.
+        </li>
+      </ul>
+      <p>
+        הרישיון חל רק על תוכן שבבעלות האתר. הוא <strong class="text-rust">לא</strong>{" "}
+        חל על תכנים של צד שלישי: גיידבוקים וקבצי טופו, מידע ותיאורים שמקורם
+        בהתאחדות הטיפוס, באנציקלופדיה של הטיפוס או במקורות אחרים שמצוינים
+        באתר, אריחי המפה של OpenStreetMap, ושמות מסחריים וסימני מסחר. על אלה
+        חלים התנאים של בעלי הזכויות בהם.
+      </p>
+      <p>
+        לבקשות הסרה, תיקון או קרדיט:{" "}
+        <a href={contactUrl(`${SITE_NAME} - בקשת הסרה / קרדיט`)} class={linkClass}>
+          צרו קשר ←
+        </a>
+      </p>
+      <p class="text-sm text-ink-soft">
+        לפרטים נוספים על האתר ראו{" "}
+        <a href={withBase(ABOUT_LINK.href)} class={linkClass}>אודות הפרויקט</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

@@ -3,6 +3,8 @@ import { withBase } from "../../lib/url";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TopoBackground from "../../components/layout/TopoBackground.astro";
 import SectionDivider from "../../components/ui/SectionDivider.astro";
+import { regionLabel } from "../../lib/labels";
+import { SITE_NAME, contactUrl } from "../../site-config";
 
 // Every fact below is taken from the two sources cited at the bottom of
 // the page (Hebrew Wikipedia + the IMGA climbing wiki). Where they
@@ -18,6 +20,39 @@ const jsonLd = {
 };
 
 const linkClass = "font-bold text-rope hover:underline";
+
+// "קירות שהיו ואינם": climbing gyms that have closed, in order of closing.
+// Years are approximate (from each gym's last announcements / its site going
+// offline). On purpose there's no reason for closing - a thank-you page is
+// no place for legal disputes or debts - except the war, where it's plain.
+// Each one links to the open gyms in its region today.
+// `until` + `month` (1-12) is roughly when it closed - several months are
+// estimates from the gym's last posts or its site going offline.
+type ClosedGym = { name: string; city: string; until: number; month: number; about: string; region: string };
+const MONTHS = ["ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני", "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר"];
+const CLOSED_GYMS: ClosedGym[] = [
+  { name: "קיר איילת", city: "קריית אונו", until: 2019, month: 6, region: "center", about: "קיר ההובלה הוותיק באולם הספורט של קריית אונו, שבו התאמנו לאורך השנים גם מטפסים מהשורה הראשונה בארץ." },
+  { name: "iClimb אשקלון", city: "אשקלון", until: 2021, month: 11, region: "shfela", about: "מתחם טיפוס ופארק חבלים באוויר הפתוח, בפארק הים שליד חוף דלילה." },
+  { name: "iClimb הרצליה", city: "הרצליה", until: 2023, month: 2, region: "center", about: "מתחם בולדר ונינג'ה בקניון ארנה." },
+  { name: "ויקינג רעננה", city: "רעננה", until: 2023, month: 3, region: "sharon", about: "הסניף השני של ויקינג, באזור התעשייה של רעננה: כ-530 מ״ר של בולדרינג ועשרות רבות של מסלולים." },
+  { name: "iClimb מנרה", city: "קיבוץ מנרה", until: 2023, month: 10, region: "north", about: "קיר טיפוס על רכס הגליל העליון, מעל עמק החולה. נסגר בעקבות המלחמה." },
+  { name: "קיר העוגן (iClimb)", city: "קיבוץ העוגן", until: 2024, month: 6, region: "sharon", about: "נפתח ב-2003 ונחשב לאחד ממתחמי הטיפוס הגדולים במרכז, עם הובלה, טופ-רופ ובולדר." },
+  { name: "Climbr", city: "אור עקיבא", until: 2024, month: 11, region: "sharon", about: "מועדון בולדרינג עם מסלולים שהתחלפו כל שבועיים וחוגים מגיל 5." },
+  { name: "פרפורמנס רוק מודיעין", city: "מודיעין", until: 2025, month: 5, region: "shfela", about: "סניף הבולדרינג של פרפורמנס רוק במודיעין." },
+  { name: "בולדרלנד כפר סבא (iClimb)", city: "כפר סבא", until: 2026, month: 4, region: "sharon", about: "מתחם בולדר גדול באזור התעשייה של כפר סבא, עם מתחם טיפוס לילדים." },
+  { name: "iClimb תל אביב", city: "תל אביב", until: 2026, month: 6, region: "center", about: "קיר ההובלה הגבוה בפארק הירקון: קיר מרכזי בגובה 18 מטרים, אבטחה אוטומטית וקירות לילדים. הקיר עצמו צפוי להיפתח מחדש בסוף 2026 כרוקיז תל אביב, בהנהלה חדשה." },
+  { name: "ויקינג תל אביב (iClimb)", city: "תל אביב", until: 2026, month: 6, region: "center", about: "מועדון בולדרינג ברחוב השלושה, עם מונבורד, קירות אימון ובר בירה." },
+  { name: "iClimb ירושלים", city: "ירושלים", until: 2026, month: 6, region: "jerusalem", about: "קיר טיפוס באצטדיון טדי, עם הובלה, טופ-רופ ובולדר." },
+  { name: "iClimb חיפה-קריות", city: "חיפה", until: 2026, month: 6, region: "north", about: "מתחם טיפוס גדול בחיפה, עם קירות הובלה, בולדר וספיד, ומתחם ילדים. מכאן יצאו גם מתחרים לאליפויות ישראל." },
+  { name: "iClimb ראשון לציון", city: "ראשון לציון", until: 2026, month: 6, region: "center", about: "מתחם של כ-1,200 מ״ר באזור התעשייה המערבי של ראשון לציון, עם קירות הובלה בגובה 15 מטרים, אבטחה אוטומטית, בולדר וקיר קילטר." },
+  { name: "iClimb קריית גת", city: "קריית גת", until: 2026, month: 6, region: "shfela", about: "מתחם טיפוס פתוח בפארק כרמי גת, עם קירות בגובה 15 מטרים, אבטחה אוטומטית ואזור בולדר מקורה." },
+  { name: "קואלה", city: "כפר עציון", until: 2026, month: 10, region: "jerusalem", about: "קיר בולדרינג במתחם חצר הכפר בכפר עציון." },
+];
+const gymsIn = (region: string) => withBase(`/מקומות-טיפוס/?kind=gym&region=${region}`);
+const tellUsUrl = contactUrl(
+  `${SITE_NAME} - קיר שנסגר`,
+  ["שם הקיר:", "עיר:", "בערך מתי נפתח ומתי נסגר:", "מה היה מיוחד בו:"].join("\n"),
+);
 const crag = (slug: string) => withBase(`/מקומות-טיפוס/${slug}/`);
 ---
 
@@ -179,4 +214,64 @@ const crag = (slug: string) => withBase(`/מקומות-טיפוס/${slug}/`);
       </p>
     </div>
   </section>
+
+  <section aria-labelledby="closed-gyms" class="border-t border-stone/40 bg-paper-dark">
+    <div class="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12">
+      <h2 id="closed-gyms" class="font-display text-2xl font-bold text-ink">קירות שהיו ואינם</h2>
+      <p class="mt-3 leading-relaxed text-ink-soft">
+        כל קיר טיפוס הוא גם בית לקהילה. אלה קירות שנסגרו בשנים האחרונות, ותודה לכל
+        מי שהקים אותם, בנה בהם מסלולים, הדריך בהם וטיפס עליהם. מועדי הסגירה בקירוב.
+      </p>
+
+      {/* Collapsed by default: a label with an orange chevron under it opens
+          the list. Arriving via #closed-gyms (the locations page, or a
+          removed gym's old URL) opens it straight away - see the script. */}
+      <details class="group mt-6" data-closed-gyms>
+        <summary class="mx-auto flex w-fit cursor-pointer list-none flex-col items-center gap-1 py-2 font-body text-base font-bold text-rope hover:text-rust [&::-webkit-details-marker]:hidden">
+          לכל הקירות שנסגרו
+          <svg width="28" height="16" viewBox="0 0 28 16" fill="none" aria-hidden="true" class="transition-transform duration-300 group-open:rotate-180 motion-reduce:transition-none">
+            <path d="M3 3l11 10L25 3" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </summary>
+      <ol class="mt-4 space-y-3">
+        {CLOSED_GYMS.map((gym) => (
+          <li class="flex gap-4 rounded-2xl border border-stone/50 bg-paper p-4 sm:p-5">
+            <span class="w-16 shrink-0 pt-0.5 text-center font-display text-sm font-bold text-ink-soft">
+              עד
+              <span class="block text-xs leading-tight text-rope">{MONTHS[gym.month - 1]}</span>
+              <span class="block text-xl leading-tight text-rope">{gym.until}</span>
+            </span>
+            <div class="min-w-0">
+              <h3 class="font-display text-lg font-bold leading-snug text-ink">
+                <bdi>{gym.name}</bdi>
+                <span class="font-body text-sm font-normal text-ink-soft"> · {gym.city}</span>
+              </h3>
+              <p class="mt-1 text-sm leading-relaxed text-ink">{gym.about}</p>
+              <a href={gymsIn(gym.region)} class="mt-1 inline-block py-1 font-body text-sm font-bold text-rope hover:underline">
+                קירות פעילים ב{regionLabel(gym.region, "gym")} היום ←
+              </a>
+            </div>
+          </li>
+        ))}
+      </ol>
+      </details>
+
+      <p class="mt-6 text-sm text-ink-soft">
+        הכרתם קיר שלא מופיע כאן, או יודעים עליו עוד פרטים?{" "}
+        <a href={tellUsUrl} class={linkClass}>ספרו לנו</a>.
+      </p>
+    </div>
+  </section>
 </BaseLayout>
+
+<script>
+  // A link straight to the section (#closed-gyms) means "show me the closed
+  // walls", so open the list instead of leaving it collapsed.
+  function openClosedGyms() {
+    if (location.hash !== "#closed-gyms") return;
+    const list = document.querySelector<HTMLDetailsElement>("[data-closed-gyms]");
+    if (list) list.open = true;
+  }
+  openClosedGyms();
+  window.addEventListener("hashchange", openClosedGyms);
+</script>

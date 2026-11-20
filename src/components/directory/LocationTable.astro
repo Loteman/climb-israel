@@ -71,6 +71,9 @@ const stickyClass =
                 {data.kind === "gym" && data.chain && (
                   <div class="mt-0.5 font-mono text-xs text-ink-soft">{data.chain}</div>
                 )}
+                {data.kind === "gym" && data.notice && (
+                  <Badge variant="rust" class="mt-1">סגור זמנית</Badge>
+                )}
               </th>
               <td class={`${tdClass} text-sm text-ink-soft`}>{regionLabel(data.region, data.kind)}</td>
               <td class={`${tdClass} text-sm leading-relaxed text-ink-soft`}>

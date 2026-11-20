@@ -50,6 +50,7 @@ const openHours = data.kind === "gym" ? parseOpeningHours(data.hours) : [];
     </a>
   </h2>
 
+  {data.kind === "gym" && data.notice && <Badge variant="rust" class="mt-1 self-start">סגור זמנית</Badge>}
   <p class="mt-1 text-xs text-ink-soft sm:text-sm">
     {regionLabel(data.region, data.kind)}
     {data.kind === "gym" && data.chain ? ` · ${data.chain}` : ""}

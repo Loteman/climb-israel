@@ -3,23 +3,15 @@ import { withBase } from "../../lib/url";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TopoBackground from "../../components/layout/TopoBackground.astro";
 import SectionDivider from "../../components/ui/SectionDivider.astro";
-import {
-  CONTACT_EMAIL,
-  LICENSE_NAME,
-  LICENSE_URL,
-  LICENSOR_NAME,
-  LICENSOR_URL,
-  SITE_NAME,
-  contactUrl,
-} from "../../site-config";
-import { ACCESSIBILITY_LINK, PRIVACY_LINK } from "../../lib/site-nav";
+import { CONTACT_EMAIL, SITE_NAME, contactUrl } from "../../site-config";
+import { ACCESSIBILITY_LINK, COPYRIGHT_LINK, PRIVACY_LINK } from "../../lib/site-nav";
 
 const linkClass = "font-bold text-rope hover:underline";
 ---
 
 <BaseLayout
   title="אודות הפרויקט"
-  description="טיפוס ישראל הוא מאגר מידע חינמי וקהילתי לטיפוס בישראל - בולדרינג וטיפוס בטבע. מי עומד מאחורי האתר, מאיפה המידע מגיע, איך מדווחים על טעות ומה מותר לעשות בתוכן."
+  description="טיפוס ישראל הוא מאגר מידע חינמי וקהילתי לטיפוס בישראל - בולדרינג וטיפוס בטבע. מי עומד מאחורי האתר, מאיפה המידע מגיע, איך מדווחים על טעות ואיך אפשר לעזור."
 >
   <section class="relative border-b border-stone/40 py-10 sm:py-14">
     <div class="absolute inset-0 overflow-hidden">
@@ -136,83 +128,11 @@ const linkClass = "font-bold text-rope hover:underline";
         הזה פשוט לא היה יכול להתקיים.
       </p>
 
-      <SectionDivider class="text-stone/40" />
-
-      <h2 id="sources" class="scroll-mt-24 font-display text-xl font-bold text-ink">
-        מקורות וזכויות יוצרים
-      </h2>
-      <ul class="list-disc space-y-2 ps-5 marker:text-rust">
-        <li>
-          פרטי האתרים והקירות (תיאורים, סוג סלע, עונות, דרכי הגעה) מבוססים על
-          המקורות שלמעלה, וכל דף מקום מציין את המקור שלו וקישור אליו.
-        </li>
-        <li>
-          גיידבוקים וקבצי טופו - כל הזכויות שמורות ליוצריהם, ששמם מופיע ליד כל
-          קובץ. הקבצים מוצגים לטובת הקהילה; יוצר/ת שמעדיפים שהקובץ יוסר או
-          יוחלף בקישור למקור - פנו אלינו ונטפל בכך מיד.
-        </li>
-        <li>
-          שמות קירות הטיפוס, הרשתות והמותגים (כמו MoonBoard או Waze) שייכים
-          לבעליהם ומוזכרים לצורך מידע בלבד. האתר אינו קשור לאף אחד מהם.
-        </li>
-        <li>
-          המפה מבוססת על{" "}
-          <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer" class={linkClass}>
-            OpenStreetMap
-          </a>{" "}
-          ועל ספריית{" "}
-          <a href="https://leafletjs.com/" target="_blank" rel="noopener noreferrer" class={linkClass}>
-            Leaflet
-          </a>, והגופנים (Heebo, IBM Plex) מופצים ברישיון SIL Open Font License.
-        </li>
-      </ul>
-
-      <SectionDivider class="text-stone/40" />
-
-      <h2 id="license" class="scroll-mt-24 font-display text-xl font-bold text-ink">
-        רישיון שימוש בתוכן
-      </h2>
-      <p>
-        התוכן המקורי של טיפוס ישראל - הטקסטים במדריכים, האיורים ועיצוב
-        האתר - הוא ©{" "}
-        <a href={LICENSOR_URL} target="_blank" rel="noopener noreferrer" class={linkClass} dir="ltr">{LICENSOR_NAME}</a>, ומופץ
-        ברישיון{" "}
-        <a href={LICENSE_URL} target="_blank" rel="license noopener noreferrer" class={linkClass} dir="ltr">
-          {LICENSE_NAME}
-        </a>{" "}
-        (ייחוס-שיתוף זהה 4.0 בינלאומי). בפשטות: מותר להעתיק, לשתף, לתרגם
-        ולעבד את התוכן - גם לשימוש מסחרי - בתנאי ש:
-      </p>
-      <ul class="list-disc space-y-2 ps-5 marker:text-rust">
-        <li>
-          <strong class="text-rust">נותנים קרדיט</strong> - "טיפוס ישראל /{" "}
-          <bdi>{LICENSOR_NAME}</bdi>" עם קישור לאתר, ומציינים אם בוצעו שינויים.
-        </li>
-        <li>
-          <strong class="text-rust">משתפים באותו רישיון</strong> - עבודה שמבוססת
-          על התוכן מופצת גם היא ברישיון{" "}
-          <bdi class="whitespace-nowrap">{LICENSE_NAME}</bdi>.
-        </li>
-      </ul>
-      <p>
-        הרישיון חל רק על תוכן שבבעלות האתר. הוא <strong class="text-rust">לא</strong>{" "}
-        חל על תכנים של צד שלישי: גיידבוקים וקבצי טופו, מידע ותיאורים שמקורם
-        בהתאחדות הטיפוס, באנציקלופדיה של הטיפוס או במקורות אחרים שמצוינים
-        באתר, אריחי המפה של OpenStreetMap, ושמות מסחריים וסימני מסחר. על אלה
-        חלים התנאים של בעלי הזכויות בהם.
-      </p>
-      <p>
-        לבקשות הסרה, תיקון או קרדיט:{" "}
-        <a href={contactUrl(`${SITE_NAME} - בקשת הסרה / קרדיט`)} class={linkClass}>
-          צרו קשר ←
-        </a>
-      </p>
-
-      {/* The site's policy pages are linked from here only, not from the
-          footer of every page. */}
+      {/* The site's policy pages: privacy and accessibility are linked from
+          here only; copyright also has a link in the footer. */}
       <nav aria-label="מסמכי האתר" class="flex flex-wrap gap-2 border-t border-dashed border-stone/50 pt-6">
         {
-          [PRIVACY_LINK, ACCESSIBILITY_LINK].map((link) => (
+          [PRIVACY_LINK, ACCESSIBILITY_LINK, COPYRIGHT_LINK].map((link) => (
             <a
               href={withBase(link.href)}
               class="inline-flex min-h-10 items-center border border-stone/60 px-3 font-body text-sm font-bold text-ink transition-colors hover:border-rust hover:text-rust sm:min-h-0 sm:py-1.5"

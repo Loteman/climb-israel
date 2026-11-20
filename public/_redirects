@@ -1,0 +1,21 @@
+# Cloudflare Pages redirects (https://developers.cloudflare.com/pages/configuration/redirects/).
+# Hebrew paths are written percent-encoded, as browsers send them.
+
+# iClimb Tel Aviv closed (~3/2026); its Yarkon Park wall is now Rockiz Tel Aviv.
+# /מקומות-טיפוס/iclimb-tel-aviv/ -> /מקומות-טיפוס/rockiz-tel-aviv/
+/%D7%9E%D7%A7%D7%95%D7%9E%D7%95%D7%AA-%D7%98%D7%99%D7%A4%D7%95%D7%A1/iclimb-tel-aviv/ /%D7%9E%D7%A7%D7%95%D7%9E%D7%95%D7%AA-%D7%98%D7%99%D7%A4%D7%95%D7%A1/rockiz-tel-aviv/ 301
+/%D7%9E%D7%A7%D7%95%D7%9E%D7%95%D7%AA-%D7%98%D7%99%D7%A4%D7%95%D7%A1/iclimb-tel-aviv /%D7%9E%D7%A7%D7%95%D7%9E%D7%95%D7%AA-%D7%98%D7%99%D7%A4%D7%95%D7%A1/rockiz-tel-aviv/ 301
+
+# Closed gyms whose pages were removed -> "קירות שהיו ואינם" on the history page.
+/%D7%9E%D7%A7%D7%95%D7%9E%D7%95%D7%AA-%D7%98%D7%99%D7%A4%D7%95%D7%A1/iclimb-jerusalem/ /%D7%94%D7%99%D7%A1%D7%98%D7%95%D7%A8%D7%99%D7%99%D7%AA-%D7%94%D7%98%D7%99%D7%A4%D7%95%D7%A1-%D7%91%D7%99%D7%A9%D7%A8%D7%90%D7%9C/#closed-gyms 301
+/%D7%9E%D7%A7%D7%95%D7%9E%D7%95%D7%AA-%D7%98%D7%99%D7%A4%D7%95%D7%A1/iclimb-jerusalem /%D7%94%D7%99%D7%A1%D7%98%D7%95%D7%A8%D7%99%D7%99%D7%AA-%D7%94%D7%98%D7%99%D7%A4%D7%95%D7%A1-%D7%91%D7%99%D7%A9%D7%A8%D7%90%D7%9C/#closed-gyms 301
+/%D7%9E%D7%A7%D7%95%D7%9E%D7%95%D7%AA-%D7%98%D7%99%D7%A4%D7%95%D7%A1/iclimb-haifa/ /%D7%94%D7%99%D7%A1%D7%98%D7%95%D7%A8%D7%99%D7%99%D7%AA-%D7%94%D7%98%D7%99%D7%A4%D7%95%D7%A1-%D7%91%D7%99%D7%A9%D7%A8%D7%90%D7%9C/#closed-gyms 301
+/%D7%9E%D7%A7%D7%95%D7%9E%D7%95%D7%AA-%D7%98%D7%99%D7%A4%D7%95%D7%A1/iclimb-haifa /%D7%94%D7%99%D7%A1%D7%98%D7%95%D7%A8%D7%99%D7%99%D7%AA-%D7%94%D7%98%D7%99%D7%A4%D7%95%D7%A1-%D7%91%D7%99%D7%A9%D7%A8%D7%90%D7%9C/#closed-gyms 301
+/%D7%9E%D7%A7%D7%95%D7%9E%D7%95%D7%AA-%D7%98%D7%99%D7%A4%D7%95%D7%A1/iclimb-rishon/ /%D7%94%D7%99%D7%A1%D7%98%D7%95%D7%A8%D7%99%D7%99%D7%AA-%D7%94%D7%98%D7%99%D7%A4%D7%95%D7%A1-%D7%91%D7%99%D7%A9%D7%A8%D7%90%D7%9C/#closed-gyms 301
+/%D7%9E%D7%A7%D7%95%D7%9E%D7%95%D7%AA-%D7%98%D7%99%D7%A4%D7%95%D7%A1/iclimb-rishon /%D7%94%D7%99%D7%A1%D7%98%D7%95%D7%A8%D7%99%D7%99%D7%AA-%D7%94%D7%98%D7%99%D7%A4%D7%95%D7%A1-%D7%91%D7%99%D7%A9%D7%A8%D7%90%D7%9C/#closed-gyms 301
+/%D7%9E%D7%A7%D7%95%D7%9E%D7%95%D7%AA-%D7%98%D7%99%D7%A4%D7%95%D7%A1/vking-tel-aviv/ /%D7%94%D7%99%D7%A1%D7%98%D7%95%D7%A8%D7%99%D7%99%D7%AA-%D7%94%D7%98%D7%99%D7%A4%D7%95%D7%A1-%D7%91%D7%99%D7%A9%D7%A8%D7%90%D7%9C/#closed-gyms 301
+/%D7%9E%D7%A7%D7%95%D7%9E%D7%95%D7%AA-%D7%98%D7%99%D7%A4%D7%95%D7%A1/vking-tel-aviv /%D7%94%D7%99%D7%A1%D7%98%D7%95%D7%A8%D7%99%D7%99%D7%AA-%D7%94%D7%98%D7%99%D7%A4%D7%95%D7%A1-%D7%91%D7%99%D7%A9%D7%A8%D7%90%D7%9C/#closed-gyms 301
+/%D7%9E%D7%A7%D7%95%D7%9E%D7%95%D7%AA-%D7%98%D7%99%D7%A4%D7%95%D7%A1/koala-etzion/ /%D7%94%D7%99%D7%A1%D7%98%D7%95%D7%A8%D7%99%D7%99%D7%AA-%D7%94%D7%98%D7%99%D7%A4%D7%95%D7%A1-%D7%91%D7%99%D7%A9%D7%A8%D7%90%D7%9C/#closed-gyms 301
+/%D7%9E%D7%A7%D7%95%D7%9E%D7%95%D7%AA-%D7%98%D7%99%D7%A4%D7%95%D7%A1/koala-etzion /%D7%94%D7%99%D7%A1%D7%98%D7%95%D7%A8%D7%99%D7%99%D7%AA-%D7%94%D7%98%D7%99%D7%A4%D7%95%D7%A1-%D7%91%D7%99%D7%A9%D7%A8%D7%90%D7%9C/#closed-gyms 301
+/%D7%9E%D7%A7%D7%95%D7%9E%D7%95%D7%AA-%D7%98%D7%99%D7%A4%D7%95%D7%A1/iclimb-kiryat-gat/ /%D7%94%D7%99%D7%A1%D7%98%D7%95%D7%A8%D7%99%D7%99%D7%AA-%D7%94%D7%98%D7%99%D7%A4%D7%95%D7%A1-%D7%91%D7%99%D7%A9%D7%A8%D7%90%D7%9C/#closed-gyms 301
+/%D7%9E%D7%A7%D7%95%D7%9E%D7%95%D7%AA-%D7%98%D7%99%D7%A4%D7%95%D7%A1/iclimb-kiryat-gat /%D7%94%D7%99%D7%A1%D7%98%D7%95%D7%A8%D7%99%D7%99%D7%AA-%D7%94%D7%98%D7%99%D7%A4%D7%95%D7%A1-%D7%91%D7%99%D7%A9%D7%A8%D7%90%D7%9C/#closed-gyms 301

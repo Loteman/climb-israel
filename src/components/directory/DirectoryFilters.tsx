@@ -198,6 +198,7 @@ export default function DirectoryFilters() {
     setVisibleCount(visibleIds.size);
 
     document.getElementById("crag-guidebook-note")?.classList.toggle("hidden", kind !== "crag");
+    document.getElementById("gym-closed-note")?.classList.toggle("hidden", kind !== "gym");
 
     const detail = { visibleIds: Array.from(visibleIds), kind };
     window.__directoryFilterState = detail;

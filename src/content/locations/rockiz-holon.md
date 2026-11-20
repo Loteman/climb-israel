@@ -7,11 +7,12 @@ styles:
   - bouldering
 region: center
 city: "חולון"
+chain: "Rockiz"
 address: "שד' ירושלים 210"
 phone: "03-748-9494"
 website: "https://www.rockiz.co.il/"
 instagram: "https://www.instagram.com/rockiz.climb/"
-facebook: "https://www.facebook.com/Rockiz-%D7%A8%D7%95%D7%A7%D7%99%D7%96-%D7%97%D7%95%D7%9C%D7%95%D7%9F-2432686780295385"
+facebook: "https://www.facebook.com/rockizclimbing"
 hours:
   "א'-ה'": "09:00-12:00, 15:00-22:00"
   "ו'": "10:00-18:00"

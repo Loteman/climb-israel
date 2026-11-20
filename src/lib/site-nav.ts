@@ -87,6 +87,7 @@ export const HISTORY_LINK: NavLink = { href: "/היסטוריית-הטיפוס-�
 export const ABOUT_LINK: NavLink = { href: "/אודות/", label: "אודות" };
 export const ACCESSIBILITY_LINK: NavLink = { href: "/הצהרת-נגישות/", label: "הצהרת נגישות" };
 export const PRIVACY_LINK: NavLink = { href: "/מדיניות-פרטיות/", label: "מדיניות פרטיות" };
+export const COPYRIGHT_LINK: NavLink = { href: "/זכויות-יוצרים/", label: "זכויות יוצרים" };
 
 /** The page listing every guide (the "מדריכים" tab of the phone tab bar). */
 export const GUIDES_PAGE_LINK: NavLink = { href: "/מדריכים/", label: "מדריכים" };

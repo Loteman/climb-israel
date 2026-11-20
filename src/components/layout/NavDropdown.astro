@@ -12,12 +12,16 @@ interface Props {
   label: string;
   items?: NavLink[];
   groups?: Group[];
+  /** An overview page shown first, above the groups ("לכל המדריכים"). */
+  allLink?: NavLink;
 }
 
-const { label, items, groups } = Astro.props;
+const { label, items, groups, allLink } = Astro.props;
 const path = currentPathname(Astro.url);
 const allGroups: Group[] = groups ?? [{ label: "", items: items ?? [] }];
-const active = allGroups.some((g) => g.items.some((item) => linkState(path, item.href)));
+const active =
+  Boolean(allLink && linkState(path, allLink.href)) ||
+  allGroups.some((g) => g.items.some((item) => linkState(path, item.href)));
 ---
 
 <details class="group relative">
@@ -33,6 +37,23 @@ const active = allGroups.some((g) => g.items.some((item) => linkState(path, item
     </svg>
   </summary>
   <div class="absolute start-0 top-full z-50 mt-2 w-56 border border-stone/50 bg-paper-dark p-2 shadow-lg">
+    {
+      allLink && (
+        <Fragment>
+          <a
+            href={withBase(allLink.href)}
+            aria-current={linkState(path, allLink.href)}
+            class:list={[
+              "block rounded-sm px-3 py-2 font-body text-sm font-bold hover:bg-paper hover:text-rust",
+              linkState(path, allLink.href) ? "text-rope" : "text-ink",
+            ]}
+          >
+            {allLink.label} ←
+          </a>
+          <div class="my-1 border-t border-stone/40" />
+        </Fragment>
+      )
+    }
     {
       allGroups.map((group, i) => (
         <Fragment>

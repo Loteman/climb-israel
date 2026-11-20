@@ -146,6 +146,9 @@ const gymSchema = z.object({
   address: z.string().optional(),
   hours: z.record(z.string(), z.string()).optional(),
   hoursNote: z.string().optional(),
+  // A temporary state to flag first, e.g. "סגור לשיפוצים..." - shown at the
+  // top of the gym page, with a "סגור זמנית" badge in the lists.
+  notice: z.string().optional(),
   setting: z.enum(["indoor", "outdoor", "both"]).optional(),
   amenities: z
     .array(z.object({ type: z.enum(AMENITY_TYPES), note: z.string().optional() }))

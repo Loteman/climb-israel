@@ -79,6 +79,15 @@ const jsonLd = {
       <LocationMap client:load locations={mapLocations} />
     </div>
 
+    {/* Gyms tab only (toggled by DirectoryFilters): someone looking for a
+        wall that has closed lands here first. */}
+    <p id="gym-closed-note" class="mt-8 border-t border-dashed border-stone/50 pt-6 text-sm text-ink-soft">
+      מחפשים קיר שכבר לא מופיע כאן?{" "}
+      <a href={withBase("/היסטוריית-הטיפוס-בישראל/#closed-gyms")} class="font-bold text-rope hover:underline">
+        קירות שהיו ואינם ←
+      </a>
+    </p>
+
     <div id="crag-guidebook-note" class="hidden mt-8 space-y-3 border-t border-dashed border-stone/50 pt-6 text-xs leading-relaxed text-ink-soft">
       <p>
         לחלק מהאתרים עדיין אין מדריך טיפוס (guidebook) מפורט באתר. יש לכם
